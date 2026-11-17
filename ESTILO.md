@@ -1,7 +1,7 @@
 # Estilo "Juro Que É Verdade" — tirado dos 3 vídeos de referência
 
 ## Roteiro (o mais importante)
-Duração: 25–35 s, ~70–95 palavras, ~2,7 palavras/s (ver "Duração" abaixo; os 55–65 s originais renderam pouco). Narrador único, tom de contador de história, presente do indicativo.
+Duração: 55–65 s, ~150–170 palavras, ~2,7 palavras/s (decisão do dono: vídeos longos; ver "Duração" abaixo). Narrador único, tom de contador de história, presente do indicativo.
 
 1. **Abre no meio de uma ação estranha** (sem "olá", sem contexto): "Ele carregou a espingarda com ouro e atirou na parede da mina." / "Ele fez 82 furos numa tábua." / "Se você planta uma árvore do lado de uma estrada vazia, os carros vão bater nela."
 2. **Um coadjuvante zomba ou estranha** com uma fala curta em discurso direto: "Então a gente tá atirando ouro numa mina de ouro?" / "A gente vai lutar ou ralar queijo?"
@@ -36,8 +36,12 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 - Mostrar a prévia (folha de quadros) com close do objeto-chave e de cada personagem novo antes do render longo.
 - **Arquitetura coerente.** Telhado de varanda fica ABAIXO das janelas do andar de cima; nada atravessa janela, porta ou rosto. Conferir peças que se cruzam (colher atravessando carne, telhado cortando janela) em todos os ângulos da prévia.
 
-## Duração (dado real do canal, 2026-11-17)
-- O teste de **10 s** ("Choveu carne numa fazenda") pegou **~1k views** no YouTube; a versão de **58 s** teve **1 view em 6 h**. Até as métricas dizerem outra coisa: mirar **25–35 s** (~70–95 palavras), gancho visual forte já no quadro 0 (objeto-chave em movimento na tela, sem plano de abertura parado), virada antes dos 20 s e final que dê vontade de rever (loop).
+## Duração e retenção (decidido pelo dono em 2026-11-17: vídeos LONGOS, 55–65 s)
+- Dado do canal: teste de 10 s pegou ~1k views; versão de 58 s, 1 view em 6 h. O dono prefere manter os vídeos longos, então o trabalho é segurar a pessoa até o fim:
+  - **Quadro 0 já com ação**: objeto-chave caindo/voando na tela; nada de plano de abertura parado.
+  - **Uma piada ou surpresa a cada 5–8 s** (nova batida da escalada, objeto absurdo, reação exagerada).
+  - **Promessa no começo** que só se paga no fim (ex.: "a explicação é nojenta" → revelação aos ~45 s).
+  - **Final em loop**: a última frase/imagem conversa com a primeira, para o vídeo emendar sozinho.
 - Nunca apagar vídeo publicado, mesmo teste: o histórico ajuda o canal.
 
 ## Voz (decidido pelo dono do canal)
