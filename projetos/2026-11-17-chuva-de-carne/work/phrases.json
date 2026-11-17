@@ -1,0 +1,45 @@
+{
+ "duration": 7.975958,
+ "frames30": 239,
+ "source": "silence-align (cost 0.04)",
+ "segments": [
+  [
+   0.130125,
+   1.34221
+  ],
+  [
+   1.51975,
+   3.11683
+  ],
+  [
+   3.56046,
+   5.21962
+  ],
+  [
+   5.45721,
+   7.62617
+  ]
+ ],
+ "phrases": [
+  {
+   "text": "Num dia de c\u00e9u limpo,",
+   "s": 0.13,
+   "e": 1.342
+  },
+  {
+   "text": "choveu carne numa fazenda.",
+   "s": 1.52,
+   "e": 3.117
+  },
+  {
+   "text": "E isso aconteceu de verdade,",
+   "s": 3.56,
+   "e": 5.22
+  },
+  {
+   "text": "em mil oitocentos e setenta e seis.",
+   "s": 5.457,
+   "e": 7.626
+  }
+ ]
+}

@@ -31,6 +31,8 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 ## Aprendizados (feedback do dono do canal)
 - **Objeto-chave tem que ser reconhecível num relance.** Um bloco 3D "realista" mal feito não lê como a coisa. Usar a forma ICÔNICA de desenho animado: carne = pedaço com osso (pernil/coxa com osso branco saindo), bife = formato de bife com borda de gordura e marcas. Conferir o objeto num close ANTES do render; se não der para dizer o que é em 1 segundo, refazer.
 - **Roupas não podem criar volumes estranhos.** Saia/vestido desenhado como segunda forma abaixo do tronco parece "barriga dupla". Personagens: tronco único + pernas de palito, como nas referências. Avental pode.
+- **Carne do template virava "ovo vermelho"** no close (osso escondido atrás). Usar a coxa em torno (LatheGeometry) deitada, com osso + 2 nós sempre de lado para a câmera, escala 0,6–1,0 (pedaço do tamanho da cabeça do personagem, não maior). Código pronto em `projetos/2026-11-17-chuva-de-carne/web/main.js` (`meatPiece`).
+- **Closes cortavam a cabeça**: a cabeça do card fica ~1,7–1,9 m; mirar a câmera em y≈1,75 e a ≥2 m do rosto com fov 35–40.
 - Mostrar a prévia (folha de quadros) com close do objeto-chave e de cada personagem novo antes do render longo.
 - **Arquitetura coerente.** Telhado de varanda fica ABAIXO das janelas do andar de cima; nada atravessa janela, porta ou rosto. Conferir peças que se cruzam (colher atravessando carne, telhado cortando janela) em todos os ângulos da prévia.
 
