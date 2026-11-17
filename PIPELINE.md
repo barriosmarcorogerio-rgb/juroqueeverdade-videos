@@ -15,7 +15,7 @@ LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrig
 9. **Som**: ajustar a tabela de deixas em `audio.py` (DUR, MUSIC_END na virada, efeitos nos eventos) → `python3 audio.py && python3 mix.py voice.wav music.wav sfx.wav`.
 10. **Legenda + MP4**: `python3 captions.py && FRAMES=frames_cap bash finish.sh "Titulo"`. Conferir `out/qa_sheet.jpg`.
 11. **Versão YouTube** (Make grátis aceita ≤5 MB): `ffmpeg -i out/X.mp4 -c:v libx264 -preset slow -b:v 520k -maxrate 600k -bufsize 1200k -vf scale=720:1280 -c:a aac -b:a 96k -movflags +faststart videos/AAAA-MM-DD-slug-yt.mp4` (conferir < 5 MB; se passar, baixar o bitrate). Alta: `cp out/X.mp4 videos/AAAA-MM-DD-slug.mp4`.
-11b. **Capa**: escolher o quadro com personagem em close + expressão exagerada + objeto-chave (ver ESTILO.md "Capa") e rodar `python3 thumb.py frames/fNNNN.jpg ../../videos/AAAA-MM-DD-slug-thumb.jpg` (vertical, sem texto). `cover_ms` = NNNN/30*1000. Fazer ANTES de apagar frames/.
+11b. **Thumbnail + capa**: escolher o quadro com personagem em close + expressão exagerada + objeto-chave na metade de baixo (ver ESTILO.md "Capa") e rodar `python3 thumb.py frames/fNNNN.jpg "TEXTO DE 2-3 PALAVRAS" ../../videos/AAAA-MM-DD-slug-thumb.jpg` (vertical 1080x1920). `cover_ms` = NNNN/30*1000. Fazer ANTES de apagar frames/.
 12. **Fila de publicação**: acrescentar em `fila.json` um item `{data, slug, titulo, descricao, legenda_instagram, video, video_yt, thumb, cover_ms, publicado:false}`. Título YouTube ≤ 70 caracteres terminando em `#shorts`. Atualizar `historias.md`.
 13. `git add -A && git commit` (fim da mensagem com as linhas de atribuição) `&& git push`. Apagar `frames/`, `frames_cap/`, `stills/` antes do commit (não versionar quadros).
 

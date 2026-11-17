@@ -58,5 +58,5 @@ Bem em cima da fazenda.
 E os vizinhos? Já tinham repetido o prato.
 ```
 
-## Capa / thumbnail (padrão do estilo)
-Shorts e Reels mostram capa VERTICAL: um quadro da própria animação, personagem em close com expressão exagerada (choque/riso) + objeto-chave visível, cores fortes, SEM texto. Escolha o quadro na prévia e use `thumb.py` (gera a capa vertical 1080x1920).
+## Capa / thumbnail (aprovado pelo dono)
+VERTICAL 1080x1920 (o YouTube recomenda 9:16 para Shorts; horizontal é substituído por recorte automático). Quadro da animação com o personagem em close, expressão exagerada e o objeto-chave visível na metade de baixo + letreiro grosso amarelo/branco com contorno preto, 2–3 palavras em MAIÚSCULAS no terço de cima (ex.: "CHOVEU CARNE?!"). Gerar com `thumb.py`. A capa do Reel no Instagram é o mesmo quadro (cover_ms), sem letreiro.
