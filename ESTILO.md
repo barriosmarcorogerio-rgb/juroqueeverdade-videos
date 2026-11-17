@@ -36,3 +36,27 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 
 ## Voz (decidido pelo dono do canal)
 Gemini TTS voz **Charon**, +8% de velocidade (`template/gemini_tts.py`). Sem instrução de estilo (ela é lida em voz alta). A animação da voz vem da pontuação do roteiro: "...", "!", MAIÚSCULA na palavra de ênfase, frases curtas.
+
+## Régua de qualidade do roteiro (o teste de 10 s ficou FRACO — não repetir)
+Os roteiros de referência têm SEMPRE: (a) personagens com papel e FALA em discurso direto, (b) números concretos (82 furos, 15 por hora, 10 anos, último cem reais, 3 metros), (c) 4–6 piadas físicas em escalada, cada frase = uma ação que dá pra desenhar, (d) "Isso se chama..." com o nome do fenômeno, (e) final irônico de 1 frase que fecha o ciclo. Se faltar um desses, reescreva antes de gerar a voz.
+
+Exemplo completo no padrão (≈60 s) — "A chuva de carne":
+```
+Choveu carne do céu... e a fazenda inteira achou que era o fim do mundo.
+Kentucky, mil oitocentos e setenta e seis. A senhora Crouch está fazendo sabão no quintal, quando um pedaço de carne cai dentro do caldeirão.
+Ela olha pra cima. Céu azul. Nem UMA nuvem.
+E aí... cai outro. E outro. E OUTRO!
+Em poucos minutos, carne cobre o quintal, a cerca e o telhado.
+O marido sai correndo: "Mulher, é castigo de Deus!"
+Os vizinhos chegam... e um deles PROVA um pedaço.
+"Carneiro", ele diz. O outro mastiga devagar: "Não... é veado."
+Os jornais chamam de "a chuva de carne do Kentucky", e cientistas aparecem com potinhos de vidro pra levar amostras.
+Mas a explicação era bem mais nojenta.
+Isso se chama... vômito de urubu.
+Quando um bando de urubus se assusta, eles vomitam tudo o que comeram, pra ficar leves e fugir mais rápido.
+Bem em cima da fazenda.
+E os vizinhos? Já tinham repetido o prato.
+```
+
+## Capa / thumbnail (padrão do estilo)
+Shorts e Reels mostram capa VERTICAL: um quadro da própria animação, personagem em close com expressão exagerada (choque/riso) + objeto-chave visível, cores fortes, SEM texto. Escolha o quadro na prévia e use `thumb.py` (gera a capa vertical 1080x1920).
