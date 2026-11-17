@@ -20,3 +20,6 @@ Fila vazia: o único item pendente ("Choveu carne do céu") já foi publicado à
 - Idioma do Short estava `pt-PT` (padrão do upload). Cenário do Make ganhou o passo "Idioma pt-BR" (API videos.update) e o vídeo lgyRq-Q2C9Y já foi corrigido para pt-BR.
 - Capa personalizada recusada (403): o canal precisa de verificação por telefone (youtube.com/verify). Depois de verificado, reaplicar com `canal:"thumb"` (PIPELINE.md, 4b).
 
+## 2026-11-17 — aprendizado principal
+- Teste de 10 s: ~1k views (dono apagou o vídeo depois). Versão de 58 s: 1 view em ~6 h. Formato curto passa a ser o padrão (25–35 s) até as métricas mostrarem o contrário.
+

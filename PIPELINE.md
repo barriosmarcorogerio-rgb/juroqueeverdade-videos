@@ -1,6 +1,6 @@
 # Pipeline diário — "Juro Que É Verdade"
 
-Canal: YouTube **@juroqueeverdade.brasil** + Instagram **@juroqueeverdade.brasil**. 1 vídeo por dia, 55–65 s, vertical 1080x1920.
+Canal: YouTube **@juroqueeverdade.brasil** + Instagram **@juroqueeverdade.brasil**. 1 vídeo por dia, 25–35 s (ver ESTILO.md, Duração), vertical 1080x1920.
 LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrigatórios) e `historias.md` (o que já saiu + ideias).
 
 ## Tarefa A — Produção (madrugada)
