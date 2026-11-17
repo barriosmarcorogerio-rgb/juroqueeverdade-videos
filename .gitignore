@@ -1,0 +1,7 @@
+frames/
+frames_cap/
+stills/
+node_modules/
+*.wav
+_raw.wav
+.chrome

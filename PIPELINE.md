@@ -1,0 +1,29 @@
+# Pipeline diário — "Juro Que É Verdade"
+
+Canal: YouTube **@juroqueeverdade.brasil** + Instagram **@juroqueeverdade.brasil**. 1 vídeo por dia, 55–65 s, vertical 1080x1920.
+LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrigatórios) e `historias.md` (o que já saiu + ideias).
+
+## Tarefa A — Produção (madrugada)
+1. **Escolher a história**: a próxima do backlog em `historias.md` (ou uma nova melhor, inspirada nas métricas em `metricas.md`). Nunca repetir. Fatos conferidos com busca na web; lenda é avisada ("diz a lenda"). Nada político, nada gráfico, nada de pessoas vivas.
+2. **Roteiro** no formato do `ESTILO.md`, 150–170 palavras, com pontuação expressiva ("...", "!", MAIÚSCULA para ênfase) porque é ela que dá emoção à voz. Salvar em `projetos/AAAA-MM-DD-slug/script.txt` (uma frase por linha).
+3. **Projeto**: `cp -r template projetos/AAAA-MM-DD-slug` ; `cd` nele ; `npm i --silent --no-audit --no-fund playwright-core@1.49.1` só se `import('playwright')` falhar (Chromium já vem instalado no container).
+4. **Voz**: `python3 gemini_tts.py script.txt voice.wav` (Charon, +8%). Timing por palavra: `HF_HUB_DISABLE_XET=1 python3 -I words.py voice.wav script.txt work/words.json` (precisa `pip install faster-whisper`; na 1ª vez baixa o modelo `small` do Hugging Face). TOTAL de quadros = round(duração × 30).
+5. **Cena** (`web/main.js`, seção `// ---------- world ----------` até `// ---------- cards ----------`): construir o cenário da história no estilo semi-realista do template (MeshStandardMaterial, sem contorno, grama 3D instanciada, árvores com folhas instanciadas, nuvens suaves). O exemplo da fazenda mostra todas as técnicas. Personagens novos: `web/toon.js` OUTFITS (tronco único, sem saia). Objetos-chave na forma ICÔNICA de desenho (ver aprendizados).
+6. **Plano** (`web/story.js`): 30–45 planos de 1–2 s, ângulos variados (close de rosto, close de objeto, POV, drone, contra-plongée, câmera seguindo objeto), luz progredindo (dia → entardecer → noite/chuva no clímax → amanhecer). Exemplo pronto: `template/web/story.js`.
+7. **Prévia obrigatória**: `node render.mjs stills/a "<meio de cada plano>"` + `python3 sheet.py stills/a stills/sheet.jpg 8`. OLHAR a folha e corrigir: objeto reconhecível em 1 s? algo atravessando algo? telhado/janela coerentes? rosto cortado? Repetir até ficar limpo.
+8. **Render** em blocos: `RESUME=1 node render.mjs frames "0-299"`, `"300-599"`... até o fim (~4–9 s/quadro). Nunca terminar a sessão com render rodando.
+9. **Som**: ajustar a tabela de deixas em `audio.py` (DUR, MUSIC_END na virada, efeitos nos eventos) → `python3 audio.py && python3 mix.py voice.wav music.wav sfx.wav`.
+10. **Legenda + MP4**: `python3 captions.py && FRAMES=frames_cap bash finish.sh "Titulo"`. Conferir `out/qa_sheet.jpg`.
+11. **Versão YouTube** (Make grátis aceita ≤5 MB): `ffmpeg -i out/X.mp4 -c:v libx264 -preset slow -b:v 520k -maxrate 600k -bufsize 1200k -vf scale=720:1280 -c:a aac -b:a 96k -movflags +faststart videos/AAAA-MM-DD-slug-yt.mp4` (conferir < 5 MB; se passar, baixar o bitrate). Alta: `cp out/X.mp4 videos/AAAA-MM-DD-slug.mp4`.
+12. **Fila de publicação**: acrescentar em `fila.json` um item `{data, slug, titulo, descricao, legenda_instagram, video, video_yt, publicado:false}`. Título YouTube ≤ 70 caracteres terminando em `#shorts`. Atualizar `historias.md`.
+13. `git add -A && git commit` (fim da mensagem com as linhas de atribuição) `&& git push`. Apagar `frames/`, `frames_cap/`, `stills/` antes do commit (não versionar quadros).
+
+## Tarefa B — Publicação + métricas (12h)
+1. `git pull`. Pegar em `fila.json` o item mais antigo com `publicado:false`.
+2. Make (conector), cenário **7068350**, `scenarios_run` com `responsive:true` e data:
+   `video_url` = `https://raw.githubusercontent.com/barriosmarcorogerio-rgb/juroqueeverdade-videos/main/<video>`,
+   `yt_url` = idem com `<video_yt>`, `title`, `description`, `caption`, `yt_privacy:"public"`, `instagram:"sim"`.
+   Se o MCP der erro de rede, ANTES de repetir confira `executions_list` (não publicar 2 vezes).
+3. Marcar `publicado:true` + data/hora em `fila.json`, commit e push.
+4. **Métricas**: registrar em `metricas.md` o que der para ler (views/curtidas/retenção dos últimos vídeos — via Make: YouTube "Watch videos"/Instagram "Get post insights", ou o que estiver disponível) e 3 linhas de conclusão: que tipo de história/gancho rendeu mais → ajustar a ordem do backlog em `historias.md`.
+5. Se a fila estiver vazia: não publicar nada e registrar o motivo em `metricas.md`.
