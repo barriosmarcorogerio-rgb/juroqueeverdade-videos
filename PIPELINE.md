@@ -23,10 +23,11 @@ LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrig
 1. `git pull`. Pegar em `fila.json` o item mais antigo com `publicado:false`.
 2. Make (conector), cenário **7068350**, `scenarios_run` com `responsive:true` e data:
    `video_url` = `https://raw.githubusercontent.com/barriosmarcorogerio-rgb/juroqueeverdade-videos/main/<video>`,
-   `yt_url` = idem com `<video_yt>`, `thumb_url` = idem com `<thumb>`, `cover_ms`, `title`, `description`, `caption`, `yt_privacy:"public"`, `instagram:"sim"`. Chamada: `curl -X POST https://us2.make.com/api/v2/scenarios/7068350/run -H 'Content-Type: application/json' -d '{"responsive":true,"data":{...}}'` (token injetado pelo ambiente). Item antigo sem `thumb`: usar `thumb_url` = a URL do vídeo yt (o passo da thumbnail falha e é ignorado).
+   `yt_url` = idem com `<video_yt>`, `thumb_url` = idem com `<thumb>`, `cover_ms`, `title`, `description`, `caption`, `yt_privacy:"public"`, `instagram:"sim"`. **E também** `yt_snippet` = `json.dumps({"title":titulo,"description":descricao,"categoryId":"1","defaultLanguage":"pt-BR","defaultAudioLanguage":"pt-BR"})` (string JSON; sem ela o YouTube marca o idioma como pt-PT). Chamada: `curl -X POST https://us2.make.com/api/v2/scenarios/7068350/run -H 'Content-Type: application/json' -d '{"responsive":true,"data":{...}}'` (token injetado pelo ambiente). Item antigo sem `thumb`: usar `thumb_url` = a URL do vídeo yt (o passo da thumbnail falha e é ignorado).
    Se o MCP der erro de rede, ANTES de repetir confira `executions_list` (não publicar 2 vezes).
 3. Marcar `publicado:true` + data/hora em `fila.json`, commit e push.
 4. **Métricas**: `curl -sS -m 120 -X POST https://hook.us2.make.com/eyu8l7uumr8uiv2yyp6lrjir03vhyn6e -H 'Content-Type: application/json' -d '{}'` devolve JSON com `youtube` (últimos 15 vídeos: snippet + statistics: views, likes, comentários) e `instagram` (últimos 15 posts: likes, comentários). Registrar uma tabela em `metricas.md` e 3 linhas de conclusão: que tipo de história/gancho rendeu mais → ajustar a ordem do backlog em `historias.md`.
+4b. **Capa de vídeo já publicado** (ex.: depois que o canal foi verificado por telefone): rodar o mesmo cenário com `canal:"thumb"`, `video_id`, `thumb_url`, `yt_snippet` (+ os campos obrigatórios `video_url`, `yt_url`, `title`, e `instagram:"nao"`). Erro 403 "permissions to ... set custom video thumbnails" = canal ainda não verificado em youtube.com/verify.
 5. Se a fila estiver vazia: não publicar nada e registrar o motivo em `metricas.md`.
 
 ## Tarefa C — Melhoria contínua (domingo)

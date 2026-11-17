@@ -15,3 +15,8 @@ Conclusões:
 
 ## 2026-11-17 — tarefa agendada de publicação (disparada 14:47 UTC, atendida 16:08 UTC)
 Fila vazia: o único item pendente ("Choveu carne do céu") já foi publicado às 16:06 UTC pela recuperação manual, nos dois canais. Nada publicado de novo, para não duplicar. As métricas lidas às 16:07 estão na tabela acima (todas em 0).
+
+## 2026-11-17 — ajustes no YouTube
+- Idioma do Short estava `pt-PT` (padrão do upload). Cenário do Make ganhou o passo "Idioma pt-BR" (API videos.update) e o vídeo lgyRq-Q2C9Y já foi corrigido para pt-BR.
+- Capa personalizada recusada (403): o canal precisa de verificação por telefone (youtube.com/verify). Depois de verificado, reaplicar com `canal:"thumb"` (PIPELINE.md, 4b).
+
