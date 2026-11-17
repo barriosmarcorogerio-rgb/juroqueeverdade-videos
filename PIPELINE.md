@@ -15,15 +15,25 @@ LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrig
 9. **Som**: ajustar a tabela de deixas em `audio.py` (DUR, MUSIC_END na virada, efeitos nos eventos) → `python3 audio.py && python3 mix.py voice.wav music.wav sfx.wav`.
 10. **Legenda + MP4**: `python3 captions.py && FRAMES=frames_cap bash finish.sh "Titulo"`. Conferir `out/qa_sheet.jpg`.
 11. **Versão YouTube** (Make grátis aceita ≤5 MB): `ffmpeg -i out/X.mp4 -c:v libx264 -preset slow -b:v 520k -maxrate 600k -bufsize 1200k -vf scale=720:1280 -c:a aac -b:a 96k -movflags +faststart videos/AAAA-MM-DD-slug-yt.mp4` (conferir < 5 MB; se passar, baixar o bitrate). Alta: `cp out/X.mp4 videos/AAAA-MM-DD-slug.mp4`.
-12. **Fila de publicação**: acrescentar em `fila.json` um item `{data, slug, titulo, descricao, legenda_instagram, video, video_yt, publicado:false}`. Título YouTube ≤ 70 caracteres terminando em `#shorts`. Atualizar `historias.md`.
+11b. **Thumbnail + capa**: escolher o quadro mais expressivo (rosto reagindo + objeto-chave, nada cortado) e rodar `python3 thumb.py frames/fNNNN.jpg "TEXTO DE 2-4 PALAVRAS" ../../videos/AAAA-MM-DD-slug-thumb.jpg` (JPG < 2 MB). `cover_ms` = NNNN/30*1000 (capa do Reel). Fazer ANTES de apagar frames/.
+12. **Fila de publicação**: acrescentar em `fila.json` um item `{data, slug, titulo, descricao, legenda_instagram, video, video_yt, thumb, cover_ms, publicado:false}`. Título YouTube ≤ 70 caracteres terminando em `#shorts`. Atualizar `historias.md`.
 13. `git add -A && git commit` (fim da mensagem com as linhas de atribuição) `&& git push`. Apagar `frames/`, `frames_cap/`, `stills/` antes do commit (não versionar quadros).
 
 ## Tarefa B — Publicação + métricas (12h)
 1. `git pull`. Pegar em `fila.json` o item mais antigo com `publicado:false`.
 2. Make (conector), cenário **7068350**, `scenarios_run` com `responsive:true` e data:
    `video_url` = `https://raw.githubusercontent.com/barriosmarcorogerio-rgb/juroqueeverdade-videos/main/<video>`,
-   `yt_url` = idem com `<video_yt>`, `title`, `description`, `caption`, `yt_privacy:"public"`, `instagram:"sim"`.
+   `yt_url` = idem com `<video_yt>`, `thumb_url` = idem com `<thumb>`, `cover_ms`, `title`, `description`, `caption`, `yt_privacy:"public"`, `instagram:"sim"`. Chamada: `curl -X POST https://us2.make.com/api/v2/scenarios/7068350/run -H 'Content-Type: application/json' -d '{"responsive":true,"data":{...}}'` (token injetado pelo ambiente). Item antigo sem `thumb`: usar `thumb_url` = a URL do vídeo yt (o passo da thumbnail falha e é ignorado).
    Se o MCP der erro de rede, ANTES de repetir confira `executions_list` (não publicar 2 vezes).
 3. Marcar `publicado:true` + data/hora em `fila.json`, commit e push.
-4. **Métricas**: registrar em `metricas.md` o que der para ler (views/curtidas/retenção dos últimos vídeos — via Make: YouTube "Watch videos"/Instagram "Get post insights", ou o que estiver disponível) e 3 linhas de conclusão: que tipo de história/gancho rendeu mais → ajustar a ordem do backlog em `historias.md`.
+4. **Métricas**: `curl -sS -m 120 -X POST https://hook.us2.make.com/eyu8l7uumr8uiv2yyp6lrjir03vhyn6e -H 'Content-Type: application/json' -d '{}'` devolve JSON com `youtube` (últimos 15 vídeos: snippet + statistics: views, likes, comentários) e `instagram` (últimos 15 posts: likes, comentários). Registrar uma tabela em `metricas.md` e 3 linhas de conclusão: que tipo de história/gancho rendeu mais → ajustar a ordem do backlog em `historias.md`.
 5. Se a fila estiver vazia: não publicar nada e registrar o motivo em `metricas.md`.
+
+## Tarefa C — Melhoria contínua (domingo)
+1. `git pull`; ler `metricas.md` da semana, `historias.md`, `ESTILO.md` e os erros anotados pelas tarefas A/B.
+2. Ler as métricas atuais (webhook acima). Comparar: quais ganchos, temas, épocas e durações tiveram mais views/likes por hora desde a publicação.
+3. Pesquisar na web vídeos/canais do mesmo estilo (desenho "cabeça de feijão", histórias reais curiosas, shorts virais de história) e anotar 3 padrões novos que funcionam.
+4. Atualizar `ESTILO.md` (seção Aprendizados) com o que funcionou/não funcionou, e o `PIPELINE.md` se algum passo deu erro na semana.
+5. Repor o backlog de `historias.md` com 10 histórias novas com fatos conferidos, ordenadas pelo que as métricas indicam.
+6. Corrigir no `template/` qualquer problema técnico recorrente (render lento, objetos mal reconhecíveis, falhas de voz).
+7. Commit + push com um resumo da semana no topo de `metricas.md`.
