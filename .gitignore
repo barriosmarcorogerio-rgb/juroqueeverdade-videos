@@ -11,3 +11,5 @@ projetos/madrugada2.log
 *.tts.log
 projetos/*/r[123].log
 projetos/madrugada*.log
+projetos/refazer_camelos.log
+projetos/*/r_*.log

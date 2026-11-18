@@ -8,7 +8,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; }
 # ---------- 1) Short dos camelos ----------
 if [ ! -f $R/videos/2026-11-18-camelos-ceara.mp4 ]; then
-cd $P/2026-11-18-camelos-ceara; mkdir -p frames
+cd $P/2026-11-18-camelos-ceara; mkdir -p frames out
 cd $P/2026-11-18-camelos-ceara
 pgrep -f "render.mjs frames 0-941" >/dev/null || (cd $P/2026-11-18-camelos-ceara && RESUME=1 nohup node render.mjs frames 0-941 > r1.log 2>&1 &)
 pgrep -f "render.mjs frames 942-1883" >/dev/null || (cd $P/2026-11-18-camelos-ceara && RESUME=1 nohup node render.mjs frames 942-1883 > r2.log 2>&1 &)
