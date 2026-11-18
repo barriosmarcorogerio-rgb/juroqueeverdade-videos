@@ -33,6 +33,12 @@ export const actorsAt = (f, T) => {
     if (c.float) pos = [pos[0] + Math.sin(F * 0.03 + pos[2]) * c.float * 0.5, pos[1] + Math.sin(F * 0.05 + pos[0]) * c.float, pos[2]];
     if (c.fx) { let go = c.o || {}; if (c.walk) go = { ...go, walk: q(((f - S.a) * 2.5 / 30 * 0.6) % 1, 2) }; if (go.steam) go = { ...go, steam: q(((f - S.a) / 30) % 1 + 0.001, 2) }; if (go.cutFrac !== undefined) go = { ...go, cut: q(Math.min(1, Math.max(0, (f - S.a - go.cutFrac * (S.b - S.a)) / 10)), 2) }; if (go.decapFrac !== undefined) go = { ...go, decap: q(Math.min(1, Math.max(0, (f - S.a - go.decapFrac * (S.b - S.a)) / Math.max(4, (1 - go.decapFrac) * (S.b - S.a) * 0.8))), 2) }; const k = c.fx + (c.t !== undefined ? q(c.t, 1) : '') + JSON.stringify(go); out.push({ key: k, draw: (p) => T[c.fx](p, c.t ?? 0, go), x: pos[0], y: pos[1], z: pos[2], s: c.s || 1, face: c.face, flip: c.flip, blob: false, shadow: c.shadow ?? false, order: c.order || 4, roll: c.wobble ? c.wobble * Math.sin(F * 0.05) : (c.roll || 0), tint: c.tint }); continue; }
     const b = base(F, SEED[c.who] || 7), o = { ...b, ...(c.pose || {}) };
+    // vida automática: quem está parado gesticula (um braço por vez, troca a cada ~1,2–1,7 s), balança mais e mexe a cabeça; ferramenta na mão (pá/arpão) sobe e desce
+    if (!c.still && !c.walk && !c.to && !c.spin && !c.noAnim) { const sd0 = SEED[c.who] || 7, per = 14 + (sd0 * 3) % 7, k = Math.floor((f - S.a + sd0 * 5) / per);
+      if (k % 2) { const side = Math.floor(k / 2) % 2 ? 'L' : 'R', held = side === 'L' ? o.holdL : o.holdR, cur = o[side] || 'hang';
+        const ALT = { hang: 'hip', hip: 'hang', reach: 'give', give: 'reach', point: 'reach', up: 'reach', cheek: 'hang', cross: 'hip', thumb: 'hang', wave: 'up', lift: 'up', temple: 'cheek', belly: 'hang' };
+        if (!held) o[side] = ALT[cur] || cur; else if (held === 'shovel' || held === 'grapple' || held === 'drill') o[side] = cur === 'up' ? 'reach' : 'up'; }
+      o.bob = q((o.bob || 0) * 2.2, 3); o.headTilt = q((o.headTilt || 0) * 2.2, 1); o.look = q((o.look || 0) + 0.25 * Math.sin((f - S.a) * 0.09 + sd0), 2); }
     if (c.still) { o.bob = 0; o.tilt = 0; }
     if (c.walk) o.step = q(walk(F, S.a * 2.5, 1.2, 0.5).phase, 2);
     if (c.shake) { o.bob = q(0.01 * Math.sin(F * 2.1), 3); o.shake = (F | 0) % 2; }

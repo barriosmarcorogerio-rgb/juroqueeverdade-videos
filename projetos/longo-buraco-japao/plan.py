@@ -111,10 +111,23 @@ def ocean(v='wide', jy=0.0, jyTo=None, jp=None, tk=None, ripple=True):
 p = pose
 S = {}
 # Cap 1 — o quintal
-S[0] = [yard('low', jp=p('grin', 'up', 'hang', holdL='shovel'), pp=False, hole=0),   # abertura: contra-plongée do Joãozinho com a pá (antes: drone alto, perdia o interesse e a grama tremia)
-        yard('j', jp=p('grin', 'up', 'hang', holdL='shovel'), pp=False, hole=0)]
-S[1] = [yard('p', pp=p('stern', 'hip', 'point', facing=1, look=0.5), hole=0), yard('wide', jp=p('grin', 'reach', 'hang', holdL='shovel'), hole=0)]
-S[2] = [yard('j', jp=p('smile', 'thumb', 'hang', holdL='shovel'), pp=False), earth(0, None, 'far')]
+def Y(v, jp=None, pp=False, hole=0, jfrom=None, pfrom=None):   # yard com ação: personagem entra andando de jfrom/pfrom até a marca
+    sh = yard(v, jp=jp, pp=pp, hole=hole); k = 0
+    if jp is not False:
+        if jfrom: sh['cast'][0].update({'pos': jfrom, 'to': JY, 'walk': True})
+        k = 1
+    if pp is not False and pfrom: sh['cast'][k].update({'pos': pfrom, 'to': PY, 'walk': True})
+    return sh
+SH = lambda e='grin', up=True, **k: p(e, 'up' if up else 'reach', 'up' if up else 'reach', holdL='shovel', **k)   # pá no alto / pá cravada
+S[0] = [Y('low', jp=p('grin', 'reach', 'hang', holdL='shovel'), jfrom=[7.5, 0, 6.5]),          # entra andando com a pá
+        Y('j', jp=SH(up=True)), Y('j', jp=SH(up=False), hole=0.08),                              # cava
+        Y('hole', jp=SH(up=True), hole=0.12), Y('hole', jp=SH(up=False), hole=0.2),
+        Y('j', jp=SH('smile', up=True), hole=0.25), Y('j', jp=SH('smile', up=False), hole=0.3)]
+S[1] = [Y('p', pp=p('stern', 'hip', 'hang', facing=1, look=0.5), jp=False, hole=0.3, pfrom=[-1.5, 0, 7.2]),   # Pedro chega na cerca
+        Y('p', pp=p('stern', 'hip', 'point', facing=1, look=0.5), jp=False, hole=0.3),
+        Y('wide', jp=SH(up=True), pp=p('stern', 'hip', 'point', facing=1, look=0.5), hole=0.35),
+        Y('wide', jp=SH(up=False), pp=p('stern', 'cross', 'cross', facing=1, look=0.5), hole=0.4)]
+S[2] = [Y('j', jp=p('smile', 'wave', 'hang', holdL='shovel', wv=1), hole=0.45), Y('j', jp=p('grin', 'thumb', 'hang', holdL='shovel'), hole=0.45), earth(0, None, 'far')]
 S[3] = [earth(0, 1, 'cut')]
 S[4] = [earth(0.5, None, 'far')]
 S[5] = [earth(0, 0.25, 'top')]
