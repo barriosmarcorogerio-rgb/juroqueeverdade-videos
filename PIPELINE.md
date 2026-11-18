@@ -39,6 +39,9 @@ Para cada vídeo longo pronto (`projetos/entrega/<slug>-ALTA.mp4`):
    Descrição do YouTube: 1ª linha "▶ Vídeo completo: https://youtu.be/<id>". Legenda do Instagram: "Vídeo completo no YouTube (link na bio)".
    Se o longo ainda não estiver no canal: **não publicar** a prévia, publicar o próximo item da fila e tentar de novo no dia seguinte.
 
+## Abertura "TITANS ATTACKING" (vídeos de titãs)
+Para os longos de titãs (gigantes e muralha): `bash projetos/_abertura/com_abertura.sh projetos/entrega/<x>-ALTA.mp4 projetos/entrega/<x>-ALTA-abertura.mp4` → 9 s de abertura (titã correndo, agarra e devora um soldado, título com estrondo) + o vídeo. Enviar ao dono a versão `-ALTA-abertura`. Prévia e recortes continuam usando o `-ALTA` sem abertura (os tempos da timeline batem com ele).
+
 ## Recortes de Instagram de vídeo longo (divulgação)
 Para cada longo pronto em `projetos/entrega/`, além da prévia: `bash projetos/_teaser/gerar_recortes.sh <projeto_longo>`.
 - Usa `projetos/_teaser/recortes.json` (capítulos que se entendem sozinhos + gancho + legenda) e `recorte.py`: o capítulo inteiro em vertical, gancho em cima, selo "TRECHO" e cartela final "QUER VER O RESTO? Vídeo completo no YouTube — link na bio" (narração `fim_insta.wav`).

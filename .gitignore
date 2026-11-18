@@ -13,3 +13,7 @@ projetos/*/r[123].log
 projetos/madrugada*.log
 projetos/refazer_camelos.log
 projetos/*/r_*.log
+projetos/_abertura/frames_t/
+projetos/_abertura/abertura.mp4
+projetos/_abertura/abertura.wav
+projetos/_abertura/r[12].log
