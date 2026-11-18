@@ -182,3 +182,11 @@ error: Please commit or stash them.
 + sleep 60
 + grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
 + sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120

@@ -587,14 +587,23 @@ const eye = (p, kind, x, ey, u, side, look, skin)=>{
     const lx = x + look * 3 * u, lw = 3.8 * u;
     switch(kind){
         case "dot":
-            p.ell(lx, ey, 4.4 * u, 6.2 * u, INK, 0);
-            p.dot(lx + 1.4 * u, ey - 2.4 * u, 1.5 * u, "#ffffff");
-            break;
         case "small":
-            p.ell(lx, ey, 3.4 * u, 4.8 * u, INK, 0);
-            p.dot(lx + 1.1 * u, ey - 1.8 * u, 1.1 * u, "#ffffff");
-            break;
         case "lid":
+        case "slit": {
+            // cartoon eye: white almond, brown iris, pupil, highlight, heavy upper lid
+            const k = kind === "small" ? 0.82 : 1, rx = 7.6 * u * k, ry = (kind === "slit" ? 4.0 : 9.4) * u * k;
+            const ix = x + look * 2.6 * u, iy = ey + 0.8 * u, ir = 5.6 * u * k;
+            const sc = []; for (let i = 0; i < 36; i++) { const a = i / 36 * Math.PI * 2; sc.push([x + Math.cos(a) * rx, ey + Math.sin(a) * ry]); }
+            p.poly(sc, WHITE, 0);
+            p.clip(sc, () => { p.dot(ix, iy, ir, "#5b3a26"); p.dot(ix, iy, ir * 0.72, "#3a2418"); p.dot(ix, iy, ir * 0.42, INK); p.dot(ix + ir * 0.38, iy - ir * 0.42, ir * 0.3, "#ffffff"); p.dot(ix - ir * 0.35, iy + ir * 0.4, ir * 0.13, "#ffffff");
+                if (kind === "lid" || kind === "slit") { const lidY = kind === "lid" ? ey - ry * 0.05 : ey - ry * 0.2; p.poly([[x - rx - 2, ey - ry - 2], [x + rx + 2, ey - ry - 2], [x + rx + 2, lidY], [x - rx - 2, lidY]], skin, 0); }
+                else p.arc(x, ey + ry * 0.2, rx * 1.1, ry * 1.1, 200, 340, 1.4 * u, "rgba(80,60,60,0.25)"); });
+            p.poly(sc, null, 1.3 * u);
+            if (kind === "lid" || kind === "slit") { const lidY = kind === "lid" ? ey - ry * 0.05 : ey - ry * 0.2; p.stroke([[x - rx * 1.05, lidY + 0.3 * u], [x, lidY - 0.6 * u], [x + rx * 1.05, lidY + 0.3 * u]], 2.6 * u); }
+            else p.arc(x, ey, rx * 1.02, ry * 1.02, 205, 335, 2.6 * u);
+            break;
+        }
+        case "_lid_old":
             p.ell(lx, ey - u, 7 * u, 6 * u, INK, 0, 0, 180);
             p.stroke([
                 [
@@ -607,7 +616,7 @@ const eye = (p, kind, x, ey, u, side, look, skin)=>{
                 ]
             ], lw);
             break;
-        case "slit":
+        case "_slit_old":
             p.ell(lx, ey, 7 * u, 2.6 * u, INK, 0, 0, 180);
             p.stroke([
                 [
@@ -681,28 +690,29 @@ const eye = (p, kind, x, ey, u, side, look, skin)=>{
             }
     }
 };
+let LIPCOL = null;
+const LC = () => LIPCOL || INK;
+/** open mouth: upturned corners, curved top teeth, tongue, thin outline */
 const dmouth = (p, mx, y, rx, ry, u, tongue = false)=>{
-    p.ell(mx, y, rx, ry, MOUTH, 0, 0, 180);
-    p.clip([
-        [
-            mx - rx,
-            y
-        ],
-        [
-            mx + rx,
-            y
-        ],
-        [
-            mx + rx,
-            y + 3 * u
-        ],
-        [
-            mx - rx,
-            y + 3 * u
-        ]
-    ], ()=>p.ell(mx, y, rx, ry, WHITE, 0, 0, 180));
-    if (tongue) p.ell(mx + 2 * u, y + 0.62 * ry, 0.4 * rx, 0.28 * ry, TONGUE, 0);
-    p.ell(mx, y, rx, ry, null, 3 * u, 0, 180);
+    const top = [], bot = [];
+    for (let i = 0; i <= 20; i++) { const t = i / 20, x = mx - rx + t * 2 * rx, k = (t - 0.5) * 2; top.push([x, y - 1.6 * u * k * k + 0.8 * u]); bot.push([x, y + ry * Math.sqrt(Math.max(0, 1 - k * k)) * (0.9 + 0.1 * (1 - k * k)) - 1.6 * u * k * k]); }
+    const mp = [...top, ...bot.reverse()];
+    p.poly(mp, MOUTH, 0);
+    p.clip(mp, () => {
+        p.poly([...top.map(([x, yy]) => [x, yy - 2 * u]), ...top.slice().reverse().map(([x, yy]) => [x, yy + 0.32 * ry])], WHITE, 0);
+        p.stroke(top.map(([x, yy]) => [x, yy + 0.32 * ry]), 0.8 * u, "#d8d0c8");
+        if (tongue || ry > 7 * u) p.ell(mx + 0.15 * rx, y + ry * 0.95, rx * 0.55, ry * 0.45, TONGUE, 0);
+    });
+    p.poly(mp, null, 2.4 * u);
+    if (LIPCOL) { const g = p.g; g.save(); g.strokeStyle = LIPCOL; g.globalAlpha = 0.85; p.stroke(bot, 1.6 * u, LIPCOL); g.restore(); }
+    for (const sd of [-1, 1]) p.stroke([[mx + sd * (rx + 0.4 * u), y - 1.2 * u], [mx + sd * (rx + 2.4 * u), y - 3 * u]], 1.8 * u);
+};
+/** closed smile: crescent thicker in the middle, tapered ends, corner dimples */
+const smileC = (p, mx, my, rx, ry, u, tilt = 0) => {
+    const a = [], b = [];
+    for (let i = 0; i <= 20; i++) { const t = i / 20, k = (t - 0.5) * 2, x = mx + k * rx, yc = my + ry * (1 - k * k) - ry * 0.55 + tilt * k * u * 3; const th = (1 - k * k) * 1.6 * u + 0.9 * u; a.push([x, yc - th]); b.push([x, yc + th]); }
+    p.poly([...a, ...b.reverse()], LC(), 0);
+    for (const sd of [-1, 1]) p.stroke([[mx + sd * rx * 0.98, my - ry * 0.55 + sd * tilt * u * 3 - 0.4 * u], [mx + sd * (rx + 1.8 * u), my - ry * 0.55 - 2.2 * u + sd * tilt * u * 3]], 1.5 * u, LC());
 };
 const mouth = (p, kind, mx, my, u, k = 1)=>{
     const mw = 4 * u;
@@ -720,16 +730,16 @@ const mouth = (p, kind, mx, my, u, k = 1)=>{
             ], mw);
             break;
         case "frown":
-            p.arc(mx, my + 3 * u, 6.5 * u * k, 3.5 * u, 200, 340, mw);
+            { const a = [], b = []; for (let i = 0; i <= 16; i++) { const t = i / 16, kk = (t - 0.5) * 2, x = mx + kk * 6.5 * u * k, yc = my + 2.5 * u - 3.2 * u * (1 - kk * kk); const th = (1 - kk * kk) * 1.4 * u + 0.8 * u; a.push([x, yc - th]); b.push([x, yc + th]); } p.poly([...a, ...b.reverse()], LC(), 0); }
             break;
         case "smirk":
-            p.arc(mx + u, my - 3 * u, 7 * u * k, 4 * u, 10, 150, mw);
+            smileC(p, mx + 1.5 * u, my - 1 * u, 7 * u * k, 3.2 * u, u, 0.8);
             break;
         case "smile":
-            p.arc(mx, my - 3 * u, 8 * u * k, 4.5 * u, 20, 160, mw);
+            smileC(p, mx, my - 1 * u, 8.5 * u * k, 4.5 * u, u);
             break;
         case "smileWide":
-            p.arc(mx, my - 4 * u, 11 * u * k, 6 * u, 15, 165, mw);
+            dmouth(p, mx, my - 2 * u, 10.5 * u * k, 6.5 * u, u);
             break;
         case "grin":
             dmouth(p, mx, my - u, 12 * u * k, 8 * u, u);
@@ -753,40 +763,15 @@ const mouth = (p, kind, mx, my, u, k = 1)=>{
                 p.stroke(s, 3 * u);
                 break;
             }
-        case "teeth":
-            p.poly([
-                [
-                    mx - 12 * u * k,
-                    my - 4 * u
-                ],
-                [
-                    mx + 12 * u * k,
-                    my - 4 * u
-                ],
-                [
-                    mx + 11 * u * k,
-                    my + 4 * u
-                ],
-                [
-                    mx - 11 * u * k,
-                    my + 4 * u
-                ]
-            ], WHITE, 3 * u);
-            for (const j of [
-                -1,
-                0,
-                1
-            ])p.stroke([
-                [
-                    mx + j * 6 * u * k,
-                    my - 4 * u
-                ],
-                [
-                    mx + j * 6 * u * k,
-                    my + 4 * u
-                ]
-            ], 1.5 * u);
+        case "teeth": {
+            const rx = 11 * u * k, ry = 5 * u, top = [], bot = [];
+            for (let i2 = 0; i2 <= 20; i2++) { const t = i2 / 20, kk = (t - 0.5) * 2, x = mx + kk * rx, cv = 1.4 * u * kk * kk; top.push([x, my - ry * Math.sqrt(1 - Math.pow(Math.abs(kk), 6)) - cv]); bot.push([x, my + ry * Math.sqrt(1 - Math.pow(Math.abs(kk), 6)) - cv]); }
+            const tp = [...top, ...bot.reverse()];
+            p.poly(tp, WHITE, 0);
+            p.clip(tp, () => { p.stroke(Array.from({ length: 21 }, (_, i2) => { const kk = (i2 / 20 - 0.5) * 2; return [mx + kk * rx, my - 1.4 * u * kk * kk]; }), 1.2 * u, "#b8aea6"); for (const jj of [-2, -1, 0, 1, 2]) p.stroke([[mx + jj * 4.2 * u * k, my - ry], [mx + jj * 4.2 * u * k, my + ry]], 0.9 * u, "#c9c0b8"); });
+            p.poly(tp, null, 2.4 * u);
             break;
+        }
         case "lick":
             p.arc(mx, my - 3 * u, 8 * u * k, 4.5 * u, 20, 160, mw);
             p.ell(mx + 6 * u * k, my + 3 * u, 3.6 * u, 4.6 * u, TONGUE, 2.4 * u);
@@ -2803,10 +2788,12 @@ export const romanFront = (p, key, opts = {}) => {
     p.inkRing(bd, ow * 0.8, thick);
   }
   for (const sd of [-1, 1]) { const g = p.g; g.save(); g.globalAlpha = 0.28; p.ell(cx + 7 * u * facing + sd * 27 * u, hc + 12 * u, 8 * u, 5 * u, "#ff7a6a", 0); g.restore(); }
+  LIPCOL = O.female ? '#b8324e' : null;
   faceFront(p, cx, hc, W, expr, facing, look, lid, helmet, skin, O.beard ? O.beard : O.moustache, !!O.stout);
+  LIPCOL = null;
   if (!O.beard) { const nx = cx + 9 * u * facing; p.arc(nx, hc + 9 * u, 4 * u, 3 * u, 20, 160, 2 * u, mul(skin, [0.65, 0.5, 0.45])); }
   if (O.female) { const fx = cx + 7 * u * facing; for (const sd of [-1, 1]) { const ex = fx + sd * 13 * u, ey = hc - 6 * u; for (let k = 0; k < 3; k++) p.stroke([[ex + sd * (4 + k * 3) * u, ey - (3 - k) * u], [ex + sd * (8 + k * 4) * u, ey - (8 - k * 1.5) * u]], 2 * u); }
-    const g = p.g; g.save(); g.globalAlpha = 0.55; p.ell(cx + 8 * u * facing, hc + 21 * u, 6 * u, 2.4 * u, '#d0405a', 0); g.restore(); }
+  }
   if (O.brows) for (const s of [-1, 1]) p.ell(cx + 7 * u * facing + s * 14 * u, hc - 20 * u, 11 * u, 5 * u, O.brows, 2 * u);
   if (O.beard) { // re-draw the mouth over the beard for open mouths
     if (expr === "shock" || expr === "snore") p.ell(cx + 8 * u * facing, hc + 22 * u, 6 * u, 7 * u, "#5a1e28", 2 * u);
