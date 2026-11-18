@@ -111,7 +111,8 @@ def ocean(v='wide', jy=0.0, jyTo=None, jp=None, tk=None, ripple=True):
 p = pose
 S = {}
 # Cap 1 — o quintal
-S[0] = [yard('drone', jp=p('grin', 'reach', 'hang', holdL='shovel'), pp=False, hole=0), yard('j', jp=p('grin', 'up', 'hang', holdL='shovel'), pp=False, hole=0)]
+S[0] = [yard('low', jp=p('grin', 'up', 'hang', holdL='shovel'), pp=False, hole=0),   # abertura: contra-plongée do Joãozinho com a pá (antes: drone alto, perdia o interesse e a grama tremia)
+        yard('j', jp=p('grin', 'up', 'hang', holdL='shovel'), pp=False, hole=0)]
 S[1] = [yard('p', pp=p('stern', 'hip', 'point', facing=1, look=0.5), hole=0), yard('wide', jp=p('grin', 'reach', 'hang', holdL='shovel'), hole=0)]
 S[2] = [yard('j', jp=p('smile', 'thumb', 'hang', holdL='shovel'), pp=False), earth(0, None, 'far')]
 S[3] = [earth(0, 1, 'cut')]

@@ -34,5 +34,48 @@
   "publicado": true,
   "publicado_em": "2026-11-18 15:26 UTC",
   "youtube_id": "j9vrGbPrAUM"
+ },
+ {
+  "data": "2026-11-19",
+  "slug": "prev-longo-buraco-japao",
+  "titulo": "E se você cavasse um buraco até o Japão? (parte 1) #shorts",
+  "descricao": "O Joãozinho pegou uma pá e decidiu cavar até o Japão. O que ele encontra no caminho é mais estranho do que você imagina 🕳️🌍\n\nVídeo completo no canal!\n#curiosidades #ciencia #japao #shorts",
+  "legenda_instagram": "E se você cavasse um buraco até o Japão? 🕳️🇯🇵 A parte 1 tá aqui — o vídeo completo está no nosso YouTube (link na bio)! #curiosidades #ciencia #reels",
+  "video": "videos/prev-longo-buraco-japao.mp4",
+  "video_yt": "videos/prev-longo-buraco-japao-yt.mp4",
+  "thumb": "videos/prev-longo-buraco-japao-thumb.jpg",
+  "cover_ms": 3000,
+  "requer_longo": "E se você cavasse um buraco até o Japão?",
+  "publicado": false
+ },
+ {
+  "slug": "insta-buraco-japao-1",
+  "canal": "insta",
+  "titulo": "O buraco mais fundo do mundo",
+  "legenda_instagram": "A humanidade furou a Terra por 20 ANOS... e olha onde parou 🕳️🇷🇺 Juro que é verdade!\n\n▶ Vídeo completo no YouTube: \"E se você cavasse um buraco até o Japão?\" (link na bio)\n#juroqueeverdade #curiosidades #desenhoanimado #reels",
+  "video": "videos/insta-buraco-japao-1.mp4",
+  "cover_ms": 4000,
+  "requer_longo": "E se você cavasse um buraco até o Japão?",
+  "publicado": false
+ },
+ {
+  "slug": "insta-buraco-japao-2",
+  "canal": "insta",
+  "titulo": "Embaixo da terra NÃO tem lava",
+  "legenda_instagram": "Você aprendeu errado na escola: debaixo do chão não tem um mar de lava 🌋 Entenda!\n\n▶ Vídeo completo no YouTube: \"E se você cavasse um buraco até o Japão?\" (link na bio)\n#juroqueeverdade #curiosidades #desenhoanimado #reels",
+  "video": "videos/insta-buraco-japao-2.mp4",
+  "cover_ms": 4000,
+  "requer_longo": "E se você cavasse um buraco até o Japão?",
+  "publicado": false
+ },
+ {
+  "slug": "insta-buraco-japao-3",
+  "canal": "insta",
+  "titulo": "E se você pulasse no centro da Terra?",
+  "legenda_instagram": "Pula num túnel que atravessa o planeta... e aí? 🌍⬇️ A resposta é muito estranha.\n\n▶ Vídeo completo no YouTube: \"E se você cavasse um buraco até o Japão?\" (link na bio)\n#juroqueeverdade #curiosidades #desenhoanimado #reels",
+  "video": "videos/insta-buraco-japao-3.mp4",
+  "cover_ms": 4000,
+  "requer_longo": "E se você cavasse um buraco até o Japão?",
+  "publicado": false
  }
 ]
