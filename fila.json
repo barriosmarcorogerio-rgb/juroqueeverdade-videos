@@ -31,6 +31,8 @@
   "video_yt": "videos/2026-11-18-camelos-ceara-yt.mp4",
   "thumb": "videos/2026-11-18-camelos-ceara-thumb.jpg",
   "cover_ms": 32000,
-  "publicado": false
+  "publicado": true,
+  "publicado_em": "2026-11-18 15:26 UTC",
+  "youtube_id": "j9vrGbPrAUM"
  }
 ]
