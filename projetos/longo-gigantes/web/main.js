@@ -131,7 +131,7 @@ const WH = siding('#ece6da', '#b9b0a2'), RD = siding('#a8322b', '#6e1f1b', true)
 const roofT = P.tex(cv(256, 256, (g, w, h) => { g.fillStyle = '#4d4f55'; g.fillRect(0, 0, w, h); for (let y = 0; y < h; y += 16) for (let x = (y / 16 % 2) * 12; x < w; x += 24) { g.fillStyle = `hsl(220,6%,${24 + rr() * 14}%)`; g.fillRect(x + 1, y + 1, 22, 14); } }));
 const mat = (t, w, h, s) => std({ map: sideTex(t, w, h, s) });
 const gable = (parent, w, d, h, rise, wallM, roofM, y0 = 0) => {
-  add(tbox(w, h, d, 2), wallM, 0, y0 + h / 2, 0, parent);
+  const body = add(tbox(w, h, d, 2), wallM, 0, y0 + h / 2, 0, parent); parent.userData.body = body;
   const sh = new THREE.Shape(); sh.moveTo(-d / 2, 0); sh.lineTo(d / 2, 0); sh.lineTo(0, rise); sh.closePath();
   const gg = new THREE.ExtrudeGeometry(sh, { depth: w, bevelEnabled: false }); gg.translate(0, 0, -w / 2);
   const gb = add(gg, wallM, 0, y0 + h, 0, parent); gb.rotation.y = Math.PI / 2;
@@ -142,11 +142,23 @@ const winM = std({ color: '#2c3a4a', roughness: 0.3 }), trimM = std({ color: '#f
 // farmhouse (front faces +z)
 const house = new THREE.Group(); house.position.set(-1.5, 0, -9); world.add(house);
 gable(house, 9, 6.5, 5.6, 2.6, mat(WH, 9, 6, 2.4), std({ map: sideTex(roofT, 10, 5, 2.5) }));
+// cut a real doorway in the front face (alpha hole) and build a lit room behind it
+{ const body = house.userData.body, wm = body.material, front = wm.clone();
+  front.alphaMap = P.tex(cv(256, 256, (g, w, h) => { g.fillStyle = '#ffffff'; g.fillRect(0, 0, w, h); g.fillStyle = '#000000'; const x0 = (4.5 - 0.6) / 9 * w, x1 = (4.5 + 0.6) / 9 * w, yb = h - 0.25 / 5.6 * h, yt = h - 2.55 / 5.6 * h; g.fillRect(x0, yt, x1 - x0, yb - yt); }));
+  front.alphaMap.wrapS = front.alphaMap.wrapT = THREE.ClampToEdgeWrapping; front.alphaMap.repeat.set(1 / 4.5, 1 / 2.8); front.alphaMap.colorSpace = THREE.NoColorSpace; front.alphaTest = 0.5; front.transparent = false;
+  body.material = [wm, wm, wm, wm, front, wm];
+  const room = new THREE.Group(); room.position.set(0, 0.25, 1.6); house.add(room);
+  const rw = 3.6, rh = 2.7, rd = 3.0;
+  const wallIn = std({ color: '#e8d6b0', side: THREE.BackSide }); const rb = add(new THREE.BoxGeometry(rw, rh, rd), wallIn, 0, rh / 2, 0, room, { cast: false });
+  const fl = add(new THREE.PlaneGeometry(rw, rd), std({ map: P.tex(P.planks(61), 2, 2), color: '#c9a070' }), 0, 0.01, 0, room, { cast: false }); fl.rotation.x = -Math.PI / 2;
+  const pic = add(box(0.8, 0.6, 0.04), std({ color: '#7a5a3a' }), 0.4, 1.6, -rd / 2 + 0.03, room); add(box(0.66, 0.46, 0.02), std({ color: '#7ab0d0' }), 0.4, 1.6, -rd / 2 + 0.06, room);
+  add(box(0.9, 0.8, 0.5), std({ color: '#8a5a3a' }), -1.1, 0.4, -rd / 2 + 0.3, room); add(new THREE.CylinderGeometry(0.12, 0.18, 0.3, 12), std({ color: '#f2e6c8', emissive: '#ffd890', emissiveIntensity: 0.8 }), -1.1, 1.0, -rd / 2 + 0.3, room);
+  const lamp = new THREE.PointLight('#ffd9a0', 6, 6, 1.5); lamp.position.set(0, 2.2, 0); room.add(lamp); }
 add(tbox(9.4, 0.5, 6.9, 2), std({ color: '#8d8478' }), 0, 0.25, 0, house);
 add(tbox(0.9, 3, 0.9, 1), brick, 2.6, 8.3, -0.8, house);
 for (const [x, y] of [[-3, 1.6], [3, 1.6], [-3, 4.2], [0, 4.2], [3, 4.2]]) { add(box(1.1, 1.5, 0.06), winM, x, y, 3.27, house, { cast: false }); add(box(1.35, 0.14, 0.12), trimM, x, y + 0.8, 3.3, house); add(box(1.35, 0.14, 0.12), trimM, x, y - 0.8, 3.3, house); for (const s of [-1, 1]) add(box(0.12, 1.7, 0.12), trimM, x + s * 0.62, y, 3.3, house); add(box(0.06, 1.5, 0.08), trimM, x, y, 3.31, house); }
 // real door: dark interior, frame, hinged leaf (pivot on the left edge) with knob; opens with world.door 0..1
-add(box(1.18, 2.28, 0.02), decal(std({ color: '#1a120c' }), 2), 0, 1.4, 3.262, house, { cast: false });
+
 for (const [x, y, w, h] of [[-0.66, 1.42, 0.12, 2.42], [0.66, 1.42, 0.12, 2.42], [0, 2.62, 1.44, 0.14]]) add(box(w, h, 0.14), trimM, x, y, 3.3, house);
 const doorPivot = new THREE.Group(); doorPivot.position.set(-0.6, 0.25, 3.3); house.add(doorPivot);
 { const leafM = std({ color: '#6b4428' }); add(box(1.2, 2.3, 0.07), leafM, 0.6, 1.15, 0, doorPivot);
