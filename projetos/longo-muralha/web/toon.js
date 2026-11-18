@@ -3199,3 +3199,11 @@ export const fxStall = (p, t = 0) => {
   const fr = ["#e8483b", "#f2a33a", "#8ac04a", "#f2d04a"];
   for (let i = 0; i < 14; i++) { const x = fall ? 60 + (i * 97) % 640 : 110 + (i % 7) * 62, y = fall ? 880 + (i % 3) * 12 : 620 - Math.floor(i / 7) * 46; p.ell(x, y, 26, 24, fr[i % 4], 5); }
 };
+
+/** CORTE (golpe de lâmina): crescente branco com brilho e rastros — cartão x -200..800, centro (300, 500) */
+export const fxSlash = (p, t = 0) => { const g = p.g; g.save();
+  const arc = (r0, r1, a0, a1, col, n = 40) => { const o = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; o.push([300 + Math.cos(a) * r0, 520 + Math.sin(a) * r0 * 0.45]); } for (let i = n; i >= 0; i--) { const a = a0 + (a1 - a0) * i / n, w = Math.sin(i / n * Math.PI); o.push([300 + Math.cos(a) * (r0 - (r0 - r1) * w), 520 + Math.sin(a) * (r0 - (r0 - r1) * w) * 0.45]); } p.poly(o, col, 0); };
+  g.shadowColor = 'rgba(190,230,255,0.9)'; g.shadowBlur = 40; arc(430, 360, Math.PI * 0.95, Math.PI * 2.05, 'rgba(235,248,255,0.95)'); g.shadowBlur = 0;
+  arc(420, 395, Math.PI * 1.0, Math.PI * 2.0, '#ffffff');
+  for (let k = 0; k < 5; k++) { const a = Math.PI * (1.1 + k * 0.2); p.stroke([[300 + Math.cos(a) * 470, 520 + Math.sin(a) * 210], [300 + Math.cos(a) * 560, 520 + Math.sin(a) * 250]], 6, 'rgba(255,255,255,0.8)'); }
+  g.restore(); };

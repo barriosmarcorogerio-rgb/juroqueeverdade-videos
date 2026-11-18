@@ -71,7 +71,7 @@ S = {}
 S[0] = [shot(N, cam([-13, WY + 1.7, WALK - 1.8], [0, WY + 3.5, WZ + 6], 50, [-12.4, WY + 1.6, WALK - 1.6], [0, WY + 5, WZ + 6], 46),   # abertura: o rosto do colossal surge por cima da muralha
               cast=[giant('long', [0, -15, WZ + 7], s=16.8, to=[0, -11.5, WZ + 7]), who('tonico', [-9.5, WY, WALK], P('shock', 'up', 'hang', look=0.6))]),
         city(N), shot(N, cam([4, WY + 3, WALK - 30], [0, WY + 1, WALK], 46, [3, WY + 2.6, WALK - 24], [0, WY + 1, WALK], 44))]
-S[1] = [wall_one(N, 'tonico', p('nervous', 'hang', 'reach', holdR='sandwich', blink=1)), wall_one(N, 'tonico', p('smile', 'hang', 'cheek', holdR='sandwich'))]
+S[1] = [wall_one(N, 'tonico', p('nervous', 'hang', 'reach', holdR='sandwich', blink=1)), wall_one(N, 'tonico', p('smile', 'hang', 'give', holdR='sandwich'))]
 S[2] = [wall_one(N, 'tonico', p('shock', 'hang', 'reach', holdR='sandwich', blink=0))]
 S[3] = [look_out(N, 0, walk=False)]
 S[4] = [look_out(N, 0, walk=False, fov=46)]

@@ -103,12 +103,12 @@ S[1] = [wall_out(N, lookY=6)]
 S[2] = [look_out(N, 0, walk=False, fov=56) if False else shot(N, cam([1.0, WY + 1.9, WALK - 1.2], [2, WY + 2, 60], 54))]
 S[3] = [look_out(N, 0, walk=False)]
 S[4] = [bell(N, ring=False)]
-S[5] = [wall_one(N, 'tonico', p('smile', 'hang', 'cheek', holdR='sandwich'))]
+S[5] = [wall_one(N, 'tonico', p('smile', 'hang', 'give', holdR='sandwich'))]
 S[6] = [wall_one(N, 'tonico', p('nervous', 'hang', 'reach', holdR='sandwich'))]
 S[7] = [wall_one(N, 'bia', p('stern', 'hang', 'lift', holdR='grapple'), x0=0.65)]
 S[8] = [wall_one(N, 'bia', p('neutral', 'hang', 'hang', look=0.6), x0=0.65)]
 S[9] = [shot(N, cam([1.0, WY + 1.9, WALK - 1.2], [2, WY + 2, 60], 50))]
-S[10] = [wall_duo(N, p('grin', 'hip', 'cheek', holdR='sandwich'), p('stern', 'hip', 'hang', facing=-1, look=-0.5))]
+S[10] = [wall_duo(N, p('grin', 'hip', 'give', holdR='sandwich'), p('stern', 'hip', 'hang', facing=-1, look=-0.5))]
 S[11] = [wall_duo(N, p('smile', 'hip', 'hang', holdR='sandwich'), p('neutral', 'hang', 'hang', facing=-1)), city(N)]
 S[12] = [bell(N)]; S[13] = [bell(N, near=True)]; S[14] = [wall_duo(N, p('shock', 'cheek', 'hang', holdR='sandwich'), p('shock', 'hang', 'hang'))]
 # cap 2
@@ -135,14 +135,14 @@ S[36] = [shot(N, cam([2, 1.8, -54], [0, 4.5, WZ - 3], 46), cast=[who('pobre', [3
 S[37] = [shot(N, cam([-18, 1.8, -12], [-4, 14, OUT + 8], 62, [-18, 1.8, -12], [-4, 14, OUT + 8], 58), cast=[COL([-4, 0, OUT + 8], to=[-30, 0, OUT + 30])])]
 G3W = lambda **o: [giant('grin', [-6, 0, OUT + 3], arms='reach', **o), giant('tiny', [6, 0, OUT + 3.5], arms='reach'), giant('long', [15, 0, OUT + 5], arms='up')]
 S[38] = [wall_out(N, G3W(), kick=True)]
-S[39] = [wall_duo(N, p('shock', 'cheek', 'hang'), p('shock', 'hang', 'hang'), extra=()), ]
+S[39] = [wall_out(N, [*G3W(), who('soldado', [-2.5, WY + 1.2, OUT + 0.4], p('shock', 'up', 'up'), to=[-3.5, 0.3, OUT + 2.6], spin=True), who('soldado', [1.8, WY + 1.2, OUT + 0.4], p('shock', 'up', 'reach'), to=[2.6, 0.3, OUT + 2.8], spin=True)], kick=True)]   # dois soldados despencam
 S[39][0]['kick'] = 1
 S[40] = [wall_out(N, G3W(), kick=True)]
 S[41] = [crack_out(N, [giant('grin', [-12, 0, OUT + 3.5], arms='reach')], crack=1)]
 S[42] = [shot(N, cam([4, WY + 1.8, WALK - 4], [8, WY + 4, OUT + 4], 52), cast=[giant('long', [12, 0, OUT + 4], arms='reach'), who('soldado', [7, WY, WALK], p('shock', 'up', 'hang')), who('soldado', [9, WY, WALK + 0.3], p('shock', 'cheek', 'hang'))])]
 for i, x in zip((43, 44, 45), (7, 9, 11)):
     S[i] = [shot(N, cam([x - 2, WY + 1.7, WALK - 3], [x, WY + 2.5, WALK], 44), cast=[who('soldado', [x, WY, WALK], p('shock', 'up', 'up'), to=[x + 0.5, WY + 4, WALK + 2])])]
-S[46] = [shot(N, cam([13, 9, OUT + 14], [12, 9, OUT + 4], 44), cast=[giant('long', [12, 0, OUT + 4], arms='reach'), fx('fxSack', [10.5, 6.5, OUT + 5], 1.4)])]
+S[46] = [shot(N, cam([-6, 10.6, OUT + 13], [-6, 10.8, OUT + 3], 46, [-6, 10.9, OUT + 11.5], [-6, 11, OUT + 3], 42), cast=[giant('grin', [-6, 0, OUT + 3], arms='up', mouth=1), who('soldado', [-4.6, 6.5, OUT + 3.4], p('shock', 'up', 'up'), to=[-6, 10.9, OUT + 2.85])], kick=True)]   # o Rui é levado à boca (some atrás da cabeça, sem sangue)
 S[47] = [shot(N, cam([11, 8, OUT + 10], [10.5, 7.5, OUT + 5], 40), cast=[fx('fxSack', [10.5, 6.5, OUT + 5], 1.4), giant('long', [12, 0, OUT + 4])])]
 S[48] = [wall_one(N, 'bia', p('stern', 'lift', 'point', holdR='grapple', hookFire=1), x0=0.65)]
 S[49] = [shot(N, cam([4, WY + 1.8, WALK - 4], [8, WY + 4, OUT + 4], 50), cast=[giant('long', [12, 0, OUT + 4]), who('bia', [3, WY, WALK], p('stern', 'up', 'hang', holdR='grapple'))], world={'ropes': [[3.3, WY + 1.25, WALK, 10.3, 13.9, OUT + 4.0]]})]
@@ -155,9 +155,9 @@ S[53] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 40), cast=TOP())
 S[54] = [shot(N, cam([6.8, 13.8, OUT + 6.5], [6, 12.6, OUT + 3.9], 36), cast=TOP('nervous'))]
 S[55] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 34), cast=TOP('squeeze'))]
 S[56] = [shot(N, cam([10, 11, OUT + 12], [4, 12, OUT + 2], 48), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('bia', [12, 13, OUT + 4], p('stern', 'up', 'reach', holdR='grapple'), to=[0, WY, WALK + 1])])]
-S[57] = [look_out(DW, 1, walk=False)]
-S[58] = [field(DW, 1, walk=False)]
-S[59] = [field(DW, 1, walk=False, flip=True)]
+S[57] = [shot(N, cam([14, 10.5, OUT + 9], [6, 10.8, OUT + 3.5], 46), cast=[giant('tiny', [6, 0, OUT + 3.5], dazed=True, steam=True), who('bia', [1.0, 9.9, OUT + 4.8], p('stern', 'up', 'reach', holdR='grapple'), to=[11, 9.5, OUT + 4.8]), fx('fxSlash', [6, 7.6, OUT + 3.9], 2.6)], kick=True)]   # corte atrás do pescoço
+S[58] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('tiny', [6, 0, OUT + 6], down=True, steam=True, roll=0, rollTo=-1.45, rollEase='in'), who('ferraz', [0, WY, WALK], p('stern', 'point', 'hip'))], kick=True)]   # o gigante desaba soltando fumaça
+S[59] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('tiny', [6, 0, OUT + 6], steam=True, roll=-1.2, rollTo=0), giant('grin', [-10, 0, OUT + 8]), giant('long', [-1, 0, OUT + 12])])]   # o caído se levanta, regenerando
 S[60] = [shot(DW, cam([1.0, WY + 1.9, WALK - 1.2], [2, WY + 5, 40], 52), cast=[giant('grin', [-4, 0, 60], walk=True, to=[-4, 0, 90]), giant('tiny', [8, 0, 66], walk=True, to=[8, 0, 96]), giant('long', [18, 0, 72], walk=True, to=[18, 0, 100]), fx('fxSack', [18, 7, 71], 1.4, to=[18, 7, 99])])]
 S[61] = [crack_out(DW, crack=2)]
 S[62] = [wall_one(DW, 'soldado', p('nervous', 'hang', 'hang'), x0=7)]
@@ -179,7 +179,7 @@ S[76] = [field_out(D, prints=True)]
 S[77] = [shot(D, cam([6.5, 2.6, 21], [3, 0.4, 27], 50), cast=[who('tonico', [5, 0, 27], p('shock', 'cheek', 'hang'))], world={'prints': True})]
 S[78] = [trail(D)]
 S[79] = [trail(D, EXP(78))]
-S[80] = [shot(D, cam([2.4, 1.6, 76.5], [1.4, 1.4, 79], 36), cast=[who('tonico', [1.4, 0, 79], p('nervous', 'hang', 'cheek', holdR='sandwich', chew=1))], world={'prints': True})]
+S[80] = [shot(D, cam([2.4, 1.6, 76.5], [1.4, 1.4, 79], 36), cast=[who('tonico', [1.4, 0, 79], p('nervous', 'hang', 'give', holdR='sandwich', chew=1))], world={'prints': True})]
 S[81] = [tablet(D)]; S[82] = [tablet(D)]; S[83] = [tablet(D, near=True)]
 S[84] = [tablet(D, near=True)]; S[85] = [tablet(D, near=True)]; S[86] = [tablet(D, near=True)]; S[87] = [tablet(D, near=True)]
 S[88] = [shot(D, cam([-7.4, WY + 2.2, BZ - 3.5], [BX, WY + 2.5, BZ], 40), world={'bell': False}), tablet(D, near=True)]
