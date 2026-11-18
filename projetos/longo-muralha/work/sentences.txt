@@ -1,0 +1,188 @@
+0 1 Faz cem anos que a cidade de Pedra Alta vive presa atrás de uma muralha de doze metros.
+1 1 Ninguém sai.
+2 1 Ninguém sabe o que tem depois da floresta.
+3 1 Só se sabe uma coisa: lá fora, tem gigantes.
+4 1 Na torre do portão fica pendurado um sino velho, que ninguém tem permissão pra tocar.
+5 1 O recruta Tonico faz a ronda da noite com uma lanterna e um pão com manteiga.
+6 1 Ele entrou pra tropa porque o pai mandou.
+7 1 Do lado dele, a recruta Bia treina com o gancho de corda.
+8 1 Ela entrou porque, dez anos atrás, o pai dela foi levado pelos gigantes.
+9 1 E nunca mais voltou.
+10 1 "Bia, faz cem anos que nenhum gigante chega perto da muralha.
+11 1 A gente é só enfeite." E aí, em algum lugar dentro da cidade, alguém toca o sino.
+12 1 Uma vez.
+13 1 Duas.
+14 1 Três. 
+15 2 O Tonico engole o pão inteiro.
+16 2 Lá longe, as árvores da floresta começam a balançar.
+17 2 Não é vento.
+18 2 No meio da névoa aparece uma cabeça enorme.
+19 2 Depois outra.
+20 2 E outra.
+21 2 Gigantes.
+22 2 Quinze metros de altura.
+23 2 Sorrindo.
+24 2 Andando reto na direção da cidade.
+25 2 O Comandante Ferraz sobe a escada da muralha correndo, de pijama, com a espada numa mão e a escova d
+26 2 "Todo mundo nos seus postos!
+27 2 Canhões!
+28 2 Recrutas, ganchos prontos!" O primeiro tiro de canhão acerta a barriga de um gigante.
+29 2 Ele cai sentado.
+30 2 E o buraco na barriga se fecha sozinho, em segundos, como se nunca tivesse existido.
+31 2 E os três gigantes chegam na muralha. 
+32 3 E aí, no meio da névoa, aparece um quarto gigante.
+33 3 Esse tem trinta metros.
+34 3 A cabeça dele passa por cima da muralha inteira.
+35 3 Ele encosta o ombro no portão e empurra.
+36 3 A madeira estala.
+37 3 E depois ele some na névoa, tão rápido quanto apareceu.
+38 3 O primeiro gigante dá um soco na muralha.
+39 3 A pedra treme inteira.
+40 3 O segundo soca também.
+41 3 Bem do lado do portão, aparece uma rachadura do tamanho de uma porta.
+42 3 O terceiro gigante estica o braço por cima das ameias e começa a pegar soldados.
+43 3 Um.
+44 3 Dois.
+45 3 Três.
+46 3 Ele não machuca ninguém.
+47 3 Só coloca os três num saco de pano, com cuidado, como quem colhe fruta.
+48 3 "Eles estão levando gente!", grita a Bia, e lança o gancho no ombro do gigante.
+49 3 O gancho prende.
+50 3 A corda estica.
+51 3 E o Tonico, que estava pisando na corda sem perceber, sai voando junto.
+52 3 Ele gira três vezes no ar e cai sentado bem em cima da cabeça de um gigante. 
+53 4 O gigante olha pra cima.
+54 4 O Tonico olha pra baixo.
+55 4 Os dois piscam ao mesmo tempo.
+56 4 Aí a Bia passa voando pela corda, agarra o Tonico pela gola e puxa ele de volta pra muralha.
+57 4 É nessa hora que o sol começa a nascer.
+58 4 E os gigantes, de repente, param.
+59 4 Viram as costas.
+60 4 E voltam andando pra floresta, levando o saco com os três soldados.
+61 4 A muralha está rachada.
+62 4 Três soldados sumiram.
+63 4 E ninguém sabe quem tocou o sino.
+64 4 O Comandante Ferraz reúne a tropa.
+65 4 "Se eles voltarem hoje à noite, a muralha não aguenta." "Precisamos descobrir pra onde eles levam as
+66 4 Vai ter uma expedição.
+67 4 Lá fora." É a primeira expedição em cem anos.
+68 4 A Bia levanta a mão na hora.
+69 4 O Tonico levanta a mão sem querer, porque estava se espreguiçando. 
+70 5 O portão se abre só um pouquinho.
+71 5 A expedição sai.
+72 5 O Comandante, a Bia, o Tonico, quatro soldados e o Mestre Lúcio, o sábio da cidade.
+73 5 Lá fora é tudo enorme.
+74 5 A grama bate na cintura.
+75 5 As árvores parecem prédios.
+76 5 E no chão, as pegadas dos gigantes.
+77 5 Cada uma do tamanho de uma piscina.
+78 5 As pegadas entram fundo na floresta.
+79 5 Ninguém fala nada.
+80 5 O único barulho é o Tonico mastigando de nervoso.
+81 5 No meio da trilha, eles acham uma pedra gigante coberta de musgo.
+82 5 O Mestre Lúcio limpa o musgo com a manga.
+83 5 E embaixo tem desenhos.
+84 5 Muito antigos.
+85 5 Gigantes.
+86 5 Gente pequena.
+87 5 E um sino.
+88 5 Igualzinho ao sino da muralha. 
+89 6 O Mestre Lúcio lê os desenhos devagar, com o dedo.
+90 6 "Aqui.
+91 6 O sino tocado três vezes... e os gigantes acordam e vêm atrás do som." "E aqui.
+92 6 O sino tocado sete vezes... e os gigantes caem no sono." O Comandante fica pálido.
+93 6 "Então o sino não avisa que os gigantes estão chegando.
+94 6 O sino chama eles." "E alguém lá dentro da cidade tocou ele ontem à noite", diz a Bia.
+95 6 Mais pra frente, numa clareira, eles encontram os três gigantes.
+96 6 Dormindo.
+97 6 Roncando tão alto que as folhas tremem.
+98 6 E do lado deles, o saco de pano.
+99 6 Dentro, os três soldados.
+100 6 Vivos.
+101 6 Também dormindo.
+102 6 A Bia olha em volta, procurando outro rosto.
+103 6 Um rosto de dez anos atrás.
+104 6 Não está ali. 
+105 7 Enquanto isso, lá dentro da cidade, no prédio do Conselho, alguém conta moedas à luz de vela.
+106 7 É o Conselheiro Graúdo, o homem mais rico de Pedra Alta.
+107 7 Na mesa dele tem um livro de registros.
+108 7 E em cada página, uma data, e a mesma frase: "sino tocado".
+109 7 Toda vez que o povo reclamava dos impostos, o sino tocava.
+110 7 Os gigantes apareciam.
+111 7 E o povo, com medo, pagava mais pra reforçar a muralha.
+112 7 Cem anos de medo.
+113 7 Cem anos de imposto.
+114 7 E o Conselheiro Graúdo sorri, porque hoje à noite ele vai tocar o sino de novo.
+115 7 Afinal, uma muralha rachada é muito mais cara de consertar. 
+116 8 Na clareira, a expedição abre o saco devagarinho.
+117 8 O Tonico segura a respiração.
+118 8 Os soldados saem um por um, na ponta dos pés.
+119 8 Mas o sol está se pondo.
+120 8 E lá longe, da direção da cidade, vem um som.
+121 8 Uma badalada.
+122 8 Duas.
+123 8 Três.
+124 8 Os gigantes abrem os olhos.
+125 8 Todos ao mesmo tempo.
+126 8 "Corre!", grita o Comandante.
+127 8 A expedição dispara pela floresta.
+128 8 A Bia vai na frente, pulando de árvore em árvore com o gancho.
+129 8 O Tonico vai atrás, correndo tão rápido que as pernas dele parecem um ventilador.
+130 8 E atrás deles, três gigantes de quinze metros, derrubando árvores como se fossem palitos. 
+131 9 A expedição chega na muralha um segundo antes dos gigantes.
+132 9 O portão se fecha atrás deles.
+133 9 Mas a rachadura de ontem ainda está aberta.
+134 9 O primeiro gigante enfia o braço inteiro pela rachadura.
+135 9 A mão dele tateia a rua, derrubando barracas de fruta.
+136 9 O povo corre gritando.
+137 9 Uma senhora acerta a mão do gigante com a vassoura.
+138 9 Não adianta nada.
+139 9 "O sino!", grita o Tonico.
+140 9 "Sete vezes!
+141 9 Alguém tem que tocar sete vezes!" Ele olha pra torre.
+142 9 E lá em cima, com a mão na corda do sino, está o Conselheiro Graúdo. 
+143 10 O Tonico sobe a escada da torre correndo, sem pão, sem lanterna, sem fôlego.
+144 10 O Conselheiro Graúdo segura a corda.
+145 10 "Saia daqui, recruta.
+146 10 Isso é assunto do Conselho." "O senhor tocou o sino.
+147 10 O senhor chamou os gigantes.
+148 10 Por dinheiro." "Por ordem, menino.
+149 10 Um povo com medo é um povo obediente." O Conselheiro empurra o Tonico na direção da beirada.
+150 10 E nesse exato segundo, um gancho passa assobiando e se enrola na corda do sino.
+151 10 É a Bia.
+152 10 Ela puxa com toda a força, e o sino balança.
+153 10 Uma. 
+154 11 O Conselheiro tenta segurar a corda.
+155 11 O Comandante Ferraz chega na escada e segura o Conselheiro.
+156 11 Duas.
+157 11 O Tonico se pendura na corda com o corpo inteiro.
+158 11 Três.
+159 11 Quatro.
+160 11 Lá embaixo, os gigantes param de socar.
+161 11 Viram a cabeça pro som.
+162 11 Cinco.
+163 11 O primeiro gigante boceja.
+164 11 Um bocejo tão grande que dá pra ver o almoço de ontem.
+165 11 Seis.
+166 11 Sete.
+167 11 Os três gigantes caem no sono ao mesmo tempo.
+168 11 O maior desaba de cara na muralha... e o corpo dele tapa a rachadura certinho.
+169 11 Silêncio total em Pedra Alta.
+170 11 Só se ouve o ronco. 
+171 12 O sol nasce.
+172 12 O Conselheiro Graúdo é levado pra prisão, ainda segurando um saco de moedas.
+173 12 O livro de registros é lido em voz alta na praça.
+174 12 O povo descobre a verdade.
+175 12 Cem anos de medo, tudo por imposto.
+176 12 Os três soldados voltam pra casa.
+177 12 O Tonico ganha uma medalha.
+178 12 Ele não sabe muito bem o que fez, mas aceita.
+179 12 A Bia sobe na muralha e olha pros gigantes dormindo lá fora.
+180 12 "Tonico, se o sino chama os gigantes... quem fez o sino?" O Mestre Lúcio chega com o desenho da pedr
+181 12 Na última parte tinha um detalhe que ninguém viu na floresta.
+182 12 Gente pequena entrando numa montanha... e saindo do outro lado.
+183 12 Enorme.
+184 12 Lá longe, por trás das montanhas, a cabeça do gigante de trinta metros aparece de novo.
+185 12 E ele está olhando direto pra Bia.
+186 12 A Bia segura a corda do gancho com força.
+187 12 E sussurra: "...Pai?" Continua. 
