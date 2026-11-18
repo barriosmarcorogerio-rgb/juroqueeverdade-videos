@@ -32,7 +32,7 @@ Regras: frases de 8–15 palavras; números por extenso; nada de descrever o ób
 - Bichos: usar os de `animals.js` (camelo/mula, girafa, elefante, vaca, rato, dinossauro, urso, urubu) — contorno único (patas fundidas ao corpo), sombreado, olho com brilho. Bicho novo segue o mesmo método (`aGroup` + `aTaper` + `aEye`).
 - Chão de campo: capim 3D no campo inteiro (FIELD GRASS), sem invadir plantação/estrada/horta; manchas grandes de cor no chão.
 - Morros ao fundo: nunca esfera lisa de uma cor; usar `hillGeo` (contorno irregular) + `hillTexs` (campos, manchas de mata, árvores).
-- Criaturas gigantes NÃO são personagem comum ampliado: usar `fxGiant` (proporção errada, braços longos, costelas, sorriso com dentes, olhar vazio), 3 tipos: grin, tiny, long.
+- Criaturas gigantes NÃO são personagem comum ampliado: usar `fxGiant` (contorno único com ombro/braço/perna fundidos ao tronco, peitoral e costelas, juntas ossudas, mãos com dedos, olheiras, sorriso com gengiva e dentes), 3 tipos: grin, tiny, long.
 - Portas: nada atravessa porta fechada. O vão é um buraco de verdade na fachada com um cômodo iluminado atrás (não uma parede). A casa tem porta com batente, dobradiça, maçaneta e vão escuro; `world.door` (0→1) abre a folha. Personagem que sai de casa: abrir a porta nos ~0,5 s antes e começar a caminhada dentro do vão.
 - Chão/paredes: câmera com near 0,15; estrada/areia/campos usam `decal()` (polygonOffset) para não piscar; capim do quintal baixo (não esconde as pernas).
 

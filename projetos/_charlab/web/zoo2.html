@@ -1,0 +1,8 @@
+<!doctype html><html><body style="margin:0;background:#cfe2f2"><canvas id="c" width="2000" height="1000"></canvas>
+<script type="module">
+import * as T from './toon.js'; import * as Gt from './giant.js';
+const c = document.getElementById('c'), g = c.getContext('2d');
+const list = [['grin', { kind: 'grin' }], ['tiny reach', { kind: 'tiny', skin: '#d29a74', arms: 'reach' }], ['long', { kind: 'long', skin: '#f0c8a8', hair: '#b07a3a' }], ['grin walk up', { kind: 'grin', walk: 0.25, armsR: 'up' }], ['long dazed', { kind: 'long', dazed: true, arms: 'up', skin: '#f0c8a8' }], ['tiny walk', { kind: 'tiny', walk: 0.6, skin: '#d29a74' }]];
+list.forEach(([n, o], i) => { const x = i * 333 - 120; g.save(); g.translate(x, 0); g.translate(0, 330); g.scale(0.666, 0.666); g.translate(0, 0); Gt.fxGiant(new T.Pen(g), 0, o); g.restore(); g.fillStyle = '#000'; g.font = '24px sans-serif'; g.fillText(n, x + 10, 30); });
+window.ready = true;
+</script></body></html>
