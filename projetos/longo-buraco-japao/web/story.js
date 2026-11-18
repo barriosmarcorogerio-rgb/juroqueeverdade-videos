@@ -25,7 +25,7 @@ export const worldAt = (f) => { const S = shotAt(f); const w = { noClouds: S.set
   if (S.world && S.world.travTo !== undefined) { const t = E.smooth(clamp((f - S.a) / Math.max(1, S.b - S.a))); w.trav = lerp(S.world.trav, S.world.travTo, t); }
   if (S.world && S.world.potYTo !== undefined) { const t = E.smooth(clamp((f - S.a) / Math.max(1, S.b - S.a))); w.potY = lerp(S.world.potY || 0, S.world.potYTo, t); }
   return w; };
-const base = (F, seed) => { const i = idle(F, seed); return { seed, bob: q(i.bob, 3), tilt: q(i.tilt, 1), headTilt: q(i.headTilt, 1), blink: blinkAt(F, seed) }; };
+const base = (F, seed) => { const i = idle(F, seed); return { seed, bob: q(i.bob, 5), tilt: q(i.tilt, 3), headTilt: q(i.headTilt, 3), blink: blinkAt(F, seed) };   // precisão alta: arredondar causava a cabeça 'tremer' 1–2 px };
 const SEED = { joao: 3, pedro: 5, rocha: 9, takeshi: 11, mineiro: 13 };
 export const actorsAt = (f, T) => {
   const S = shotAt(f), F = f * 2.5, out = [], u = E.smooth(clamp((f - S.a) / Math.max(1, S.b - S.a)));
@@ -39,10 +39,11 @@ export const actorsAt = (f, T) => {
       if (k % 2) { const side = Math.floor(k / 2) % 2 ? 'L' : 'R', held = side === 'L' ? o.holdL : o.holdR, cur = o[side] || 'hang';
         const ALT = { hang: 'hip', hip: 'hang', reach: 'give', give: 'reach', point: 'reach', up: 'reach', cheek: 'hang', cross: 'hip', thumb: 'hang', wave: 'up', lift: 'up', temple: 'cheek', belly: 'hang' };
         if (!held) o[side] = ALT[cur] || cur; else if (held === 'shovel' || held === 'grapple' || held === 'drill') o[side] = cur === 'up' ? 'reach' : 'up'; }
-      o.bob = q((o.bob || 0) * 2.2, 3); o.headTilt = q((o.headTilt || 0) * 2.2, 1); o.look = q((o.look || 0) + 0.25 * Math.sin((f - S.a) * 0.09 + sd0), 2); }
+      o.bob = q((o.bob || 0) * 2.2, 5); o.headTilt = q((o.headTilt || 0) * 2.2, 3); o.look = q((o.look || 0) + 0.25 * Math.sin((f - S.a) * 0.09 + sd0), 3); }
     if (c.hat) o.hardhat = true;
     if (c.still) { o.bob = 0; o.tilt = 0; }
     if (c.walk) o.step = q(walk(F, S.a * 2.5, 1.2, 0.5).phase, 2);
+    if (c.climb) { const k = Math.floor((f - S.a) / 4); o.L = 'grip'; o.R = 'grip'; o.gripHi = k % 2 ? 'L' : 'R'; o.step = q((k % 4) / 4, 2); o.bob = q(0.01 * Math.sin((f - S.a) * 0.8), 3); }   // escalada/rapel: mão sobre mão na corda, pernas mexendo
     if (c.shake) { o.bob = q(0.01 * Math.sin(F * 2.1), 3); o.shake = (F | 0) % 2; }
     if (c.swirl) o.swirl = q(F * 0.2, 1);
     if (c.chew) o.bob = q(0.006 * Math.sin(F * 0.8), 3);

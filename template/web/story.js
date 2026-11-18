@@ -48,7 +48,7 @@ export const dofAt = (f) => {
 export const worldAt = (f) => ({ stir: f < 118, noClouds: true });
 const R = (T, who, o, pos, extra = {}) => ({ key: who + JSON.stringify(o), draw: (p) => T.romanFront(p, who, o), x: pos[0], y: pos[1], z: pos[2], ...extra });
 export const actorsAt = (f, T) => {
-  const i = idle(f, 7), base = { seed: 7, bob: q(i.bob, 3), tilt: q(i.tilt, 1), blink: blinkAt(f, 7) };
+  const i = idle(f, 7), base = { seed: 7, bob: q(i.bob, 5), tilt: q(i.tilt, 3), blink: blinkAt(f, 7) };
   let o;
   if (f < 118) o = { ...base, expr: 'smile', L: 'reach', R: 'reach', facing: 1, look: 0.4, headTilt: q(2 * Math.sin(f * 0.18), 1) };
   else if (f < 155) o = { ...base, expr: 'shock', L: 'cheek', R: 'cheek', facing: 1, look: 0.5, bob: f < 122 ? -0.02 : base.bob };

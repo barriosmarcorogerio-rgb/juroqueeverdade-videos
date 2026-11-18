@@ -2625,6 +2625,7 @@ export const romanFront = (p, key, opts = {}) => {
       case "belly": return { pts: [s, [X(8), s[1] + 0.45 * HH], [tcx + side * 0.25 * T.a, torsoBot - 0.35 * HH]], front: true };
       case "temple": return { pts: [s, [X(26), s[1] + 0.05 * HH], [cx + side * (H.a + 16 * u), hc - 0.1 * HH]], front: false, swirl: true };
       case "lift": return { pts: [s, [X(20), s[1] - 0.25 * HH], [X(4), s[1] - 0.82 * HH]], front: false };
+      case "grip": { const hi = opts.gripHi === (side < 0 ? "L" : "R") ? 0.16 * HH : 0; return { pts: [s, [cx + side * (H.a * 1.12), hc - 0.05 * HH - hi * 0.4], [cx + side * 7 * u, hc - H.b - 0.18 * HH - hi]], front: true }; }   // agarrado na corda acima da cabeça (mão alta alterna)
       case "shield": return { pts: [s, [X(4), s[1] + 0.4 * HH], [tcx + side * 0.6 * T.a, torsoBot - 0.1 * HH]], front: true };
       case "cross": return { pts: [s, [X(2), s[1] + 0.38 * HH], [tcx - side * 0.45 * T.a, s[1] + 0.32 * HH]], front: true };
       case "reach": { const lf = (opts.lift || 0) * 0.62 * HH; return { pts: [s, [X(42), s[1] - 0.12 * HH - lf * 0.6], [X(82), s[1] - 0.5 * HH - lf]], front: false }; }

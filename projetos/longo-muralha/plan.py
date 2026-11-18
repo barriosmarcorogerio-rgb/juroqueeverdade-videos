@@ -231,7 +231,7 @@ S[140] = [shot(N, cam([1.6, 1.7, -53], [1, 1.5, -50], 36), cast=[who('tonico', [
 S[141] = [shot(N, cam([1.6, 1.7, -53], [1, 1.5, -50], 36), cast=[who('tonico', [1, 0, -50], p('nervous', 'point', 'hang', look=0.7))]), shot(N, cam([-5, 2, -56], [BX, WY + 2.5, BZ], 40), world={'bell': False})]
 S[142] = [bell(N, [who('juiz', [BX + 0.6, WY, BZ - 0.4], p('grin', 'up', 'hip'))], ring=False)]
 # cap 10 — the tower
-S[143] = [shot(N, cam([BX + 3, WY - 4, BZ - 8], [BX, WY, BZ], 50), cast=[who('tonico', [BX + 1.5, WY - 6, BZ - 1.5], p('nervous', 'up', 'up'), to=[BX + 1.5, WY, BZ - 1.5])])]
+S[143] = [shot(N, cam([BX + 3, WY - 4, BZ - 8], [BX, WY, BZ], 50), cast=[who('tonico', [BX + 1.5, WY - 6, BZ - 1.5], p('nervous', 'up', 'up'), to=[BX + 1.5, WY, BZ - 1.5], climb=True)])]
 def tower(light, cast, ring=False, fov=46):
     return shot(light, cam([BX + 1.8, WY + 1.7, BZ - 4.4], [BX + 0.9, WY + 1.6, BZ - 0.5], fov, [BX + 1.7, WY + 1.7, BZ - 4.0], [BX + 0.9, WY + 1.65, BZ - 0.5], fov - 2), cast, world={'bell': ring})
 TOW = lambda te='stern', je='grin', jl='up', tl='point': [who('juiz', [BX + 0.6, WY, BZ - 0.4], p(je, jl, 'hip')), who('tonico', [BX + 2.0, WY, BZ - 0.8], p(te, tl, 'hang', facing=-1))]
