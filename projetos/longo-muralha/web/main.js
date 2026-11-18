@@ -280,12 +280,34 @@ for (const sd of [-1, 1]) add(box(0.3, 9, 0.3), std({ color: '#3a3a3a' }), sd * 
 for (const y of [1.6, 4.5, 7.4]) add(box(7, 0.28, 0.12), std({ color: '#2e2e30', metalness: 0.4 }), 0, y, FACE + 0.56, wallG);
 for (const sd of [-1, 1]) add(tbox(1.4, 10.2, 1.6, 4), capM, sd * 4.2, 5.1, FACE + 0.3, wallG);
 add(tbox(9.8, 1.6, 1.6, 4), capM, 0, 10.0, FACE + 0.3, wallG); add(tbox(1.2, 1.9, 1.75, 4), wallDark, 0, 10.0, FACE + 0.32, wallG);
-// 3D ropes (grapple lines): world.ropes = [[x1,y1,z1,x2,y2,z2], ...]
-const ropePool = []; { const rm = std({ color: '#d9c49a' }), hm = std({ color: '#55595f', metalness: 0.5, roughness: 0.5 });
-  for (let i = 0; i < 6; i++) { const m = add(new THREE.CylinderGeometry(0.028, 0.028, 1, 6), rm, 0, -50, 0, world); const h = add(new THREE.ConeGeometry(0.12, 0.35, 8), hm, 0, -50, 0, world); ropePool.push([m, h]); } }
+// 3D ropes (grapple lines): world.ropes = [[x1,y1,z1,x2,y2,z2], ...]  (x2..z2 = where the hook bites)
+// rope = sagging braided tube; hook = iron shank + ring + 3 curled claws biting into the target, plus a puff of stone chips
+const ropeTex = (() => { const c = document.createElement('canvas'); c.width = 64; c.height = 256; const g = c.getContext('2d'); g.fillStyle = '#d6bf8e'; g.fillRect(0, 0, 64, 256);
+  for (let y = -64; y < 320; y += 16) { g.strokeStyle = '#9c8457'; g.lineWidth = 5; g.beginPath(); g.moveTo(0, y); g.lineTo(64, y + 32); g.stroke(); g.strokeStyle = '#efe0b8'; g.lineWidth = 2; g.beginPath(); g.moveTo(0, y + 6); g.lineTo(64, y + 38); g.stroke(); }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const ropePool = []; { const hm = std({ color: '#9aa3ad', metalness: 0.55, roughness: 0.35, emissive: '#22262c' }), cm = std({ color: '#8a8478' });
+  for (let i = 0; i < 6; i++) { const rm = std({ color: '#f4e2b2', map: ropeTex.clone(), emissive: '#4a3a1c' }); rm.map.needsUpdate = true;
+    const ink = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: '#1a1418', side: THREE.BackSide })); world.add(ink);
+    const m = new THREE.Mesh(new THREE.BufferGeometry(), rm); m.castShadow = true; world.add(m);
+    const h = new THREE.Group(); world.add(h); const hk = new THREE.Group(); hk.scale.setScalar(1.7); h.add(hk);
+    add(new THREE.CylinderGeometry(0.045, 0.055, 0.62, 10), hm, 0, -0.22, 0, hk);                       // shank
+    add(new THREE.TorusGeometry(0.09, 0.025, 8, 16), hm, 0, -0.58, 0, hk).rotation.y = Math.PI / 2;      // eye ring (rope tied here)
+    add(new THREE.ConeGeometry(0.06, 0.16, 10), hm, 0, 0.13, 0, hk);                                    // nose
+    for (let k = 0; k < 3; k++) { const cl = new THREE.Group(); cl.rotation.y = k * Math.PI * 2 / 3; hk.add(cl);
+      const arc = add(new THREE.TorusGeometry(0.2, 0.032, 8, 14, Math.PI * 0.95), hm, 0.2, 0.0, 0, cl); arc.rotation.z = Math.PI * 0.02;   // curls back toward the rope
+      const tip = add(new THREE.ConeGeometry(0.04, 0.14, 8), hm, 0.4, -0.04, 0, cl); tip.rotation.z = Math.PI; }
+    const chips = new THREE.Group(); h.add(chips);
+    for (let k = 0; k < 7; k++) { const c = add(new THREE.DodecahedronGeometry(0.05 + (k % 3) * 0.025), cm, 0, 0, 0, chips); c.userData.v = [Math.cos(k * 2.4) * 0.5, -0.25 - (k % 4) * 0.12, Math.sin(k * 2.4) * 0.5]; }
+    ropePool.push([m, h, chips, ink]); } }
 const _up = new THREE.Vector3(0, 1, 0), _d = new THREE.Vector3();
-const setRopes = (R) => ropePool.forEach(([m, h], i) => { const r = R && R[i]; m.visible = h.visible = !!r; if (!r) return; const a = new THREE.Vector3(r[0], r[1], r[2]), b = new THREE.Vector3(r[3], r[4], r[5]);
-  _d.subVectors(b, a); const L = _d.length(); m.position.copy(a).addScaledVector(_d, 0.5); m.scale.set(1, L, 1); m.quaternion.setFromUnitVectors(_up, _d.clone().normalize()); h.position.copy(b); h.quaternion.copy(m.quaternion); });
+const setRopes = (R, f = 0) => ropePool.forEach(([m, h, chips, ink], i) => { const r = R && R[i]; m.visible = h.visible = ink.visible = !!r; if (!r) return;
+  const a = new THREE.Vector3(r[0], r[1], r[2]), b = new THREE.Vector3(r[3], r[4], r[5]); _d.subVectors(b, a); const L = _d.length(), dir = _d.clone().normalize();
+  const horiz = Math.hypot(_d.x, _d.z) / L, sag = 0.035 * L * horiz;                                  // taut-ish sag, none when hanging straight down
+  const mid = a.clone().lerp(b, 0.5); mid.y -= sag; const end = b.clone().addScaledVector(dir, -1.0);   // rope ends at the hook's eye ring
+  const curve = new THREE.QuadraticBezierCurve3(a, mid, end); m.geometry.dispose(); m.geometry = new THREE.TubeGeometry(curve, 24, 0.045, 8, false); ink.geometry.dispose(); ink.geometry = new THREE.TubeGeometry(curve, 24, 0.065, 8, false);
+  m.material.map.repeat.set(1, L * 2.2);
+  h.position.copy(b).addScaledVector(dir, 0.08); h.quaternion.setFromUnitVectors(_up, dir);              // nose buried a little in the stone
+  const ph = r[6] ?? Math.min(1, f / 14); chips.visible = ph < 1; chips.children.forEach((c) => { const v = c.userData.v; c.position.set(v[0] * ph, v[1] * ph - 1.2 * ph * ph, v[2] * ph); c.rotation.set(ph * 5, ph * 3, 0); c.scale.setScalar(Math.max(0.01, 1 - ph)); }); });
 // city houses
 const houseCol = ['#e7c25a', '#7fb0c9', '#e79a8a', '#f2efe6', '#9fcf8a', '#c9a0d9', '#e0b080'];
 for (let i = 0; i < 60; i++) { const x = -110 + rr() * 220, z = WZ - 12 - rr() * 90; if (Math.abs(x) < 6 && z > WZ - 25) continue; const w = 5 + rr() * 4, h = 5 + rr() * 6, d = 5 + rr() * 3;
@@ -339,7 +361,7 @@ const forestG = new THREE.Group(); world.add(forestG);
 const prints = new THREE.Group(); world.add(prints);
 { const pm = decal(std({ color: '#4a3a24', transparent: true, opacity: 0.75 }), 3); for (let i = 0; i < 17; i++) { const z = 22 + i * 4.6, x = 2 + (i % 2 ? 1.4 : -1.4) + Math.sin(i * 0.7) * 1.5;
   const e = add(new THREE.CircleGeometry(1, 24), pm, x, 0.04, z, prints, { cast: false }); e.rotation.x = -Math.PI / 2; e.scale.set(1.3, 2.6, 1); e.userData.ndSkip = true; } }
-const setWorld = (S, f) => { tripG.visible = !!S.trip; carts.visible = !!S.carts; chart.visible = !!S.chart; setRopes(S.ropes);
+const setWorld = (S, f) => { tripG.visible = !!S.trip; carts.visible = !!S.carts; chart.visible = !!S.chart; setRopes(S.ropes, S.a != null ? f - S.a : 99);
   bellPiv.rotation.z = S.bell ? Math.sin(f * 0.9) * 0.45 : 0;
   for (const c of cracks) { c.visible = !!S.crack; c.material.map = crackA[S.crack === 2 ? 1 : 0]; c.scale.setScalar(S.crack === 2 ? 1.25 : 1); }
   prints.visible = !!S.prints; };

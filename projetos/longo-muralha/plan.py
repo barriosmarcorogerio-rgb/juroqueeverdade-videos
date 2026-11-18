@@ -145,7 +145,7 @@ for i, x in zip((43, 44, 45), (7, 9, 11)):
 S[46] = [shot(N, cam([13, 9, OUT + 14], [12, 9, OUT + 4], 44), cast=[giant('long', [12, 0, OUT + 4], arms='reach'), fx('fxSack', [10.5, 6.5, OUT + 5], 1.4)])]
 S[47] = [shot(N, cam([11, 8, OUT + 10], [10.5, 7.5, OUT + 5], 40), cast=[fx('fxSack', [10.5, 6.5, OUT + 5], 1.4), giant('long', [12, 0, OUT + 4])])]
 S[48] = [wall_one(N, 'bia', p('stern', 'lift', 'point', holdR='grapple', hookFire=1), x0=0.65)]
-S[49] = [shot(N, cam([4, WY + 1.8, WALK - 4], [8, WY + 4, OUT + 4], 50), cast=[giant('long', [12, 0, OUT + 4]), who('bia', [3, WY, WALK], p('stern', 'up', 'hang', holdR='grapple'))], world={'ropes': [[3.3, WY + 1.25, WALK, 9.8, 11.4, OUT + 4.3]]})]
+S[49] = [shot(N, cam([4, WY + 1.8, WALK - 4], [8, WY + 4, OUT + 4], 50), cast=[giant('long', [12, 0, OUT + 4]), who('bia', [3, WY, WALK], p('stern', 'up', 'hang', holdR='grapple'))], world={'ropes': [[3.3, WY + 1.25, WALK, 10.3, 13.9, OUT + 4.0]]})]
 S[50] = [wall_duo(N, p('shock', 'hang', 'hang'), p('stern', 'up', 'hang', holdR='grapple', facing=-1))]
 S[51] = [shot(N, cam([0, WY + 2, WALK - 6], [3, WY + 4, OUT], 54), cast=[who('tonico', [0, WY, WALK], p('shock', 'up', 'up'), to=[5, WY + 6, OUT + 3], spin=True)])]
 S[52] = [shot(N, cam([4, WY + 3, OUT - 6], [6, WY + 3, OUT + 3], 50), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('tonico', [6, WY + 5, OUT + 3.9], p('shock', 'up', 'up'), to=[6, WY + 0.6, OUT + 3.9], spin=True)])]

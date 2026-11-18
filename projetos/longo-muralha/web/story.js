@@ -22,7 +22,7 @@ export const lightFor = (S, f) => ({ ...LIGHTS[S.light || 'day'], ...(S.lightOv 
 export const camAt = (f) => { const S = shotAt(f); const c = camFromKeys(S.cam, f, { kicks: S.kicks || [], creep: 0.0025 }); c.shadowAt = S.shadowAt || c.look; return c; };
 const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
 export const dofAt = (f) => { const S = shotAt(f); if (!S.dof) return { focus: 10, cinf: 0 }; const C = camAt(f); return { focus: dist(C.pos, S.focusAt || C.look), cinf: S.dof }; };
-export const worldAt = (f) => { const S = shotAt(f); const w = { noClouds: false, ...(S.world || {}) };
+export const worldAt = (f) => { const S = shotAt(f); const w = { noClouds: false, ...(S.world || {}), a: S.a };
   return w; };
 const base = (F, seed) => { const i = idle(F, seed); return { seed, bob: q(i.bob, 3), tilt: q(i.tilt, 1), headTilt: q(i.headTilt, 1), blink: blinkAt(F, seed) }; };
 const SEED = { tonico: 3, bia: 5, ferraz: 9, lucio: 11, soldado: 13, gigante: 15, gigante2: 17, gigante3: 19 };

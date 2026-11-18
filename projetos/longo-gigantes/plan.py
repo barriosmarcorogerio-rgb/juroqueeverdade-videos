@@ -215,7 +215,7 @@ S[136] = [lab(D, p('grin', 'hold', 'point')), wall_one(D, 'bia', p('grin', 'hang
 S[137] = [wall_one(D, 'tonico', p('grin', 'hang', 'reach', holdR='grapple'))]
 S[138] = [wall_duo(D, p('grin', 'hang', 'reach', holdR='grapple'), p('grin', 'reach', 'hang', holdL='grapple'))]
 # cap 10 — the trap
-S[139] = [shot(D, cam([17, 6.5, WZ + 11.5], [10.8, 6, WZ + 3], 46, [16.5, 6, WZ + 11], [10.8, 5, WZ + 3], 44), cast=[who('tonico', [9.5, 6.5, WZ + 3.35], p('grin', 'up', 'up'), to=[9.5, 1.5, WZ + 3.35]), who('bia', [12.2, 8.5, WZ + 3.35], p('stern', 'up', 'up'), to=[12.2, 3.0, WZ + 3.35])], world={'ropes': [[9.5, WY + 1.6, WZ + 2.55, 9.5, 0.05, WZ + 3.2], [12.2, WY + 1.6, WZ + 2.55, 12.2, 0.05, WZ + 3.2]]}),
+S[139] = [shot(D, cam([17, 6.5, WZ + 11.5], [10.8, 6, WZ + 3], 46, [16.5, 6, WZ + 11], [10.8, 5, WZ + 3], 44), cast=[who('tonico', [9.5, 6.5, WZ + 3.35], p('grin', 'up', 'up'), to=[9.5, 1.5, WZ + 3.35]), who('bia', [12.2, 8.5, WZ + 3.35], p('stern', 'up', 'up'), to=[12.2, 3.0, WZ + 3.35])], world={'ropes': [[9.5, 0.05, WZ + 3.2, 9.5, WY + 1.6, WZ + 2.55], [12.2, 0.05, WZ + 3.2, 12.2, WY + 1.6, WZ + 2.55]]}),
           ground(D, [who('tonico', [-10, 0, 20.5], p('grin', 'reach', 'hang')), who('bia', [10, 0, 20.5], p('grin', 'hang', 'reach'))])]
 S[140] = [ground(D, [who('tonico', [-10, 0, 20.5], p('grin', 'thumb', 'hang')), who('bia', [10, 0, 20.5], p('smile', 'hang', 'thumb'))])]
 S[141] = [ground(D, [who('tonico', [-10, 0, 20.5], p('laugh', 'belly', 'hang'))])]
