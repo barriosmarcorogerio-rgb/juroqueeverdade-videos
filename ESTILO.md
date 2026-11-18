@@ -27,7 +27,9 @@ Regras: frases de 8–15 palavras; números por extenso; nada de descrever o ób
 - Mãos de luvinha com polegar (cor da pele), desenhadas POR CIMA do objeto: o personagem segura o cabo de verdade. Braços com manga (faixa com contorno), calça e sapato arredondado, bochecha rosada. Sem "saia" abaixo do tronco.
 - Poses novas: `hold` (duas mãos na frente do peito, com `holdBoth: "objeto"`) e `give` (braço estendido para o lado: dois personagens em `give` frente a frente = entrega; troque `holdR` de um para `holdL` do outro no meio da fala).
 - Objetos na mão não podem ser cortados: o cartão do personagem tem margem de 200 unidades de cada lado (`PAD`), cabendo braço esticado + pá/lanche.
-- Portas: nada atravessa porta fechada. A casa tem porta com batente, dobradiça, maçaneta e vão escuro; `world.door` (0→1) abre a folha. Personagem que sai de casa: abrir a porta nos ~0,5 s antes e começar a caminhada dentro do vão.
+- Mulheres precisam ser reconhecíveis num relance: `female: true` = silhueta de cintura e quadril (forma única), pescoço visível, cílios e batom leve, cabelo comprido (`long`, caindo atrás dos ombros) ou `ponytail`.
+- Pegada: palma atrás do objeto, dedos na frente (o objeto passa ENTRE a mão, não por cima nem por baixo).
+- Portas: nada atravessa porta fechada. O vão é um buraco de verdade na fachada com um cômodo iluminado atrás (não uma parede). A casa tem porta com batente, dobradiça, maçaneta e vão escuro; `world.door` (0→1) abre a folha. Personagem que sai de casa: abrir a porta nos ~0,5 s antes e começar a caminhada dentro do vão.
 - Chão/paredes: câmera com near 0,15; estrada/areia/campos usam `decal()` (polygonOffset) para não piscar; capim do quintal baixo (não esconde as pernas).
 
 ## Legenda

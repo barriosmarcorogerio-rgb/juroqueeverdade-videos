@@ -2456,24 +2456,24 @@ FACE.bliss = { eye: ["happy", "happy"], brow: [-3, 2], mouth: "o" };
 // ---------------- Roman-era cast (our own designs), built on the Pen / blob / face helpers above ----------------
 const STEEL = "#aeb6bf", BRASS = "#d9a845", LEATHER = "#7a4a2a";
 export const OUTFITS = {
-  fazendeira: { tunic: "#5f86b8", apron: "#efe7d6", skin: "#f2c9a3", hair: "#7a4a2a", hairStyle: "long", pants: "#4a3a32" },
+  fazendeira: { tunic: "#5f86b8", apron: "#efe7d6", skin: "#f2c9a3", hair: "#7a4a2a", pants: "#4a3a32", hairStyle: "long", female: true },
   narrador: { tunic: "#e8483b", skin: "#f5c9a0", moustache: "#2b1d17", cap: "#2f6f8f" },
   legion: { tunic: "#b8322f", cape: "#8f2228", skin: SKIN, helmet: true, armor: true, spear: true, shield: true },
   old: { tunic: "#9c4a3c", cape: "#6e3330", skin: "#f3d6bb", helmet: "old", armor: true, spear: true, shield: false, beard: "#f4f1ea", brows: "#f4f1ea" },
   toga: { tunic: "#f1ead8", skin: "#f5c9a0", toga: "#6b3c8f", hair: "#3b2a20", stout: true, hairStyle: "short" },
   civA: { tunic: "#4f7fb8", skin: "#f5c9a0", hair: "#5a3b2a", hairStyle: "side" },
-  civB: { tunic: "#d9a441", skin: SKIN, hair: "#2b211c", dress: "#c25a7a", hairStyle: "long" },
+  civB: { tunic: "#d9a441", skin: SKIN, hair: "#2b211c", dress: "#c25a7a", hairStyle: "long", female: true },
   civC: { tunic: "#5d8a3a", skin: "#c99067", hair: "#1e1714", stout: true },
   workA: { tunic: "#8a5d3b", skin: "#f5c9a0", cap: "#c2733a", apron: "#d8c9a6" },
   workB: { tunic: "#3f6a6f", skin: "#ecd0b6", cap: "#5b4a8a", moustache: "#4a3020" },
   pobre: { tunic: "#8a6a48", skin: "#eab58e", hair: "#4a3424", moustache: "#4a3424", patches: true, hairStyle: "spiky" },
   padeiro: { tunic: "#e2cfae", skin: "#f2bf96", cap: "#fbf8f2", apron: "#ffffff", stout: true, moustache: "#3a2414" },
   juiz: { tunic: "#30304a", toga: "#a5263a", skin: "#f3d6bb", beard: "#eeeae2", cap: "#23233a", stout: true },
-  velha: { tunic: "#7d5a8c", skin: "#f1cfb1", hair: "#d9d4cc", dress: "#6f8f5a", hairStyle: "bun" },
+  velha: { tunic: "#7d5a8c", skin: "#f1cfb1", hair: "#d9d4cc", dress: "#6f8f5a", hairStyle: "long", female: true },
   civD: { tunic: "#c9663a", skin: "#a8714d", hair: "#1e1714", hairStyle: "curly" },
   joao: { tunic: "#f2c84b", skin: "#f2c09a", hair: "#2b1d17", hairStyle: "spiky", pants: "#3f5f86", shoe: "#c0392f" },
   pedro: { tunic: "#4f7fb8", skin: "#f5d0b0", hair: "#c9742e", hairStyle: "curly", pants: "#6a5a4a", shoe: "#2a2a2e" },
-  rocha: { tunic: "#7a8a5a", skin: "#f1cfb1", hair: "#d9d4cc", apron: "#c9b48a", hairStyle: "bun", pants: "#5a4a3a", shoe: "#5a3a22" },
+  rocha: { tunic: "#7a8a5a", skin: "#f1cfb1", hair: "#a8a098", apron: "#c9b48a", pants: "#5a4a3a", shoe: "#5a3a22", hairStyle: "long", female: true },
   takeshi: { tunic: "#2f4f7f", skin: "#efc8a0", hair: "#1e1714", hairStyle: "side", pants: "#e8e2d4" },
   mineiro: { tunic: "#e8903a", skin: "#c99067", hair: "#1e1714" },
   marido: { tunic: "#8a5a3a", skin: "#efc29c", hair: "#3a2a1e", apron: "#3f5f86", hairStyle: "short" },
@@ -2561,16 +2561,17 @@ const cobweb = (p, cx, cy, r, u) => {
 /** cartoon hair (front view): soft cap with tufted fringe, NO dark band across the forehead. styles: short, spiky, bun, curly, long, side, bald */
 const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
   const dark = mul(col, [0.72, 0.7, 0.75]), ow = 4.2 * u, A = H.a * 1.06, B = H.b * 1.06;
-  if (behind) { if (style === 'long') { const bp = [[cx - A * 1.02, hc - 0.2 * B], [cx - A * 1.08, hc + 0.7 * B], [cx - A * 0.7, hc + 1.05 * B], [cx + A * 0.7, hc + 1.05 * B], [cx + A * 1.08, hc + 0.7 * B], [cx + A * 1.02, hc - 0.2 * B]]; p.poly(bp, dark, ow); }
+  if (behind) { if (style === 'long') { const bp = [[cx - A * 0.98, hc - 0.2 * B], [cx - A * 1.08, hc + 0.8 * B], [cx - A * 1.28, hc + 1.75 * B], [cx - A * 0.7, hc + 1.95 * B], [cx + A * 0.7, hc + 1.95 * B], [cx + A * 1.28, hc + 1.75 * B], [cx + A * 1.08, hc + 0.8 * B], [cx + A * 0.98, hc - 0.2 * B]]; p.shadedFill(bp, col, dark, light, A, 0.3); p.poly(bp, null, ow); for (const sd of [-1, 1]) p.stroke([[cx + sd * A * 0.8, hc + 0.4 * B], [cx + sd * A * 0.85, hc + 1.6 * B]], 2 * u, dark); }
+    if (style === 'ponytail') { const sd = -(facing || 1), px = cx + sd * A * 0.95; const pt = [[px, hc - 0.6 * B], [px + sd * 0.45 * A, hc - 0.2 * B], [px + sd * 0.5 * A, hc + 0.9 * B], [px + sd * 0.15 * A, hc + 1.5 * B], [px - sd * 0.05 * A, hc + 0.6 * B]]; p.shadedFill(pt, col, dark, light, A, 0.3); p.poly(pt, null, ow); p.ell(px + sd * 0.05 * A, hc - 0.5 * B, 0.13 * A, 0.1 * B, '#d0304a', 2.4 * u); }
     if (style === 'bun') { p.ell(cx, hc - B * 1.02, 0.36 * A, 0.3 * B, col, ow); p.ell(cx - 0.08 * A, hc - B * 1.08, 0.12 * A, 0.07 * B, mul(col, [1.15, 1.15, 1.15]), 0); }
     return; }
   if (style === 'bald') { for (const sd of [-1, 1]) p.ell(cx + sd * 0.92 * H.a, hc - 0.05 * B, 0.2 * A, 0.32 * B, col, 3 * u); return; }
-  const sk = facing * 0.12 * A, cut = hc - (style === 'long' || style === 'side' ? 0.28 : 0.36) * B;
+  const sk = facing * 0.12 * A, cut = hc - (style === 'long' ? 0.42 : style === 'side' ? 0.28 : 0.36) * B;
   const pts = [];
   const a0 = Math.PI + 0.32, a1 = 2 * Math.PI - 0.32;
   for (let i = 0; i <= 28; i++) { const a = a0 + i / 28 * (a1 - a0); pts.push([cx + Math.cos(a) * A, hc + Math.sin(a) * B * 1.02]); }
   // side drops (sideburns) for long/side/short
-  const drop = style === 'long' ? 0.55 : style === 'curly' ? 0.25 : 0.12;
+  const drop = style === 'long' ? 0.3 : style === 'curly' ? 0.25 : 0.12;
   if (drop > 0.2) pts.push([cx + A * 0.99, hc + drop * B]); pts.push([cx + A * 0.86, cut + 0.06 * B]);
   // fringe: rounded tufts from right to left
   const n = style === 'spiky' ? 5 : 4;
@@ -2582,6 +2583,7 @@ const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
   p.shadedFill(pts, col, mul(col, [0.8, 0.78, 0.84]), light, H.a, 0.35);
   p.stroke(pts.slice(0, 29), ow, INK);
   p.stroke(pts.slice(28), 1.6 * u, dark);   // fringe edge: thin, soft — no band
+  if (style === 'long') { p.stroke([[cx + sk * 0.3, hc - 1.02 * B], [cx + sk * 0.3 + 2 * u, cut + 0.05 * B]], 2 * u, dark); for (const sd of [-1, 1]) for (let k = 1; k <= 3; k++) p.stroke([[cx + sd * A * (0.15 + k * 0.2), hc - 0.9 * B + k * 0.1 * B], [cx + sd * A * (0.25 + k * 0.2), cut]], 1.4 * u, dark); }
   p.stroke([[cx - 0.35 * A + sk, hc - 0.82 * B], [cx - 0.05 * A + sk, hc - 0.92 * B]], 3 * u, mul(col, [1.35, 1.35, 1.35]));  // highlight
 };
 /** mitten hand (skin) with thumb, drawn over held props */
@@ -2614,10 +2616,16 @@ export const romanFront = (p, key, opts = {}) => {
     p.ell(fx + side * 5 * u, fy - 1 * u, 11 * u, 6 * u, shoe, 1.8 * u, 180, 360); p.stroke([[fx + side * 5 * u - 11 * u, fy - 1 * u], [fx + side * 5 * u + 11 * u, fy - 1 * u]], 3.4 * u, INK);
     if (O.helmet) for (let k = 1; k <= 3; k++) p.stroke([[fx - 4 * u, fy - k * 0.07 * HH], [fx + 4 * u, fy - k * 0.07 * HH - 2 * u]], 2 * u, LEATHER);
   }
+  if (O.hair && !helmet && ['long', 'ponytail'].includes(O.hairStyle)) { p.rot = null; drawHair(p, O.hairStyle, O.hair, H, cx, hc, light, facing, u, true); }
   // ---- upper body ----
   p.rot = tilt ? [rad(tilt), cx, hipY] : null;
   const T = { a: (0.4 * W) / 1.06 * (O.stout ? 1.12 : 1), b: 0.5 * (torsoBot - (chin - 0.25 * HH)), nTop: 2.2, nBot: 2.6, egg: O.stout ? 0.17 : 0.12, asym: 0.04 * facing, rot: 0, noise: 0.006, seed: seed + 7 };
-  const tcx = cx + 3 * u * facing, tcy = torsoBot - T.b, tp = blobPts(tcx, tcy, T);
+  const tcx = cx + 3 * u * facing, tcy = torsoBot - T.b;
+  let tp = blobPts(tcx, tcy, T);
+  if (O.female) { const top = chin + 0.1 * HH, bot = torsoBot + 0.04 * HH, H2 = bot - top, half = (k) => { // k 0 (top) .. 1 (bottom)
+      const sh = 0.78, wa = 0.58, hi = 1.04; return T.a * (k < 0.12 ? sh * (0.55 + 0.45 * Math.sin(k / 0.12 * Math.PI / 2)) : k < 0.5 ? sh + (wa - sh) * Math.sin((k - 0.12) / 0.38 * Math.PI / 2) : k < 0.85 ? wa + (hi - wa) * Math.sin((k - 0.5) / 0.35 * Math.PI / 2) : hi * Math.cos((k - 0.85) / 0.15 * Math.PI / 2 * 0.9)); };
+    const L = [], Rr = []; for (let i = 0; i <= 30; i++) { const k = i / 30, y = top + k * H2, w = Math.max(half(k), 0.05 * T.a); Rr.push([tcx + w, y]); L.push([tcx - w, y]); }
+    tp = [...Rr, ...L.reverse()]; }
   const S = (side) => [tcx + side * 0.85 * T.a, chin + 0.12 * HH];
   const arm = (side, pose) => {
     const s = S(side), X = (k) => tcx + side * (T.a * 1.1 + k * u);
@@ -2645,11 +2653,15 @@ export const romanFront = (p, key, opts = {}) => {
     const cp = curve(a.pts[0], a.pts[1], a.pts[2]);
     p.band(cp, mix(O.tunic, "#000000", 0.08), 7 * u, 1.7 * u, "round");
     const [hx, hy] = a.pts[2], dirx = Math.sign(hx - cx) || 1;
+    const holds = (opts.holdL && a === arms[0]) || (opts.holdR && a === arms[1]);
+    if (holds) hand(p, hx, hy, u, skin, -dirx);   // palm + thumb behind the object
     if (opts.holdL && a === arms[0]) PROP[opts.holdL](p, hx, hy, u, opts);
     if (opts.holdR && a === arms[1]) PROP[opts.holdR](p, hx, hy, u, opts);
+    if (holds) { const fp = []; for (let i = 0; i <= 12; i++) { const t = -0.5 + i / 12; fp.push([hx + dirx * 1.5 * u + Math.cos(t * 2.4) * 6.2 * u * -dirx * 0.2 + t * 2 * u, hy - 1 * u + t * 11 * u]); }
+      p.band(fp, skin, 5.4 * u, 1.8 * u, 'round'); for (const t of [-0.17, 0.17]) p.stroke([[hx - 2.5 * u, hy - 1 * u + t * 11 * u], [hx + 2.5 * u, hy - 1 * u + t * 11 * u]], 1.1 * u, mul(skin, [0.7, 0.6, 0.55])); }
     if (opts.holdBoth && a === arms[1]) { const [lx, ly] = arms[0].pts[2]; PROP[opts.holdBoth](p, (lx + hx) / 2, (ly + hy) / 2, u, opts); hand(p, lx, ly, u, skin, -1); }
     if (a.finger) { const dx = a.pts[2][0] - a.pts[1][0], dy = a.pts[2][1] - a.pts[1][1], l = Math.hypot(dx, dy); p.band([[hx, hy], [hx + dx / l * 14 * u, hy + dy / l * 14 * u]], skin, 3.4 * u, 1.6 * u, "round"); }
-    hand(p, hx, hy, u, skin, a.thumb ? 0 : dirx);
+    if (!holds) hand(p, hx, hy, u, skin, a.thumb ? 0 : dirx);
     if (a.thumb) p.band([[hx, hy - 3 * u], [hx + dirx * 3 * u, hy - 14 * u]], skin, 4 * u, 1.6 * u, "round");
   };
   // spear behind
@@ -2673,6 +2685,7 @@ export const romanFront = (p, key, opts = {}) => {
     p.gradFill(sk, O.tunic, mul(O.tunic, SH_CLOTH), light); p.poly(sk, null, ow * 0.8);
     if (O.armor) for (let i = -3; i <= 3; i++) { const x = tcx + i * 0.27 * T.a, st = [[x - 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot + 0.22 * HH], [x - 9 * u, torsoBot + 0.22 * HH]]; p.poly(st, old ? "#5e4632" : LEATHER, 1.6 * u); }
   }
+  if (O.female) { const nk = [[tcx - 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.2 * T.a, chin + 0.16 * HH], [tcx - 0.2 * T.a, chin + 0.16 * HH]]; p.poly(nk, mul(skin, [0.92, 0.88, 0.86]), 1.8 * u); }
   p.gradFill(tp, O.tunic, mul(O.tunic, SH_CLOTH), light);
   p.clip(tp, () => {
     if (O.armor) {
@@ -2689,7 +2702,8 @@ export const romanFront = (p, key, opts = {}) => {
       p.band([[tcx - 1.4 * T.a, torsoBot - 0.24 * HH], [tcx + 1.4 * T.a, torsoBot - 0.24 * HH]], O.apron ? "#5a3b2a" : "#e2c27a", 0.05 * HH, 1.2 * u);
       if (O.toga) p.band([[tcx - 1.0 * T.a, chin - 0.1 * HH], [tcx + 1.1 * T.a, torsoBot - 0.1 * HH]], O.toga, 0.16 * HH, 1.6 * u);
       if (O.apron) p.poly([[tcx - 0.55 * T.a, torsoBot - 0.2 * HH], [tcx + 0.55 * T.a, torsoBot - 0.2 * HH], [tcx + 0.6 * T.a, torsoBot + 0.2 * HH], [tcx - 0.6 * T.a, torsoBot + 0.2 * HH]], O.apron, 1.6 * u);
-      p.stroke([[tcx - 0.2 * T.a, chin + 0.02 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.2 * T.a, chin + 0.02 * HH]], 2 * u);
+      if (O.female) p.ell(tcx, chin + 0.11 * HH, 0.24 * T.a, 0.07 * HH, mul(skin, [0.92, 0.88, 0.86]), 1.6 * u, 0, 180);
+      else p.stroke([[tcx - 0.2 * T.a, chin + 0.02 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.2 * T.a, chin + 0.02 * HH]], 2 * u);
       if (O.patches) { p.poly(rrect(tcx - 0.62 * T.a, chin + 0.3 * HH, tcx - 0.22 * T.a, chin + 0.62 * HH, 2 * u), "#a8865c", 1.6 * u);
         p.poly(rrect(tcx + 0.25 * T.a, chin + 0.62 * HH, tcx + 0.62 * T.a, chin + 0.88 * HH, 2 * u), "#6d5236", 1.6 * u);
         for (let i = 0; i < 4; i++) p.stroke([[tcx - 0.6 * T.a + i * 0.12 * T.a, chin + 0.28 * HH], [tcx - 0.6 * T.a + i * 0.12 * T.a, chin + 0.33 * HH]], 1.2 * u); }
@@ -2722,7 +2736,7 @@ export const romanFront = (p, key, opts = {}) => {
   p.rot = Ah ? [rad(Ah), cx, chin, cpx - cx, cpy - chin] : null;
   if (helmet) galea(p, H, cx, hc, light, thick, ow, old, u);
   const hp = blobPts(cx, hc, H);
-  if (O.hair && !helmet) drawHair(p, O.hairStyle || 'short', O.hair, H, cx, hc, light, facing, u, true);
+  if (O.hair && !helmet && !['long', 'ponytail'].includes(O.hairStyle)) drawHair(p, O.hairStyle || 'short', O.hair, H, cx, hc, light, facing, u, true);
   p.shadedFill(hp, skin, mul(skin, SH_SKIN), light, H.a);
   p.inkRing(hp, ow, thick);
   if (helmet) {
@@ -2747,6 +2761,8 @@ export const romanFront = (p, key, opts = {}) => {
   }
   for (const sd of [-1, 1]) { const g = p.g; g.save(); g.globalAlpha = 0.28; p.ell(cx + 7 * u * facing + sd * 27 * u, hc + 12 * u, 8 * u, 5 * u, "#ff7a6a", 0); g.restore(); }
   faceFront(p, cx, hc, W, expr, facing, look, lid, helmet, skin, O.beard ? O.beard : O.moustache, !!O.stout);
+  if (O.female) { const fx = cx + 7 * u * facing; for (const sd of [-1, 1]) { const ex = fx + sd * 13 * u, ey = hc - 6 * u; for (let k = 0; k < 3; k++) p.stroke([[ex + sd * (4 + k * 3) * u, ey - (3 - k) * u], [ex + sd * (8 + k * 4) * u, ey - (8 - k * 1.5) * u]], 2 * u); }
+    const g = p.g; g.save(); g.globalAlpha = 0.55; p.ell(cx + 8 * u * facing, hc + 21 * u, 6 * u, 2.4 * u, '#d0405a', 0); g.restore(); }
   if (O.brows) for (const s of [-1, 1]) p.ell(cx + 7 * u * facing + s * 14 * u, hc - 20 * u, 11 * u, 5 * u, O.brows, 2 * u);
   if (O.beard) { // re-draw the mouth over the beard for open mouths
     if (expr === "shock" || expr === "snore") p.ell(cx + 8 * u * facing, hc + 22 * u, 6 * u, 7 * u, "#5a1e28", 2 * u);
