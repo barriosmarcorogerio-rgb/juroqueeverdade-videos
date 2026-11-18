@@ -1,0 +1,17 @@
+{"total": 4, "shots": [
+ {"id":"t0","a":0,"b":0,"light":"day","cam":[{"f":0,"pos":[40,30,60],"look":[0,6,-40],"fov":45}],"cast":[
+  {"who":"gigante","pos":[-10,0,25],"s":7.6,"pose":{"expr":"grin","L":"hang","R":"reach","look":0}},
+  {"who":"gigante2","pos":[12,0,45],"s":7.2,"pose":{"expr":"grin","L":"reach","R":"hang"}},
+  {"who":"gigante3","pos":[30,0,70],"s":7.9,"pose":{"expr":"smile","L":"hang","R":"hang"}}],"world":{}},
+ {"id":"t1","a":1,"b":1,"light":"gold","cam":[{"f":1,"pos":[1.5,13.6,-36.8],"look":[0,13.3,-39.5],"fov":44}],"cast":[
+  {"who":"tonico","pos":[-0.6,12,-39.6],"pose":{"expr":"shock","L":"cheek","R":"hang","holdR":"sandwich"}},
+  {"who":"bia","pos":[0.7,12,-39.6],"pose":{"expr":"stern","L":"point","R":"hip","facing":1,"look":0.5}}],"world":{}},
+ {"id":"t2","a":2,"b":2,"light":"day","cam":[{"f":2,"pos":[3,13.8,-41.5],"look":[0,16,20],"fov":50}],"cast":[
+  {"who":"tonico","pos":[1.2,12,-39.4],"pose":{"expr":"shock","L":"up","R":"hang"}},
+  {"who":"gigante","pos":[-2,0,-26],"s":7.6,"pose":{"expr":"grin","L":"hang","R":"hang"}}],"world":{}},
+ {"id":"t3","a":3,"b":3,"light":"day","cam":[{"f":3,"pos":[6,2.2,8],"look":[0,1.2,20],"fov":50}],"cast":[
+  {"who":"ferraz","pos":[1.5,0,14],"pose":{"expr":"stern","L":"hip","R":"point"}},
+  {"who":"lucio","pos":[-1.2,0,14],"pose":{"expr":"grin","L":"hold","R":"hold"}},
+  {"who":"gigante","pos":[0,0,24],"s":7.6,"roll":-1.45,"pose":{"expr":"dazed","L":"up","R":"up"}},
+  {"fx":"fxGiraffe","pos":[6,0,16],"s":2.2},{"fx":"fxCow","pos":[-5,0,16],"s":1.2}],"world":{"trip":true}}
+]}
