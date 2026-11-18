@@ -26,20 +26,12 @@ for fp in fs:
     n = int(os.path.basename(fp)[1:-4])
     if n < a0: continue
     t = n / FPS; im = Image.open(fp).convert('RGB'); d = ImageDraw.Draw(im, 'RGBA')
-    h = hud_at(n) or last_h; last_h = h
+    h = hud_at(n)
     if h and h['hud']:
-        dep, tmp = h['hud']; km = DEPTH_KM(dep)
-        d.rounded_rectangle([40, 36, 470, 160], 22, fill=(10, 8, 14, 150))
-        d.text((66, 52), 'PROFUNDIDADE', font=f_small, fill=(255, 214, 63)); d.text((66, 78), dep, font=f_num, fill=(255, 255, 255))
-        d.text((300, 52), 'CALOR', font=f_small, fill=(255, 140, 90)); d.text((300, 78), tmp, font=f_num, fill=(255, 255, 255))
-        # minimap: Earth slice with the traveller
-        cx, cy, R = 1800, 150, 90
-        for r, col in [(1.0, (90, 140, 200)), (0.97, (200, 100, 42)), (0.546, (242, 178, 58)), (0.19, (255, 242, 176))]:
-            d.ellipse([cx - R * r, cy - R * r, cx + R * r, cy + R * r], fill=col + (235,), outline=(20, 16, 22), width=3)
-        d.line([cx, cy - R, cx, cy + R], fill=(20, 16, 22), width=3)
-        y = cy - R + 2 * R * min(1, km / 12742); d.ellipse([cx - 11, y - 11, cx + 11, y + 11], fill=(255, 214, 63), outline=(20, 16, 22), width=4)
-        d.text((cx, cy - R - 22), 'BRASIL', font=f_small, fill=(255, 255, 255), anchor='mm', stroke_width=4, stroke_fill=(20, 16, 22))
-        d.text((cx, cy + R + 22), 'JAPÃO?', font=f_small, fill=(255, 255, 255), anchor='mm', stroke_width=4, stroke_fill=(20, 16, 22))
+        items = h['hud']; bw = 40 + max(d.textlength(v, font=f_num) for _, v in items) + 40
+        d.rounded_rectangle([40, 36, 40 + max(330, bw), 36 + 30 + 82 * len(items)], 22, fill=(10, 8, 14, 160))
+        for k, (lab, val) in enumerate(items):
+            d.text((66, 52 + k * 82), lab, font=f_small, fill=(255, 214, 63)); d.text((66, 78 + k * 82), val, font=f_num, fill=(255, 255, 255))
     for c in HUD['caps']:
         if c['a'] - 2 <= n < c['a'] + int(2.6 * FPS):
             k = (n - c['a'] + 2) / (2.6 * FPS + 2); al = int(255 * min(1, k * 6, (1 - k) * 6))
