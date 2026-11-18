@@ -11,7 +11,7 @@ const srv = http.createServer((q, s) => { const p = path.join(root, decodeURICom
 await new Promise(r => srv.on('listening', r));
 const exe = process.env.CHROME || (fs.existsSync('.chrome') ? fs.readFileSync('.chrome', 'utf8').trim() : null);
 const b = await pw.chromium.launch({ ...(exe ? { executablePath: exe } : {}), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-const pg = await b.newPage({ viewport: { width: 1080, height: 1920 } });
+const pg = await b.newPage({ viewport: { width: 1920, height: 1080 } });
 pg.on('console', m => console.log('PAGE', m.text())); pg.on('pageerror', e => console.log('ERR', e.message));
 await pg.goto(`http://localhost:${srv.address().port}/index.html${process.env.HASH || ""}`);
 await pg.waitForFunction(() => window.ready || window.err, null, { timeout: 180000 });
