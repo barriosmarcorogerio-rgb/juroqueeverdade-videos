@@ -2886,45 +2886,56 @@ const TP = (pts, w0, w1, n = 18) => { const P = []; for (let i = 0; i <= n; i++)
   const A = [], B = []; P.forEach((q, i) => { const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)]; let nx = b[1] - a[1], ny = a[0] - b[0]; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l; const w = (w0 + (w1 - w0) * i / n) / 2; A.push([q[0] + nx * w, q[1] + ny * w]); B.push([q[0] - nx * w, q[1] - ny * w]); }); return [...A, ...B.reverse()]; };
 const G = (p, shapes, w = 9) => { for (const s of shapes) p.inkRing(s.pts, w, TH); for (const s of shapes) p.shadedFill(s.pts, s.col, s.sh || mul(s.col, [0.8, 0.7, 0.7]), L, s.R || X(s.pts), 0.35); };
 const ARCH = {
-  grin: { hip: 610, sh: 345, chestW: 150, waistW: 95, head: 140, hy: 210, legW: 64, armW: 52, armL: 1.12, belly: 0.3 },
-  tiny: { hip: 590, sh: 330, chestW: 190, waistW: 150, head: 62, hy: 268, legW: 84, armW: 70, armL: 0.95, belly: 1.0 },
-  long: { hip: 640, sh: 365, chestW: 128, waistW: 82, head: 112, hy: 220, legW: 54, armW: 44, armL: 1.38, belly: 0.1 },
+  grin: { hip: 612, sh: 345, chestW: 158, waistW: 108, head: 128, hy: 216, legW: 74, armW: 58, armL: 1.08, belly: 0.25 },
+  tiny: { hip: 592, sh: 332, chestW: 196, waistW: 166, head: 64, hy: 268, legW: 92, armW: 74, armL: 0.95, belly: 1.0 },
+  long: { hip: 640, sh: 362, chestW: 134, waistW: 92, head: 108, hy: 224, legW: 62, armW: 50, armL: 1.3, belly: 0.1 },
 };
 /** o: {kind, skin, hair, walk 0..1, arms|armsL|armsR: hang|reach|up, look, mouth 0..1, dazed} */
 return (p, t = 0, o = {}) => {
   const A = ARCH[o.kind || 'grin'], kind = o.kind || 'grin', SK = o.skin || '#e6b08a', SD = mul(SK, [0.8, 0.68, 0.66]), DK = mul(SK, [0.58, 0.46, 0.44]), w = o.walk || 0, cx = 300, sole = 975;
   const shapes = [], after = [];
-  // --- legs (hip -> knee -> ankle) ---
-  for (const sd of [-1, 1]) { const ph = Math.sin((w + (sd > 0 ? 0.5 : 0)) * Math.PI * 2), hx = cx + sd * A.waistW * 0.55, kx = hx + sd * 14 + ph * 20, ky = (A.hip + sole) / 2 + 10 - Math.max(0, ph) * 24, ax = hx + sd * 6 + ph * 36, ay = sole - 30 - Math.max(0, ph) * 36;
-    shapes.push({ pts: TP([[hx, A.hip - 30], [kx, ky]], A.legW * 1.15, A.legW * 0.75), col: SK }, { pts: E(kx, ky, A.legW * 0.46, A.legW * 0.42), col: SK }, { pts: TP([[kx, ky], [ax, ay]], A.legW * 0.72, A.legW * 0.5), col: SK },
-      { pts: E(ax + sd * 24, ay + 18, A.legW * 0.85, A.legW * 0.34), col: SK });
-    after.push(() => { p.arc(kx, ky + 4, A.legW * 0.3, 7, 200, 340, 3, DK); for (let k = 0; k < 4; k++) p.ell(ax + sd * (24 + A.legW * 0.6) - sd * k * 15, ay + 26, 6, 4, mix(SK, '#ffffff', 0.4), 2); }); }
-  // --- torso: hunched chest, narrow waist, pot belly ---
-  const tor = [], top = A.sh - 10, bot = A.hip + 10;
-  for (let i = 0; i <= 24; i++) { const k = i / 24, y = top + (bot - top) * k, hw = k < 0.35 ? A.chestW * (0.82 + 0.18 * Math.sin(k / 0.35 * Math.PI / 2)) : A.chestW + (A.waistW - A.chestW) * ((k - 0.35) / 0.65) + A.belly * 40 * Math.sin((k - 0.35) / 0.65 * Math.PI); tor.push([cx + hw, y]); }
-  for (let i = 24; i >= 0; i--) { const [x, y] = tor[i]; tor.push([2 * cx - x, y]); }
-  shapes.push({ pts: tor, col: SK }, { pts: E(cx, A.hip - 10, A.waistW * 1.05, 60), col: SK });
-  // --- shoulders + arms, merged with the torso ---
+  // width-profiled limb: pts = control points, ws = width at each control point (smooth, muscular)
+  const TW = (pts, ws, n = 28) => { const seg = []; let tot = 0; for (let i = 0; i < pts.length - 1; i++) { const l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]); seg.push(l); tot += l; }
+    const at = (d) => { let i = 0; while (i < seg.length - 1 && d > seg[i]) { d -= seg[i]; i++; } const u = Math.min(1, d / (seg[i] || 1)), e = (1 - Math.cos(u * Math.PI)) / 2; return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * u, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * u, ws[i] + (ws[i + 1] - ws[i]) * e]; };
+    const Q = []; for (let k = 0; k <= n; k++) Q.push(at(tot * k / n)); const A_ = [], B_ = [];
+    Q.forEach((q, k) => { const a = Q[Math.max(0, k - 1)], b = Q[Math.min(n, k + 1)]; let nx = b[1] - a[1], ny = a[0] - b[0]; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l; A_.push([q[0] + nx * q[2] / 2, q[1] + ny * q[2] / 2]); B_.push([q[0] - nx * q[2] / 2, q[1] - ny * q[2] / 2]); });
+    const cap = (c, r, a0) => { const o = []; for (let k = 1; k < 8; k++) { const a = a0 + k / 8 * Math.PI; o.push([c[0] + Math.cos(a) * r, c[1] + Math.sin(a) * r]); } return o; };
+    const e0 = Q[0], e1 = Q[n], d0 = Math.atan2(Q[1][1] - e0[1], Q[1][0] - e0[0]), d1 = Math.atan2(e1[1] - Q[n - 1][1], e1[0] - Q[n - 1][0]);
+    return [...A_, ...cap(e1, e1[2] / 2, d1 - Math.PI / 2), ...B_.reverse(), ...cap(e0, e0[2] / 2, d0 + Math.PI / 2)]; };
+  // --- legs: thick thigh -> knee -> calf bulge -> slim ankle; big flat feet ---
+  for (const sd of [-1, 1]) { const ph = Math.sin((w + (sd > 0 ? 0.5 : 0)) * Math.PI * 2), hx = cx + sd * A.waistW * 0.52, kx = hx + sd * (o.down ? 46 : 10) + ph * 20, ky = (A.hip + sole) / 2 + 6 - Math.max(0, ph) * 24 - (o.down ? 26 : 0), ax = hx + sd * (o.down ? 92 : 4) + ph * 36, ay = sole - 34 - Math.max(0, ph) * 36;
+    const L_ = A.legW; shapes.push({ pts: TW([[hx, A.hip - 40], [(hx + kx) / 2 + sd * 4, (A.hip + ky) / 2], [kx, ky], [kx + (ax - kx) * 0.3 - sd * 3, ky + (ay - ky) * 0.3], [ax, ay]], [L_ * 1.75, L_ * 1.5, L_ * 0.92, L_ * 1.05, L_ * 0.6]), col: SK },
+      { pts: E(ax + sd * 20, ay + 20, L_ * 0.82, L_ * 0.32), col: SK });
+    after.push(() => { p.arc(kx, ky + 2, L_ * 0.26, 6, 200, 340, 3, SD); p.arc(kx + (ax - kx) * 0.32 + sd * L_ * 0.2, ky + (ay - ky) * 0.32, L_ * 0.18, L_ * 0.35, sd > 0 ? 280 : 100, sd > 0 ? 350 : 170, 3, SD); for (let k = 0; k < 4; k++) p.ell(ax + sd * (20 + L_ * 0.58) - sd * k * 14, ay + 28, 6, 4, mix(SK, '#ffffff', 0.4), 2); }); }
+  // pelvis (smooth, no detail) joining the thighs
+  shapes.push({ pts: E(cx, A.hip - 18, A.waistW * 1.12, 74), col: SK });
+  // --- torso: traps -> broad shoulders -> chest -> waist ---
+  const top = A.sh - 6, bot = A.hip + 4, nk = kind === 'tiny' ? 40 : 30, tor = [];
+  tor.push([cx + nk, top - 34]); tor.push([cx + nk + (A.chestW - nk) * 0.55, top - 8]);
+  for (let i = 0; i <= 20; i++) { const k = i / 20, y = top + (bot - top) * k, sh_ = A.chestW * 1.04, hw = k < 0.12 ? sh_ : k < 0.42 ? sh_ + (A.chestW * 0.96 - sh_) * ((k - 0.12) / 0.3) : A.chestW * 0.96 + (A.waistW - A.chestW * 0.96) * ((k - 0.42) / 0.58) + A.belly * 46 * Math.sin((k - 0.42) / 0.58 * Math.PI); tor.push([cx + hw, y]); }
+  const half = tor.length; for (let i = half - 1; i >= 0; i--) { const [x, y] = tor[i]; tor.push([2 * cx - x, y]); }
+  shapes.push({ pts: tor, col: SK });
+  // --- arms: deltoid -> biceps -> elbow -> forearm bulge -> wrist; big hands ---
   for (const sd of [-1, 1]) {
-    const sx = cx + sd * A.chestW * 0.86, sy = A.sh + 30, pose = (sd < 0 ? o.armsL : o.armsR) || o.arms || 'hang', Lr = (sole - A.sh) * 0.6 * A.armL, sw = Math.sin((w + (sd > 0 ? 0 : 0.5)) * Math.PI * 2) * 22;
-    let ex, ey, hx, hy; if (pose === 'reach') { ex = sx + sd * Lr * 0.48; ey = sy - 6; hx = sx + sd * Lr * 0.95; hy = sy - 50; } else if (pose === 'up') { ex = sx + sd * 46; ey = sy - Lr * 0.46; hx = sx + sd * 80; hy = sy - Lr * 0.92; } else { ex = sx + sd * 36 + sw * 0.3; ey = sy + Lr * 0.48; hx = sx + sd * 26 + sw; hy = sy + Lr * 0.98; }
-    shapes.push({ pts: E(sx - sd * 10, sy - 6, A.armW * 0.95, A.armW * 0.75), col: SK }, { pts: TP([[sx - sd * 14, sy - 4], [ex, ey]], A.armW * 1.05, A.armW * 0.62), col: SK }, { pts: E(ex, ey, A.armW * 0.36, A.armW * 0.34), col: SK },
-      { pts: TP([[ex, ey], [hx, hy]], A.armW * 0.62, A.armW * 0.48), col: SK });
-    const ang = Math.atan2(hy - ey, hx - ex), hr = A.armW * 0.62;
-    shapes.push({ pts: E(hx + Math.cos(ang) * hr * 0.6, hy + Math.sin(ang) * hr * 0.6, hr, hr * 0.8, ang), col: SK });
-    for (let k = 0; k < 4; k++) { const a = ang + (k - 1.5) * 0.32, bx = hx + Math.cos(ang) * hr * 1.1, by = hy + Math.sin(ang) * hr * 1.1; shapes.push({ pts: TP([[bx + Math.cos(a) * 4, by + Math.sin(a) * 4], [bx + Math.cos(a) * hr * 1.25, by + Math.sin(a) * hr * 1.25]], hr * 0.36, hr * 0.26), col: SK }); }
-    shapes.push({ pts: TP([[hx - Math.cos(ang - sd * 1.6) * 0, hy], [hx + Math.cos(ang - sd * 1.4) * hr * 1.0, hy + Math.sin(ang - sd * 1.4) * hr * 1.0]], hr * 0.4, hr * 0.3), col: SK });
-    after.push(() => { p.arc(ex, ey, A.armW * 0.26, 6, 20, 160, 3, DK); p.arc(sx - sd * 6, sy + 10, A.armW * 0.55, A.armW * 0.4, sd > 0 ? 200 : 200, 330, 3, SD); });
+    const sx = cx + sd * A.chestW * 0.92, sy = A.sh + 26, pose = o.down ? 'splay' : (sd < 0 ? o.armsL : o.armsR) || o.arms || 'hang', Lr = (sole - A.sh) * 0.6 * A.armL, sw = Math.sin((w + (sd > 0 ? 0 : 0.5)) * Math.PI * 2) * 22;
+    let ex, ey, hx, hy; if (pose === 'splay') { ex = sx + sd * Lr * 0.44; ey = sy + Lr * 0.2; hx = sx + sd * Lr * 0.86; hy = sy + Lr * 0.42; } else if (pose === 'reach') { ex = sx + sd * Lr * 0.48; ey = sy - 6; hx = sx + sd * Lr * 0.95; hy = sy - 50; } else if (pose === 'up') { ex = sx + sd * 46; ey = sy - Lr * 0.46; hx = sx + sd * 80; hy = sy - Lr * 0.92; } else { ex = sx + sd * 30 + sw * 0.3; ey = sy + Lr * 0.48; hx = sx + sd * 22 + sw; hy = sy + Lr * 0.93; }
+    const aw = A.armW; shapes.push({ pts: E(sx - sd * 4, sy - 4, aw * 0.98, aw * 0.82), col: SK },
+      { pts: TW([[sx, sy], [(sx + ex) / 2, (sy + ey) / 2], [ex, ey], [ex + (hx - ex) * 0.3, ey + (hy - ey) * 0.3], [hx, hy]], [aw * 1.25, aw * 1.08, aw * 0.74, aw * 0.86, aw * 0.56]), col: SK });
+    const ang = Math.atan2(hy - ey, hx - ex), hr = aw * 0.72;
+    shapes.push({ pts: E(hx + Math.cos(ang) * hr * 0.55, hy + Math.sin(ang) * hr * 0.55, hr, hr * 0.82, ang), col: SK });
+    for (let k = 0; k < 4; k++) { const a = ang + (k - 1.5) * 0.3, bx = hx + Math.cos(ang) * hr * 1.0, by = hy + Math.sin(ang) * hr * 1.0; shapes.push({ pts: TW([[bx, by], [bx + Math.cos(a) * hr * 1.15, by + Math.sin(a) * hr * 1.15]], [hr * 0.4, hr * 0.32]), col: SK }); }
+    shapes.push({ pts: TW([[hx, hy], [hx + Math.cos(ang - sd * 1.3) * hr * 1.05, hy + Math.sin(ang - sd * 1.3) * hr * 1.05]], [hr * 0.46, hr * 0.34]), col: SK });
+    after.push(() => { p.arc(ex, ey, aw * 0.22, 6, 20, 160, 3, SD); p.arc(sx + sd * 2, sy + aw * 0.5, aw * 0.6, aw * 0.3, sd > 0 ? 200 : 200, 330, 3, SD); });
   }
-  // neck
-  shapes.push({ pts: TP([[cx + 2, A.sh + 30], [cx + 6, A.hy + A.head * 0.6]], kind === 'tiny' ? 64 : 52, kind === 'tiny' ? 54 : 40), col: SK });
+  // neck (thick, merges with the traps)
+  shapes.push({ pts: TW([[cx + 2, A.sh + 10], [cx + 6, A.hy + A.head * 0.62]], [nk * 2.2, nk * 1.7]), col: SK });
   G(p, shapes, 10); after.forEach((fn) => fn());
-  // anatomy: pecs, ribs, belly, navel
-  for (const sd of [-1, 1]) p.arc(cx + sd * A.chestW * 0.42, A.sh + 70, A.chestW * 0.4, 26, sd > 0 ? 10 : 10, 170, 4, SD);
-  for (let k = 0; k < 4; k++) for (const sd of [-1, 1]) p.arc(cx + sd * A.chestW * 0.5, A.sh + 120 + k * 24, A.chestW * 0.3, 10, 195, 300, 3.5, DK);
-  p.stroke([[cx, A.sh + 40], [cx + 2, A.sh + 170]], 3, SD); p.ell(cx + 3, A.hip - 70, 6, 8, DK, 0); if (A.belly > 0.5) p.arc(cx, A.hip - 40, A.waistW * 0.9, 50, 20, 160, 3.5, SD);
+  // anatomy: collarbones, pecs, abs hint, belly, navel (no ribs)
+  for (const sd of [-1, 1]) { p.stroke([[cx + sd * 16, A.sh + 14], [cx + sd * A.chestW * 0.6, A.sh + 6]], 3, SD); p.arc(cx + sd * A.chestW * 0.44, A.sh + 64, A.chestW * 0.42, 34, 15, 165, 4, SD); }
+  if (kind !== 'tiny') for (let k = 0; k < 2; k++) for (const sd of [-1, 1]) p.stroke([[cx + sd * 8, A.sh + 150 + k * 44], [cx + sd * A.waistW * 0.42, A.sh + 146 + k * 44]], 3, mix(SK, SD, 0.6));
+  p.stroke([[cx, A.sh + 108], [cx + 1, A.hip - 92]], 3, mix(SK, SD, 0.6)); p.ell(cx + 2, A.hip - 66, 6, 8, DK, 0); if (A.belly > 0.5) p.arc(cx, A.hip - 34, A.waistW * 0.9, 48, 20, 160, 3.5, SD);
   // --- head ---
-  const hcx = cx + 8 + (o.look || 0) * 10, hcy = A.hy + (o.dazed ? 10 : 0), HR = A.head, ry = kind === 'long' ? 1.35 : 1.0;
+  const hcx = cx + 8 + (o.look || 0) * 10 + (o.down ? 26 : 0), hcy = A.hy + (o.dazed || o.down ? 14 : 0), HR = A.head, ry = kind === 'long' ? 1.35 : 1.0;
   const head = E(hcx, hcy, HR, HR * ry); head.forEach((q) => { if (q[1] > hcy) q[0] = hcx + (q[0] - hcx) * (1 - 0.12 * (q[1] - hcy) / (HR * ry)); });
   G(p, [{ pts: E(hcx - HR * 0.98, hcy + 6, HR * 0.2, HR * 0.28), col: SK }, { pts: E(hcx + HR * 0.98, hcy + 6, HR * 0.2, HR * 0.28), col: SK }, { pts: head, col: SK }], 9);
   for (const sd of [-1, 1]) p.ell(hcx + sd * HR * 0.98, hcy + 6, HR * 0.09, HR * 0.15, SD, 0);
@@ -2936,15 +2947,20 @@ return (p, t = 0, o = {}) => {
   // eyes: sunken, blank, tiny pupils
   const ey = hcy - HR * ry * 0.16, er = kind === 'tiny' ? HR * 0.3 : HR * 0.17;
   for (const sd of [-1, 1]) { const ex = hcx + sd * HR * 0.36; p.ell(ex, ey + 3, er * 1.35, er * 1.25, mix(SK, DK, 0.55), 0); p.ell(ex, ey, er, er * 0.95, '#fbf7ee', 5);
-    if (o.dazed) { const sp = []; for (let k = 0; k < 26; k++) { const a = k / 26 * 12, r = k / 26 * er * 0.8; sp.push([ex + Math.cos(a) * r, ey + Math.sin(a) * r]); } p.stroke(sp, 3); } else p.dot(ex + (o.look || 0) * er * 0.3, ey + 2, Math.max(4, er * 0.16)); }
+    if (o.down) { const r = er * 0.62; p.stroke([[ex - r, ey - r], [ex + r, ey + r]], 6); p.stroke([[ex - r, ey + r], [ex + r, ey - r]], 6); } else if (o.sleep) { p.ell(ex, ey, er * 1.02, er * 0.97, SK, 0); p.arc(ex, ey - 2, er * 0.8, er * 0.5, 20, 160, 5); } else if (o.dazed) { const sp = []; for (let k = 0; k < 26; k++) { const a = k / 26 * 12, r = k / 26 * er * 0.8; sp.push([ex + Math.cos(a) * r, ey + Math.sin(a) * r]); } p.stroke(sp, 3); } else p.dot(ex + (o.look || 0) * er * 0.3, ey + 2, Math.max(4, er * 0.16)); }
   p.stroke([[hcx - 6, ey + er + 8], [hcx + 8, ey + er + 34], [hcx - 6, ey + er + 38]], 4, DK);
   // mouth: wide grin with gums + teeth
-  const my = hcy + HR * ry * 0.42, mw = kind === 'tiny' ? HR * 0.5 : HR * 0.82, open = (o.mouth || 0) * 40;
+  const my = hcy + HR * ry * 0.42, mw = kind === 'tiny' ? HR * 0.5 : HR * 0.82, open = o.down ? 36 : o.sleep ? 8 : (o.mouth || 0) * 40;
   if (kind === 'tiny') { p.arc(hcx, my - 10, mw, 18, 15, 165, 5); p.arc(hcx, my - 4, mw * 0.6, 8, 30, 150, 3, DK); }
   else { const top = [], bt = []; for (let i = 0; i <= 22; i++) { const x = hcx - mw + i / 22 * mw * 2, k = (i / 22 - 0.5) * 2; top.push([x, my - 20 - k * k * 16]); bt.push([x, my + 24 + open - k * k * 28]); }
     const mp = [...top, ...bt.reverse()]; p.poly(mp, '#4a1420', 0);
     p.clip(mp, () => { p.poly(top.map(([x, y]) => [x, y - 2]).concat(top.slice().reverse().map(([x, y]) => [x, y + 9])), '#d06a78', 0); const nT = 14; for (let i = 0; i < nT; i++) { const x0 = hcx - mw + i / nT * mw * 2, k = ((i + 0.5) / nT - 0.5) * 2, yt = my - 12 - k * k * 16; p.poly([[x0 + 2, yt], [x0 + mw * 2 / nT - 2, yt], [x0 + mw * 2 / nT - 3, yt + 16 - k * k * 4], [x0 + 3, yt + 16 - k * k * 4]], '#fbf3dc', 1.6); } });
     p.poly(mp, null, 6); for (const sd of [-1, 1]) p.stroke([[hcx + sd * mw, my - 20 - 16], [hcx + sd * (mw + 16), my - 34 - 16]], 4, DK); }
+  if (o.down && kind !== 'tiny') { p.ell(hcx + mw * 0.45, my + 30 + open, mw * 0.2, 30, '#d9667a', 5); p.stroke([[hcx + mw * 0.45, my + 18 + open], [hcx + mw * 0.45, my + 46 + open]], 3, '#a8405a'); }
+  if (o.down && kind === 'tiny') { p.ell(hcx, my + 4, mw * 0.4, 18, '#4a1420', 5); }
+  if (o.sleep) { const g = p.g; g.save(); g.font = '900 64px sans-serif'; g.fillStyle = '#ffffff'; g.strokeStyle = INK; g.lineWidth = 8; for (let k = 0; k < 3; k++) { const x = hcx + HR * 0.9 + k * 46, y = hcy - HR * 0.7 - k * 56, sz = 1 - k * 0.2; g.save(); g.translate(x, y); g.scale(sz, sz); g.strokeText('Z', 0, 0); g.fillText('Z', 0, 0); g.restore(); } g.restore(); }
+  if (o.steam) { const g = p.g; g.save(); for (let k = 0; k < 14; k++) { const u = ((o.steam + k / 14) % 1), x = cx + Math.sin(k * 2.7) * A.chestW * 1.1 + Math.sin(u * 6 + k) * 30, y = (k % 2 ? A.hip : A.sh + 90) - u * 250, r = 50 + u * 75;
+      const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,255,255,${0.85 * Math.min(1, u * 5) * (1 - u)})`); gr.addColorStop(0.5, `rgba(250,250,250,${0.45 * Math.min(1, u * 5) * (1 - u)})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill(); } g.restore(); }
 };
 })();
 

@@ -305,7 +305,7 @@ const forestG = new THREE.Group(); world.add(forestG);
 { let n = 0, guard = 0; while (n < 46 && guard++ < 400) { const x = -48 + rr() * 96, z = 72 + rr() * 80; if (Math.hypot(x, z - 110) < 15) continue; if (Math.abs(x - 2) < 4 && z < 100) continue; const t = oak(x, z, 1.4 + rr() * 0.8, 22); world.remove(t); forestG.add(t); n++; } }
 // giant footprints from the gate to the clearing
 const prints = new THREE.Group(); world.add(prints);
-{ const pm = decal(std({ color: '#4a3a24', transparent: true, opacity: 0.75 }), 3); for (let i = 0; i < 18; i++) { const z = -30 + i * 7.4, x = 2 + (i % 2 ? 1.4 : -1.4) + Math.sin(i * 0.7) * 1.5;
+{ const pm = decal(std({ color: '#4a3a24', transparent: true, opacity: 0.75 }), 3); for (let i = 0; i < 17; i++) { const z = 22 + i * 4.6, x = 2 + (i % 2 ? 1.4 : -1.4) + Math.sin(i * 0.7) * 1.5;
   const e = add(new THREE.CircleGeometry(1, 24), pm, x, 0.04, z, prints, { cast: false }); e.rotation.x = -Math.PI / 2; e.scale.set(1.3, 2.6, 1); e.userData.ndSkip = true; } }
 const setWorld = (S, f) => { tripG.visible = !!S.trip; carts.visible = !!S.carts; chart.visible = !!S.chart;
   bellPiv.rotation.z = S.bell ? Math.sin(f * 0.9) * 0.45 : 0;

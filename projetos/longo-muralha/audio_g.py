@@ -1,4 +1,4 @@
-"""Trilha + efeitos do vídeo longo -> music.wav, sfx.wav (níveis finais feitos em mix_long)."""
+"""Trilha + efeitos — A Muralha (ep. 1) -> music.wav, sfx.wav (níveis finais feitos em mix_long)."""
 import json, numpy as np, wave
 src = open('../2026-11-17-chuva-de-carne/audio.py').read()
 head = src[:src.index('# ---------------- music')]
@@ -10,11 +10,11 @@ SENT = [x for x in T if x['i'] >= 0]
 st = lambda i: SENT[i]['s']
 music = np.zeros(N, np.float32)
 # soft bed: plucked C-F-G-C loop at 96 bpm, alternating brighter/darker every chapter; rests at chapter titles
-BPM = 96; beat = 60 / BPM
+BPM = 84; beat = 60 / BPM
 caps = [x for x in T if x['i'] == 0]
 for ci, c in enumerate(caps):
     a = c['s'] + 1.5; b = (caps[ci + 1]['s'] - 1.0) if ci + 1 < len(caps) else END - 1
-    prog = [(48, [60, 64, 67]), (53, [57, 60, 65]), (55, [59, 62, 67]), (48, [60, 64, 67])] if ci % 2 == 0 else [(45, [57, 60, 64]), (53, [57, 60, 65]), (52, [56, 59, 64]), (45, [57, 60, 64])]
+    prog = [(45, [57, 60, 64]), (53, [57, 60, 65]), (52, [56, 59, 64]), (45, [57, 60, 64])]
     tt = a; bar = 0
     while tt < b - beat * 4:
         root, ch = prog[bar % 4]
@@ -31,13 +31,27 @@ def drill(d):
 def ring(d=1.2):
     n = int(d * SR); t = np.arange(n) / SR
     return ((np.sin(2 * np.pi * 1300 * t) + np.sin(2 * np.pi * 1700 * t)) * (np.mod(t, 0.4) < 0.2) * 0.25).astype(np.float32)
-ev = {2: [(sting(), 0, 0.5)], 6: [(thunk(60, 0.6), 0, 0.8)], 28: [(crunch(0.4), 0.8, 0.6)], 29: [(creak(0.6), 0, 0.4)], 30: [(thunk(50, 0.6), 1.0, 0.9), (rumble(1.2), 1.0, 0.5)],
-      54: [(thunk(50, 0.6), 0.3, 0.9), (rumble(1.0), 0.3, 0.5)], 55: [(snap(), 0.1, 1.0)], 72: [(laugh(1.0), 1.5, 0.4)], 85: [(thunk(60, 0.4), 0.5, 0.5)], 87: [(cuckoo(), 0, 0.4)],
-      88: [(thunk(45, 0.8), 0.6, 1.0), (rumble(1.5), 0.6, 0.6)], 95: [(crunch(0.5), 0.3, 0.6)], 104: [(whoosh(0.4), 0, 0.3)], 105: [(crunch(0.5), 1.5, 0.7)], 118: [(water(2.5), 0, 0.4)],
-      119: [(water(3.0), 0, 0.5)], 126: [(thunk(150, 0.2), 0.3, 0.6)], 127: [(crunch(0.4), 0.2, 0.7)], 128: [(splash(0.8), 0.6, 0.8)], 139: [(whoosh(1.2), 0, 0.5), (whoosh(1.0), 2.0, 0.4)],
-      144: [(snap(), 0.3, 0.8)], 145: [(whoosh(1.5), 0, 0.6)], 147: [(thunk(40, 1.0), 0, 1.0), (rumble(2.5), 0, 0.9), (crash(1.5), 0.1, 0.5)], 148: [(leaves(1.5), 0, 0.4)],
-      149: [(whoosh(1.0), 0, 0.5), (snore(0.6), 0.5, 0.3)], 151: [(splash(0.6), 1.5, 0.5), (thunk(45, 0.8), 2.0, 0.9)], 153: [(clink(1200), 0.4, 0.5)], 174: [(laugh(1.5), 0, 0.4)],
-      178: [(creak(1.0), 0, 0.4)], 187: [(ting(), 0, 0.4)], 189: [(sting(), 1.0, 0.4)]}
+def bell(d=3.0, f0=196.0):
+    n = int(d * SR); t = np.arange(n) / SR
+    parts = [(0.5, 0.6), (1.0, 1.0), (1.2, 0.5), (1.5, 0.35), (2.0, 0.4), (2.5, 0.2), (3.0, 0.15)]
+    x = sum(a * np.sin(2 * np.pi * f0 * r * t) * np.exp(-t * (1.2 + r * 0.8)) for r, a in parts)
+    return (x * np.minimum(1, t / 0.004) * 0.35).astype(np.float32)
+B = lambda dt=0.0, g=0.8: (bell(), dt, g)
+HIT = lambda dt=0.0: [(thunk(50, 0.6), dt, 0.9), (rumble(1.2), dt, 0.5)]
+ev = {11: [B(1.4, 0.6)], 12: [B()], 13: [B()], 14: [B()], 16: [(leaves(1.5), 0, 0.5)], 18: [(sting(), 0, 0.4)],
+      28: [(thunk(80, 0.4), 1.5, 1.0), (crash(0.6), 1.6, 0.4)], 29: [(thunk(45, 0.8), 0.2, 0.8)], 30: [(creak(0.8), 0.5, 0.3)], 31: HIT(0.8),
+      32: [(sting(), 0.5, 0.5)], 35: [(creak(1.2), 0.5, 0.6)], 36: [(crunch(0.6), 0, 0.8)], 37: [(whoosh(1.2), 0.3, 0.4)],
+      38: HIT(0.6), 39: [(rumble(1.5), 0, 0.6)], 40: HIT(0.3), 41: [(crunch(0.8), 0.2, 0.7)], 43: [(whoosh(0.4), 0, 0.4)], 44: [(whoosh(0.4), 0, 0.4)], 45: [(whoosh(0.4), 0, 0.4)],
+      48: [(whoosh(0.5), 1.0, 0.6), (snap(), 1.5, 0.6)], 49: [(clink(900), 0, 0.6)], 50: [(creak(0.5), 0, 0.4)], 51: [(whoosh(1.2), 0.5, 0.6)], 52: [(whoosh(1.0), 0, 0.5), (thunk(120, 0.3), 1.6, 0.7)],
+      55: [(ting(), 0.3, 0.3)], 56: [(whoosh(1.0), 0.3, 0.6)], 61: [(creak(0.6), 0, 0.3)], 70: [(creak(1.4), 0, 0.5)], 80: [(crunch(0.3), 0.3, 0.3), (crunch(0.3), 0.9, 0.3)],
+      82: [(leaves(1.0), 0, 0.3)], 96: [(snore(0.8), 0, 0.5)], 97: [(snore(0.8), 0, 0.6), (leaves(1.0), 0.3, 0.3)], 105: [(clink(1500), 1.0, 0.3), (clink(1700), 1.6, 0.3)],
+      114: [(laugh(1.2), 1.5, 0.3)], 121: [B(0, 0.5)], 122: [B(0, 0.5)], 123: [B(0, 0.5)], 124: [(sting(), 0, 0.5)], 126: [(whoosh(0.6), 0, 0.5)],
+      128: [(whoosh(0.6), 0, 0.5), (whoosh(0.6), 0.8, 0.5)], 130: [(crash(1.2), 0.5, 0.5), (thunk(45, 0.8), 0.5, 0.8), (leaves(1.5), 0.6, 0.5)],
+      132: [(thunk(60, 0.6), 0.2, 0.9)], 134: [(crunch(0.8), 0.2, 0.7), (rumble(1.0), 0.2, 0.5)], 135: [(crash(1.0), 0.6, 0.6)], 137: [(thunk(150, 0.2), 1.2, 0.7)],
+      143: [(whoosh(0.5), 0, 0.3)], 149: [(whoosh(0.6), 1.5, 0.5)], 150: [(whoosh(0.8), 0.5, 0.6), (clink(800), 1.2, 0.6)],
+      153: [B()], 156: [B()], 158: [B()], 159: [B()], 162: [B()], 164: [(snore(1.2), 0, 0.5)], 165: [B()], 166: [B(0, 1.0)],
+      167: [(thunk(40, 1.0), 0.8, 1.0), (rumble(2.5), 0.8, 0.9)], 168: [(thunk(45, 0.8), 1.0, 1.0), (crash(1.0), 1.1, 0.4)], 170: [(snore(1.0), 0, 0.6), (snore(1.0), 1.4, 0.6)],
+      177: [(clink(1200), 0.4, 0.5)], 178: [(laugh(1.2), 0.2, 0.3)], 184: [(rumble(2.0), 0, 0.6), (sting(), 0.8, 0.5)], 187: [(sting(), 1.2, 0.5), B(1.8, 0.4)]}
 for i, lst in ev.items():
     for sig, dt, g in lst: place(sfx, sig, st(i) + dt, g)
 pk = max(np.abs(music).max(), np.abs(sfx).max(), 1e-6)
