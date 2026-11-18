@@ -217,8 +217,8 @@ const clouds = [];
   } }
 
 // ---------- cards ----------
-const CW = 1200, CH = 2000, CM = 2.25; // canvas px, card height in metres (design 600x1000 -> 2.25 m)
-const cardGeo = new THREE.PlaneGeometry(CM * 0.6, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
+const CW = 2000, CH = 2000, CM = 2.25, PAD = 200;
+const cardGeo = new THREE.PlaneGeometry(CM * (600 + 2 * PAD) / 1000, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
 const blobTex = P.tex(P.radial('20,14,30', 0.6));
 class Card {
   constructor(scale = 1) {
@@ -233,7 +233,7 @@ class Card {
   }
   draw(key, fn) {
     if (key === this.key) return; this.key = key;
-    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / 600, 0, 0, CH / 1000, 0, 0);
+    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / (600 + 2 * PAD), 0, 0, CH / 1000, PAD * CW / (600 + 2 * PAD), 0);
     const p = new T.Pen(g); fn(p); this.t.needsUpdate = true;
   }
 }
@@ -315,7 +315,7 @@ function drawActors(list, cam) {
     c.draw(a.key, a.draw);
     c.mesh.visible = true; c.mesh.position.set(a.x, a.y, a.z);
     const s = a.s || 1; c.mesh.scale.set(s * (a.flip ? -1 : 1), s, s);
-    c.mesh.rotation.set(0, Math.atan2(cam.position.x - a.x, cam.position.z - a.z) + (a.yaw || 0), a.roll || 0);
+    if (a.face === 'cam') { c.mesh.quaternion.copy(cam.quaternion); if (a.roll) c.mesh.rotateZ(a.roll); } else c.mesh.rotation.set(0, Math.atan2(cam.position.x - a.x, cam.position.z - a.z) + (a.yaw || 0), a.roll || 0);
     c.mat.color.set(a.tint || '#ffffff'); c.mat.opacity = a.alpha ?? 1;
     c.mesh.castShadow = a.shadow !== false;
     c.mesh.renderOrder = a.order || 2;

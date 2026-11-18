@@ -116,8 +116,8 @@ export const actorsAt = (f, T) => {
       const lie = id === 'vaq1' ? 0 : id === 'deita' ? q(clamp((f - 1052) / 8), 2) : 1;
       push(CM(T, { ...cb(f, 2), lie, wide: false, blink: id === 'sentado' ? 1 : cb(f, 2).blink }, [0, 0, 0], { s: 1.35 }));
       if (id === 'vaq1') push(R(T, 'vaqueiro', { ...base(f, 5), expr: 'grin', L: 'reach', R: 'hang', facing: 1, look: 0.5, step: q(walk(f, 992, 1, 0.5).phase, 2) }, [lerp(-2.6, -1.2, clamp((f - 992) / 40)), 0, 0.3]));
-      else if (id === 'deita') push(R(T, 'vaqueiro', { ...base(f, 5), expr: f > 1052 ? 'shock' : 'grin', L: 'up', R: 'reach', facing: 1, look: 0.5, bob: f > 1052 ? -0.08 : 0 }, [-0.4, f > 1052 ? 0.45 : 0.75, 0.35]));
-      else push(R(T, 'vaqueiro', { ...base(f, 5), expr: 'nervous', L: 'belly', R: 'temple', facing: 1 }, [-0.3, 0.5, 0.35]));
+      else if (id === 'deita') push(R(T, 'vaqueiro', { ...base(f, 5), expr: f > 1052 ? 'shock' : 'grin', L: 'up', R: 'reach', facing: 1, look: 0.5, bob: f > 1052 ? -0.08 : 0 }, [-0.4, f > 1052 ? 0.3 : 0.75, 0.35]));
+      else push(R(T, 'vaqueiro', { ...base(f, 5), expr: 'nervous', L: 'belly', R: 'temple', facing: 1 }, [-0.3, 0.62, 0.05]));
       break; }
     case 'estranho': for (let i = 0; i < 5; i++) push(CM(T, { ...cb(f, i) }, [-6 + i * 3, 0, -6 - (i % 2) * 2], { s: 1.35, flip: i % 2 === 0 })); break;
     case 'quadro': push(R(T, 'cientC', { ...base(f, 41), expr: 'stern', L: 'point', R: 'hang', facing: 1, look: 0.6 }, [3.0, 0, -0.6])); break;

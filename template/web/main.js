@@ -225,6 +225,23 @@ for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 20
     dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.1 + rr() * 0.2; dummy.scale.set(0.8 + rr() * 0.6, s, 0.8); dummy.updateMatrix(); gi.setMatrixAt(k, dummy.matrix);
     col.setHSL(0.22 + rr() * 0.07, 0.45 + rr() * 0.2, 0.75 + rr() * 0.35); gi.setColorAt(k, col); k++; }
   gi.receiveShadow = true; gi.castShadow = false; gi.userData.nd = plainNd; world.add(gi); }
+// ---- FIELD GRASS: blades over the whole countryside (denser near the yard), + large-scale colour patches on the ground ----
+{ const bg = new THREE.BufferGeometry(); bg.setAttribute('position', new THREE.Float32BufferAttribute([-0.04, 0, 0, 0.04, 0, 0, 0.006, 1, 0.02, 0.05, 0, 0.03, 0.12, 0, 0.03, 0.09, 0.8, 0.04], 3));
+  bg.setAttribute('normal', new THREE.Float32BufferAttribute([0, 0.3, 1, 0, 0.3, 1, 0, 0.6, 1, 0, 0.3, 1, 0, 0.3, 1, 0, 0.6, 1], 3));
+  bg.setAttribute('color', new THREE.Float32BufferAttribute([0.16, 0.26, 0.08, 0.16, 0.26, 0.08, 0.55, 0.72, 0.3, 0.16, 0.26, 0.08, 0.16, 0.26, 0.08, 0.5, 0.68, 0.28], 3));
+  const FIELDS = [[-60, -70, 90, 60, 0.05], [45, -80, 80, 70, -0.04], [-25, -150, 120, 60, 0.02], [70, 40, 70, 60, 0.1], [-70, 45, 70, 55, -0.08], [10, -220, 160, 80, 0]];
+  const inField = (x, z) => FIELDS.some(([fx, fz, w, d, r]) => { const dx = x - fx, dz = z - fz, c = Math.cos(r), s = Math.sin(r), u = dx * c - dz * s, v = -dx * s - dz * c; return Math.abs(u) < w / 2 + 1.2 && Math.abs(v) < d / 2 + 1.2; });
+  const N = 170000, gi2 = new THREE.InstancedMesh(bg, std({ vertexColors: true, side: THREE.DoubleSide }), N); const col = new THREE.Color(); let k = 0, guard = 0;
+  while (k < N && guard++ < N * 6) { const r = Math.pow(rr(), 1.25) * 170, a = rr() * Math.PI * 2, x = Math.cos(a) * r, z = Math.sin(a) * r + 10;
+    if (Math.abs(z - 8) < 2.6 || inField(x, z) || (x > -24 && x < 24 && z > -16 && z < 18)) continue;
+    dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.18 + rr() * 0.3 + r * 0.002; dummy.scale.set(1.2 + rr() + r * 0.01, s, 1.2); dummy.updateMatrix(); gi2.setMatrixAt(k, dummy.matrix);
+    col.setHSL(0.2 + rr() * 0.09, 0.42 + rr() * 0.2, 0.7 + rr() * 0.35); gi2.setColorAt(k, col); k++; }
+  gi2.count = k; gi2.receiveShadow = true; gi2.castShadow = false; gi2.userData.nd = plainNd; world.add(gi2);
+  const patch = P.tex(cv(1024, 1024, (g, w, h) => { for (let i = 0; i < 220; i++) { const x = rr() * w, y = rr() * h, r = 20 + rr() * 90, light = rr() < 0.5; const gr = g.createRadialGradient(x, y, 0, x, y, r);
+    gr.addColorStop(0, light ? 'rgba(170,200,90,0.35)' : 'rgba(40,70,20,0.35)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); } }), 1, 1);
+  patch.wrapS = patch.wrapT = THREE.ClampToEdgeWrapping;
+  const pm = new THREE.MeshBasicMaterial({ map: patch, transparent: true, depthWrite: false, fog: true }); decal(pm, 1);
+  const pp = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), pm); pp.rotation.x = -Math.PI / 2; pp.position.set(0, 0.012, 20); pp.userData.ndSkip = true; pp.renderOrder = 0; world.add(pp); }
 // cauldron over a fire in the yard
 const kettle = new THREE.Group(); kettle.position.set(2.6, 0, -0.6); world.add(kettle);
 { const pts = []; for (let i = 0; i <= 12; i++) { const a = i / 12 * Math.PI * 0.62; pts.push(new THREE.Vector2(Math.sin(a) * 0.55 + 0.02, -Math.cos(a) * 0.5)); }

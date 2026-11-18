@@ -2462,14 +2462,14 @@ export const OUTFITS = {
   old: { tunic: "#9c4a3c", cape: "#6e3330", skin: "#f3d6bb", helmet: "old", armor: true, spear: true, shield: false, beard: "#f4f1ea", brows: "#f4f1ea" },
   toga: { tunic: "#f1ead8", skin: "#f5c9a0", toga: "#6b3c8f", hair: "#3b2a20", stout: true, hairStyle: "short" },
   civA: { tunic: "#4f7fb8", skin: "#f5c9a0", hair: "#5a3b2a", hairStyle: "side" },
-  civB: { tunic: "#d9a441", skin: SKIN, hair: "#2b211c", dress: "#c25a7a", hairStyle: "long" },
+  civB: { tunic: "#d9a441", skin: SKIN, hair: "#2b211c", dress: "#c25a7a", hairStyle: "long", female: true },
   civC: { tunic: "#5d8a3a", skin: "#c99067", hair: "#1e1714", stout: true },
   workA: { tunic: "#8a5d3b", skin: "#f5c9a0", cap: "#c2733a", apron: "#d8c9a6" },
   workB: { tunic: "#3f6a6f", skin: "#ecd0b6", cap: "#5b4a8a", moustache: "#4a3020" },
   pobre: { tunic: "#8a6a48", skin: "#eab58e", hair: "#4a3424", moustache: "#4a3424", patches: true, hairStyle: "spiky" },
   padeiro: { tunic: "#e2cfae", skin: "#f2bf96", cap: "#fbf8f2", apron: "#ffffff", stout: true, moustache: "#3a2414" },
   juiz: { tunic: "#30304a", toga: "#a5263a", skin: "#f3d6bb", beard: "#eeeae2", cap: "#23233a", stout: true },
-  velha: { tunic: "#7d5a8c", skin: "#f1cfb1", hair: "#d9d4cc", dress: "#6f8f5a", hairStyle: "bun" },
+  velha: { tunic: "#7d5a8c", skin: "#f1cfb1", hair: "#d9d4cc", dress: "#6f8f5a", hairStyle: "bun", female: true },
   civD: { tunic: "#c9663a", skin: "#a8714d", hair: "#1e1714", hairStyle: "curly" },
   dpedro: { tunic: "#22263a", skin: "#f3d6bb", hair: "#efece6", beard: "#f4f1ea", stout: true, hairStyle: "bald", pants: "#22263a", shoe: "#111111" },
   marinheiro: { tunic: "#2f5f9a", skin: "#e2a982", hair: "#2b1d17", hairStyle: "spiky" },
@@ -2562,16 +2562,17 @@ const cobweb = (p, cx, cy, r, u) => {
 /** cartoon hair (front view): soft cap with tufted fringe, NO dark band across the forehead. styles: short, spiky, bun, curly, long, side, bald */
 const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
   const dark = mul(col, [0.72, 0.7, 0.75]), ow = 4.2 * u, A = H.a * 1.06, B = H.b * 1.06;
-  if (behind) { if (style === 'long') { const bp = [[cx - A * 1.02, hc - 0.2 * B], [cx - A * 1.08, hc + 0.7 * B], [cx - A * 0.7, hc + 1.05 * B], [cx + A * 0.7, hc + 1.05 * B], [cx + A * 1.08, hc + 0.7 * B], [cx + A * 1.02, hc - 0.2 * B]]; p.poly(bp, dark, ow); }
+  if (behind) { if (style === 'long') { const bp = [[cx - A * 0.98, hc - 0.2 * B], [cx - A * 1.08, hc + 0.8 * B], [cx - A * 1.28, hc + 1.75 * B], [cx - A * 0.7, hc + 1.95 * B], [cx + A * 0.7, hc + 1.95 * B], [cx + A * 1.28, hc + 1.75 * B], [cx + A * 1.08, hc + 0.8 * B], [cx + A * 0.98, hc - 0.2 * B]]; p.shadedFill(bp, col, dark, light, A, 0.3); p.poly(bp, null, ow); for (const sd of [-1, 1]) p.stroke([[cx + sd * A * 0.8, hc + 0.4 * B], [cx + sd * A * 0.85, hc + 1.6 * B]], 2 * u, dark); }
+    if (style === 'ponytail') { const sd = -(facing || 1), px = cx + sd * A * 0.95; const pt = [[px, hc - 0.6 * B], [px + sd * 0.45 * A, hc - 0.2 * B], [px + sd * 0.5 * A, hc + 0.9 * B], [px + sd * 0.15 * A, hc + 1.5 * B], [px - sd * 0.05 * A, hc + 0.6 * B]]; p.shadedFill(pt, col, dark, light, A, 0.3); p.poly(pt, null, ow); p.ell(px + sd * 0.05 * A, hc - 0.5 * B, 0.13 * A, 0.1 * B, '#d0304a', 2.4 * u); }
     if (style === 'bun') { p.ell(cx, hc - B * 1.02, 0.36 * A, 0.3 * B, col, ow); p.ell(cx - 0.08 * A, hc - B * 1.08, 0.12 * A, 0.07 * B, mul(col, [1.15, 1.15, 1.15]), 0); }
     return; }
   if (style === 'bald') { for (const sd of [-1, 1]) p.ell(cx + sd * 0.92 * H.a, hc - 0.05 * B, 0.2 * A, 0.32 * B, col, 3 * u); return; }
-  const sk = facing * 0.12 * A, cut = hc - (style === 'long' || style === 'side' ? 0.28 : 0.36) * B;
+  const sk = facing * 0.12 * A, cut = hc - (style === 'long' ? 0.42 : style === 'side' ? 0.28 : 0.36) * B;
   const pts = [];
   const a0 = Math.PI + 0.32, a1 = 2 * Math.PI - 0.32;
   for (let i = 0; i <= 28; i++) { const a = a0 + i / 28 * (a1 - a0); pts.push([cx + Math.cos(a) * A, hc + Math.sin(a) * B * 1.02]); }
   // side drops (sideburns) for long/side/short
-  const drop = style === 'long' ? 0.55 : style === 'curly' ? 0.25 : 0.12;
+  const drop = style === 'long' ? 0.3 : style === 'curly' ? 0.25 : 0.12;
   if (drop > 0.2) pts.push([cx + A * 0.99, hc + drop * B]); pts.push([cx + A * 0.86, cut + 0.06 * B]);
   // fringe: rounded tufts from right to left
   const n = style === 'spiky' ? 5 : 4;
@@ -2583,6 +2584,7 @@ const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
   p.shadedFill(pts, col, mul(col, [0.8, 0.78, 0.84]), light, H.a, 0.35);
   p.stroke(pts.slice(0, 29), ow, INK);
   p.stroke(pts.slice(28), 1.6 * u, dark);   // fringe edge: thin, soft — no band
+  if (style === 'long') { p.stroke([[cx + sk * 0.3, hc - 1.02 * B], [cx + sk * 0.3 + 2 * u, cut + 0.05 * B]], 2 * u, dark); for (const sd of [-1, 1]) for (let k = 1; k <= 3; k++) p.stroke([[cx + sd * A * (0.15 + k * 0.2), hc - 0.9 * B + k * 0.1 * B], [cx + sd * A * (0.25 + k * 0.2), cut]], 1.4 * u, dark); }
   p.stroke([[cx - 0.35 * A + sk, hc - 0.82 * B], [cx - 0.05 * A + sk, hc - 0.92 * B]], 3 * u, mul(col, [1.35, 1.35, 1.35]));  // highlight
 };
 /** mitten hand (skin) with thumb, drawn over held props */
@@ -2615,11 +2617,17 @@ export const romanFront = (p, key, opts = {}) => {
     p.ell(fx + side * 5 * u, fy - 1 * u, 11 * u, 6 * u, shoe, 1.8 * u, 180, 360); p.stroke([[fx + side * 5 * u - 11 * u, fy - 1 * u], [fx + side * 5 * u + 11 * u, fy - 1 * u]], 3.4 * u, INK);
     if (O.helmet) for (let k = 1; k <= 3; k++) p.stroke([[fx - 4 * u, fy - k * 0.07 * HH], [fx + 4 * u, fy - k * 0.07 * HH - 2 * u]], 2 * u, LEATHER);
   }
+  if (O.hair && !helmet && ['long', 'ponytail'].includes(O.hairStyle)) { p.rot = null; drawHair(p, O.hairStyle, O.hair, H, cx, hc, light, facing, u, true); }
   // ---- upper body ----
   p.rot = tilt ? [rad(tilt), cx, hipY] : null;
   const T = { a: (0.4 * W) / 1.06 * (O.stout ? 1.12 : 1), b: 0.5 * (torsoBot - (chin - 0.25 * HH)), nTop: 2.2, nBot: 2.6, egg: O.stout ? 0.17 : 0.12, asym: 0.04 * facing, rot: 0, noise: 0.006, seed: seed + 7 };
-  const tcx = cx + 3 * u * facing, tcy = torsoBot - T.b, tp = blobPts(tcx, tcy, T);
-  const S = (side) => [tcx + side * 0.85 * T.a, chin + 0.12 * HH];
+  const tcx = cx + 3 * u * facing, tcy = torsoBot - T.b;
+  let tp = blobPts(tcx, tcy, T);
+  if (O.female) { const top = chin + 0.1 * HH, bot = torsoBot + 0.04 * HH, H2 = bot - top, half = (k) => { // k 0 (top) .. 1 (bottom)
+      const sh = 0.78, wa = 0.58, hi = 1.04; return T.a * (k < 0.12 ? sh * (0.55 + 0.45 * Math.sin(k / 0.12 * Math.PI / 2)) : k < 0.5 ? sh + (wa - sh) * Math.sin((k - 0.12) / 0.38 * Math.PI / 2) : k < 0.85 ? wa + (hi - wa) * Math.sin((k - 0.5) / 0.35 * Math.PI / 2) : hi * Math.cos((k - 0.85) / 0.15 * Math.PI / 2 * 0.9)); };
+    const L = [], Rr = []; for (let i = 0; i <= 30; i++) { const k = i / 30, y = top + k * H2, w = Math.max(half(k), 0.05 * T.a); Rr.push([tcx + w, y]); L.push([tcx - w, y]); }
+    tp = [...Rr, ...L.reverse()]; }
+  const S = (side) => O.female ? [tcx + side * 0.56 * T.a, chin + 0.24 * HH] : [tcx + side * 0.8 * T.a, chin + 0.14 * HH];
   const arm = (side, pose) => {
     const s = S(side), X = (k) => tcx + side * (T.a * 1.1 + k * u);
     switch (pose) {
@@ -2643,14 +2651,20 @@ export const romanFront = (p, key, opts = {}) => {
   };
   const arms = [arm(-1, L), arm(1, R)];
   const drawArm = (a) => {
-    const cp = curve(a.pts[0], a.pts[1], a.pts[2]);
-    p.band(cp, mix(O.tunic, "#000000", 0.08), 7 * u, 1.7 * u, "round");
+    const cp = curve(a.pts[0], a.pts[1], a.pts[2]), sleeve = mix(O.tunic, "#000000", 0.08);
+    p.band(cp, sleeve, 7 * u, 1.7 * u, "round");
+    { const [sx, sy] = a.pts[0], [nx, ny] = cp[2], dx = nx - sx, dy = ny - sy, l = Math.hypot(dx, dy) || 1; // seamless shoulder: cover the seam with sleeve colour, inside the body
+      p.ell(sx - dx / l * 2 * u, sy - dy / l * 2 * u, 6.2 * u, 6.2 * u, sleeve, 0); p.ell(sx + dx / l * 2 * u, sy + dy / l * 2 * u, 4.6 * u, 4.6 * u, sleeve, 0); }
     const [hx, hy] = a.pts[2], dirx = Math.sign(hx - cx) || 1;
+    const holds = (opts.holdL && a === arms[0]) || (opts.holdR && a === arms[1]);
+    if (holds) hand(p, hx, hy, u, skin, -dirx);   // palm + thumb behind the object
     if (opts.holdL && a === arms[0]) PROP[opts.holdL](p, hx, hy, u, opts);
     if (opts.holdR && a === arms[1]) PROP[opts.holdR](p, hx, hy, u, opts);
+    if (holds) { const fp = []; for (let i = 0; i <= 12; i++) { const t = -0.5 + i / 12; fp.push([hx + dirx * 1.5 * u + Math.cos(t * 2.4) * 6.2 * u * -dirx * 0.2 + t * 2 * u, hy - 1 * u + t * 11 * u]); }
+      p.band(fp, skin, 5.4 * u, 1.8 * u, 'round'); for (const t of [-0.17, 0.17]) p.stroke([[hx - 2.5 * u, hy - 1 * u + t * 11 * u], [hx + 2.5 * u, hy - 1 * u + t * 11 * u]], 1.1 * u, mul(skin, [0.7, 0.6, 0.55])); }
     if (opts.holdBoth && a === arms[1]) { const [lx, ly] = arms[0].pts[2]; PROP[opts.holdBoth](p, (lx + hx) / 2, (ly + hy) / 2, u, opts); hand(p, lx, ly, u, skin, -1); }
     if (a.finger) { const dx = a.pts[2][0] - a.pts[1][0], dy = a.pts[2][1] - a.pts[1][1], l = Math.hypot(dx, dy); p.band([[hx, hy], [hx + dx / l * 14 * u, hy + dy / l * 14 * u]], skin, 3.4 * u, 1.6 * u, "round"); }
-    hand(p, hx, hy, u, skin, a.thumb ? 0 : dirx);
+    if (!holds) hand(p, hx, hy, u, skin, a.thumb ? 0 : dirx);
     if (a.thumb) p.band([[hx, hy - 3 * u], [hx + dirx * 3 * u, hy - 14 * u]], skin, 4 * u, 1.6 * u, "round");
   };
   // spear behind
@@ -2661,7 +2675,6 @@ export const romanFront = (p, key, opts = {}) => {
     p.poly(tip, old ? "#8b7c6a" : "#c9cfd6", 2 * u);
     if (web) cobweb(p, s1[0] - 2 * u, s1[1] + 60 * u, 70 * u, u);
   }
-  for (const a of arms) if (!a.front) drawArm(a);
   // torso
   if (dress) {
     const D = { a: 0.5 * W * 0.98, b: 0.5 * ((sole - 0.35 * HH) - (chin - 0.2 * HH)), nTop: 2.0, nBot: 3.0, egg: 0.35, asym: 0, rot: 0, noise: 0.006, seed: seed + 9 };
@@ -2674,6 +2687,7 @@ export const romanFront = (p, key, opts = {}) => {
     p.gradFill(sk, O.tunic, mul(O.tunic, SH_CLOTH), light); p.poly(sk, null, ow * 0.8);
     if (O.armor) for (let i = -3; i <= 3; i++) { const x = tcx + i * 0.27 * T.a, st = [[x - 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot + 0.22 * HH], [x - 9 * u, torsoBot + 0.22 * HH]]; p.poly(st, old ? "#5e4632" : LEATHER, 1.6 * u); }
   }
+  if (O.female) { const nk = [[tcx - 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.2 * T.a, chin + 0.16 * HH], [tcx - 0.2 * T.a, chin + 0.16 * HH]]; p.poly(nk, mul(skin, [0.92, 0.88, 0.86]), 1.8 * u); }
   p.gradFill(tp, O.tunic, mul(O.tunic, SH_CLOTH), light);
   p.clip(tp, () => {
     if (O.armor) {
@@ -2690,13 +2704,15 @@ export const romanFront = (p, key, opts = {}) => {
       p.band([[tcx - 1.4 * T.a, torsoBot - 0.24 * HH], [tcx + 1.4 * T.a, torsoBot - 0.24 * HH]], O.apron ? "#5a3b2a" : "#e2c27a", 0.05 * HH, 1.2 * u);
       if (O.toga) p.band([[tcx - 1.0 * T.a, chin - 0.1 * HH], [tcx + 1.1 * T.a, torsoBot - 0.1 * HH]], O.toga, 0.16 * HH, 1.6 * u);
       if (O.apron) p.poly([[tcx - 0.55 * T.a, torsoBot - 0.2 * HH], [tcx + 0.55 * T.a, torsoBot - 0.2 * HH], [tcx + 0.6 * T.a, torsoBot + 0.2 * HH], [tcx - 0.6 * T.a, torsoBot + 0.2 * HH]], O.apron, 1.6 * u);
-      p.stroke([[tcx - 0.2 * T.a, chin + 0.02 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.2 * T.a, chin + 0.02 * HH]], 2 * u);
+      if (O.female) p.ell(tcx, chin + 0.11 * HH, 0.24 * T.a, 0.07 * HH, mul(skin, [0.92, 0.88, 0.86]), 1.6 * u, 0, 180);
+      else p.stroke([[tcx - 0.2 * T.a, chin + 0.02 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.2 * T.a, chin + 0.02 * HH]], 2 * u);
       if (O.patches) { p.poly(rrect(tcx - 0.62 * T.a, chin + 0.3 * HH, tcx - 0.22 * T.a, chin + 0.62 * HH, 2 * u), "#a8865c", 1.6 * u);
         p.poly(rrect(tcx + 0.25 * T.a, chin + 0.62 * HH, tcx + 0.62 * T.a, chin + 0.88 * HH, 2 * u), "#6d5236", 1.6 * u);
         for (let i = 0; i < 4; i++) p.stroke([[tcx - 0.6 * T.a + i * 0.12 * T.a, chin + 0.28 * HH], [tcx - 0.6 * T.a + i * 0.12 * T.a, chin + 0.33 * HH]], 1.2 * u); }
     }
   });
   p.inkRing(tp, ow, thick);
+  for (const a of arms) if (!a.front) drawArm(a);
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);
@@ -2723,7 +2739,7 @@ export const romanFront = (p, key, opts = {}) => {
   p.rot = Ah ? [rad(Ah), cx, chin, cpx - cx, cpy - chin] : null;
   if (helmet) galea(p, H, cx, hc, light, thick, ow, old, u);
   const hp = blobPts(cx, hc, H);
-  if (O.hair && !helmet) drawHair(p, O.hairStyle || 'short', O.hair, H, cx, hc, light, facing, u, true);
+  if (O.hair && !helmet && !['long', 'ponytail'].includes(O.hairStyle)) drawHair(p, O.hairStyle || 'short', O.hair, H, cx, hc, light, facing, u, true);
   p.shadedFill(hp, skin, mul(skin, SH_SKIN), light, H.a);
   p.inkRing(hp, ow, thick);
   if (helmet) {
@@ -2748,6 +2764,8 @@ export const romanFront = (p, key, opts = {}) => {
   }
   for (const sd of [-1, 1]) { const g = p.g; g.save(); g.globalAlpha = 0.28; p.ell(cx + 7 * u * facing + sd * 27 * u, hc + 12 * u, 8 * u, 5 * u, "#ff7a6a", 0); g.restore(); }
   faceFront(p, cx, hc, W, expr, facing, look, lid, helmet, skin, O.beard ? O.beard : O.moustache, !!O.stout);
+  if (O.female) { const fx = cx + 7 * u * facing; for (const sd of [-1, 1]) { const ex = fx + sd * 13 * u, ey = hc - 6 * u; for (let k = 0; k < 3; k++) p.stroke([[ex + sd * (4 + k * 3) * u, ey - (3 - k) * u], [ex + sd * (8 + k * 4) * u, ey - (8 - k * 1.5) * u]], 2 * u); }
+    const g = p.g; g.save(); g.globalAlpha = 0.55; p.ell(cx + 8 * u * facing, hc + 21 * u, 6 * u, 2.4 * u, '#d0405a', 0); g.restore(); }
   if (O.brows) for (const s of [-1, 1]) p.ell(cx + 7 * u * facing + s * 14 * u, hc - 20 * u, 11 * u, 5 * u, O.brows, 2 * u);
   if (O.beard) { // re-draw the mouth over the beard for open mouths
     if (expr === "shock" || expr === "snore") p.ell(cx + 8 * u * facing, hc + 22 * u, 6 * u, 7 * u, "#5a1e28", 2 * u);
@@ -2798,30 +2816,6 @@ export const fxWood = (p, seed) => { p.poly([[200, 420], [400, 400], [420, 560],
 
 export const headCenter = (seed = 3) => { const H = headBlob(seed, 118, 0), HH = 2 * H.b; return 975 - 1.38 * HH - 1.08 * HH - H.b; };
 
-/** cartoon vulture (urubu) seen from the front/below. flap -1..1, scare 0/1 (startled), mouth open */
-export const fxVulture = (p, flap = 0, scare = 0, open = 0, look = 0) => {
-  const BLK = "#2a2226", BLK2 = "#40363a", cx = 300, cy = 520, a = flap * 0.75;
-  for (const s of [-1, 1]) { // wings
-    const r0 = [cx + s * 40, cy - 20], tip = [cx + s * 290, cy - 40 - 170 * a], back = [cx + s * 250, cy + 40 - 120 * a];
-    const wing = [r0, [cx + s * 150, cy - 70 - 100 * a], tip, [cx + s * 280, cy + 0 - 140 * a], back, [cx + s * 210, cy + 70 - 90 * a], [cx + s * 150, cy + 60 - 50 * a], [cx + s * 90, cy + 70], [cx + s * 40, cy + 40]];
-    p.poly(wing, BLK, 10);
-    for (let k = 0; k < 4; k++) { const t = 0.55 + k * 0.12, x = cx + s * (90 + 200 * t), y = cy - 40 - 120 * a * t + 60 * (1 - t); p.stroke([[x, y], [x + s * 30, y + 60]], 5, "#5a5052"); }
-  }
-  p.ell(cx, cy + 30, 78, 110, BLK2, 10); // body
-  p.poly([[cx - 40, cy + 120], [cx + 40, cy + 120], [cx + 20, cy + 190], [cx - 20, cy + 190]], BLK, 9); // tail
-  for (const s of [-1, 1]) { p.stroke([[cx + s * 25, cy + 130], [cx + s * 32, cy + 175]], 7, "#d9c9b0"); }
-  p.ell(cx, cy - 75, 62, 30, "#efe6dc", 9); // white ruff
-  const hx = cx + look * 14, hy = cy - 140 - (scare ? 25 : 0);
-  p.stroke([[cx, cy - 80], [hx, hy + 20]], 22, "#c96a5e");
-  p.ell(hx, hy, 52, 46, "#d8705f", 10); // bald red head
-  const ey = hy - 12, er = scare ? 19 : 14;
-  for (const s of [-1, 1]) { p.ell(hx + s * 22, ey, er, er + 2, "#ffffff", 5); p.dot(hx + s * 22 + look * 5, ey + 2, scare ? 6 : 8, "#1a1214"); }
-  if (!scare) for (const s of [-1, 1]) p.stroke([[hx + s * 8, ey - 20], [hx + s * 36, ey - 14]], 6, "#5a2a26");
-  // hooked beak
-  p.poly([[hx - 14, hy + 4], [hx + 14, hy + 4], [hx + 10, hy + 34 + open * 8], [hx, hy + 46 + open * 10], [hx - 10, hy + 34 + open * 8]], "#efe0b0", 7);
-  if (open) p.ell(hx, hy + 32, 9, 10 * open, "#7a1e28", 4);
-  if (scare) for (let k = 0; k < 5; k++) { const ang = -Math.PI / 2 + (k - 2) * 0.35; p.stroke([[hx + Math.cos(ang) * 75, hy + Math.sin(ang) * 70], [hx + Math.cos(ang) * 105, hy + Math.sin(ang) * 100]], 7); }
-};
 /** single feather drifting */
 export const fxFeather = (p) => { p.poly([[300, 380], [330, 470], [305, 640], [275, 470]], "#2f282b", 8); p.stroke([[302, 400], [303, 630]], 4, "#6a6064"); };
 /** small cartoon splash of soap water */
@@ -2829,47 +2823,6 @@ export const fxSoap = (p, t) => { const g = p.g; g.save(); g.globalAlpha = Math.
   for (let i = 0; i < 9; i++) { const a = -Math.PI * (0.1 + 0.8 * i / 8), r = 80 + 260 * t; p.ell(300 + Math.cos(a) * r, 700 + Math.sin(a) * r * 1.2 + 300 * t * t, 26 - 10 * t, 34 - 10 * t, "#efe4c0", 8); }
   g.restore(); };
 
-/** cartoon dromedary (camelo) side view. o: {walk 0..1, lie 0..1, spit 0..1, chew, hat, mule, bandage, look, blink, mouth} */
-export const fxCamel = (p, o = {}) => {
-  const SAND = o.mule ? "#8f8a84" : "#d2a868", SH2 = o.mule ? "#6f6a66" : "#b08348", lie = o.lie || 0, w = o.walk || 0;
-  const g = p.g; g.save(); g.translate(230, 50); g.scale(0.95, 0.95);
-  const bodyY = 560 + lie * 230, bx = 0;
-  // legs (behind first)
-  const leg = (x, ph, front) => { const sw = Math.sin((w + ph) * Math.PI * 2) * 26 * (1 - lie);
-    if (lie > 0.5) { p.stroke([[x, bodyY + 40], [x + 46, bodyY + 75], [x - 10, bodyY + 95]], 20, INK); p.stroke([[x, bodyY + 40], [x + 46, bodyY + 75], [x - 10, bodyY + 95]], 13, SH2); return; }
-    const kx = x + sw * 0.6, ky = bodyY + 170 - lie * 60, fx = x + sw, fy = 975 - lie * 120;
-    p.stroke([[x, bodyY + 40], [kx, ky], [fx, fy]], 22, INK); p.stroke([[x, bodyY + 40], [kx, ky], [fx, fy]], 14, front ? SAND : SH2);
-    p.ell(kx, ky, 11, 11, front ? SAND : SH2, 5); p.ell(fx + 8, fy - 2, 18, 9, "#6a5a48", 5); };
-  leg(-120, 0.5, false); leg(95, 0, false);
-  // tail
-  p.stroke([[-190, bodyY - 20], [-215, bodyY + 60], [-205, bodyY + 120]], 10, INK); p.stroke([[-190, bodyY - 20], [-215, bodyY + 60], [-205, bodyY + 120]], 5, SH2);
-  // body + hump
-  p.ell(bx - 10, bodyY, 200, 95, SAND, 10);
-  if (!o.mule) { p.ell(-25, bodyY - 70, 115, 110, SAND, 10, 180, 360); p.ell(-25, bodyY - 40, 150, 62, SAND, 0); }
-  p.ell(bx - 10, bodyY + 25, 150, 55, SAND, 0); p.stroke([[-120, bodyY + 55], [90, bodyY + 60]], 5, SH2);
-  leg(-100, 0, true); leg(115, 0.5, true);
-  if (o.bandage) { p.poly([[-118, bodyY + 120], [-80, bodyY + 120], [-80, bodyY + 160], [-118, bodyY + 160]], "#f4f1ea", 5); p.stroke([[-112, bodyY + 135], [-86, bodyY + 145]], 4, "#d24a3a"); }
-  // neck + head
-  const nb = [150, bodyY - 30], nm = [o.mule ? 200 : 240, bodyY - (o.mule ? 110 : 190) + lie * 20], hy = nm[1] - (o.mule ? 30 : 60);
-  p.stroke([nb, [210, bodyY - 70], nm, [nm[0] + 10, hy]], 62, INK); p.stroke([nb, [210, bodyY - 70], nm, [nm[0] + 10, hy]], 46, SAND);
-  const hx = nm[0] + 40;
-  p.ell(hx, hy, 78, 46, SAND, 9, 0, 360, -8);
-  p.ell(hx + 62, hy + 14, 34, 30, o.mule ? "#a9a49e" : "#e6c48a", 8); // snout
-  for (const s of [-1, 1]) if (o.mule) p.poly([[hx - 30 + s * 12, hy - 30], [hx - 46 + s * 18, hy - 120], [hx - 10 + s * 12, hy - 40]], SAND, 8);
-  else p.ell(hx - 40 + s * 8, hy - 40, 12, 20, SAND, 6);
-  p.dot(hx + 78, hy + 4, 5);
-  // eye: lazy half-lid
-  const ex = hx + 6 + (o.look || 0) * 6, ey = hy - 10;
-  p.ell(ex, ey, 18, 18, "#ffffff", 5); p.dot(ex + 4, ey + 3, 7);
-  if (!o.wide) p.poly([[ex - 20, ey - 2], [ex + 20, ey - 2], [ex + 20, ey - 20], [ex - 20, ey - 20]], SAND, 0), p.stroke([[ex - 19, ey - 2], [ex + 19, ey - 2]], 5);
-  if (o.blink) p.poly([[ex - 20, ey + 18], [ex + 20, ey + 18], [ex + 20, ey - 20], [ex - 20, ey - 20]], SAND, 0), p.stroke([[ex - 18, ey + 4], [ex + 18, ey + 4]], 5);
-  // mouth
-  const mo = o.spit ? 1 : (o.mouth || 0), my = hy + 30;
-  if (mo > 0) p.ell(hx + 70, my + 6, 22, 8 + 12 * mo, "#7a2e34", 6);
-  else p.stroke([[hx + 46, my + 2], [hx + 66, my + 8 + (o.chew ? 6 * Math.sin(o.chew) : 0)], [hx + 92, my + 2]], 5);
-  if (o.hat) { g.save(); g.translate(hx + 90, my + 4); g.rotate(-0.3); p.ell(0, 0, 70, 18, "#5a3a22", 7); p.ell(0, -22, 38, 28, "#5a3a22", 7, 180, 360); p.stroke([[-36, -6], [36, -6]], 7, "#c9a24a"); g.restore(); }
-  g.restore();
-};
 /** spit blob flying (t 0..1) */
 export const fxSpit = (p, t) => { const g = p.g; g.save(); g.globalAlpha = 1 - t * 0.3; p.ell(300, 500, 60 + 40 * t, 45 + 30 * t, "#e9f4e6", 8); for (let i = 0; i < 6; i++) p.ell(300 + Math.cos(i) * (90 + 120 * t), 500 + Math.sin(i * 1.7) * (60 + 80 * t), 18, 14, "#e9f4e6", 5); g.restore(); };
 /** a straw hat (sitting on a head) */
@@ -2879,3 +2832,165 @@ export const fxThought = (p, t) => { const g = p.g; g.save(); g.globalAlpha = Ma
   for (let i = 0; i < 9; i++) { const a = i / 9 * Math.PI * 2; p.ell(300 + Math.cos(a) * 170, 430 + Math.sin(a) * 120, 90, 70, "#ffffff", 9); }
   p.ell(300, 430, 200, 140, "#ffffff", 0); p.ell(150, 640, 30, 24, "#ffffff", 7); p.ell(110, 700, 18, 14, "#ffffff", 6);
   g.translate(300, 430); g.scale(0.36, 0.36); g.translate(-330, -560); fxCamel(p, { walk: 0 }); g.restore(); };
+
+// ===== bichos redesenhados (ver _charlab/web/animals.js) =====
+// Bichos redesenhados (mesmo acabamento dos personagens): formas fundidas num contorno único, sombreado, olhos com brilho.
+// Espaço do cartão: x -200..800 (centro 300), y 0..1000, pés em ~975. Todos olham para a DIREITA (use flip no cartão para virar).
+const A_LIGHT = -2.094, A_TH = Math.atan2(-Math.sin(A_LIGHT) + 0.8, -Math.cos(A_LIGHT));
+const aEll = (cx, cy, a, b, rot = 0, n = 44) => { const c = Math.cos(rot), s = Math.sin(rot), o = []; for (let i = 0; i < n; i++) { const t = i / n * Math.PI * 2, x = Math.cos(t) * a, y = Math.sin(t) * b; o.push([cx + x * c - y * s, cy + x * s + y * c]); } return o; };
+const aExt = (pts) => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); } return Math.max(x1 - x0, y1 - y0) / 2; };
+/** tapered limb/neck polygon along a polyline, width w0 -> w1 */
+const aTaper = (pts, w0, w1, n = 16) => {
+  const P = []; for (let i = 0; i <= n; i++) { const t = i / n, k = t * (pts.length - 1), j = Math.min(pts.length - 2, Math.floor(k)), u = k - j; P.push([pts[j][0] + (pts[j + 1][0] - pts[j][0]) * u, pts[j][1] + (pts[j + 1][1] - pts[j][1]) * u]); }
+  const L = [], R = []; P.forEach((q, i) => { const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)]; let nx = b[1] - a[1], ny = a[0] - b[0]; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l; const w = (w0 + (w1 - w0) * i / n) / 2; L.push([q[0] + nx * w, q[1] + ny * w]); R.push([q[0] - nx * w, q[1] - ny * w]); });
+  return [...L, ...R.reverse()];
+};
+/** draw a group of overlapping shapes as ONE silhouette: all ink first, then all fills */
+const aGroup = (p, shapes, w = 9) => { for (const s of shapes) if (!s.noInk) p.inkRing(s.pts, s.w ?? w, A_TH); for (const s of shapes) { const R = s.R || aExt(s.pts); if (s.flat) p.poly(s.pts, s.col, 0); else p.shadedFill(s.pts, s.col, s.shadow || mul(s.col, [0.76, 0.72, 0.8]), A_LIGHT, R, 0.35); } };
+const aEye = (p, x, y, r, o = {}) => { p.ell(x, y, r, r * 1.05, '#ffffff', 4.5); const lx = (o.look || 0) * r * 0.3; p.ell(x + lx + r * 0.15, y + r * 0.12, r * 0.52, r * 0.58, o.iris || '#2a1a14', 0); p.dot(x + lx + r * 0.32, y - r * 0.12, r * 0.18, '#ffffff');
+  if (o.lid) { p.clip(aEll(x, y, r * 1.02, r * 1.07), () => p.poly([[x - r * 1.2, y - r * 1.2], [x + r * 1.2, y - r * 1.2], [x + r * 1.2, y - r * 1.2 + o.lid * 2.1 * r], [x - r * 1.2, y - r * 1.2 + o.lid * 2.1 * r]], o.skin, 0)); p.stroke([[x - r * 0.98, y - r * 1.05 + o.lid * 2.1 * r], [x + r * 0.98, y - r * 1.05 + o.lid * 2.1 * r]], 4); p.ell(x, y, r, r * 1.05, null, 4.5); }
+  if (o.lashes) for (let k = 0; k < 3; k++) { const a = -Math.PI * (0.25 + k * 0.17); p.stroke([[x + Math.cos(a) * r, y + Math.sin(a) * r], [x + Math.cos(a) * r * 1.35, y + Math.sin(a) * r * 1.4]], 3.5); } };
+const aHoof = (p, x, y, w, col = '#3a2a22') => { p.poly([[x - w, y - w * 0.9], [x + w, y - w * 0.9], [x + w * 1.1, y], [x - w * 1.1, y]], col, 5); };
+
+/** CAMELO (dromedário). o: {walk, lie, spit, chew, hat, mule, bandage, look, blink, mouth, wide} */
+export const fxCamel = (p, o = {}) => {
+  const mule = !!o.mule, C = mule ? '#9a948c' : '#d8ad6c', C2 = mule ? '#7a746e' : '#bb8a4c', BELLY = mule ? '#c2bcb4' : '#efd3a0', lie = o.lie || 0, w = o.walk || 0;
+  const by = 590 + lie * 210, bx = 230;
+  // far legs (darker), drawn first
+  const NEAR = [], FEET = []; const leg = (x, ph, far) => { const col = far ? C2 : C; if (lie > 0.5) { const pts = aTaper([[x, by + 40], [x + 60, by + 95], [x - 20, by + 115]], 34, 26); if (far) { aGroup(p, [{ pts, col }], 7); p.ell(x - 22, by + 115, 18, 12, '#6a5040', 5); } else { NEAR.push({ pts, col }); FEET.push(() => p.ell(x - 22, by + 115, 18, 12, '#6a5040', 5)); } return; }
+    const sw = Math.sin((w + ph) * Math.PI * 2) * 28 * (1 - lie), kx = x + sw * 0.5, ky = by + 190, fx = x + sw, fy = 972;
+    const pts = aTaper([[x, by + 30], [x + 4, by + 110], [kx, ky], [fx, fy - 20]], 46, 22); if (far) { aGroup(p, [{ pts, col }, { pts: aEll(kx, ky, 17, 16), col }], 7); aHoof(p, fx, fy, 20, '#6a5040'); } else { NEAR.push({ pts, col }, { pts: aEll(kx, ky, 17, 16), col }); FEET.push(() => aHoof(p, fx, fy, 20, '#6a5040')); } };
+  leg(bx - 120, 0.5, true); leg(bx + 105, 0, true);
+  // tail
+  p.band([[bx - 185, by - 30], [bx - 210, by + 40], [bx - 200, by + 110]], C2, 12, 4, 'round'); p.ell(bx - 200, by + 118, 10, 18, mul(C2, [0.7, 0.7, 0.7]), 4);
+  // body + hump + neck + head as one silhouette
+  const neck = mule ? aTaper([[bx + 150, by - 40], [bx + 210, by - 110], [bx + 245, by - 150]], 110, 70) : aTaper([[bx + 150, by - 20], [bx + 230, by - 80], [bx + 250, by - 190], [bx + 280, by - 255]], 100, 62);
+  const hx = mule ? bx + 285 : bx + 320, hy = mule ? by - 185 : by - 290 + lie * 30;
+  const shapes = [{ pts: aEll(bx, by, 195, 100), col: C }, { pts: neck, col: C }, { pts: aEll(hx, hy, 74, 44, -0.12), col: C }, { pts: aEll(hx + 62, hy + 16, 38, 32), col: mix(C, '#ffffff', 0.25) }];
+  if (!mule) shapes.push({ pts: aEll(bx - 15, by - 85, 112, 100), col: C, shadow: C2 });
+  leg(bx - 95, 0, false); leg(bx + 125, 0.5, false);
+  aGroup(p, [...NEAR, ...shapes], 10); FEET.forEach((fn) => fn());
+  p.clip(aEll(bx, by, 195, 100), () => p.ell(bx + 10, by + 70, 150, 50, BELLY, 0));
+  if (!mule) for (let k = 0; k < 7; k++) p.stroke([[bx - 70 + k * 22, by - 172 + Math.abs(k - 3) * 6], [bx - 64 + k * 22, by - 192 + Math.abs(k - 3) * 6]], 4, C2);
+  if (mule) { p.band([[bx + 140, by - 70], [bx + 220, by - 150], [hx - 30, hy - 30]], '#4a4440', 18, 3, 'round'); for (const sd of [-1, 1]) aGroup(p, [{ pts: aTaper([[hx - 30 + sd * 10, hy - 30], [hx - 50 + sd * 18, hy - 120]], 30, 10), col: C }], 6); }
+  else for (const sd of [-1, 1]) aGroup(p, [{ pts: aEll(hx - 42 + sd * 10, hy - 40, 12, 20, -0.2), col: C }], 5);
+  if (o.bandage && lie < 0.5) { p.poly([[bx - 120, by + 150], [bx - 70, by + 150], [bx - 72, by + 200], [bx - 118, by + 200]], '#f6f3ec', 5); p.stroke([[bx - 112, by + 168], [bx - 80, by + 180]], 5, '#d24a3a'); }
+  if (o.bandage && lie >= 0.5) { p.ell(bx - 115, by + 112, 34, 16, '#f6f3ec', 5); p.stroke([[bx - 130, by + 112], [bx - 100, by + 112]], 5, '#d24a3a'); }
+  // face
+  aEye(p, hx + 2, hy - 8, 17, { look: o.look || 0.5, lid: o.blink ? 1 : (o.wide ? 0 : 0.45), skin: C, lashes: !mule });
+  p.stroke([[hx + 88, hy + 4], [hx + 96, hy + 12]], 5);
+  const my = hy + 34, mo = o.spit ? 1 : (o.mouth || 0), ch = o.chew ? 5 * Math.sin(o.chew) : 0;
+  if (mo > 0) { p.ell(hx + 72, my + 8, 26, 9 + 13 * mo, '#7a2e34', 5); p.ell(hx + 74, my - 2, 30, 8, mix(C, '#ffffff', 0.25), 4, 180, 360); }
+  else { p.stroke([[hx + 44, my + 2], [hx + 70, my + 10 + ch], [hx + 98, my + 2]], 5); p.ell(hx + 68, my + 16 + ch, 22, 8, mix(C, '#ffffff', 0.2), 4, 0, 180); }
+  if (o.hat) { const g = p.g; g.save(); g.translate(hx + 95, my + 6); g.rotate(-0.3); p.ell(0, 0, 72, 18, '#5a3a22', 7); p.ell(0, -22, 40, 30, '#5a3a22', 7, 180, 360); p.stroke([[-38, -6], [38, -6]], 7, '#c9a24a'); g.restore(); }
+};
+/** GIRAFA (lado direito) */
+export const fxGiraffe = (p, o = {}) => {
+  const Y = '#efbe55', S = '#a8682a', w = o.walk || 0, bx = 250, by = 650;
+  const NEAR = []; const leg = (x, ph, far) => { const sw = Math.sin((w + ph) * Math.PI * 2) * 20; const pts = aTaper([[x, by + 20], [x + sw * 0.4, by + 170], [x + sw, 955]], 34, 18); const sh = [{ pts, col: far ? mul(Y, [0.85, 0.82, 0.8]) : Y }, { pts: aEll(x + sw * 0.4, by + 170, 13, 12), col: far ? mul(Y, [0.85, 0.82, 0.8]) : Y }]; if (far) aGroup(p, sh, 6); else NEAR.push(...sh); aHoof(p, x + sw, 972, 14); };
+  leg(bx - 85, 0.5, true); leg(bx + 80, 0, true);
+  const neck = aTaper([[bx + 95, by - 20], [bx + 140, by - 200], [bx + 170, by - 400], [bx + 185, by - 470]], 92, 46);
+  const hx = bx + 205, hy = by - 495;
+  const body = aEll(bx, by, 145, 82, -0.08);
+  leg(bx - 60, 0, false); leg(bx + 105, 0.5, false);
+  aGroup(p, [...NEAR, { pts: body, col: Y }, { pts: neck, col: Y }, { pts: aEll(hx, hy, 52, 32, 0.15), col: Y }, { pts: aEll(hx + 42, hy + 14, 26, 22), col: '#f6dc98' }], 9);
+  const spots = (clipPts, x0, y0, x1, y1, seed) => p.clip(clipPts, () => { let s = seed; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280; for (let y = y0; y < y1; y += 46) for (let x = x0 + ((y / 46) % 2) * 22; x < x1; x += 50) { const pts = aEll(x + r() * 10, y + r() * 10, 17 + r() * 6, 14 + r() * 5, r() * 3, 7); p.poly(pts, S, 0); } });
+  spots(body, bx - 150, by - 90, bx + 150, by + 90, 7); spots(neck, bx + 50, by - 480, bx + 230, by, 11);
+  p.band([[bx + 75, by - 60], [bx + 110, by - 240], [bx + 140, by - 420], [hx - 30, hy - 10]], '#8a5422', 12, 3, 'round');
+  for (const sd of [0, 1]) { p.band([[hx - 18 + sd * 20, hy - 26], [hx - 22 + sd * 22, hy - 62]], Y, 8, 3, 'round'); p.ell(hx - 22 + sd * 22, hy - 66, 9, 9, S, 4); }
+  aGroup(p, [{ pts: aEll(hx - 36, hy - 20, 18, 9, -0.6), col: Y }], 5);
+  aEye(p, hx + 2, hy - 6, 11, { look: 0.5, lashes: true, lid: 0.25, skin: Y }); p.stroke([[hx + 56, hy + 6], [hx + 60, hy + 12]], 4); p.arc(hx + 46, hy + 24, 12, 5, 20, 160, 4);
+  p.band([[bx - 140, by - 20], [bx - 160, by + 60], [bx - 150, by + 140]], Y, 8, 3, 'round'); p.ell(bx - 150, by + 150, 9, 16, '#5a3418', 4);
+};
+/** ELEFANTE (lado direito). t anima a orelha */
+export const fxElephant = (p, t = 0) => {
+  const G = '#9aa3ae', G2 = '#7d8693', bx = 250, by = 640;
+  const NEAR = [], FEET = []; const leg = (x, far) => { const pts = aTaper([[x, by + 40], [x, 965]], 78, 70); if (far) aGroup(p, [{ pts, col: G2 }], 8); else NEAR.push({ pts, col: G }); const toes = () => { for (let k = 0; k < 3; k++) p.ell(x - 22 + k * 22, 958, 9, 7, '#e8e2d4', 3); }; if (far) toes(); else FEET.push(toes); };
+  leg(bx - 110, true); leg(bx + 90, true);
+  const hx = bx + 175, hy = by - 95;
+  const trunk = aTaper([[hx + 55, hy + 30], [hx + 95, hy + 120], [hx + 100, hy + 230], [hx + 80, hy + 300]], 64, 30);
+  leg(bx - 70, false); leg(bx + 130, false);
+  aGroup(p, [...NEAR, { pts: aEll(bx, by, 190, 135, -0.05), col: G }, { pts: aEll(hx, hy, 105, 98), col: G }, { pts: trunk, col: G }], 10); FEET.forEach((fn) => fn());
+  for (let k = 0; k < 6; k++) p.arc(hx + 92 - k * 1.5, hy + 110 + k * 28, 22, 6, 10, 170, 3, G2);
+  p.poly(aTaper([[hx + 40, hy + 70], [hx + 90, hy + 95], [hx + 125, hy + 75]], 22, 6), '#f6f0e2', 5);
+  const flap = Math.sin(t * 6) * 12;
+  const ear = aEll(hx - 62, hy + 28, 66 + flap, 92, -0.1); aGroup(p, [{ pts: ear, col: G }], 9); p.clip(ear, () => p.ell(hx - 56, hy + 32, 46 + flap, 70, '#d9a6a8', 0));
+  aEye(p, hx + 40, hy - 20, 13, { look: 0.4, lid: 0.3, skin: G, lashes: true });
+  p.band([[bx - 185, by - 20], [bx - 215, by + 60]], G, 10, 3, 'round'); p.ell(bx - 216, by + 68, 8, 14, '#4a4a4a', 3);
+};
+/** RATO (lado direito) */
+export const fxRat = (p, t = 0) => {
+  const G = '#9a9aa4', bx = 290, by = 905;
+  p.band([[bx - 70, by + 10], [bx - 140, by + 30], [bx - 190, by - 10], [bx - 210, by - 60]], '#e6a8b4', 9, 3, 'round');
+  aGroup(p, [{ pts: aEll(bx, by, 78, 50, -0.05), col: G }, { pts: aTaper([[bx + 50, by - 10], [bx + 140, by + 12]], 66, 14), col: G }], 7);
+  p.clip(aEll(bx, by, 78, 50, -0.05), () => p.ell(bx + 10, by + 34, 60, 20, '#d8d6dc', 0));
+  aGroup(p, [{ pts: aEll(bx + 52, by - 46, 22, 26, -0.3), col: G }], 6); p.ell(bx + 52, by - 46, 13, 16, '#e6a8b4', 0, 0, 360, -17);
+  p.ell(bx + 144, by + 10, 9, 8, '#d0607a', 3); aEye(p, bx + 86, by - 8, 9, { look: 0.6 });
+  for (const d of [-8, 0, 8]) p.stroke([[bx + 128, by + 14], [bx + 175, by + 6 + d * 2]], 2);
+  for (const x of [bx - 40, bx + 30]) p.ell(x, by + 48, 16, 8, '#e6a8b4', 3);
+};
+/** VACA (lado direito) */
+export const fxCow = (p) => {
+  const W = '#f6f3ec', B = '#2a2622', bx = 260, by = 720;
+  const NEAR = [], FEET = []; const leg = (x, far) => { const pts = aTaper([[x, by + 40], [x, 950]], 40, 30); if (far) aGroup(p, [{ pts, col: '#dcd8d0' }], 7); else NEAR.push({ pts, col: W }); if (far) aHoof(p, x, 972, 20); else FEET.push(() => aHoof(p, x, 972, 20)); };
+  leg(bx - 105, true); leg(bx + 95, true);
+  const hx = bx + 205, hy = by - 70;
+  const body = aEll(bx, by, 175, 95, -0.03);
+  leg(bx - 75, false); leg(bx + 125, false);
+  aGroup(p, [...NEAR, { pts: body, col: W }, { pts: aTaper([[bx + 140, by - 30], [hx - 20, hy + 10]], 110, 80), col: W }, { pts: aEll(hx, hy, 62, 54), col: W }, { pts: aEll(hx + 40, hy + 34, 40, 30), col: '#f0b6b2' }], 9); FEET.forEach((fn) => fn());
+  p.clip(body, () => { for (const [x, y, a, b] of [[bx - 80, by - 40, 60, 46], [bx + 50, by + 20, 44, 34], [bx - 10, by - 70, 30, 24], [bx + 120, by - 60, 30, 26]]) p.poly(aEll(x, y, a, b, 0.4, 12), B, 0); });
+  p.poly(aEll(hx - 14, hy - 18, 26, 20, 0.3, 10), B, 0);
+  for (const sd of [-1, 1]) { aGroup(p, [{ pts: aTaper([[hx - 20 + sd * 22, hy - 44], [hx - 22 + sd * 38, hy - 82]], 14, 6), col: '#e8dcb8' }], 4); aGroup(p, [{ pts: aEll(hx - 30 + sd * 46, hy - 30, 22, 12, sd * 0.4), col: W }], 5); }
+  aEye(p, hx + 8, hy - 8, 11, { look: 0.5, lashes: true, lid: 0.2, skin: W }); for (const d of [-10, 10]) p.ell(hx + 52 + d * 0.4, hy + 36 + d, 5, 4, '#9a5a5a', 0);
+  p.ell(bx + 20, by + 92, 40, 20, '#f0b6b2', 5);
+  p.band([[bx - 172, by - 30], [bx - 196, by + 60], [bx - 188, by + 150]], W, 9, 3, 'round'); p.ell(bx - 188, by + 160, 11, 18, B, 4);
+};
+/** DINOSSAURO saurópode (lado direito) */
+export const fxSauro = (p) => {
+  const G = '#6fa35e', G2 = '#4f8040', bx = 250, by = 700;
+  const NEAR = [], FEET = []; const leg = (x, far) => { const pts = aTaper([[x, by + 40], [x, 960]], 74, 64); if (far) aGroup(p, [{ pts, col: G2 }], 8); else NEAR.push({ pts, col: G }); const toes = () => { for (let k = 0; k < 3; k++) p.ell(x - 22 + k * 22, 958, 8, 6, '#e8e2d4', 3); }; if (far) toes(); else FEET.push(toes); };
+  leg(bx - 120, true); leg(bx + 100, true);
+  const neck = aTaper([[bx + 140, by - 40], [bx + 230, by - 230], [bx + 280, by - 470], [bx + 300, by - 560]], 120, 46);
+  const tail = aTaper([[bx - 160, by - 10], [bx - 260, by + 40], [bx - 340, by + 130], [bx - 380, by + 220]], 100, 10);
+  const hx = bx + 320, hy = by - 580;
+  leg(bx - 80, false); leg(bx + 140, false);
+  aGroup(p, [...NEAR, { pts: aEll(bx, by, 200, 120), col: G }, { pts: neck, col: G }, { pts: tail, col: G }, { pts: aEll(hx, hy, 50, 30, 0.1), col: G }], 10); FEET.forEach((fn) => fn());
+  p.clip(aEll(bx, by, 200, 120), () => p.ell(bx, by + 80, 170, 50, '#a8cf8a', 0));
+  for (let k = 0; k < 9; k++) p.ell(bx - 140 + k * 36, by - 110 + Math.abs(k - 4) * 6, 12, 8, G2, 0);
+  aEye(p, hx + 6, hy - 6, 10, { look: 0.6 }); p.arc(hx + 32, hy + 12, 14, 5, 20, 160, 4);
+};
+/** URSO-POLAR (lado direito) */
+export const fxBear = (p) => {
+  const W = '#f4f6fa', S = '#c9d4e2', bx = 280, by = 700;
+  const NEAR = [], FEET = []; const leg = (x, far) => { const pts = aTaper([[x, by + 40], [x, 950]], 72, 64); if (far) aGroup(p, [{ pts, col: '#dde4ee', shadow: S }], 8); else NEAR.push({ pts, col: W, shadow: S }); const toes = () => { for (let k = 0; k < 3; k++) p.ell(x - 18 + k * 18 + 10, 960, 7, 6, '#2a2a30', 0); }; if (far) toes(); else FEET.push(toes); };
+  leg(bx - 110, true); leg(bx + 95, true);
+  const hx = bx + 220, hy = by - 60;
+  leg(bx - 70, false); leg(bx + 135, false);
+  aGroup(p, [...NEAR, { pts: aEll(bx, by, 200, 125), col: W, shadow: S }, { pts: aEll(bx - 150, by - 40, 60, 60), col: W, shadow: S }, { pts: aEll(hx, hy, 80, 70), col: W, shadow: S }, { pts: aEll(hx + 70, hy + 22, 42, 30), col: W, shadow: S }], 10); FEET.forEach((fn) => fn());
+  for (const sd of [-1, 1]) { aGroup(p, [{ pts: aEll(hx - 30 + sd * 34, hy - 64, 20, 18), col: W, shadow: S }], 6); p.ell(hx - 30 + sd * 34, hy - 64, 9, 8, '#c8b8c0', 0); }
+  p.ell(hx + 108, hy + 16, 14, 11, '#1a1a1e', 4); p.stroke([[hx + 100, hy + 34], [hx + 86, hy + 44]], 4); aEye(p, hx + 26, hy - 14, 11, { look: 0.6 });
+};
+/** URUBU (de frente, asas abertas). flap -1..1, scare 0/1, open 0..1 */
+export const fxVulture = (p, flap = 0, scare = 0, open = 0, look = 0) => {
+  const BLK = '#2c2428', BLK2 = '#40363a', cx = 300, cy = 520, a = flap * 0.75;
+  for (const s of [-1, 1]) {
+    const base = [[cx + s * 40, cy - 30], [cx + s * 160, cy - 80 - 90 * a], [cx + s * 270, cy - 60 - 170 * a]], tipY = cy - 60 - 170 * a;
+    const wing = [[cx + s * 40, cy - 30], [cx + s * 160, cy - 85 - 90 * a], [cx + s * 285, tipY - 10]];
+    for (let k = 0; k < 6; k++) { const fx = cx + s * (300 - k * 22), fy = tipY + 20 + k * 28 - 60 * a * (k / 6); wing.push([fx + s * 30, fy + 40], [fx, fy + 30]); }
+    wing.push([cx + s * 120, cy + 70 - 40 * a], [cx + s * 40, cy + 40]);
+    aGroup(p, [{ pts: wing, col: BLK, shadow: '#1a1416' }], 8);
+    for (let k = 0; k < 5; k++) p.stroke([[cx + s * (150 + k * 24), cy - 40 - (70 + k * 18) * a], [cx + s * (170 + k * 24), cy + 20 - (40 + k * 18) * a]], 4, '#5a5054');
+  }
+  aGroup(p, [{ pts: aEll(cx, cy + 30, 78, 112), col: BLK2 }, { pts: [[cx - 40, cy + 120], [cx + 40, cy + 120], [cx + 22, cy + 192], [cx - 22, cy + 192]], col: BLK }], 9);
+  for (const s of [-1, 1]) { p.band([[cx + s * 25, cy + 130], [cx + s * 32, cy + 178]], '#d9c9b0', 9, 3, 'round'); p.stroke([[cx + s * 32, cy + 180], [cx + s * 44, cy + 190]], 4); }
+  for (let k = 0; k < 9; k++) { const t = k / 8; p.ell(cx - 66 + t * 132, cy - 72 + Math.sin(t * Math.PI) * -10, 20, 16, '#f2ebe2', 4); }
+  const hx = cx + look * 14, hy = cy - 145 - (scare ? 25 : 0);
+  aGroup(p, [{ pts: aTaper([[cx, cy - 75], [hx, hy + 20]], 30, 22), col: '#c96a5e' }, { pts: aEll(hx, hy, 52, 46), col: '#d8705f' }], 8);
+  for (let k = 0; k < 4; k++) p.arc(hx, hy - 30 + k * 8, 26 - k * 3, 6, 200, 340, 2.5, '#b0503f');
+  const ey = hy - 10, er = scare ? 18 : 13;
+  for (const s of [-1, 1]) { aEye(p, hx + s * 22, ey, er, { look: s * 0.2 + look, iris: '#1a1214', lid: scare ? 0 : 0.35, skin: '#d8705f' }); if (!scare) p.stroke([[hx + s * 8, ey - 20], [hx + s * 34, ey - 14]], 5, '#5a2a26'); }
+  p.poly([[hx - 15, hy + 6], [hx + 15, hy + 6], [hx + 12, hy + 30 + open * 8], [hx + 2, hy + 48 + open * 10], [hx - 4, hy + 38], [hx - 12, hy + 30 + open * 8]], '#efe0b0', 5);
+  p.stroke([[hx - 6, hy + 18], [hx + 6, hy + 18]], 3, '#b8a070');
+  if (open) p.ell(hx, hy + 32, 9, 10 * open, '#7a1e28', 4);
+  if (scare) for (let k = 0; k < 5; k++) { const ang = -Math.PI / 2 + (k - 2) * 0.35; p.stroke([[hx + Math.cos(ang) * 75, hy + Math.sin(ang) * 70], [hx + Math.cos(ang) * 105, hy + Math.sin(ang) * 100]], 7); }
+};

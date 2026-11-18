@@ -1,0 +1,9 @@
+<!doctype html><html><body style="margin:0;background:#cfe2f2"><canvas id="c" width="2000" height="1500"></canvas>
+<script type="module">
+import * as T from './toon.js'; import * as A from './animals.js';
+const c = document.getElementById('c'), g = c.getContext('2d');
+const list = [['Camelo', (p) => A.fxCamel(p, { walk: 0.2 })], ['Camelo deitado', (p) => A.fxCamel(p, { lie: 1, chew: 1 })], ['Camelo cospe', (p) => A.fxCamel(p, { spit: 1, wide: true })], ['Mula', (p) => A.fxCamel(p, { mule: true, lie: 1, mouth: 0.5 })],
+  ['Girafa', (p) => A.fxGiraffe(p)], ['Elefante', (p) => A.fxElephant(p, 0.3)], ['Vaca', (p) => A.fxCow(p)], ['Dinossauro', (p) => A.fxSauro(p)], ['Urso', (p) => A.fxBear(p)], ['Rato', (p) => A.fxRat(p)], ['Urubu', (p) => A.fxVulture(p, 0.4, 0, 0)], ['Urubu susto', (p) => A.fxVulture(p, -0.5, 1, 1)]];
+list.forEach(([n, fn], i) => { const x = (i % 6) * 333, y = Math.floor(i / 6) * 500; g.save(); g.translate(x, y); g.scale(333 / 1000, 0.5); g.translate(200, 0); fn(new T.Pen(g)); g.restore(); g.fillStyle = '#000'; g.font = '24px sans-serif'; g.fillText(n, x + 10, y + 30); });
+window.ready = true;
+</script></body></html>
