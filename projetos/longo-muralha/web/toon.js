@@ -2868,6 +2868,7 @@ export const fxCubes = (p) => { const cube = (x, y, s, c) => { p.poly([[x, y], [
   cube(90, 700, 90, "#f2c84b"); for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) cube(300 + i * 90, 610 + j * 90, 90, "#e8483b"); };
 export const fxSweat = (p, t = 0) => { for (let i = 0; i < 5; i++) { const y = 300 + ((t * 300 + i * 140) % 600); p.ell(260 + i * 22, y, 12, 18, "#9fd4ff", 4); } };
 /** Gigante (design próprio, contorno único). o: {kind: grin|tiny|long, skin, hair, walk, arms|armsL|armsR, look, mouth, dazed} */
+const P_rng = (seed) => { let x = seed * 9301 + 49297; return () => { x = (x * 9301 + 49297) % 233280; return x / 233280; }; };
 export const fxGiant = (() => {
 const L = -2.094, TH = Math.atan2(-Math.sin(L) + 0.8, -Math.cos(L));
 const E = (cx, cy, a, b, rot = 0, n = 44) => { const c = Math.cos(rot), s = Math.sin(rot), o = []; for (let i = 0; i < n; i++) { const t = i / n * Math.PI * 2, x = Math.cos(t) * a, y = Math.sin(t) * b; o.push([cx + x * c - y * s, cy + x * s + y * c]); } return o; };
@@ -2921,9 +2922,11 @@ return (p, t = 0, o = {}) => {
   shapes.push({ pts: TW([[cx + 2, A.sh + 10], [cx + 6, A.hy + A.head * 0.62]], [nk * 2.2, nk * 1.7]), col: SK });
   G(p, shapes, 10); after.forEach((fn) => fn());
   // anatomy: collarbones, pecs, abs hint, belly, navel (no ribs)
-  for (const sd of [-1, 1]) { p.stroke([[cx + sd * 16, A.sh + 14], [cx + sd * A.chestW * 0.6, A.sh + 6]], 3, SD); p.arc(cx + sd * A.chestW * 0.44, A.sh + 64, A.chestW * 0.42, 34, 15, 165, 4, SD); }
+  if (!o.back) {  for (const sd of [-1, 1]) { p.stroke([[cx + sd * 16, A.sh + 14], [cx + sd * A.chestW * 0.6, A.sh + 6]], 3, SD); p.arc(cx + sd * A.chestW * 0.44, A.sh + 64, A.chestW * 0.42, 34, 15, 165, 4, SD); }
   if (kind !== 'tiny') for (let k = 0; k < 2; k++) for (const sd of [-1, 1]) p.stroke([[cx + sd * 8, A.sh + 150 + k * 44], [cx + sd * A.waistW * 0.42, A.sh + 146 + k * 44]], 3, mix(SK, SD, 0.6));
-  p.stroke([[cx, A.sh + 108], [cx + 1, A.hip - 92]], 3, mix(SK, SD, 0.6)); p.ell(cx + 2, A.hip - 66, 6, 8, DK, 0); if (A.belly > 0.5) p.arc(cx, A.hip - 34, A.waistW * 0.9, 48, 20, 160, 3.5, SD);
+  p.stroke([[cx, A.sh + 108], [cx + 1, A.hip - 92]], 3, mix(SK, SD, 0.6)); p.ell(cx + 2, A.hip - 66, 6, 8, DK, 0); if (A.belly > 0.5) p.arc(cx, A.hip - 34, A.waistW * 0.9, 48, 20, 160, 3.5, SD); } else {   // costas: omoplatas, coluna, covinhas da lombar
+    for (const sd of [-1, 1]) { p.arc(cx + sd * A.chestW * 0.42, A.sh + 70, A.chestW * 0.36, 44, sd > 0 ? 200 : 200, 340, 4, SD); p.stroke([[cx + sd * A.chestW * 0.2, A.sh + 40], [cx + sd * A.chestW * 0.6, A.sh + 110]], 3, mix(SK, SD, 0.6)); p.ell(cx + sd * 26, A.hip - 46, 6, 5, SD, 0); }
+    p.stroke([[cx, A.sh - 10], [cx + 2, A.sh + 120], [cx, A.hip - 40]], 4, mix(SK, SD, 0.7)); }
   // --- head ---
   const hcx = cx + 8 + (o.look || 0) * 10 + (o.down ? 26 : 0), hcy = A.hy + (o.dazed || o.down ? 14 : 0), HR = A.head, ry = kind === 'long' ? 1.35 : 1.0;
   const head = E(hcx, hcy, HR, HR * ry); head.forEach((q) => { if (q[1] > hcy) q[0] = hcx + (q[0] - hcx) * (1 - 0.12 * (q[1] - hcy) / (HR * ry)); });
@@ -2934,6 +2937,63 @@ return (p, t = 0, o = {}) => {
     p.shadedFill(cap, HC, mul(HC, [0.7, 0.7, 0.7]), L, HR, 0.35); p.poly(cap, null, 6);
     /* tufts removed: the jagged fringe carries the hair */
     for (let k = 0; k < 5; k++) { const x = hcx - HR * 0.6 + k * HR * 0.3; p.stroke([[x, hcy - HR * ry * 0.85], [x + 6, hcy - HR * ry * 0.6]], 2.5, mul(HC, [0.6, 0.6, 0.6])); } }
+  if (o.side) {   // titã de PERFIL (rosto para o lado sd), nuca do lado oposto; o.cut 0..1 = golpe na nuca
+    const sd = o.side > 0 ? 1 : -1, cut = o.cut || 0, HC = o.hair || '#4a3424', INKc = '#1c1418';
+    // cabeça de perfil: crânio + mandíbula + nariz, num contorno só
+    const prof = [{ pts: E(hcx, hcy, HR, HR * ry), col: SK }, { pts: E(hcx + sd * HR * 0.45, hcy + HR * ry * 0.5, HR * 0.62, HR * 0.5), col: SK }, { pts: E(hcx + sd * HR * 0.98, hcy + HR * 0.05, HR * 0.17, HR * 0.13, sd * 0.4), col: SK }];
+    G(p, prof, 9);
+    if (kind !== 'tiny') { const hp = []; for (let i = 0; i <= 30; i++) { const a = -Math.PI / 2 + sd * (Math.PI * 0.12) - sd * (i / 30) * Math.PI * 0.82; hp.push([hcx + Math.cos(a) * HR * 1.04, hcy + Math.sin(a) * HR * ry * 1.04]); }
+      hp.push([hcx - sd * HR * 0.55, hcy + HR * ry * 0.45]); hp.push([hcx - sd * HR * 0.38, hcy + HR * ry * 0.05]); hp.push([hcx - sd * HR * 0.02, hcy - HR * ry * 0.48]); hp.push([hcx + sd * HR * 0.3, hcy - HR * ry * 0.7]);
+      p.shadedFill(hp, HC, mul(HC, [0.7, 0.7, 0.7]), L, HR, 0.35); p.poly(hp, null, 7); for (let k = 0; k < 6; k++) { const a = -Math.PI / 2 - sd * (0.1 + k * 0.32); p.stroke([[hcx + Math.cos(a) * HR * 0.95, hcy + Math.sin(a) * HR * 0.95], [hcx + Math.cos(a) * HR * 0.55, hcy + Math.sin(a) * HR * 0.6]], 2.5, mul(HC, [0.6, 0.6, 0.6])); } }
+    p.ell(hcx - sd * HR * 0.12, hcy + HR * 0.06, HR * 0.17, HR * 0.24, SK, 6); p.arc(hcx - sd * HR * 0.12, hcy + HR * 0.06, HR * 0.09, HR * 0.14, sd > 0 ? 100 : 280, sd > 0 ? 260 : 440, 3, SD);   // orelha
+    // olho de perfil (órbita funda), sobrancelha; na dor o olho arregala
+    const ex = hcx + sd * HR * 0.58, ey = hcy - HR * ry * 0.14, er = HR * 0.16;
+    p.ell(ex, ey + 4, er * 1.3, er * 1.2, mix(DK, '#1a0e12', 0.55), 0); p.ell(ex + sd * er * 0.2, ey + 3, er * 0.55, er * (cut > 0 ? 0.62 : 0.45), '#efe4cc', 4); p.dot(ex + sd * er * 0.4, ey + 3, Math.max(3.5, er * 0.13), '#140606');
+    p.stroke([[ex - sd * er * 1.0, ey - er * (cut > 0 ? 1.6 : 1.2)], [ex + sd * er * 1.2, ey - er * (cut > 0 ? 1.0 : 0.75)]], 9, mix(DK, '#1a0e12', 0.6));
+    // boca de perfil: sorriso esticado com dentes; com o golpe vira um grito aberto
+    const m0 = [hcx + sd * HR * 1.0, hcy + HR * ry * 0.42], m1 = [hcx + sd * HR * 0.15, hcy + HR * ry * 0.3], op = cut > 0 ? 70 * Math.min(1, cut * 2) : 10;
+    const mp = [m1, [m0[0], m0[1] - 6], [m0[0] - sd * 6, m0[1] + op * 0.6], [m1[0] + sd * HR * 0.1, m1[1] + op * 0.8 + 14]]; p.poly(mp, '#3a0a14', 5);
+    p.clip(mp, () => { for (let k = 0; k < 9; k++) { const t = k / 9, x = m1[0] + (m0[0] - m1[0]) * t, y = m1[1] + (m0[1] - m1[1]) * t; p.poly([[x, y - 2], [x + sd * 13, y - 2], [x + sd * 11, y + 16], [x + sd * 2, y + 16]], '#f1e6c8', 1.5); p.poly([[x, y + op * 0.7 + 14], [x + sd * 13, y + op * 0.7 + 14], [x + sd * 11, y + op * 0.7 - 2], [x + sd * 2, y + op * 0.7 - 2]], '#f1e6c8', 1.5); } });
+    p.stroke([[m1[0], m1[1]], [m1[0] - sd * 18, m1[1] - 26]], 4, DK);
+    // NUCA: atrás da cabeça, onde o crânio encontra o pescoço
+    const NX = hcx - sd * HR * 0.5, NY = hcy + HR * ry * 0.82;
+    p.stroke([[NX - sd * 6, NY - 30], [NX + sd * 4, NY + 40]], 3.5, SD);
+    if (cut > 0) { const k = Math.min(1, cut * 1.5), dep = HR * 0.55 * k, wd = 34 * k, r = P_rng(11);
+      // talho em cunha: pele aberta (borda rosada), carne vermelha, fundo escuro, um traço branco de osso
+      const wedge = [[NX - sd * 10, NY - wd], [NX + sd * dep, NY - 4], [NX + sd * dep, NY + 4], [NX - sd * 10, NY + wd]];
+      p.poly(wedge, '#e88a8a', 0); p.poly([[NX - sd * 4, NY - wd * 0.75], [NX + sd * dep * 0.95, NY - 2], [NX + sd * dep * 0.95, NY + 2], [NX - sd * 4, NY + wd * 0.75]], '#a8121f', 0);
+      p.poly([[NX + sd * dep * 0.35, NY - wd * 0.35], [NX + sd * dep * 0.9, NY - 1], [NX + sd * dep * 0.9, NY + 1], [NX + sd * dep * 0.35, NY + wd * 0.35]], '#3a0408', 0);
+      if (k > 0.6) p.stroke([[NX + sd * dep * 0.55, NY - wd * 0.2], [NX + sd * dep * 0.55, NY + wd * 0.2]], 4, '#f3ead8');
+      p.poly(wedge, null, 4);
+      // jatos de sangue em arco, para trás, + gotas ao longo do arco
+      if (cut > 0.15) for (let j = 0; j < 4; j++) { const ang = 0.5 + j * 0.25, len = (120 + j * 50) * Math.min(1, (cut - 0.15) * 2), arcp = [], ws = [];
+        for (let i = 0; i <= 14; i++) { const t = i / 14, x = NX - sd * t * len * Math.cos(ang * 0.5), y = NY - t * len * Math.sin(ang) * 0.9 + t * t * len * 0.9; arcp.push([x, y]); }
+        for (let i = 0; i < arcp.length - 1; i++) p.band([arcp[i], arcp[i + 1]], '#b3162a', Math.max(2, 16 * (1 - i / 14)), 0, 'round');
+        for (let i = 0; i < 4; i++) { const t = 0.7 + r() * 0.5, x = NX - sd * t * len * Math.cos(ang * 0.5) - sd * r() * 30, y = NY - t * len * Math.sin(ang) * 0.9 + t * t * len * 0.9 + r() * 20; p.ell(x, y, 4 + r() * 5, 5 + r() * 6, '#b3162a', 0); } }
+      // escorrimento pelo pescoço (irregular, afinando)
+      for (let j = 0; j < 5; j++) { const x0 = NX + sd * (j * 7 - 6), len = (40 + r() * 110) * Math.min(1, cut * 1.3), w0 = 13 - j * 1.5; const pts = []; for (let i = 0; i <= 8; i++) { const t = i / 8; pts.push([x0 + Math.sin(t * 5 + j) * 4, NY + wd * 0.6 + t * len]); } for (let i = 0; i < 8; i++) p.band([pts[i], pts[i + 1]], '#a8121f', Math.max(3, w0 * (1 - i / 10)), 0, 'round'); p.ell(pts[8][0], pts[8][1] + 4, w0 * 0.4, w0 * 0.55, '#a8121f', 0); }
+      const g = p.g; g.save(); for (let k2 = 0; k2 < 8; k2++) { const u = (cut + k2 / 8) % 1, x = NX + sd * 20 - sd * Math.sin(k2 * 2.1) * 30, y = NY - u * 240, rr = 30 + u * 80; const gr = g.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, `rgba(255,255,255,${0.75 * k * (1 - u)})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, rr, 0, 6.2832); g.fill(); } g.restore(); }
+    // rastro da lâmina: arco afiado e brilhante cruzando a nuca, com faíscas
+    if (cut > 0 && cut < 0.8) { const g = p.g, al = Math.min(1, 1.6 * (1 - cut / 0.8)); g.save(); g.shadowColor = `rgba(170,225,255,${al})`; g.shadowBlur = 45;
+      const tr = []; for (let i = 0; i <= 30; i++) { const t = i / 30, a = Math.PI * (0.65 + t * 0.9); tr.push([NX + Math.cos(a) * HR * 1.4, NY + Math.sin(a) * HR * 0.55]); }
+      for (let i = 30; i >= 0; i--) { const t = i / 30, a = Math.PI * (0.65 + t * 0.9), th = 1 - 0.75 * Math.abs(t - 0.5) * 2; tr.push([NX + Math.cos(a) * HR * (1.4 - 0.18 * th), NY + Math.sin(a) * HR * (0.55 - 0.1 * th)]); }
+      p.poly(tr, `rgba(245,252,255,${al})`, 0); g.shadowBlur = 0; for (let k2 = 0; k2 < 10; k2++) { const a = k2 * 0.63; p.stroke([[NX, NY], [NX + Math.cos(a) * (30 + k2 * 6), NY + Math.sin(a) * (30 + k2 * 6) * 0.7]], 3, `rgba(255,230,150,${al})`); } g.restore(); }
+  } else if (o.back) {   // titã de COSTAS: cabelo cobre a cabeça, nuca à mostra; o.cut 0..1 = golpe na nuca (rastro -> talho com sangue e vapor)
+    if (kind !== 'tiny') { const HC = o.hair || '#4a3424', hb = []; for (let i = 0; i <= 36; i++) { const a = Math.PI * (0.94 + i / 36 * 1.12); hb.push([hcx + Math.cos(a) * HR * 1.04, hcy + Math.sin(a) * HR * ry * 1.04]); }
+      for (let i = 14; i >= 0; i--) { const t = i / 14, x = hcx - HR * 0.98 + t * HR * 1.96; hb.push([x, hcy + HR * ry * (0.42 + (i % 2 ? 0.1 : 0)) - Math.sin(t * Math.PI) * HR * 0.08]); }
+      p.shadedFill(hb, HC, mul(HC, [0.7, 0.7, 0.7]), L, HR, 0.35); p.poly(hb, null, 7); for (let k = 0; k < 7; k++) { const x = hcx - HR * 0.7 + k * HR * 0.23; p.stroke([[x, hcy - HR * ry * 0.8], [x + 4, hcy + HR * ry * 0.3]], 2.5, mul(HC, [0.6, 0.6, 0.6])); } }
+    const NX = hcx, NY = hcy + HR * ry * 0.93, cut = o.cut || 0;
+    for (const sd of [-1, 1]) p.stroke([[NX + sd * HR * 0.22, NY - 10], [NX + sd * HR * 0.26, NY + 60]], 3.5, SD);
+    if (cut > 0) { const w = HR * 0.95 * Math.min(1, cut * 1.6), gh = 30 * Math.min(1, cut * 2);
+      const gash = []; for (let i = 0; i <= 20; i++) { const t = i / 20, x = NX - w + t * 2 * w; gash.push([x, NY - Math.sin(t * Math.PI) * gh * 0.25]); } for (let i = 20; i >= 0; i--) { const t = i / 20, x = NX - w + t * 2 * w; gash.push([x, NY + Math.sin(t * Math.PI) * gh]); }
+      p.poly(gash, '#4a0810', 5); p.clip(gash, () => { p.ell(NX, NY + gh * 0.7, w * 0.8, gh * 0.6, '#b3162a', 0); p.ell(NX - w * 0.2, NY + gh * 0.5, w * 0.25, gh * 0.25, '#e04a5a', 0); });
+      if (cut > 0.3) { const r = P_rng(7); for (let k = 0; k < 9; k++) { const dx = (r() - 0.5) * w * 1.6, dl = 30 + r() * 120 * cut; p.band([[NX + dx, NY + gh * 0.6], [NX + dx * 1.05, NY + gh * 0.6 + dl]], '#a8121f', 7 + r() * 6, 0, 'round'); p.ell(NX + dx * 1.05, NY + gh * 0.6 + dl + 6, 7, 9, '#a8121f', 0); }
+        for (let k = 0; k < 8; k++) { const sd = k % 2 ? 1 : -1, d = HR * (1.15 + r() * 0.9 * cut); p.ell(NX + sd * d, NY - 10 - r() * 60, 3 + r() * 5, 3 + r() * 5, '#b8162a', 0); } }
+      const g = p.g; g.save(); for (let k = 0; k < 8; k++) { const u = (cut + k / 8) % 1, x = NX + Math.sin(k * 2.1) * w * 0.7, y = NY - u * 260, rr = 40 + u * 90; const gr = g.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, `rgba(255,255,255,${0.8 * Math.min(1, cut * 2) * (1 - u)})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, rr, 0, 6.2832); g.fill(); } g.restore(); }
+    if (cut > 0 && cut < 0.8) { const g = p.g, al = Math.min(1, 1.6 * (1 - cut / 0.8)); g.save(); g.shadowColor = `rgba(160,220,255,${al})`; g.shadowBlur = 50; const tr = []; for (let i = 0; i <= 30; i++) { const t = i / 30, x = NX - HR * 1.9 + t * HR * 3.8; tr.push([x, NY - 6 + Math.sin(t * Math.PI) * 26]); }
+      for (let i = 30; i >= 0; i--) { const t = i / 30, x = NX - HR * 1.9 + t * HR * 3.8; tr.push([x, NY - 6 + Math.sin(t * Math.PI) * 26 - 54 * Math.sin(t * Math.PI) * (0.3 + 0.7 * t)]); }
+      p.poly(tr, `rgba(240,250,255,${al})`, 0); g.shadowBlur = 0; for (let k = 0; k < 9; k++) { const a = k * 0.7, x = NX + HR * 1.6 - k * 22; p.stroke([[x, NY - 20], [x + 40 * Math.cos(a), NY - 20 - 40 * Math.abs(Math.sin(a))]], 4, `rgba(255,235,160,${al})`); } g.restore(); }
+  } else {
   // eyes: sunken, blank, tiny pupils
   const ey = hcy - HR * ry * 0.16, er = kind === 'tiny' ? HR * 0.3 : HR * 0.17;
   const SCARY = !o.cute && !o.down && !o.sleep && !o.dazed;   // titã assustador: órbitas fundas, olho pequeno e parado, pupila de alfinete
@@ -2959,6 +3019,9 @@ return (p, t = 0, o = {}) => {
   if (SCARY) { const VN = mix(SK, '#6a3a5a', 0.45); for (const sd of [-1, 1]) { const tx = hcx + sd * HR * 0.78, ty = hcy - HR * ry * 0.35; p.stroke([[tx, ty], [tx - sd * 10, ty + 22], [tx + sd * 4, ty + 44], [tx - sd * 6, ty + 62]], 3, VN); } }
   if (o.down && kind !== 'tiny') { p.ell(hcx + mw * 0.45, my + 30 + open, mw * 0.2, 30, '#d9667a', 5); p.stroke([[hcx + mw * 0.45, my + 18 + open], [hcx + mw * 0.45, my + 46 + open]], 3, '#a8405a'); }
   if (o.down && kind === 'tiny') { p.ell(hcx, my + 4, mw * 0.4, 18, '#4a1420', 5); }
+  if (o.blood && kind !== 'tiny') { const r = P_rng(3); for (let k = 0; k < 7; k++) { const x = hcx + (r() - 0.5) * mw * 1.6, y0 = my - 14 + r() * 10; p.ell(x, y0, 6 + r() * 6, 4 + r() * 4, '#b3162a', 0); }   // sangue nos dentes e escorrendo
+    for (const sd of [-1, 1]) for (let k = 0; k < 3; k++) { const x = hcx + sd * (mw * (0.7 - k * 0.22)), len = 18 + ((k * 37 + (sd > 0 ? 11 : 0)) % 40), w = 12 - k * 3; p.poly([[x - w / 2, my + 16], [x + w / 2, my + 16], [x + w * 0.3, my + 16 + len], [x - w * 0.3, my + 16 + len]], '#a8121f', 0); p.ell(x, my + 18 + len, w * 0.45, w * 0.6, '#a8121f', 0); } }
+  }
   if (o.sleep) { const g = p.g; g.save(); g.font = '900 64px sans-serif'; g.fillStyle = '#ffffff'; g.strokeStyle = INK; g.lineWidth = 8; for (let k = 0; k < 3; k++) { const x = hcx + HR * 0.9 + k * 46, y = hcy - HR * 0.7 - k * 56, sz = 1 - k * 0.2; g.save(); g.translate(x, y); g.scale(sz, sz); g.strokeText('Z', 0, 0); g.fillText('Z', 0, 0); g.restore(); } g.restore(); }
   if (o.steam) { const g = p.g; g.save(); for (let k = 0; k < 14; k++) { const u = ((o.steam + k / 14) % 1), x = cx + Math.sin(k * 2.7) * A.chestW * 1.1 + Math.sin(u * 6 + k) * 30, y = (k % 2 ? A.hip : A.sh + 90) - u * 250, r = 50 + u * 75;
       const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,255,255,${0.85 * Math.min(1, u * 5) * (1 - u)})`); gr.addColorStop(0.5, `rgba(250,250,250,${0.45 * Math.min(1, u * 5) * (1 - u)})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill(); } g.restore(); }

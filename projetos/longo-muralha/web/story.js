@@ -31,7 +31,7 @@ export const actorsAt = (f, T) => {
   for (const c of S.cast || []) {
     let pos = c.to ? lerp3(c.pos, c.to, c.ease === 'lin' ? clamp((f - S.a) / Math.max(1, S.b - S.a)) : u) : c.pos.slice();
     if (c.float) pos = [pos[0] + Math.sin(F * 0.03 + pos[2]) * c.float * 0.5, pos[1] + Math.sin(F * 0.05 + pos[0]) * c.float, pos[2]];
-    if (c.fx) { let go = c.o || {}; if (c.walk) go = { ...go, walk: q(((f - S.a) * 2.5 / 30 * 0.6) % 1, 2) }; if (go.steam) go = { ...go, steam: q(((f - S.a) / 30) % 1 + 0.001, 2) }; const k = c.fx + (c.t !== undefined ? q(c.t, 1) : '') + JSON.stringify(go); out.push({ key: k, draw: (p) => T[c.fx](p, c.t ?? 0, go), x: pos[0], y: pos[1], z: pos[2], s: c.s || 1, face: c.face, flip: c.flip, blob: false, shadow: c.shadow ?? false, order: c.order || 4, roll: c.wobble ? c.wobble * Math.sin(F * 0.05) : (c.roll || 0), tint: c.tint }); continue; }
+    if (c.fx) { let go = c.o || {}; if (c.walk) go = { ...go, walk: q(((f - S.a) * 2.5 / 30 * 0.6) % 1, 2) }; if (go.steam) go = { ...go, steam: q(((f - S.a) / 30) % 1 + 0.001, 2) }; if (go.cutFrac !== undefined) go = { ...go, cut: q(Math.min(1, Math.max(0, (f - S.a - go.cutFrac * (S.b - S.a)) / 10)), 2) }; const k = c.fx + (c.t !== undefined ? q(c.t, 1) : '') + JSON.stringify(go); out.push({ key: k, draw: (p) => T[c.fx](p, c.t ?? 0, go), x: pos[0], y: pos[1], z: pos[2], s: c.s || 1, face: c.face, flip: c.flip, blob: false, shadow: c.shadow ?? false, order: c.order || 4, roll: c.wobble ? c.wobble * Math.sin(F * 0.05) : (c.roll || 0), tint: c.tint }); continue; }
     const b = base(F, SEED[c.who] || 7), o = { ...b, ...(c.pose || {}) };
     if (c.still) { o.bob = 0; o.tilt = 0; }
     if (c.walk) o.step = q(walk(F, S.a * 2.5, 1.2, 0.5).phase, 2);
