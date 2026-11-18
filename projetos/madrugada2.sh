@@ -7,7 +7,6 @@ push() { cd $R && git add -A && git commit -qm "$1
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; }
 cd $G
-rm -f cap05.wav   # roteiro do cap 5 mudou: regenerar
 while true; do
   miss=""; for k in 01 02 03 04 05 06 07 08 09 10 11 12; do [ -f cap$k.wav ] || miss="$miss $k"; done
   [ -z "$miss" ] && break
@@ -22,7 +21,7 @@ nice -n 10 python3 audio_g.py && python3 mix.py voice.wav music.wav sfx.wav
 push "Gigantes: narração completa, timings e plano de câmera"
 until grep -q FIM-MADRUGADA-1 $P/madrugada.log; do sleep 120; done
 TOT=$(python3 -c "import json;print(json.load(open('web/shots.json'))['total'])"); H=$((TOT/2))
-(RESUME=1 node render.mjs frames "0-$((H-1))" > r1.log 2>&1 &); (RESUME=1 node render.mjs frames "$H-$((TOT-1))" > r2.log 2>&1 &)
+mkdir -p frames; (RESUME=1 node render.mjs frames "0-$((H-1))" > r1.log 2>&1 &); (RESUME=1 node render.mjs frames "$H-$((TOT-1))" > r2.log 2>&1 &)
 sleep 60
 until [ $(ls frames | wc -l) -ge $TOT ] && ! pgrep -f "render.mjs frames" >/dev/null; do sleep 60; if ! pgrep -f "render.mjs frames" >/dev/null && [ $(ls frames | wc -l) -lt $TOT ]; then (RESUME=1 node render.mjs frames "0-$((TOT-1))" > r3.log 2>&1 &); sleep 60; fi; done
 python3 overlay.py

@@ -7,7 +7,12 @@ push() { cd $R && git add -A && git commit -qm "$1
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; }
 # ---------- 1) Short dos camelos ----------
+if [ ! -f $R/videos/2026-11-18-camelos-ceara.mp4 ]; then
+cd $P/2026-11-18-camelos-ceara; mkdir -p frames
 cd $P/2026-11-18-camelos-ceara
+pgrep -f "render.mjs frames 0-941" >/dev/null || (cd $P/2026-11-18-camelos-ceara && RESUME=1 nohup node render.mjs frames 0-941 > r1.log 2>&1 &)
+pgrep -f "render.mjs frames 942-1883" >/dev/null || (cd $P/2026-11-18-camelos-ceara && RESUME=1 nohup node render.mjs frames 942-1883 > r2.log 2>&1 &)
+sleep 20
 until [ $(ls frames | wc -l) -ge 1884 ] && ! pgrep -f "render.mjs frames" >/dev/null; do sleep 30; done
 python3 captions.py && FRAMES=frames_cap bash finish.sh "Camelos-de-Dom-Pedro"
 D=2026-11-18-camelos-ceara
@@ -31,9 +36,10 @@ PY
 ls -la $R/videos/$D*
 cd $P/2026-11-18-camelos-ceara && rm -rf frames frames_cap stills out
 push "Short: Os camelos de Dom Pedro II (Ceará, 1859) — vídeo, versão YouTube, capa e fila"
+fi
 # ---------- 2) Longo: buraco até o Japão ----------
 cd $P/longo-buraco-japao && rm -rf stills
-(RESUME=1 node render.mjs frames "0-4105" > r1.log 2>&1 &); (RESUME=1 node render.mjs frames "4106-8211" > r2.log 2>&1 &)
+mkdir -p frames; (RESUME=1 node render.mjs frames "0-4105" > r1.log 2>&1 &); (RESUME=1 node render.mjs frames "4106-8211" > r2.log 2>&1 &)
 sleep 60
 until [ $(ls frames | wc -l) -ge 8212 ] && ! pgrep -f "render.mjs frames" >/dev/null; do sleep 60; if ! pgrep -f "render.mjs frames" >/dev/null && [ $(ls frames | wc -l) -lt 8212 ]; then (RESUME=1 node render.mjs frames "0-8211" > r3.log 2>&1 &); sleep 60; fi; done
 python3 overlay.py
