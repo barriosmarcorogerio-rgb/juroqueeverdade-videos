@@ -2616,11 +2616,12 @@ export const romanFront = (p, key, opts = {}) => {
   const T = { a: (0.4 * W) / 1.06 * (O.stout ? 1.12 : 1), b: 0.5 * (torsoBot - (chin - 0.25 * HH)), nTop: 2.2, nBot: 2.6, egg: O.stout ? 0.17 : 0.12, asym: 0.04 * facing, rot: 0, noise: 0.006, seed: seed + 7 };
   const tcx = cx + 3 * u * facing, tcy = torsoBot - T.b;
   let tp = blobPts(tcx, tcy, T);
-  if (O.female) { const top = chin + 0.1 * HH, bot = torsoBot + 0.04 * HH, H2 = bot - top, half = (k) => { // k 0 (top) .. 1 (bottom)
+  const fem = O.female && !O.straps;
+  if (fem) { const top = chin + 0.1 * HH, bot = torsoBot + 0.04 * HH, H2 = bot - top, half = (k) => { // k 0 (top) .. 1 (bottom)
       const sh = 0.78, wa = O.straps ? 0.64 : 0.58, hi = O.straps ? 0.86 : 1.04; return T.a * (k < 0.12 ? sh * (0.55 + 0.45 * Math.sin(k / 0.12 * Math.PI / 2)) : k < 0.5 ? sh + (wa - sh) * Math.sin((k - 0.12) / 0.38 * Math.PI / 2) : k < 0.85 ? wa + (hi - wa) * Math.sin((k - 0.5) / 0.35 * Math.PI / 2) : hi * Math.cos((k - 0.85) / 0.15 * Math.PI / 2 * 0.9)); };
     const L = [], Rr = []; for (let i = 0; i <= 30; i++) { const k = i / 30, y = top + k * H2, w = Math.max(half(k), 0.05 * T.a); Rr.push([tcx + w, y]); L.push([tcx - w, y]); }
     tp = [...Rr, ...L.reverse()]; }
-  const S = (side) => O.female ? [tcx + side * 0.56 * T.a, chin + 0.24 * HH] : [tcx + side * 0.8 * T.a, chin + 0.14 * HH];
+  const S = (side) => fem ? [tcx + side * 0.56 * T.a, chin + 0.24 * HH] : [tcx + side * 0.8 * T.a, chin + 0.14 * HH];
   const arm = (side, pose) => {
     const s = S(side), X = (k) => tcx + side * (T.a * 1.1 + k * u);
     switch (pose) {
@@ -2680,7 +2681,7 @@ export const romanFront = (p, key, opts = {}) => {
     p.gradFill(sk, O.tunic, mul(O.tunic, SH_CLOTH), light); p.poly(sk, null, ow * 0.8);
     if (O.armor) for (let i = -3; i <= 3; i++) { const x = tcx + i * 0.27 * T.a, st = [[x - 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot + 0.22 * HH], [x - 9 * u, torsoBot + 0.22 * HH]]; p.poly(st, old ? "#5e4632" : LEATHER, 1.6 * u); }
   }
-  if (O.female) { const nk = [[tcx - 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.2 * T.a, chin + 0.16 * HH], [tcx - 0.2 * T.a, chin + 0.16 * HH]]; p.poly(nk, mul(skin, [0.92, 0.88, 0.86]), 1.8 * u); }
+  if (fem) { const nk = [[tcx - 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.2 * T.a, chin + 0.16 * HH], [tcx - 0.2 * T.a, chin + 0.16 * HH]]; p.poly(nk, mul(skin, [0.92, 0.88, 0.86]), 1.8 * u); }
   if (O.gear) for (const sd of [-1, 1]) { const gx = tcx + sd * 0.92 * T.a, gy = torsoBot - 0.06 * HH, MT = '#5c626b';
     const cs = [[gx - sd * 6 * u, gy - 7 * u], [gx + sd * 26 * u, gy - 9 * u], [gx + sd * 30 * u, gy - 3 * u], [gx + sd * 26 * u, gy + 5 * u], [gx - sd * 6 * u, gy + 6 * u]];
     p.gradFill(cs, '#7d838c', MT, light); p.poly(cs, null, 1.8 * u); for (const k of [6, 16]) p.dot(gx + sd * k * u, gy - 1 * u, 1.3 * u, '#c9ccd2');
@@ -2702,7 +2703,7 @@ export const romanFront = (p, key, opts = {}) => {
       p.band([[tcx - 1.4 * T.a, torsoBot - 0.24 * HH], [tcx + 1.4 * T.a, torsoBot - 0.24 * HH]], O.apron ? "#5a3b2a" : "#e2c27a", 0.05 * HH, 1.2 * u);
       if (O.toga) p.band([[tcx - 1.0 * T.a, chin - 0.1 * HH], [tcx + 1.1 * T.a, torsoBot - 0.1 * HH]], O.toga, 0.16 * HH, 1.6 * u);
       if (O.apron) p.poly([[tcx - 0.55 * T.a, torsoBot - 0.2 * HH], [tcx + 0.55 * T.a, torsoBot - 0.2 * HH], [tcx + 0.6 * T.a, torsoBot + 0.2 * HH], [tcx - 0.6 * T.a, torsoBot + 0.2 * HH]], O.apron, 1.6 * u);
-      if (O.female) p.ell(tcx, chin + 0.11 * HH, 0.24 * T.a, 0.07 * HH, mul(skin, [0.92, 0.88, 0.86]), 1.6 * u, 0, 180);
+      if (fem) p.ell(tcx, chin + 0.11 * HH, 0.24 * T.a, 0.07 * HH, mul(skin, [0.92, 0.88, 0.86]), 1.6 * u, 0, 180);
       else p.stroke([[tcx - 0.2 * T.a, chin + 0.02 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.2 * T.a, chin + 0.02 * HH]], 2 * u);
       if (O.patches) { p.poly(rrect(tcx - 0.62 * T.a, chin + 0.3 * HH, tcx - 0.22 * T.a, chin + 0.62 * HH, 2 * u), "#a8865c", 1.6 * u);
         p.poly(rrect(tcx + 0.25 * T.a, chin + 0.62 * HH, tcx + 0.62 * T.a, chin + 0.88 * HH, 2 * u), "#6d5236", 1.6 * u);
@@ -2712,12 +2713,12 @@ export const romanFront = (p, key, opts = {}) => {
   p.clip(tp, () => { const fc = mul(O.tunic, [0.8, 0.78, 0.82]); if (!O.naked) { p.arc(tcx - 0.5 * T.a, torsoBot - 0.45 * HH, 0.3 * T.a, 0.08 * HH, 200, 300, 1.6 * u, fc); p.arc(tcx + 0.45 * T.a, torsoBot - 0.6 * HH, 0.25 * T.a, 0.07 * HH, 230, 330, 1.6 * u, fc);
     if (!O.female && !O.straps) p.poly([[tcx - 0.12 * T.a, chin + 0.02 * HH], [tcx - 0.42 * T.a, chin + 0.02 * HH], [tcx - 0.16 * T.a, chin + 0.3 * HH]], mul(O.tunic, [1.12, 1.12, 1.12]), 1.4 * u),
     p.poly([[tcx + 0.12 * T.a, chin + 0.02 * HH], [tcx + 0.42 * T.a, chin + 0.02 * HH], [tcx + 0.16 * T.a, chin + 0.3 * HH]], mul(O.tunic, [1.12, 1.12, 1.12]), 1.4 * u); } });
-  if (O.straps) p.clip(tp, () => { const jy = O.female ? chin + 0.4 * HH : chin + 0.5 * HH; p.poly([[tcx - 1.6 * T.a, jy], [tcx + 1.6 * T.a, jy - 0.03 * HH], [tcx + 1.6 * T.a, torsoBot + 0.2 * HH], [tcx - 1.6 * T.a, torsoBot + 0.2 * HH]], '#ece4d0', 0); p.stroke([[tcx - 1.6 * T.a, jy], [tcx + 1.6 * T.a, jy - 0.03 * HH]], 2.2 * u, mul(O.tunic, [0.7, 0.7, 0.7])); });
+  if (O.straps) p.clip(tp, () => { const jy = chin + 0.5 * HH; p.poly([[tcx - 1.6 * T.a, jy], [tcx + 1.6 * T.a, jy - 0.03 * HH], [tcx + 1.6 * T.a, torsoBot + 0.2 * HH], [tcx - 1.6 * T.a, torsoBot + 0.2 * HH]], '#ece4d0', 0); p.stroke([[tcx - 1.6 * T.a, jy], [tcx + 1.6 * T.a, jy - 0.03 * HH]], 2.2 * u, mul(O.tunic, [0.7, 0.7, 0.7])); });
   if (O.straps) p.clip(tp, () => { const BL = '#3a2416', BK = '#c9a24a';
-    const fTop = chin + 0.1 * HH, fBot = torsoBot + 0.04 * HH, beltY = O.female ? fTop + 0.5 * (fBot - fTop) : torsoBot - 0.2 * HH, chestY = O.female ? chin + 0.36 * HH : chin + 0.41 * HH;
-    const xs = O.female ? [0.32, 0.36, 0.3] : [0.42, 0.48, 0.5];
-    for (const sd of [-1, 1]) p.band([[tcx + sd * xs[0] * T.a, chin + (O.female ? 0.14 : 0.02) * HH], [tcx + sd * xs[1] * T.a, chestY], [tcx + sd * xs[2] * T.a, beltY]], BL, 0.03 * HH, 0.9 * u);
-    p.band([[tcx - (O.female ? 0.7 : 0.95) * T.a, chestY + 0.01 * HH], [tcx + (O.female ? 0.7 : 0.95) * T.a, chestY]], BL, 0.026 * HH, 0.8 * u);
+    const fTop = chin + 0.1 * HH, fBot = torsoBot + 0.04 * HH, beltY = torsoBot - 0.2 * HH, chestY = chin + 0.41 * HH;
+    const xs = [0.42, 0.48, 0.5];
+    for (const sd of [-1, 1]) p.band([[tcx + sd * xs[0] * T.a, chin + 0.02 * HH], [tcx + sd * xs[1] * T.a, chestY], [tcx + sd * xs[2] * T.a, beltY]], BL, 0.03 * HH, 0.9 * u);
+    p.band([[tcx - 0.95 * T.a, chestY + 0.01 * HH], [tcx + 0.95 * T.a, chestY]], BL, 0.026 * HH, 0.8 * u);
     p.band([[tcx - 1.05 * T.a, beltY], [tcx + 1.05 * T.a, beltY]], BL, 0.045 * HH, 1 * u);
     for (const sd of [-1, 1]) p.poly(rrect(tcx + sd * xs[1] * T.a - 3.5 * u, chestY - 0.04 * HH, tcx + sd * xs[1] * T.a + 3.5 * u, chestY + 0.04 * HH, 1.2 * u), BK, 1 * u);
     p.poly(rrect(tcx - 6 * u, beltY - 0.04 * HH, tcx + 6 * u, beltY + 0.04 * HH, 1.5 * u), BK, 1.2 * u); });
