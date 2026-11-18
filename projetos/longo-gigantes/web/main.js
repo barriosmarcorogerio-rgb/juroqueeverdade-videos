@@ -327,13 +327,13 @@ const ropePool = []; { const hm = std({ color: '#9aa3ad', metalness: 0.55, rough
     ropePool.push([m, h, chips, ink]); } }
 const _up = new THREE.Vector3(0, 1, 0), _d = new THREE.Vector3();
 const setRopes = (R, f = 0) => ropePool.forEach(([m, h, chips, ink], i) => { const r = R && R[i]; m.visible = h.visible = ink.visible = !!r; if (!r) return;
-  const a = new THREE.Vector3(r[0], r[1], r[2]), b = new THREE.Vector3(r[3], r[4], r[5]); _d.subVectors(b, a); const L = _d.length(), dir = _d.clone().normalize();
+  const a = new THREE.Vector3(r[0], r[1], r[2]), b = new THREE.Vector3(r[3], r[4], r[5]); const sk = r[7] ? Math.min(1, Math.max(0.02, f / r[7])) : 1; if (sk < 1) b.lerpVectors(a, b, sk); /* r[7] = quadros do disparo: o gancho voa até cravar */ _d.subVectors(b, a); const L = _d.length(), dir = _d.clone().normalize();
   const horiz = Math.hypot(_d.x, _d.z) / L, sag = 0.035 * L * horiz;                                  // taut-ish sag, none when hanging straight down
   const mid = a.clone().lerp(b, 0.5); mid.y -= sag; const end = b.clone().addScaledVector(dir, -1.0);   // rope ends at the hook's eye ring
   const curve = new THREE.QuadraticBezierCurve3(a, mid, end); m.geometry.dispose(); m.geometry = new THREE.TubeGeometry(curve, 24, 0.045, 8, false); ink.geometry.dispose(); ink.geometry = new THREE.TubeGeometry(curve, 24, 0.065, 8, false);
   m.material.map.repeat.set(1, L * 2.2);
   h.position.copy(b).addScaledVector(dir, 0.08); h.quaternion.setFromUnitVectors(_up, dir);              // nose buried a little in the stone
-  const ph = r[6] ?? Math.min(1, f / 14); chips.visible = ph < 1; chips.children.forEach((c) => { const v = c.userData.v; c.position.set(v[0] * ph, v[1] * ph - 1.2 * ph * ph, v[2] * ph); c.rotation.set(ph * 5, ph * 3, 0); c.scale.setScalar(Math.max(0.01, 1 - ph)); }); });
+  const ph = r[6] ?? Math.min(1, (f - (r[7] || 0)) / 14); chips.visible = ph > 0 && ph < 1; chips.children.forEach((c) => { const v = c.userData.v; c.position.set(v[0] * ph, v[1] * ph - 1.2 * ph * ph, v[2] * ph); c.rotation.set(ph * 5, ph * 3, 0); c.scale.setScalar(Math.max(0.01, 1 - ph)); }); });
 // city houses
 const houseCol = ['#e7c25a', '#7fb0c9', '#e79a8a', '#f2efe6', '#9fcf8a', '#c9a0d9', '#e0b080'];
 for (let i = 0; i < 60; i++) { const x = -110 + rr() * 220, z = WZ - 12 - rr() * 90; if (Math.abs(x) < 6 && z > WZ - 25) continue; const w = 5 + rr() * 4, h = 5 + rr() * 6, d = 5 + rr() * 3;

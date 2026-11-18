@@ -2884,7 +2884,7 @@ const ARCH = {
 /** o: {kind, skin, hair, walk 0..1, arms|armsL|armsR: hang|reach|up, look, mouth 0..1, dazed} */
 return (p, t = 0, o = {}) => {
   const A = ARCH[o.kind || 'grin'], kind = o.kind || 'grin', SK = o.skin || '#e6b08a', SD = mul(SK, [0.8, 0.68, 0.66]), DK = mul(SK, [0.58, 0.46, 0.44]), w = o.walk || 0, cx = 300, sole = 975;
-  const shapes = [], after = [];
+  const shapes = [], after = []; if (o.headOnly) { p.g.save(); p.g.translate(100000, 0); }   // só a cabeça (caída no chão)
   // width-profiled limb: pts = control points, ws = width at each control point (smooth, muscular)
   const TW = (pts, ws, n = 28) => { const seg = []; let tot = 0; for (let i = 0; i < pts.length - 1; i++) { const l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]); seg.push(l); tot += l; }
     const at = (d) => { let i = 0; while (i < seg.length - 1 && d > seg[i]) { d -= seg[i]; i++; } const u = Math.min(1, d / (seg[i] || 1)), e = (1 - Math.cos(u * Math.PI)) / 2; return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * u, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * u, ws[i] + (ws[i + 1] - ws[i]) * e]; };
@@ -2927,18 +2927,26 @@ return (p, t = 0, o = {}) => {
   p.stroke([[cx, A.sh + 108], [cx + 1, A.hip - 92]], 3, mix(SK, SD, 0.6)); p.ell(cx + 2, A.hip - 66, 6, 8, DK, 0); if (A.belly > 0.5) p.arc(cx, A.hip - 34, A.waistW * 0.9, 48, 20, 160, 3.5, SD); } else {   // costas: omoplatas, coluna, covinhas da lombar
     for (const sd of [-1, 1]) { p.arc(cx + sd * A.chestW * 0.42, A.sh + 70, A.chestW * 0.36, 44, sd > 0 ? 200 : 200, 340, 4, SD); p.stroke([[cx + sd * A.chestW * 0.2, A.sh + 40], [cx + sd * A.chestW * 0.6, A.sh + 110]], 3, mix(SK, SD, 0.6)); p.ell(cx + sd * 26, A.hip - 46, 6, 5, SD, 0); }
     p.stroke([[cx, A.sh - 10], [cx + 2, A.sh + 120], [cx, A.hip - 40]], 4, mix(SK, SD, 0.7)); }
+  if (o.headOnly) p.g.restore();
   // --- head ---
   const hcx = cx + 8 + (o.look || 0) * 10 + (o.down ? 26 : 0), hcy = A.hy + (o.dazed || o.down ? 14 : 0), HR = A.head, ry = kind === 'long' ? 1.35 : 1.0;
   const head = E(hcx, hcy, HR, HR * ry); head.forEach((q) => { if (q[1] > hcy) q[0] = hcx + (q[0] - hcx) * (1 - 0.12 * (q[1] - hcy) / (HR * ry)); });
-  G(p, [{ pts: E(hcx - HR * 0.98, hcy + 6, HR * 0.2, HR * 0.28), col: SK }, { pts: E(hcx + HR * 0.98, hcy + 6, HR * 0.2, HR * 0.28), col: SK }, { pts: head, col: SK }], 9);
-  for (const sd of [-1, 1]) p.ell(hcx + sd * HR * 0.98, hcy + 6, HR * 0.09, HR * 0.15, SD, 0);
-  if (kind !== 'tiny') { const HC = o.hair || '#4a3424', cap = []; for (let i = 0; i <= 30; i++) { const a = Math.PI * (1.08 + i / 30 * 0.84); cap.push([hcx + Math.cos(a) * HR * 1.03, hcy + Math.sin(a) * HR * ry * 1.03]); }
-    for (let i = 12; i >= 0; i--) { const t = i / 12, x = hcx - HR * 0.92 + t * HR * 1.84, jag = (i % 2 ? 0.1 : -0.02) * HR; cap.push([x, hcy - HR * ry * 0.55 + jag + Math.sin(t * 9) * HR * 0.03]); }
-    p.shadedFill(cap, HC, mul(HC, [0.7, 0.7, 0.7]), L, HR, 0.35); p.poly(cap, null, 6);
-    /* tufts removed: the jagged fringe carries the hair */
-    for (let k = 0; k < 5; k++) { const x = hcx - HR * 0.6 + k * HR * 0.3; p.stroke([[x, hcy - HR * ry * 0.85], [x + 6, hcy - HR * ry * 0.6]], 2.5, mul(HC, [0.6, 0.6, 0.6])); } }
+  if (!o.side) G(p, [{ pts: E(hcx - HR * 0.98, hcy + 6, HR * 0.2, HR * 0.28), col: SK }, { pts: E(hcx + HR * 0.98, hcy + 6, HR * 0.2, HR * 0.28), col: SK }, { pts: head, col: SK }], 9);
+  if (!o.side) for (const sd of [-1, 1]) p.ell(hcx + sd * HR * 0.98, hcy + 6, HR * 0.09, HR * 0.15, SD, 0);
+  if (kind !== 'tiny' && !o.side) { const HC = o.hair || '#4a3424', HD = mul(HC, [0.62, 0.6, 0.62]), HL = mix(HC, '#ffffff', 0.32), cap = [];   // cabelo: mechas desiguais, costeletas cobrindo as têmporas
+    for (let i = 0; i <= 32; i++) { const a = Math.PI * (1.0 + i / 32); cap.push([hcx + Math.cos(a) * HR * 1.05, hcy + Math.sin(a) * HR * ry * 1.05]); }
+    const NL = 11, base = hcy - HR * ry * 0.5, LEN = [0.5, 0.3, 0.18, 0.26, 0.14, 0.22, 0.12, 0.24, 0.16, 0.3, 0.52];
+    cap.push([hcx + HR * 1.02, hcy - HR * ry * 0.02]);
+    for (let k = NL - 1; k >= 0; k--) { const t0 = (k + 1) / NL, t1 = (k + 0.5) / NL, t2 = k / NL, xx = (t) => hcx - HR * 0.98 + t * HR * 1.96, edge = (t) => base + (Math.abs(t - 0.5) > 0.4 ? HR * 0.28 : 0);
+      cap.push([xx(t0), edge(t0)]); cap.push([xx(t1) + (t1 - 0.5) * 14, edge(t1) + LEN[k] * HR]); }
+    cap.push([hcx - HR * 1.02, hcy - HR * ry * 0.02]);
+    p.shadedFill(cap, HC, mul(HC, [0.72, 0.7, 0.72]), L, HR, 0.35); p.poly(cap, null, 6);
+    for (let k = 0; k < NL; k++) { const t1 = (k + 0.5) / NL, x = hcx - HR * 0.98 + t1 * HR * 1.96; p.stroke([[hcx + (t1 - 0.5) * HR * 0.5, hcy - HR * ry * 0.95], [x - (t1 - 0.5) * 30, base - HR * 0.05], [x + (t1 - 0.5) * 10, base + LEN[k] * HR * 0.7]], 2.5, HD); }
+    const sh = []; for (let i = 0; i <= 12; i++) { const a = Math.PI * (1.22 + i / 12 * 0.34); sh.push([hcx + Math.cos(a) * HR * 0.8, hcy + Math.sin(a) * HR * ry * 0.82]); } p.stroke(sh, 7, HL); }
   if (o.side) {   // titã de PERFIL (rosto para o lado sd), nuca do lado oposto; o.cut 0..1 = golpe na nuca
     const sd = o.side > 0 ? 1 : -1, cut = o.cut || 0, HC = o.hair || '#4a3424', INKc = '#1c1418';
+    const dec = o.decap || 0, g0 = p.g; g0.save();   // decapitação: a cabeça (com a nuca cortada) voa para a frente, gira e cai no chão
+    if (o.headGone) g0.translate(100000, 0); else if (dec > 0) { const e = dec * dec, hx2 = hcx + sd * 260 * dec, hy2 = hcy - 120 * Math.sin(dec * Math.PI) + (975 - HR * 0.95 - hcy) * e; g0.translate(hx2, hy2); g0.rotate(sd * 2.6 * dec); g0.translate(-hcx, -hcy); }
     // cabeça de perfil: crânio + mandíbula + nariz, num contorno só
     const prof = [{ pts: E(hcx, hcy, HR, HR * ry), col: SK }, { pts: E(hcx + sd * HR * 0.45, hcy + HR * ry * 0.5, HR * 0.62, HR * 0.5), col: SK }, { pts: E(hcx + sd * HR * 0.98, hcy + HR * 0.05, HR * 0.17, HR * 0.13, sd * 0.4), col: SK }];
     G(p, prof, 9);
@@ -2955,6 +2963,13 @@ return (p, t = 0, o = {}) => {
     const mp = [m1, [m0[0], m0[1] - 6], [m0[0] - sd * 6, m0[1] + op * 0.6], [m1[0] + sd * HR * 0.1, m1[1] + op * 0.8 + 14]]; p.poly(mp, '#3a0a14', 5);
     p.clip(mp, () => { for (let k = 0; k < 9; k++) { const t = k / 9, x = m1[0] + (m0[0] - m1[0]) * t, y = m1[1] + (m0[1] - m1[1]) * t; p.poly([[x, y - 2], [x + sd * 13, y - 2], [x + sd * 11, y + 16], [x + sd * 2, y + 16]], '#f1e6c8', 1.5); p.poly([[x, y + op * 0.7 + 14], [x + sd * 13, y + op * 0.7 + 14], [x + sd * 11, y + op * 0.7 - 2], [x + sd * 2, y + op * 0.7 - 2]], '#f1e6c8', 1.5); } });
     p.stroke([[m1[0], m1[1]], [m1[0] - sd * 18, m1[1] - 26]], 4, DK);
+    g0.restore();
+    if ((dec > 0 || o.headGone) && !o.headOnly) { const SX = cx + 6, SY = A.hy + HR * 0.62 - 6, RW = 30 * 1.7 * 0.62, k2 = o.headGone ? 1 : Math.min(1, dec * 3), r = P_rng(5);   // toco do pescoço jorrando
+      for (let j = 0; j < 5; j++) { const h = (140 + j * 60) * k2 * (o.headGone ? 0.55 : 1), sp = (j - 2) * 0.22, pts = []; for (let i = 0; i <= 12; i++) { const t = i / 12; pts.push([SX + Math.sin(sp) * h * t * 1.4 + (j - 2) * 6, SY - h * t + h * t * t * 0.95]); } for (let i = 0; i < 12; i++) p.band([pts[i], pts[i + 1]], '#b3162a', Math.max(3, 18 * (1 - i / 14)), 0, 'round'); for (let i = 0; i < 3; i++) p.ell(pts[12][0] + (r() - 0.5) * 30, pts[12][1] + r() * 20, 5 + r() * 5, 6 + r() * 6, '#b3162a', 0); }
+      p.ell(SX, SY, RW * 1.25, RW * 0.5, '#e88a8a', 5); p.ell(SX, SY, RW, RW * 0.38, '#a8121f', 0); p.ell(SX + 6, SY - 2, RW * 0.28, RW * 0.14, '#f3ead8', 2); p.ell(SX - 14, SY + 2, RW * 0.16, RW * 0.1, '#3a0408', 0);
+      for (let j = 0; j < 4; j++) { const x0 = SX - RW + j * RW * 0.6, len = 40 + j * 25; p.band([[x0, SY + 6], [x0 + 3, SY + 6 + len]], '#a8121f', 9, 0, 'round'); }
+      const g = p.g; g.save(); for (let q2 = 0; q2 < 10; q2++) { const u = ((o.steam || 0.5) + q2 / 10) % 1, x = SX + Math.sin(q2 * 2.3) * 60, y = SY - u * 320, rr = 40 + u * 110; const gr = g.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, `rgba(255,255,255,${0.8 * (1 - u)})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, rr, 0, 6.2832); g.fill(); } g.restore(); }
+    if (dec <= 0.02 && !o.headGone) {
     // NUCA: atrás da cabeça, onde o crânio encontra o pescoço
     const NX = hcx - sd * HR * 0.5, NY = hcy + HR * ry * 0.82;
     p.stroke([[NX - sd * 6, NY - 30], [NX + sd * 4, NY + 40]], 3.5, SD);
@@ -2978,6 +2993,7 @@ return (p, t = 0, o = {}) => {
       const tr = []; for (let i = 0; i <= 30; i++) { const t = i / 30, a = Math.PI * (0.65 + t * 0.9); tr.push([NX + Math.cos(a) * HR * 1.4, NY + Math.sin(a) * HR * 0.55]); }
       for (let i = 30; i >= 0; i--) { const t = i / 30, a = Math.PI * (0.65 + t * 0.9), th = 1 - 0.75 * Math.abs(t - 0.5) * 2; tr.push([NX + Math.cos(a) * HR * (1.4 - 0.18 * th), NY + Math.sin(a) * HR * (0.55 - 0.1 * th)]); }
       p.poly(tr, `rgba(245,252,255,${al})`, 0); g.shadowBlur = 0; for (let k2 = 0; k2 < 10; k2++) { const a = k2 * 0.63; p.stroke([[NX, NY], [NX + Math.cos(a) * (30 + k2 * 6), NY + Math.sin(a) * (30 + k2 * 6) * 0.7]], 3, `rgba(255,230,150,${al})`); } g.restore(); }
+    }
   } else if (o.back) {   // titã de COSTAS: cabelo cobre a cabeça, nuca à mostra; o.cut 0..1 = golpe na nuca (rastro -> talho com sangue e vapor)
     if (kind !== 'tiny') { const HC = o.hair || '#4a3424', hb = []; for (let i = 0; i <= 36; i++) { const a = Math.PI * (0.94 + i / 36 * 1.12); hb.push([hcx + Math.cos(a) * HR * 1.04, hcy + Math.sin(a) * HR * ry * 1.04]); }
       for (let i = 14; i >= 0; i--) { const t = i / 14, x = hcx - HR * 0.98 + t * HR * 1.96; hb.push([x, hcy + HR * ry * (0.42 + (i % 2 ? 0.1 : 0)) - Math.sin(t * Math.PI) * HR * 0.08]); }
@@ -3023,7 +3039,7 @@ return (p, t = 0, o = {}) => {
     for (const sd of [-1, 1]) for (let k = 0; k < 3; k++) { const x = hcx + sd * (mw * (0.7 - k * 0.22)), len = 18 + ((k * 37 + (sd > 0 ? 11 : 0)) % 40), w = 12 - k * 3; p.poly([[x - w / 2, my + 16], [x + w / 2, my + 16], [x + w * 0.3, my + 16 + len], [x - w * 0.3, my + 16 + len]], '#a8121f', 0); p.ell(x, my + 18 + len, w * 0.45, w * 0.6, '#a8121f', 0); } }
   }
   if (o.sleep) { const g = p.g; g.save(); g.font = '900 64px sans-serif'; g.fillStyle = '#ffffff'; g.strokeStyle = INK; g.lineWidth = 8; for (let k = 0; k < 3; k++) { const x = hcx + HR * 0.9 + k * 46, y = hcy - HR * 0.7 - k * 56, sz = 1 - k * 0.2; g.save(); g.translate(x, y); g.scale(sz, sz); g.strokeText('Z', 0, 0); g.fillText('Z', 0, 0); g.restore(); } g.restore(); }
-  if (o.steam) { const g = p.g; g.save(); for (let k = 0; k < 14; k++) { const u = ((o.steam + k / 14) % 1), x = cx + Math.sin(k * 2.7) * A.chestW * 1.1 + Math.sin(u * 6 + k) * 30, y = (k % 2 ? A.hip : A.sh + 90) - u * 250, r = 50 + u * 75;
+  if (o.steam && !o.headOnly) { const g = p.g; g.save(); for (let k = 0; k < 14; k++) { const u = ((o.steam + k / 14) % 1), x = cx + Math.sin(k * 2.7) * A.chestW * 1.1 + Math.sin(u * 6 + k) * 30, y = (k % 2 ? A.hip : A.sh + 90) - u * 250, r = 50 + u * 75;
       const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,255,255,${0.85 * Math.min(1, u * 5) * (1 - u)})`); gr.addColorStop(0.5, `rgba(250,250,250,${0.45 * Math.min(1, u * 5) * (1 - u)})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill(); } g.restore(); }
 };
 })();

@@ -396,1007 +396,1007 @@
 "i": 0,
 "text": "O gigante olha pra cima.",
 "s": 162.347,
-"e": 164.147
+"e": 164.167
 },
 {
 "cap": 4,
 "i": 1,
 "text": "O Tonico olha pra baixo.",
-"s": 164.147,
-"e": 165.827
+"s": 164.167,
+"e": 165.507
 },
 {
 "cap": 4,
 "i": 2,
 "text": "Os dois piscam ao mesmo tempo.",
-"s": 165.827,
-"e": 168.507
+"s": 165.507,
+"e": 167.447
 },
 {
 "cap": 4,
 "i": 3,
 "text": "Aí a Bia passa voando pela corda, agarra o Tonico pela gola e puxa ele de volta pra muralha.",
-"s": 168.507,
-"e": 174.967
+"s": 167.447,
+"e": 172.567
 },
 {
 "cap": 4,
 "i": 4,
-"text": "No caminho, a Bia passa a lâmina atrás do pescoço do gigante, e ele desaba soltando fumaça.",
-"s": 174.967,
-"e": 181.147
+"text": "No caminho, a Bia passa a lâmina na nuca do gigante, e a cabeça dele sai voando.",
+"s": 172.567,
+"e": 177.027
 },
 {
 "cap": 4,
 "i": 5,
 "text": "Atrás do pescoço, é lá o ponto fraco, grita o Comandante, e nessa hora o sol nasce e os outros gigantes param.",
-"s": 181.147,
-"e": 189.267
+"s": 177.027,
+"e": 183.347
 },
 {
 "cap": 4,
 "i": 6,
-"text": "O caído se levanta, com o pescoço já fechando, e todos viram as costas.",
-"s": 189.267,
-"e": 194.287
+"text": "A cabeça rola na grama, o corpo vira fumaça, e os outros viram as costas.",
+"s": 183.347,
+"e": 187.847
 },
 {
 "cap": 4,
 "i": 7,
 "text": "E voltam andando pra floresta, levando o saco com os três soldados.",
-"s": 194.287,
-"e": 198.887
+"s": 187.847,
+"e": 191.347
 },
 {
 "cap": 4,
 "i": 8,
 "text": "A muralha está rachada.",
-"s": 198.887,
-"e": 200.807
+"s": 191.347,
+"e": 192.947
 },
 {
 "cap": 4,
 "i": 9,
 "text": "Três soldados sumiram, e outros três nunca mais vão voltar pra casa.",
-"s": 200.807,
-"e": 205.247
+"s": 192.947,
+"e": 197.047
 },
 {
 "cap": 4,
 "i": 10,
 "text": "E ninguém sabe quem tocou o sino.",
-"s": 205.247,
-"e": 207.787
+"s": 197.047,
+"e": 198.867
 },
 {
 "cap": 4,
 "i": 11,
 "text": "O Comandante Ferraz reúne a tropa.",
-"s": 207.787,
-"e": 210.187
+"s": 198.867,
+"e": 200.787
 },
 {
 "cap": 4,
 "i": 12,
 "text": "\"Se eles voltarem hoje à noite, a muralha não aguenta.\" \"Precisamos descobrir pra onde eles levam as pessoas.",
-"s": 210.187,
-"e": 216.407
+"s": 200.787,
+"e": 206.827
 },
 {
 "cap": 4,
 "i": 13,
 "text": "Vai ter uma expedição.",
-"s": 216.407,
-"e": 217.667
+"s": 206.827,
+"e": 208.127
 },
 {
 "cap": 4,
 "i": 14,
 "text": "Lá fora.\" É a primeira expedição em cem anos.",
-"s": 217.667,
-"e": 221.327
+"s": 208.127,
+"e": 212.127
 },
 {
 "cap": 4,
 "i": 15,
 "text": "A Bia levanta a mão na hora.",
-"s": 221.327,
-"e": 223.127
+"s": 212.127,
+"e": 213.507
 },
 {
 "cap": 4,
 "i": 16,
 "text": "O Tonico levanta a mão sem querer, porque estava se espreguiçando.",
-"s": 223.127,
-"e": 226.677
+"s": 213.507,
+"e": 216.683
 },
 {
 "cap": 4,
 "i": -1,
 "text": "#END",
-"s": 226.677,
-"e": 227.877
+"s": 216.683,
+"e": 217.883
 },
 {
 "cap": 5,
 "i": 0,
 "text": "O portão se abre só um pouquinho.",
-"s": 227.877,
-"e": 230.037
+"s": 217.883,
+"e": 220.043
 },
 {
 "cap": 5,
 "i": 1,
 "text": "A expedição sai.",
-"s": 230.037,
-"e": 231.457
+"s": 220.043,
+"e": 221.463
 },
 {
 "cap": 5,
 "i": 2,
 "text": "O Comandante, a Bia, o Tonico, quatro soldados e o Mestre Lúcio, o sábio da cidade.",
-"s": 231.457,
-"e": 238.197
+"s": 221.463,
+"e": 228.203
 },
 {
 "cap": 5,
 "i": 3,
 "text": "Lá fora é tudo enorme.",
-"s": 238.197,
-"e": 239.937
+"s": 228.203,
+"e": 229.943
 },
 {
 "cap": 5,
 "i": 4,
 "text": "A grama bate na cintura.",
-"s": 239.937,
-"e": 241.557
+"s": 229.943,
+"e": 231.563
 },
 {
 "cap": 5,
 "i": 5,
 "text": "As árvores parecem prédios.",
-"s": 241.557,
-"e": 243.497
+"s": 231.563,
+"e": 233.503
 },
 {
 "cap": 5,
 "i": 6,
 "text": "E no chão, as pegadas dos gigantes.",
-"s": 243.497,
-"e": 245.997
+"s": 233.503,
+"e": 236.003
 },
 {
 "cap": 5,
 "i": 7,
 "text": "Cada uma do tamanho de uma piscina.",
-"s": 245.997,
-"e": 248.597
+"s": 236.003,
+"e": 238.603
 },
 {
 "cap": 5,
 "i": 8,
 "text": "As pegadas entram fundo na floresta.",
-"s": 248.597,
-"e": 250.937
+"s": 238.603,
+"e": 240.943
 },
 {
 "cap": 5,
 "i": 9,
 "text": "Ninguém fala nada.",
-"s": 250.937,
-"e": 252.337
+"s": 240.943,
+"e": 242.343
 },
 {
 "cap": 5,
 "i": 10,
 "text": "O único barulho é o Tonico mastigando de nervoso.",
-"s": 252.337,
-"e": 255.697
+"s": 242.343,
+"e": 245.703
 },
 {
 "cap": 5,
 "i": 11,
 "text": "No meio da trilha, eles acham uma pedra gigante coberta de musgo.",
-"s": 255.697,
-"e": 260.017
+"s": 245.703,
+"e": 250.023
 },
 {
 "cap": 5,
 "i": 12,
 "text": "O Mestre Lúcio limpa o musgo com a manga.",
-"s": 260.017,
-"e": 262.597
+"s": 250.023,
+"e": 252.603
 },
 {
 "cap": 5,
 "i": 13,
 "text": "E embaixo tem desenhos.",
-"s": 262.597,
-"e": 264.337
+"s": 252.603,
+"e": 254.343
 },
 {
 "cap": 5,
 "i": 14,
 "text": "Muito antigos.",
-"s": 264.337,
-"e": 265.657
+"s": 254.343,
+"e": 255.663
 },
 {
 "cap": 5,
 "i": 15,
 "text": "Gigantes.",
-"s": 265.657,
-"e": 266.657
+"s": 255.663,
+"e": 256.663
 },
 {
 "cap": 5,
 "i": 16,
 "text": "Gente pequena.",
-"s": 266.657,
-"e": 267.837
+"s": 256.663,
+"e": 257.843
 },
 {
 "cap": 5,
 "i": 17,
 "text": "E um sino.",
-"s": 267.837,
-"e": 269.037
+"s": 257.843,
+"e": 259.043
 },
 {
 "cap": 5,
 "i": 18,
 "text": "Igualzinho ao sino da muralha.",
-"s": 269.037,
-"e": 271.224
+"s": 259.043,
+"e": 261.23
 },
 {
 "cap": 5,
 "i": -1,
 "text": "#END",
-"s": 271.224,
-"e": 272.424
+"s": 261.23,
+"e": 262.43
 },
 {
 "cap": 6,
 "i": 0,
 "text": "O Mestre Lúcio lê os desenhos devagar, com o dedo.",
-"s": 272.424,
-"e": 276.004
+"s": 262.43,
+"e": 266.01
 },
 {
 "cap": 6,
 "i": 1,
 "text": "\"Aqui.",
-"s": 276.004,
-"e": 277.164
+"s": 266.01,
+"e": 267.17
 },
 {
 "cap": 6,
 "i": 2,
 "text": "O sino tocado três vezes... e os gigantes acordam e vêm atrás do som.\" \"E aqui.",
-"s": 277.164,
-"e": 282.884
+"s": 267.17,
+"e": 272.89
 },
 {
 "cap": 6,
 "i": 3,
 "text": "O sino tocado sete vezes... e os gigantes caem no sono.\" O Comandante fica pálido.",
-"s": 282.884,
-"e": 289.044
+"s": 272.89,
+"e": 279.05
 },
 {
 "cap": 6,
 "i": 4,
 "text": "\"Então o sino não avisa que os gigantes estão chegando.",
-"s": 289.044,
-"e": 291.744
+"s": 279.05,
+"e": 281.75
 },
 {
 "cap": 6,
 "i": 5,
 "text": "O sino chama eles.\" \"E alguém lá dentro da cidade tocou ele ontem à noite\", diz a Bia.",
-"s": 291.744,
-"e": 297.684
+"s": 281.75,
+"e": 287.69
 },
 {
 "cap": 6,
 "i": 6,
 "text": "Mais pra frente, numa clareira, eles encontram os três gigantes.",
-"s": 297.684,
-"e": 300.884
+"s": 287.69,
+"e": 290.89
 },
 {
 "cap": 6,
 "i": 7,
 "text": "Dormindo.",
-"s": 300.884,
-"e": 301.364
+"s": 290.89,
+"e": 291.37
 },
 {
 "cap": 6,
 "i": 8,
 "text": "Roncando tão alto que as folhas tremem.",
-"s": 301.364,
-"e": 304.224
+"s": 291.37,
+"e": 294.23
 },
 {
 "cap": 6,
 "i": 9,
 "text": "E do lado deles, o saco de pano.",
-"s": 304.224,
-"e": 306.504
+"s": 294.23,
+"e": 296.51
 },
 {
 "cap": 6,
 "i": 10,
 "text": "Dentro, os três soldados.",
-"s": 306.504,
-"e": 308.464
+"s": 296.51,
+"e": 298.47
 },
 {
 "cap": 6,
 "i": 11,
 "text": "Vivos.",
-"s": 308.464,
-"e": 309.244
+"s": 298.47,
+"e": 299.25
 },
 {
 "cap": 6,
 "i": 12,
 "text": "Também dormindo.",
-"s": 309.244,
-"e": 310.624
+"s": 299.25,
+"e": 300.63
 },
 {
 "cap": 6,
 "i": 13,
 "text": "A Bia olha em volta, procurando outro rosto.",
-"s": 310.624,
-"e": 313.204
+"s": 300.63,
+"e": 303.21
 },
 {
 "cap": 6,
 "i": 14,
 "text": "Um rosto de dez anos atrás.",
-"s": 313.204,
-"e": 315.444
+"s": 303.21,
+"e": 305.45
 },
 {
 "cap": 6,
 "i": 15,
 "text": "Não está ali.",
-"s": 315.444,
-"e": 316.903
+"s": 305.45,
+"e": 306.91
 },
 {
 "cap": 6,
 "i": -1,
 "text": "#END",
-"s": 316.903,
-"e": 318.103
+"s": 306.91,
+"e": 308.11
 },
 {
 "cap": 7,
 "i": 0,
 "text": "Enquanto isso, lá dentro da cidade, no prédio do Conselho, alguém conta moedas à luz de vela.",
-"s": 318.103,
-"e": 323.743
+"s": 308.11,
+"e": 313.75
 },
 {
 "cap": 7,
 "i": 1,
 "text": "É o Conselheiro Graúdo, o homem mais rico de Pedra Alta.",
-"s": 323.743,
-"e": 327.303
+"s": 313.75,
+"e": 317.31
 },
 {
 "cap": 7,
 "i": 2,
 "text": "Na mesa dele tem um livro de registros.",
-"s": 327.303,
-"e": 329.463
+"s": 317.31,
+"e": 319.47
 },
 {
 "cap": 7,
 "i": 3,
 "text": "E em cada página, uma data, e a mesma frase: \"sino tocado\".",
-"s": 329.463,
-"e": 334.143
+"s": 319.47,
+"e": 324.15
 },
 {
 "cap": 7,
 "i": 4,
 "text": "Toda vez que o povo reclamava dos impostos, o sino tocava.",
-"s": 334.143,
-"e": 337.763
+"s": 324.15,
+"e": 327.77
 },
 {
 "cap": 7,
 "i": 5,
 "text": "Os gigantes apareciam.",
-"s": 337.763,
-"e": 339.343
+"s": 327.77,
+"e": 329.35
 },
 {
 "cap": 7,
 "i": 6,
 "text": "E o povo, com medo, pagava mais pra reforçar a muralha.",
-"s": 339.343,
-"e": 342.143
+"s": 329.35,
+"e": 332.15
 },
 {
 "cap": 7,
 "i": 7,
 "text": "Cem anos de medo.",
-"s": 342.143,
-"e": 344.363
+"s": 332.15,
+"e": 334.37
 },
 {
 "cap": 7,
 "i": 8,
 "text": "Cem anos de imposto.",
-"s": 344.363,
-"e": 346.163
+"s": 334.37,
+"e": 336.17
 },
 {
 "cap": 7,
 "i": 9,
 "text": "E o Conselheiro Graúdo sorri, porque hoje à noite ele vai tocar o sino de novo.",
-"s": 346.163,
-"e": 350.443
+"s": 336.17,
+"e": 340.45
 },
 {
 "cap": 7,
 "i": 10,
 "text": "Afinal, uma muralha rachada é muito mais cara de consertar.",
-"s": 350.443,
-"e": 354.704
+"s": 340.45,
+"e": 344.71
 },
 {
 "cap": 7,
 "i": -1,
 "text": "#END",
-"s": 354.704,
-"e": 355.904
+"s": 344.71,
+"e": 345.91
 },
 {
 "cap": 8,
 "i": 0,
 "text": "Na clareira, a expedição abre o saco devagarinho.",
-"s": 355.904,
-"e": 359.544
+"s": 345.91,
+"e": 349.55
 },
 {
 "cap": 8,
 "i": 1,
 "text": "O Tonico segura a respiração.",
-"s": 359.544,
-"e": 362.304
+"s": 349.55,
+"e": 352.31
 },
 {
 "cap": 8,
 "i": 2,
 "text": "Os soldados saem um por um, na ponta dos pés.",
-"s": 362.304,
-"e": 366.184
+"s": 352.31,
+"e": 356.19
 },
 {
 "cap": 8,
 "i": 3,
 "text": "Mas o sol está se pondo.",
-"s": 366.184,
-"e": 368.344
+"s": 356.19,
+"e": 358.35
 },
 {
 "cap": 8,
 "i": 4,
 "text": "E lá longe, da direção da cidade, vem um som.",
-"s": 368.344,
-"e": 371.964
+"s": 358.35,
+"e": 361.97
 },
 {
 "cap": 8,
 "i": 5,
 "text": "Uma badalada.",
-"s": 371.964,
-"e": 373.444
+"s": 361.97,
+"e": 363.45
 },
 {
 "cap": 8,
 "i": 6,
 "text": "Duas.",
-"s": 373.444,
-"e": 374.924
+"s": 363.45,
+"e": 364.93
 },
 {
 "cap": 8,
 "i": 7,
 "text": "Três.",
-"s": 374.924,
-"e": 376.224
+"s": 364.93,
+"e": 366.23
 },
 {
 "cap": 8,
 "i": 8,
 "text": "Os gigantes abrem os olhos.",
-"s": 376.224,
-"e": 378.524
+"s": 366.23,
+"e": 368.53
 },
 {
 "cap": 8,
 "i": 9,
 "text": "Todos ao mesmo tempo.",
-"s": 378.524,
-"e": 380.184
+"s": 368.53,
+"e": 370.19
 },
 {
 "cap": 8,
 "i": 10,
 "text": "\"Corre!\", grita o Comandante.",
-"s": 380.184,
-"e": 382.964
+"s": 370.19,
+"e": 372.97
 },
 {
 "cap": 8,
 "i": 11,
 "text": "A expedição dispara pela floresta.",
-"s": 382.964,
-"e": 385.704
+"s": 372.97,
+"e": 375.71
 },
 {
 "cap": 8,
 "i": 12,
 "text": "A Bia vai na frente, pulando de árvore em árvore com o gancho.",
-"s": 385.704,
-"e": 389.624
+"s": 375.71,
+"e": 379.63
 },
 {
 "cap": 8,
 "i": 13,
 "text": "O Tonico vai atrás, correndo tão rápido que as pernas dele parecem um ventilador.",
-"s": 389.624,
-"e": 394.564
+"s": 379.63,
+"e": 384.57
 },
 {
 "cap": 8,
 "i": 14,
 "text": "E atrás deles, três gigantes de quinze metros, derrubando árvores como se fossem palitos.",
-"s": 394.564,
-"e": 401.104
+"s": 384.57,
+"e": 391.11
 },
 {
 "cap": 8,
 "i": -1,
 "text": "#END",
-"s": 401.104,
-"e": 402.304
+"s": 391.11,
+"e": 392.31
 },
 {
 "cap": 9,
 "i": 0,
 "text": "A expedição chega na muralha um segundo antes dos gigantes.",
-"s": 402.304,
-"e": 405.944
+"s": 392.31,
+"e": 395.95
 },
 {
 "cap": 9,
 "i": 1,
 "text": "O portão se fecha atrás deles.",
-"s": 405.944,
-"e": 408.084
+"s": 395.95,
+"e": 398.09
 },
 {
 "cap": 9,
 "i": 2,
 "text": "Mas a rachadura de ontem ainda está aberta.",
-"s": 408.084,
-"e": 410.984
+"s": 398.09,
+"e": 400.99
 },
 {
 "cap": 9,
 "i": 3,
 "text": "O primeiro gigante enfia o braço inteiro pela rachadura.",
-"s": 410.984,
-"e": 413.864
+"s": 400.99,
+"e": 403.87
 },
 {
 "cap": 9,
 "i": 4,
 "text": "A mão dele tateia a rua, derrubando barracas de fruta.",
-"s": 413.864,
-"e": 416.924
+"s": 403.87,
+"e": 406.93
 },
 {
 "cap": 9,
 "i": 5,
 "text": "O povo corre gritando.",
-"s": 416.924,
-"e": 418.444
+"s": 406.93,
+"e": 408.45
 },
 {
 "cap": 9,
 "i": 6,
 "text": "Uma senhora acerta a mão do gigante com a vassoura.",
-"s": 418.444,
-"e": 420.544
+"s": 408.45,
+"e": 410.55
 },
 {
 "cap": 9,
 "i": 7,
 "text": "Não adianta nada.",
-"s": 420.544,
-"e": 421.764
+"s": 410.55,
+"e": 411.77
 },
 {
 "cap": 9,
 "i": 8,
 "text": "\"O sino!\", grita o Tonico.",
-"s": 421.764,
-"e": 423.104
+"s": 411.77,
+"e": 413.11
 },
 {
 "cap": 9,
 "i": 9,
 "text": "\"Sete vezes!",
-"s": 423.104,
-"e": 424.264
+"s": 413.11,
+"e": 414.27
 },
 {
 "cap": 9,
 "i": 10,
 "text": "Alguém tem que tocar sete vezes!\" Ele olha pra torre.",
-"s": 424.264,
-"e": 427.404
+"s": 414.27,
+"e": 417.41
 },
 {
 "cap": 9,
 "i": 11,
 "text": "E lá em cima, com a mão na corda do sino, está o Conselheiro Graúdo.",
-"s": 427.404,
-"e": 432.228
+"s": 417.41,
+"e": 422.234
 },
 {
 "cap": 9,
 "i": -1,
 "text": "#END",
-"s": 432.228,
-"e": 433.428
+"s": 422.234,
+"e": 423.434
 },
 {
 "cap": 10,
 "i": 0,
 "text": "O Tonico sobe a escada da torre correndo, sem pão, sem lanterna, sem fôlego.",
-"s": 433.428,
-"e": 438.428
+"s": 423.434,
+"e": 428.434
 },
 {
 "cap": 10,
 "i": 1,
 "text": "O Conselheiro Graúdo segura a corda.",
-"s": 438.428,
-"e": 440.568
+"s": 428.434,
+"e": 430.574
 },
 {
 "cap": 10,
 "i": 2,
 "text": "\"Saia daqui, recruta.",
-"s": 440.568,
-"e": 441.848
+"s": 430.574,
+"e": 431.854
 },
 {
 "cap": 10,
 "i": 3,
 "text": "Isso é assunto do Conselho.\" \"O senhor tocou o sino.",
-"s": 441.848,
-"e": 444.928
+"s": 431.854,
+"e": 434.934
 },
 {
 "cap": 10,
 "i": 4,
 "text": "O senhor chamou os gigantes.",
-"s": 444.928,
-"e": 446.428
+"s": 434.934,
+"e": 436.434
 },
 {
 "cap": 10,
 "i": 5,
 "text": "Por dinheiro.\" \"Por ordem, menino.",
-"s": 446.428,
-"e": 448.968
+"s": 436.434,
+"e": 438.974
 },
 {
 "cap": 10,
 "i": 6,
 "text": "Um povo com medo é um povo obediente.\" O Conselheiro empurra o Tonico na direção da beirada.",
-"s": 448.968,
-"e": 454.548
+"s": 438.974,
+"e": 444.554
 },
 {
 "cap": 10,
 "i": 7,
 "text": "E nesse exato segundo, um gancho passa assobiando e se enrola na corda do sino.",
-"s": 454.548,
-"e": 459.148
+"s": 444.554,
+"e": 449.154
 },
 {
 "cap": 10,
 "i": 8,
 "text": "É a Bia.",
-"s": 459.148,
-"e": 459.988
+"s": 449.154,
+"e": 449.994
 },
 {
 "cap": 10,
 "i": 9,
 "text": "Ela puxa com toda a força, e o sino balança.",
-"s": 459.988,
-"e": 462.528
+"s": 449.994,
+"e": 452.534
 },
 {
 "cap": 10,
 "i": 10,
 "text": "Uma.",
-"s": 462.528,
-"e": 463.733
+"s": 452.534,
+"e": 453.739
 },
 {
 "cap": 10,
 "i": -1,
 "text": "#END",
-"s": 463.733,
-"e": 464.933
+"s": 453.739,
+"e": 454.939
 },
 {
 "cap": 11,
 "i": 0,
 "text": "O Conselheiro tenta segurar a corda.",
-"s": 464.933,
-"e": 467.153
+"s": 454.939,
+"e": 457.159
 },
 {
 "cap": 11,
 "i": 1,
 "text": "O Comandante Ferraz chega na escada e segura o Conselheiro.",
-"s": 467.153,
-"e": 470.493
+"s": 457.159,
+"e": 460.499
 },
 {
 "cap": 11,
 "i": 2,
 "text": "Duas.",
-"s": 470.493,
-"e": 472.013
+"s": 460.499,
+"e": 462.019
 },
 {
 "cap": 11,
 "i": 3,
 "text": "O Tonico se pendura na corda com o corpo inteiro.",
-"s": 472.013,
-"e": 475.553
+"s": 462.019,
+"e": 465.559
 },
 {
 "cap": 11,
 "i": 4,
 "text": "Três.",
-"s": 475.553,
-"e": 476.913
+"s": 465.559,
+"e": 466.919
 },
 {
 "cap": 11,
 "i": 5,
 "text": "Quatro.",
-"s": 476.913,
-"e": 478.533
+"s": 466.919,
+"e": 468.539
 },
 {
 "cap": 11,
 "i": 6,
 "text": "Lá embaixo, os gigantes param de socar.",
-"s": 478.533,
-"e": 481.313
+"s": 468.539,
+"e": 471.319
 },
 {
 "cap": 11,
 "i": 7,
 "text": "Viram a cabeça pro som.",
-"s": 481.313,
-"e": 483.333
+"s": 471.319,
+"e": 473.339
 },
 {
 "cap": 11,
 "i": 8,
 "text": "Cinco.",
-"s": 483.333,
-"e": 484.973
+"s": 473.339,
+"e": 474.979
 },
 {
 "cap": 11,
 "i": 9,
 "text": "O primeiro gigante boceja.",
-"s": 484.973,
-"e": 487.073
+"s": 474.979,
+"e": 477.079
 },
 {
 "cap": 11,
 "i": 10,
 "text": "Um bocejo tão grande que dá pra ver o almoço de ontem.",
-"s": 487.073,
-"e": 490.673
+"s": 477.079,
+"e": 480.679
 },
 {
 "cap": 11,
 "i": 11,
 "text": "Seis.",
-"s": 490.673,
-"e": 492.513
+"s": 480.679,
+"e": 482.519
 },
 {
 "cap": 11,
 "i": 12,
 "text": "Sete.",
-"s": 492.513,
-"e": 494.113
+"s": 482.519,
+"e": 484.119
 },
 {
 "cap": 11,
 "i": 13,
 "text": "Os três gigantes caem no sono ao mesmo tempo.",
-"s": 494.113,
-"e": 497.233
+"s": 484.119,
+"e": 487.239
 },
 {
 "cap": 11,
 "i": 14,
 "text": "O maior desaba de cara na muralha... e o corpo dele tapa a rachadura certinho.",
-"s": 497.233,
-"e": 502.633
+"s": 487.239,
+"e": 492.639
 },
 {
 "cap": 11,
 "i": 15,
 "text": "Silêncio total em Pedra Alta.",
-"s": 502.633,
-"e": 505.253
+"s": 492.639,
+"e": 495.259
 },
 {
 "cap": 11,
 "i": 16,
 "text": "Só se ouve o ronco.",
-"s": 505.253,
-"e": 507.231
+"s": 495.259,
+"e": 497.237
 },
 {
 "cap": 11,
 "i": -1,
 "text": "#END",
-"s": 507.231,
-"e": 508.431
+"s": 497.237,
+"e": 498.437
 },
 {
 "cap": 12,
 "i": 0,
 "text": "O sol nasce.",
-"s": 508.431,
-"e": 509.571
+"s": 498.437,
+"e": 499.577
 },
 {
 "cap": 12,
 "i": 1,
 "text": "O Conselheiro Graúdo é levado pra prisão, ainda segurando um saco de moedas.",
-"s": 509.571,
-"e": 515.751
+"s": 499.577,
+"e": 505.757
 },
 {
 "cap": 12,
 "i": 2,
 "text": "O livro de registros é lido em voz alta na praça.",
-"s": 515.751,
-"e": 519.251
+"s": 505.757,
+"e": 509.257
 },
 {
 "cap": 12,
 "i": 3,
 "text": "O povo descobre a verdade.",
-"s": 519.251,
-"e": 521.531
+"s": 509.257,
+"e": 511.537
 },
 {
 "cap": 12,
 "i": 4,
 "text": "Cem anos de medo, tudo por imposto.",
-"s": 521.531,
-"e": 526.291
+"s": 511.537,
+"e": 516.297
 },
 {
 "cap": 12,
 "i": 5,
 "text": "Os três soldados voltam pra casa.",
-"s": 526.291,
-"e": 528.891
+"s": 516.297,
+"e": 518.897
 },
 {
 "cap": 12,
 "i": 6,
 "text": "O Tonico ganha uma medalha.",
-"s": 528.891,
-"e": 530.671
+"s": 518.897,
+"e": 520.677
 },
 {
 "cap": 12,
 "i": 7,
 "text": "Ele não sabe muito bem o que fez, mas aceita.",
-"s": 530.671,
-"e": 534.451
+"s": 520.677,
+"e": 524.457
 },
 {
 "cap": 12,
 "i": 8,
 "text": "A Bia sobe na muralha e olha pros gigantes dormindo lá fora.",
-"s": 534.451,
-"e": 540.211
+"s": 524.457,
+"e": 530.217
 },
 {
 "cap": 12,
 "i": 9,
 "text": "\"Tonico, se o sino chama os gigantes... quem fez o sino?\" O Mestre Lúcio chega com o desenho da pedra copiado num papel.",
-"s": 540.211,
-"e": 551.231
+"s": 530.217,
+"e": 541.237
 },
 {
 "cap": 12,
 "i": 10,
 "text": "Na última parte tinha um detalhe que ninguém viu na floresta.",
-"s": 551.231,
-"e": 556.011
+"s": 541.237,
+"e": 546.017
 },
 {
 "cap": 12,
 "i": 11,
 "text": "Gente pequena entrando numa montanha... e saindo do outro lado.",
-"s": 556.011,
-"e": 561.831
+"s": 546.017,
+"e": 551.837
 },
 {
 "cap": 12,
 "i": 12,
 "text": "Enorme.",
-"s": 561.831,
-"e": 563.751
+"s": 551.837,
+"e": 553.757
 },
 {
 "cap": 12,
 "i": 13,
 "text": "Lá longe, por trás das montanhas, a cabeça do gigante de trinta metros aparece de novo.",
-"s": 563.751,
-"e": 570.931
+"s": 553.757,
+"e": 560.937
 },
 {
 "cap": 12,
 "i": 14,
 "text": "E ele está olhando direto pra Bia.",
-"s": 570.931,
-"e": 574.691
+"s": 560.937,
+"e": 564.697
 },
 {
 "cap": 12,
 "i": 15,
 "text": "A Bia segura a corda do gancho com força.",
-"s": 574.691,
-"e": 578.651
+"s": 564.697,
+"e": 568.657
 },
 {
 "cap": 12,
 "i": 16,
 "text": "E sussurra: \"...Pai?\" Continua.",
-"s": 578.651,
-"e": 598.203
+"s": 568.657,
+"e": 588.21
 },
 {
 "cap": 12,
 "i": -1,
 "text": "#END",
-"s": 598.203,
-"e": 599.403
+"s": 588.21,
+"e": 589.41
 }
 ]

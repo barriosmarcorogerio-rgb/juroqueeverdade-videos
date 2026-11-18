@@ -145,19 +145,19 @@ for i, x in zip((43, 44, 45), (7, 9, 11)):
 S[46] = [shot(N, cam([-6, 10.6, OUT + 13], [-6, 10.8, OUT + 3], 46, [-6, 10.9, OUT + 11.5], [-6, 11, OUT + 3], 42), cast=[giant('grin', [-6, 0, OUT + 3], arms='up', mouth=1), who('soldado', [-4.6, 6.5, OUT + 3.4], p('shock', 'up', 'up'), to=[-6.3, 10.9, OUT + 3.05])]), shot(N, cam([-6, 11.2, OUT + 9], [-6, 11.4, OUT + 3], 34), cast=[giant('grin', [-6, 0, OUT + 3], arms='up', mouth=0.15, blood=1), who('soldado', [-6.6, 11.6, OUT + 3.05], p('shock', 'up', 'up'), roll=1.45)], kick=True)]   # o Rui é devorado (pernas entre os dentes, sangue)
 S[47] = [shot(N, cam([11, 8, OUT + 10], [10.5, 7.5, OUT + 5], 40), cast=[fx('fxSack', [10.5, 6.5, OUT + 5], 1.4), giant('long', [12, 0, OUT + 4])])]
 S[48] = [wall_one(N, 'bia', p('stern', 'lift', 'point', holdR='grapple', hookFire=1), x0=0.65)]
-S[49] = [shot(N, cam([4, WY + 1.8, WALK - 4], [8, WY + 4, OUT + 4], 50), cast=[giant('long', [12, 0, OUT + 4]), who('bia', [3, WY, WALK], p('stern', 'up', 'hang', holdR='grapple'))], world={'ropes': [[3.3, WY + 1.25, WALK, 10.3, 13.9, OUT + 4.0]]})]
+S[49] = [shot(N, cam([4, WY + 1.8, WALK - 4], [8, WY + 4, OUT + 4], 50), cast=[giant('long', [12, 0, OUT + 4]), who('bia', [3, WY, WALK], p('stern', 'up', 'hang', holdR='grapple'))], world={'ropes': [[3.3, WY + 1.25, WALK, 10.3, 13.9, OUT + 4.0, None, 8]]})]
 S[50] = [wall_duo(N, p('shock', 'hang', 'hang'), p('stern', 'up', 'hang', holdR='grapple', facing=-1))]
-S[51] = [shot(N, cam([0, WY + 2, WALK - 6], [3, WY + 4, OUT], 54), cast=[who('tonico', [0, WY, WALK], p('shock', 'up', 'up'), to=[5, WY + 6, OUT + 3], spin=True)])]
-S[52] = [shot(N, cam([4, WY + 3, OUT - 6], [6, WY + 3, OUT + 3], 50), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('tonico', [6, WY + 5, OUT + 3.9], p('shock', 'up', 'up'), to=[6, WY + 0.6, OUT + 3.9], spin=True)])]
+S[51] = [shot(N, cam([0, WY + 2, WALK - 6], [3, WY + 4, OUT], 54), cast=[who('tonico', [0, WY, WALK], p('shock', 'reach', 'cheek'), to=[5, WY + 6, OUT + 3], spin=True)])]
+S[52] = [shot(N, cam([4, WY + 3, OUT - 6], [6, WY + 3, OUT + 3], 50), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('tonico', [6, WY + 5, OUT + 3.9], p('shock', 'reach', 'reach'), to=[6, WY + 0.6, OUT + 3.9], spin=True)])]
 # cap 4
 TOP = lambda e='shock': [giant('tiny', [6, 0, OUT + 3.5], look=0.0), who('tonico', [6, 12.2, OUT + 3.9], p(e, 'cheek', 'cheek'), s=1.0)]
 S[53] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 40), cast=TOP())]
 S[54] = [shot(N, cam([6.8, 13.8, OUT + 6.5], [6, 12.6, OUT + 3.9], 36), cast=TOP('nervous'))]
 S[55] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 34), cast=TOP('squeeze'))]
-S[56] = [shot(N, cam([10, 11, OUT + 12], [4, 12, OUT + 2], 48), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('bia', [12, 13, OUT + 4], p('stern', 'up', 'reach', holdR='grapple'), to=[0, WY, WALK + 1])])]
-S[57] = [shot(N, cam([6.4, 11.4, OUT + 13], [6, 11.3, OUT + 3.5], 36, [6.2, 11.4, OUT + 12], [6, 11.2, OUT + 3.5], 33), cast=[giant('grin', [6, 0, OUT + 3.5], side=1, cutFrac=0.45, steam=True), who('bia', [2.0, 10.7, OUT + 4.8], p('stern', 'up', 'reach', holdR='grapple'), to=[11.0, 9.6, OUT + 4.8])], kick=True)]   # corte NA NUCA, titã de perfil (rosto gritando)
-S[58] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('grin', [6, 0, OUT + 6], side=1, cut=1, steam=True, roll=0, rollTo=1.5, rollEase='in'), who('ferraz', [0, WY, WALK], p('stern', 'point', 'hip'))], kick=True)]   # desaba, nuca aberta soltando vapor
-S[59] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('grin', [6, 0, OUT + 6], steam=True, roll=1.2, rollTo=0), giant('tiny', [-10, 0, OUT + 8]), giant('long', [-1, 0, OUT + 12])])]   # o caído se levanta, regenerando
+S[56] = [shot(N, cam([10, 11, OUT + 12], [4, 12, OUT + 2], 48), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('bia', [12, 13, OUT + 4], p('stern', 'reach', 'give', holdR='grapple', look=-0.6), to=[0, WY, WALK + 1], roll=0.3)])]
+S[57] = [shot(N, cam([6.4, 10.6, OUT + 15], [6, 9.8, OUT + 3.5], 44, [6.2, 10.4, OUT + 14], [6, 8.6, OUT + 3.5], 48), cast=[giant('grin', [6, 0, OUT + 3.5], side=1, cutFrac=0.3, decapFrac=0.5, steam=True), who('bia', [2.0, 10.7, OUT + 4.8], p('stern', 'reach', 'give', holdR='grapple', look=0.6), to=[11.0, 9.6, OUT + 4.8], roll=-0.35)], kick=True)]   # corte na nuca e DECAPITAÇÃO (titã de perfil)
+S[58] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('grin', [6, 0, OUT + 6], side=1, headGone=True, steam=True, roll=0, rollTo=1.5, rollEase='in'), giant('grin', [6, 0, OUT + 6.2], side=1, decap=1, headOnly=True), who('ferraz', [0, WY, WALK], p('stern', 'point', 'hip'))], kick=True)]   # corpo sem cabeça desaba; a cabeça já está na grama
+S[59] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('grin', [6, 0, OUT + 6], side=1, headGone=True, steam=True, roll=1.5), giant('grin', [6, 0, OUT + 6.2], side=1, decap=1, headOnly=True), giant('tiny', [-10, 0, OUT + 8]), giant('long', [-1, 0, OUT + 12])])]   # o caído se levanta, regenerando
 S[60] = [shot(DW, cam([1.0, WY + 1.9, WALK - 1.2], [2, WY + 5, 40], 52), cast=[giant('grin', [-4, 0, 60], walk=True, to=[-4, 0, 90]), giant('tiny', [8, 0, 66], walk=True, to=[8, 0, 96]), giant('long', [18, 0, 72], walk=True, to=[18, 0, 100]), fx('fxSack', [18, 7, 71], 1.4, to=[18, 7, 99])])]
 S[61] = [crack_out(DW, crack=2)]
 S[62] = [wall_one(DW, 'soldado', p('nervous', 'hang', 'hang'), x0=7)]
@@ -213,7 +213,7 @@ S[124] = [clearing(GD, [giant('grin', [-6, 0.5, CL + 2], roll=-1.5), giant('tiny
 S[125] = [clearing(GD, [giant('grin', [-6, 0, CL + 2], roll=-1.5, rollTo=0), giant('tiny', [2, 0, CL + 5], roll=1.5, rollTo=0), giant('long', [9, 0, CL - 1], roll=-1.5, rollTo=0)], wide=True)]
 S[126] = [shot(GD, cam([0, 1.6, CL - 15], [0, 1.5, CL - 12], 40), cast=[who('ferraz', [0, 0, CL - 12], p('shock', 'point', 'up'))])]
 S[127] = [trail(GD, [*EXP(95, walk=True)])]
-S[128] = [shot(GD, cam([10, 3, 100], [0, 6, 88], 54), cast=[who('bia', [6, 7, 96], p('stern', 'up', 'reach', holdR='grapple'), to=[-4, 6, 82])])]
+S[128] = [shot(GD, cam([10, 3, 100], [0, 6, 88], 54), cast=[who('bia', [6, 7, 96], p('stern', 'reach', 'give', holdR='grapple', look=-0.6), to=[-4, 6, 82], roll=0.3)])]
 S[129] = [shot(GD, cam([4, 1.5, 70], [1, 1.2, 80], 44), cast=[who('tonico', [1, 0, 88], p('shock', 'hang', 'hang'), walk=True, to=[1.5, 0, 74])])]
 S[130] = [shot(GD, cam([3, 2, 64], [0, 8, 100], 58), cast=[giant('grin', [-3, 0, 108], walk=True, to=[-3, 0, 90]), giant('tiny', [6, 0, 112], walk=True, to=[6, 0, 94]), giant('long', [12, 0, 116], walk=True, to=[12, 0, 98])], kick=True)]
 # cap 9 — night again, the breach
