@@ -33,6 +33,8 @@ Regras: frases de 8–15 palavras; números por extenso; nada de descrever o ób
 - Chão de campo: capim 3D no campo inteiro (FIELD GRASS), sem invadir plantação/estrada/horta; manchas grandes de cor no chão.
 - Morros ao fundo: nunca esfera lisa de uma cor; usar `hillGeo` (contorno irregular) + `hillTexs` (campos, manchas de mata, árvores).
 - Criaturas gigantes NÃO são personagem comum ampliado: usar `fxGiant` (contorno único com ombro/braço/perna fundidos ao tronco, peitoral e costelas, juntas ossudas, mãos com dedos, olheiras, sorriso com gengiva e dentes), 3 tipos: grin, tiny, long.
+- Personagens: orelhas, narizinho, gola e dobras na roupa. Capacete de obra = `hardhat: true` (desenhado do tamanho da cabeça, com lanterna) — nunca cartão separado.
+- Soldados (clima de anime de muralha, sem copiar): jaqueta curta marrom + camisa branca, calça branca, botas altas, arnês de correias (`straps`), aparelho de gancho na cintura (`gear`, `hookFire` dispara o cabo), lançador na mão (`holdR: 'grapple'`). NUNCA: símbolo de asas, capa verde com emblema, lâminas duplas com cilindros iguais aos do anime.
 - Portas: nada atravessa porta fechada. O vão é um buraco de verdade na fachada com um cômodo iluminado atrás (não uma parede). A casa tem porta com batente, dobradiça, maçaneta e vão escuro; `world.door` (0→1) abre a folha. Personagem que sai de casa: abrir a porta nos ~0,5 s antes e começar a caminhada dentro do vão.
 - Chão/paredes: câmera com near 0,15; estrada/areia/campos usam `decal()` (polygonOffset) para não piscar; capim do quintal baixo (não esconde as pernas).
 

@@ -34,6 +34,7 @@ export const actorsAt = (f, T) => {
     if (c.float) pos = [pos[0] + Math.sin(F * 0.03 + pos[2]) * c.float * 0.5, pos[1] + Math.sin(F * 0.05 + pos[0]) * c.float, pos[2]];
     if (c.fx) { const k = c.fx + (c.t !== undefined ? q(c.t, 1) : ''); out.push({ key: k, draw: (p) => T[c.fx](p, c.t ?? 0), x: pos[0], y: pos[1], z: pos[2], s: c.s || 1, face: c.face, blob: false, shadow: false, order: c.order || 4, roll: c.roll ? c.roll * Math.sin(F * 0.05) : 0 }); continue; }
     const b = base(F, SEED[c.who] || 7), o = { ...b, ...(c.pose || {}) };
+    if (c.hat) o.hardhat = true;
     if (c.still) { o.bob = 0; o.tilt = 0; }
     if (c.walk) o.step = q(walk(F, S.a * 2.5, 1.2, 0.5).phase, 2);
     if (c.shake) { o.bob = q(0.01 * Math.sin(F * 2.1), 3); o.shake = (F | 0) % 2; }
@@ -41,7 +42,7 @@ export const actorsAt = (f, T) => {
     if (c.chew) o.bob = q(0.006 * Math.sin(F * 0.8), 3);
     const s = c.s || 1;
     out.push({ key: c.who + JSON.stringify(o), draw: (p) => T.romanFront(p, c.who, o), x: pos[0], y: pos[1], z: pos[2], s, flip: c.flip, face: c.face, blob: c.blob, roll: c.spin ? F * 0.03 : 0, shadow: c.shadow });
-    if (c.hat) out.push({ key: 'helm', draw: (p) => T.fxHelmet(p), x: pos[0], y: pos[1] + (c.hatY ?? 1.27) * s + (o.bob || 0) * 2.25 * s, z: pos[2] + 0.02, s: 0.42 * s, face: c.face, blob: false, shadow: false, order: 3 });
+
   }
   return out;
 };

@@ -36,7 +36,8 @@ def yard(v='wide', jp=None, pp=None, light='day', hole=1, extra=None, kick=None)
     return sh
 def cam2(p0, l0, f0, p1, l1, f1, roll=0):
     return [{'t': 0, 'pos': p0, 'look': l0, 'fov': f0}, {'t': 1, 'pos': p1, 'look': l1, 'fov': f1, 'roll': roll}]
-def shaft(y=-12, v='side', layer='terra', jp=None, glow=0.6, light='shaft', ice=False, extra=None, rope=True, lamp=30, hat=True, kick=None, rocha=None):
+def shaft(y=-12, v='side', layer='terra', jp=None, glow=0.6, light='shaft', ice=False, extra=None, rope=None, lamp=30, hat=True, kick=None, rocha=None):
+    if rope is None: rope = (v == 'up')
     jpos = [H[0] + 0.32, y, H[2] + 0.12]
     cast = [act(J, jpos, pose=jp or pose('neutral', 'up', 'hang', holdR='drill'), face='cam', blob=False, shadow=False, hat=hat)]
     if rocha: cast.append(act(R, [H[0] + 0.05, y + rocha + 0.2, H[2] + 0.62], pose=pose('stern', 'up', 'point', facing=1, look=0.6), face='cam', blob=False, shadow=False))
