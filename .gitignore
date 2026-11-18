@@ -9,3 +9,4 @@ projetos/entrega/
 projetos/madrugada.log
 projetos/madrugada2.log
 *.tts.log
+projetos/*/r[123].log
