@@ -35,7 +35,7 @@ export const actorsAt = (f, T) => {
     const b = base(F, SEED[c.who] || 7), o = { ...b, ...(c.pose || {}) };
     if (c.still) { o.bob = 0; o.tilt = 0; }
     if (c.walk) o.step = q(walk(F, S.a * 2.5, 1.2, 0.5).phase, 2);
-    if (c.climb) { const k = Math.floor((f - S.a) / 4); o.L = 'grip'; o.R = 'grip'; o.gripHi = k % 2 ? 'L' : 'R'; o.step = q((k % 4) / 4, 2); o.bob = q(0.01 * Math.sin((f - S.a) * 0.8), 3); }   // escalada/rapel: mão sobre mão na corda, pernas mexendo
+    if (c.climb) { const k = Math.floor((f - S.a) / 4); o.L = 'grip'; o.R = 'grip'; o.rope = 1; o.gripHi = k % 2 ? 'L' : 'R'; o.step = q((k % 4) / 4, 2); o.bob = q(0.01 * Math.sin((f - S.a) * 0.8), 3); }   // escalada/rapel: mão sobre mão na corda, pernas mexendo
     if (c.shake) { o.bob = q(0.01 * Math.sin(F * 2.1), 3); o.shake = (F | 0) % 2; }
     if (c.swirl) o.swirl = q(F * 0.2, 1);
     if (c.chew) o.bob = q(0.006 * Math.sin(F * 0.8), 3);

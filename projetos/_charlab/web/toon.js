@@ -578,7 +578,18 @@ const FACE = {
             -1
         ],
         mouth: "lick"
-    }
+    },
+    angry: { eye: ["slit", "slit"], brow: [8, -5], mouth: "teeth" },
+    sad: { eye: ["lid", "lid"], brow: [-7, 3], mouth: "frown" },
+    cry: { eye: ["squeeze", "squeeze"], brow: [-7, 3], mouth: "wave" },
+    scared: { eye: ["shock", "shock"], brow: [-7, 2], mouth: "wave" },
+    terrified: { eye: ["shock", "shock"], brow: [-8, 4], mouth: "O" },
+    surprised: { eye: ["dot", "dot"], brow: [-6, -6], mouth: "o" },
+    smug: { eye: ["lid", "lid"], brow: [2, -5], mouth: "smirk" },
+    determined: { eye: ["slit", "slit"], brow: [6, -1], mouth: "dash" },
+    excited: { eye: ["happy", "happy"], brow: [-6, -6], mouth: "laugh" },
+    confused: { eye: ["lid", "dot"], brow: [-5, 3], mouth: "smirk" },
+    disgust: { eye: ["slit", "lid"], brow: [5, -2], mouth: "wave" }
 };
 const halfLid = (k)=>k === "dot" || k === "small" ? "lid" : k === "lid" ? "slit" : k === "shock" ? "shockHalf" : k;
 const eyeKind = (k, lid)=>lid >= 1 && k !== "happy" && k !== "squeeze" && k !== "spiral" ? "dash" : lid > 0 ? halfLid(k) : k;
@@ -811,6 +822,8 @@ const faceFront = (p, cx, cy, W, expr, facing, look, lid, brim, skin, moustache,
         cy + (stout ? 10.5 : 15) * u
     ], stout ? 5.5 * u : 4.5 * u, 1.6 * u, moustache);
     if (expr === "nervous") p.ell(cx + 40 * u * (facing || 1), cy - 22 * u, 3 * u, 5 * u, "#9fd4ff", 2 * u);
+    if (expr === "cry") for (const sd of [-1, 1]) { const tx = fx + sd * 13 * u; p.band([[tx, cy + 4 * u], [tx + sd * 2 * u, cy + 26 * u]], "#8fd0ff", 3.5 * u, 1 * u, "round"); p.ell(tx + sd * 2 * u, cy + 28 * u, 2.6 * u, 3.4 * u, "#8fd0ff", 1 * u); }
+    if (expr === "angry") for (const sd of [-1, 1]) p.stroke([[fx + sd * 26 * u, cy - 34 * u], [fx + sd * 30 * u, cy - 40 * u]], 2.5 * u, "#b3162a");
 };
 const faceSide = (p, hx, hy, W, expr, lid, brim, skin, moustache, stout = false)=>{
     const u = W / 100, F = FACE[expr], ex = hx + 27 * u, ey = hy;
@@ -2604,6 +2617,7 @@ export const romanFront = (p, key, opts = {}) => {
     const cp = [[cx - 0.48 * W, chin + 0.08 * HH], [cx + 0.48 * W, chin + 0.08 * HH], [cx + 0.62 * W, sole - 0.55 * HH], [cx + 0.2 * W, sole - 0.45 * HH], [cx - 0.2 * W, sole - 0.5 * HH], [cx - 0.62 * W, sole - 0.55 * HH]];
     p.gradFill(cp, O.cape, mul(O.cape, [0.6, 0.6, 0.7]), light); p.inkRing(cp, ow * 0.8, thick);
   }
+  if (opts.rope) { p.band([[cx, -60], [cx, 1060]], "#c9a24a", 7 * u, 1.6 * u, "butt"); for (let y = -40; y < 1060; y += 22 * u) p.stroke([[cx - 3 * u, y], [cx + 3 * u, y + 10 * u]], 1.2 * u, "#8a6a2a"); }   // corda presa nas mãos (desenhada no próprio cartão: sempre alinhada)
   // ---- legs ----
   const dress = !!O.dress;
   for (const side of [-1, 1]) {

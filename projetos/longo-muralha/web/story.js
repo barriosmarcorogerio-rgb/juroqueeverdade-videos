@@ -38,10 +38,13 @@ export const actorsAt = (f, T) => {
       if (k % 2) { const side = Math.floor(k / 2) % 2 ? 'L' : 'R', held = side === 'L' ? o.holdL : o.holdR, cur = o[side] || 'hang';
         const ALT = { hang: 'hip', hip: 'hang', reach: 'give', give: 'reach', point: 'reach', up: 'reach', cheek: 'hang', cross: 'hip', thumb: 'hang', wave: 'up', lift: 'up', temple: 'cheek', belly: 'hang' };
         if (!held) o[side] = ALT[cur] || cur; else if (held === 'shovel' || held === 'grapple' || held === 'drill') o[side] = cur === 'up' ? 'reach' : 'up'; }
+      { const EV = { neutral: ['neutral', 'smug', 'confused'], stern: ['stern', 'determined', 'angry'], grin: ['grin', 'excited', 'laugh'], smile: ['smile', 'grin', 'smug'], shock: ['shock', 'scared', 'surprised'],
+          nervous: ['nervous', 'scared', 'sad'], laugh: ['laugh', 'excited', 'grin'], pained: ['pained', 'sad', 'cry'], relief: ['relief', 'smile', 'grin'] }[o.expr], k2 = Math.floor((f - S.a + sd0 * 9) / 26);   // expressão varia a cada ~2 s
+        if (EV && o.blink === 0) o.expr = EV[k2 % EV.length]; }
       o.bob = q((o.bob || 0) * 2.2, 5); o.headTilt = q((o.headTilt || 0) * 2.2, 3); o.look = q((o.look || 0) + 0.25 * Math.sin((f - S.a) * 0.09 + sd0), 3); }
     if (c.still) { o.bob = 0; o.tilt = 0; }
     if (c.walk) o.step = q(walk(F, S.a * 2.5, 1.2, 0.5).phase, 2);
-    if (c.climb) { const k = Math.floor((f - S.a) / 4); o.L = 'grip'; o.R = 'grip'; o.gripHi = k % 2 ? 'L' : 'R'; o.step = q((k % 4) / 4, 2); o.bob = q(0.01 * Math.sin((f - S.a) * 0.8), 3); }   // escalada/rapel: mão sobre mão na corda, pernas mexendo
+    if (c.climb) { const k = Math.floor((f - S.a) / 4); o.L = 'grip'; o.R = 'grip'; o.rope = 1; o.gripHi = k % 2 ? 'L' : 'R'; o.step = q((k % 4) / 4, 2); o.bob = q(0.01 * Math.sin((f - S.a) * 0.8), 3); }   // escalada/rapel: mão sobre mão na corda, pernas mexendo
     if (c.shake) { o.bob = q(0.01 * Math.sin(F * 2.1), 3); o.shake = (F | 0) % 2; }
     if (c.swirl) o.swirl = q(F * 0.2, 1);
     if (c.chew) o.bob = q(0.006 * Math.sin(F * 0.8), 3);
