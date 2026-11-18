@@ -3,7 +3,7 @@
 Canal: YouTube **@juroqueeverdade.brasil** + Instagram **@juroqueeverdade.brasil**. 1 vídeo por dia, 55–65 s (ver ESTILO.md, Duração e retenção), vertical 1080x1920.
 LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrigatórios) e `historias.md` (o que já saiu + ideias).
 
-## Tarefa A — Produção (madrugada)
+## Tarefa A — Produção (madrugada) — **2 Shorts por noite** (repetir os passos 1–13 para a 2ª história; seguir as "Regras de alcance" do ESTILO.md: `work/gancho.txt` + final em loop)
 1. **Escolher a história**: a próxima do backlog em `historias.md` (ou uma nova melhor, inspirada nas métricas em `metricas.md`). Nunca repetir. Fatos conferidos com busca na web; lenda é avisada ("diz a lenda"). Nada político, nada gráfico, nada de pessoas vivas.
 2. **Roteiro** no formato do `ESTILO.md` (conferir a "Régua de qualidade" e o exemplo completo; a história 1 do backlog JÁ TEM roteiro pronto lá — use-o), 150–170 palavras, com pontuação expressiva ("...", "!", MAIÚSCULA para ênfase) porque é ela que dá emoção à voz. Salvar em `projetos/AAAA-MM-DD-slug/script.txt` (uma frase por linha).
 3. **Projeto**: `cp -r template projetos/AAAA-MM-DD-slug` ; `cd` nele ; `npm i --silent --no-audit --no-fund playwright-core@1.49.1` só se `import('playwright')` falhar (Chromium já vem instalado no container).
@@ -19,7 +19,7 @@ LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrig
 12. **Fila de publicação**: acrescentar em `fila.json` um item `{data, slug, titulo, descricao, legenda_instagram, video, video_yt, thumb, cover_ms, publicado:false}`. Título YouTube ≤ 70 caracteres terminando em `#shorts`. Atualizar `historias.md`.
 13. `git add -A && git commit` (fim da mensagem com as linhas de atribuição) `&& git push`. Apagar `frames/`, `frames_cap/`, `stills/` antes do commit (não versionar quadros).
 
-## Tarefa B — Publicação + métricas (12h)
+## Tarefa B — Publicação + métricas (11h47 e 19h BRT; métricas só na rodada das 11h47)
 1. `git pull`. Pegar em `fila.json` o item mais antigo com `publicado:false`.
 2. Make (conector), cenário **7068350**, `scenarios_run` com `responsive:true` e data:
    `video_url` = `https://raw.githubusercontent.com/barriosmarcorogerio-rgb/juroqueeverdade-videos/main/<video>`,

@@ -63,6 +63,13 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 ## Voz (decidido pelo dono do canal)
 Gemini TTS voz **Charon**, +8% de velocidade (`template/gemini_tts.py`). Sem instrução de estilo (ela é lida em voz alta). A animação da voz vem da pontuação do roteiro: "...", "!", MAIÚSCULA na palavra de ênfase, frases curtas.
 
+## Regras de alcance (desde 18/11 — obrigatórias em todo Short)
+1. **Gancho no 1º segundo**: o vídeo ABRE na cena mais absurda (não na apresentação calma) e o arquivo `work/gancho.txt` tem a frase-gancho curta (4–7 palavras, pergunta ou afirmação chocante, ex.: "O BRASIL IMPORTOU CAMELOS?!"). O `captions.py` mostra ela grande no topo nos primeiros 2,8 s. A 1ª frase da narração já é o absurdo.
+2. **Final em loop**: a última frase do roteiro emenda na primeira (ex.: termina com "...e foi assim que" / "E tudo começou quando..." e o vídeo recomeça na frase 1). O último plano tem enquadramento parecido com o primeiro, para a volta não ser percebida.
+3. **Duração** continua 55–65 s (decisão do dono).
+4. **2 Shorts por dia**: a produção da madrugada faz 2 histórias; publicação às 11h47 e às 19h (BRT).
+5. Legenda palavra a palavra fica em 74% da altura (abaixo dos rostos).
+
 ## Régua de qualidade do roteiro (o teste de 10 s ficou FRACO — não repetir)
 Os roteiros de referência têm SEMPRE: (a) personagens com papel e FALA em discurso direto, (b) números concretos (82 furos, 15 por hora, 10 anos, último cem reais, 3 metros), (c) 4–6 piadas físicas em escalada, cada frase = uma ação que dá pra desenhar, (d) "Isso se chama..." com o nome do fenômeno, (e) final irônico de 1 frase que fecha o ciclo. Se faltar um desses, reescreva antes de gerar a voz.
 
