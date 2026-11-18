@@ -25,7 +25,7 @@ export const worldAt = (f) => { const S = shotAt(f); const w = { noClouds: S.set
   if (S.world && S.world.travTo !== undefined) { const t = E.smooth(clamp((f - S.a) / Math.max(1, S.b - S.a))); w.trav = lerp(S.world.trav, S.world.travTo, t); }
   if (S.world && S.world.potYTo !== undefined) { const t = E.smooth(clamp((f - S.a) / Math.max(1, S.b - S.a))); w.potY = lerp(S.world.potY || 0, S.world.potYTo, t); }
   return w; };
-const base = (F, seed) => { const i = idle(F, seed); return { seed, bob: q(i.bob, 5), tilt: q(i.tilt, 3), headTilt: q(i.headTilt, 3), blink: blinkAt(F, seed) };   // precisão alta: arredondar causava a cabeça 'tremer' 1–2 px };
+const base = (F, seed) => { const i = idle(F, seed); return { seed, bob: q(i.bob, 5), tilt: q(i.tilt, 3), headTilt: q(i.headTilt, 3), blink: blinkAt(F, seed) }; };   // precisão alta: arredondar causava a cabeça 'tremer' 1–2 px
 const SEED = { joao: 3, pedro: 5, rocha: 9, takeshi: 11, mineiro: 13 };
 export const actorsAt = (f, T) => {
   const S = shotAt(f), F = f * 2.5, out = [], u = E.smooth(clamp((f - S.a) / Math.max(1, S.b - S.a)));
