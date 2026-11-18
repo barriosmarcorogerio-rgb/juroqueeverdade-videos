@@ -209,7 +209,14 @@ oak(9.5, -5.5, 1.15); oak(-9.5, -3.5, 0.95); oak(14, -14, 1.0); oak(-26, -6, 1.1
 for (let i = 0; i < 26; i++) { const x = -140 + i * 11 + rr() * 6, z = -95 - rr() * 30; oak(x, z, 1.1 + rr() * 0.6, 26); }
 for (let i = 0; i < 10; i++) { const x = (rr() > 0.5 ? 1 : -1) * (30 + rr() * 50), z = -20 + rr() * 50; oak(x, z, 0.8 + rr() * 0.5, 30); }
 // far hills
-for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 200; const h = add(new THREE.SphereGeometry(70 + rr() * 60, 20, 10), std({ color: i % 2 ? '#6f9a48' : '#7fa85a' }), Math.cos(a) * d, -30, Math.sin(a) * d, world, { cast: false }); h.scale.y = 0.45; }
+const hillTexs = [0, 1, 2, 3].map((n) => P.tex(cv(512, 512, (g, w, h) => { const r = P.rng(300 + n); g.fillStyle = ['#78a450', '#6f9a48', '#82ac58', '#739f4c'][n]; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 40; i++) { g.fillStyle = `hsl(${62 + r() * 46},${32 + r() * 22}%,${36 + r() * 20}%)`; g.save(); g.translate(r() * w, r() * h); g.rotate(r() * 3); g.fillRect(-30 - r() * 40, -15 - r() * 25, 60 + r() * 80, 30 + r() * 50); g.restore(); }
+  for (let i = 0; i < 70; i++) { const x = r() * w, y = r() * h; for (let k = 0; k < 12; k++) { g.fillStyle = `hsl(${98 + r() * 22},${38 + r() * 15}%,${17 + r() * 12}%)`; g.beginPath(); g.arc(x + (r() - 0.5) * 44, y + (r() - 0.5) * 30, 4 + r() * 7, 0, 7); g.fill(); } }
+  for (let i = 0; i < 500; i++) { g.fillStyle = `hsl(108,40%,${18 + r() * 12}%)`; g.beginPath(); g.arc(r() * w, r() * h, 2 + r() * 2.5, 0, 7); g.fill(); } }), 3, 1.5));
+const hillGeo = (R, seed) => { const geo = new THREE.SphereGeometry(R, 72, 20, 0, Math.PI * 2, 0, Math.PI / 2), pa = geo.attributes.position, v = new THREE.Vector3(), r = P.rng(seed), f1 = r() * 6, f2 = r() * 6;
+  for (let i = 0; i < pa.count; i++) { v.fromBufferAttribute(pa, i); const a = Math.atan2(v.z, v.x), k = 1 + 0.12 * Math.sin(a * 3 + f1) + 0.07 * Math.sin(a * 7 + f2) + 0.04 * Math.sin(a * 13 + f1 * 2);
+    v.x *= k; v.z *= k; v.y *= 0.7 + 0.45 * (0.5 + 0.5 * Math.sin(a * 2 + f2)) + 0.06 * Math.sin(a * 11 + f1); pa.setXYZ(i, v.x, v.y, v.z); } geo.computeVertexNormals(); return geo; };
+for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 200, R = 70 + rr() * 60; const h = add(hillGeo(R, 100 + i), std({ map: hillTexs[i % 4] }), Math.cos(a) * d, -2, Math.sin(a) * d, world, { cast: false }); h.scale.y = 0.42; }
 // 3D grass blades around the yard
 { const bg = new THREE.BufferGeometry(); bg.setAttribute('position', new THREE.Float32BufferAttribute([-0.025, 0, 0, 0.025, 0, 0, 0.004, 1, 0.02], 3)); bg.setAttribute('normal', new THREE.Float32BufferAttribute([0, 0.3, 1, 0, 0.3, 1, 0, 0.6, 1], 3)); bg.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 0.5, 1], 2));
   bg.setAttribute('color', new THREE.Float32BufferAttribute([0.16, 0.26, 0.08, 0.16, 0.26, 0.08, 0.55, 0.72, 0.3], 3));

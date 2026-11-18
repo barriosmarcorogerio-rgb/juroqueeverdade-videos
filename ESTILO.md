@@ -29,6 +29,8 @@ Regras: frases de 8–15 palavras; números por extenso; nada de descrever o ób
 - Objetos na mão não podem ser cortados: o cartão do personagem tem margem de 200 unidades de cada lado (`PAD`), cabendo braço esticado + pá/lanche.
 - Mulheres precisam ser reconhecíveis num relance: `female: true` = silhueta de cintura e quadril (forma única), pescoço visível, cílios e batom leve, cabelo comprido (`long`, caindo atrás dos ombros) ou `ponytail`.
 - Pegada: palma atrás do objeto, dedos na frente (o objeto passa ENTRE a mão, não por cima nem por baixo).
+- Morros ao fundo: nunca esfera lisa de uma cor; usar `hillGeo` (contorno irregular) + `hillTexs` (campos, manchas de mata, árvores).
+- Criaturas gigantes NÃO são personagem comum ampliado: usar `fxGiant` (proporção errada, braços longos, costelas, sorriso com dentes, olhar vazio), 3 tipos: grin, tiny, long.
 - Portas: nada atravessa porta fechada. O vão é um buraco de verdade na fachada com um cômodo iluminado atrás (não uma parede). A casa tem porta com batente, dobradiça, maçaneta e vão escuro; `world.door` (0→1) abre a folha. Personagem que sai de casa: abrir a porta nos ~0,5 s antes e começar a caminhada dentro do vão.
 - Chão/paredes: câmera com near 0,15; estrada/areia/campos usam `decal()` (polygonOffset) para não piscar; capim do quintal baixo (não esconde as pernas).
 

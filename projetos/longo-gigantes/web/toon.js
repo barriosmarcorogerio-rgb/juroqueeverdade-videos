@@ -2876,3 +2876,42 @@ export const fxBread = (p) => { for (let r = 0; r < 4; r++) for (let i = 0; i <=
 export const fxCubes = (p) => { const cube = (x, y, s, c) => { p.poly([[x, y], [x + s, y], [x + s, y + s], [x, y + s]], c, 6); p.poly([[x, y], [x + s * 0.35, y - s * 0.3], [x + s * 1.35, y - s * 0.3], [x + s, y]], mul(c, [1.15, 1.15, 1.15]), 6); p.poly([[x + s, y], [x + s * 1.35, y - s * 0.3], [x + s * 1.35, y + s * 0.7], [x + s, y + s]], mul(c, [0.8, 0.8, 0.8]), 6); };
   cube(90, 700, 90, "#f2c84b"); for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) cube(300 + i * 90, 610 + j * 90, 90, "#e8483b"); };
 export const fxSweat = (p, t = 0) => { for (let i = 0; i < 5; i++) { const y = 300 + ((t * 300 + i * 140) % 600); p.ell(260 + i * 22, y, 12, 18, "#9fd4ff", 4); } };
+/** Gigante (design próprio, desproporcional e inquietante). o: {kind: 'grin'|'tiny'|'long', skin, walk 0..1, arms 'hang'|'reach'|'up', look, mouth 0..1, dazed}
+ *  Card space x -200..800, y 0..1000 (feet at 975). */
+export const fxGiant = (p, t = 0, o = {}) => {
+  const kind = o.kind || 'grin', SK = o.skin || '#e6b08a', SD = mul(SK, [0.78, 0.68, 0.66]), DK = mul(SK, [0.6, 0.48, 0.46]), g = p.g, w = o.walk || 0;
+  const cx = 300, sole = 975;
+  const P = { grin: { hip: 600, sh: 330, tw: 120, head: 150, hy: 190, legW: 30, armL: 1.15 }, tiny: { hip: 560, sh: 300, tw: 175, head: 70, hy: 245, legW: 40, armL: 1.0 }, long: { hip: 640, sh: 360, tw: 105, head: 120, hy: 210, legW: 26, armL: 1.35 } }[kind];
+  // legs: bony, slightly bent, knobby knees, big flat feet
+  for (const sd of [-1, 1]) { const ph = Math.sin((w + (sd > 0 ? 0.5 : 0)) * Math.PI * 2), hx = cx + sd * P.tw * 0.45, kx = hx + sd * 18 + ph * 22, ky = (P.hip + sole) / 2 - Math.max(0, ph) * 25, fx = hx + sd * 8 + ph * 40, fy = sole - Math.max(0, ph) * 40;
+    p.band([[hx, P.hip - 10], [(hx + kx) / 2, (P.hip + ky) / 2], [kx, ky], [fx, fy - 18]], SD, P.legW * 1.15, 7, 'round'); p.arc(kx + sd * 4, ky, P.legW * 0.35, 8, 200, 340, 3, DK);
+    p.ell(fx + sd * 26, fy - 8, 46, 18, SD, 7); for (let k = 0; k < 4; k++) p.ell(fx + sd * (48 + k * 2) - sd * k * 14, fy - 12, 8, 7, SD, 3); }
+  // torso: long, hunched, ribs and belly
+  const tp = []; for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 2, rx = P.tw * (Math.sin(a) > 0 ? 1.0 : 0.92) * (1 + 0.08 * Math.cos(a * 2)), ry = (P.hip - P.sh) / 2 + 30; tp.push([cx + Math.sin(a) * rx + (Math.cos(a) < 0 ? 12 : 0), (P.sh + P.hip) / 2 + Math.cos(a) * ry]); }
+  p.shadedFill(tp, SK, SD, -2.1, P.tw, 0.35); p.poly(tp, null, 9);
+  for (let k = 0; k < 4; k++) { const y = P.sh + 60 + k * 26; for (const sd of [-1, 1]) p.arc(cx + sd * P.tw * 0.42, y, P.tw * 0.36, 14, sd > 0 ? 200 : 200, sd > 0 ? 330 : 330, 4, DK); }
+  p.dot(cx + 4, P.hip - 60, 6, DK); p.stroke([[cx, P.sh + 30], [cx + 3, P.sh + 150]], 3, DK);
+  // arms: far too long, thin, dangling past the knees
+  for (const sd of [-1, 1]) { const sx = cx + sd * P.tw * 0.9, sy = P.sh + 25, pose = (sd < 0 ? o.armsL : o.armsR) || o.arms || 'hang';
+    const L = (sole - P.sh) * 0.62 * P.armL, swing = Math.sin((w + (sd > 0 ? 0 : 0.5)) * Math.PI * 2) * 25;
+    let ex, ey, hx, hy; if (pose === 'reach') { ex = sx + sd * L * 0.45; ey = sy - 10; hx = sx + sd * L * 0.95; hy = sy - 60; } else if (pose === 'up') { ex = sx + sd * 50; ey = sy - L * 0.45; hx = sx + sd * 90; hy = sy - L * 0.9; } else { ex = sx + sd * 40 + swing * 0.3; ey = sy + L * 0.48; hx = sx + sd * 30 + swing; hy = sy + L; }
+    p.band([[sx, sy], [(sx + ex) / 2, (sy + ey) / 2], [ex, ey], [hx, hy]], SD, 30, 7, 'round'); p.band([[sx, sy], [(sx + ex) / 2 + sd * 2, (sy + ey) / 2]], SD, 38, 0, 'round');
+    p.ell(hx, hy, 34, 30, SD, 7); for (let k = 0; k < 4; k++) { const a = Math.PI / 2 + (k - 1.5) * 0.35 + (pose === 'up' ? Math.PI : 0); p.band([[hx + Math.cos(a) * 20, hy + Math.sin(a) * 20], [hx + Math.cos(a) * 52, hy + Math.sin(a) * 52]], SD, 11, 4, 'round'); } }
+  // neck + head
+  const hcx = cx + 6 + (o.look || 0) * 10, hcy = P.hy + (o.dazed ? 10 : 0), HR = P.head;
+  p.band([[cx + 4, P.sh + 20], [hcx, hcy + HR * 0.6]], SD, kind === 'tiny' ? 44 : 34, 7);
+  const hp = []; for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 2, ry = HR * (kind === 'long' ? 1.35 : 1.0); hp.push([hcx + Math.sin(a) * HR * (1 - 0.06 * Math.cos(a)), hcy + Math.cos(a) * ry * (Math.cos(a) > 0 ? 1.05 : 0.95)]); }
+  for (const sd of [-1, 1]) p.ell(hcx + sd * HR * 0.98, hcy + 5, HR * 0.2, HR * 0.28, SD, 6);
+  p.shadedFill(hp, SK, SD, -2.1, HR, 0.35); p.poly(hp, null, 9);
+  if (kind !== 'tiny') for (let k = 0; k < 7; k++) { const a = Math.PI * (1.18 + k * 0.105), rY = kind === 'long' ? 1.3 : 0.98; p.ell(hcx + Math.cos(a) * HR * 0.86, hcy + Math.sin(a) * HR * rY, HR * 0.17, HR * 0.11, o.hair || '#4a3424', 5, 0, 360, a * 57.3 + 90); }
+  // eyes: blank, tiny pupils, no brows — the unsettling stare
+  const ey = hcy - HR * 0.18, er = kind === 'tiny' ? HR * 0.3 : HR * 0.17;
+  for (const sd of [-1, 1]) { const ex = hcx + sd * HR * 0.36; p.ell(ex, ey, er, er * 0.92, '#fbf7ee', 5); if (o.dazed) { const sp = []; for (let k = 0; k < 24; k++) { const a = k / 24 * 12, r = k / 24 * er * 0.8; sp.push([ex + Math.cos(a) * r, ey + Math.sin(a) * r]); } p.stroke(sp, 3); } else p.dot(ex + (o.look || 0) * er * 0.3, ey + 2, Math.max(4, er * 0.18)); p.arc(ex, ey + er * 0.9, er * 0.9, er * 0.25, 200, 340, 3, DK); }
+  p.stroke([[hcx - 4, ey + er + 6], [hcx + 8, ey + er + 30], [hcx - 6, ey + er + 34]], 4, DK);
+  // mouth: the huge grin with too many teeth (grin/long), tight smile for tiny
+  const my = hcy + HR * (kind === 'long' ? 0.55 : 0.42), mw = kind === 'tiny' ? HR * 0.45 : HR * 0.82, open = (o.mouth || 0) * 40;
+  if (kind === 'tiny') { p.arc(hcx, my - 8, mw, 16, 15, 165, 5); }
+  else { const top = [], bot = []; for (let i = 0; i <= 20; i++) { const x = hcx - mw + i / 20 * mw * 2, k = (i / 20 - 0.5) * 2; top.push([x, my - 18 + k * k * -14]); bot.push([x, my + 22 + open - k * k * 26]); }
+    p.poly([...top, ...bot.reverse()], '#5a1e28', 6); const nT = 12; for (let i = 0; i < nT; i++) { const x0 = hcx - mw * 0.92 + i / nT * mw * 1.84, k = ((i + 0.5) / nT - 0.5) * 2; p.poly([[x0 + 2, my - 16 - k * k * 14], [x0 + mw * 1.84 / nT - 2, my - 16 - k * k * 14], [x0 + mw * 1.84 / nT - 3, my - 2 - k * k * 10], [x0 + 3, my - 2 - k * k * 10]], '#fbf3dc', 2); }
+    for (const sd of [-1, 1]) p.stroke([[hcx + sd * mw, my - 18], [hcx + sd * (mw + 14), my - 30]], 4, DK); }
+};
