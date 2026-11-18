@@ -2559,7 +2559,7 @@ const cobweb = (p, cx, cy, r, u) => {
 
 /** cartoon hair (front view): soft cap with tufted fringe, NO dark band across the forehead. styles: short, spiky, bun, curly, long, side, bald */
 const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
-  const dark = mul(col, [0.72, 0.7, 0.75]), ow = 4.2 * u, A = H.a * 1.06, B = H.b * 1.06;
+  const dark = mul(col, [0.72, 0.7, 0.75]), ow = 4.2 * u, A = H.a * 1.1, B = H.b * 1.1;   // mais volume
   if (behind) { if (style === 'long') { const bp = [[cx - A * 0.98, hc - 0.2 * B], [cx - A * 1.08, hc + 0.8 * B], [cx - A * 1.28, hc + 1.75 * B], [cx - A * 0.7, hc + 1.95 * B], [cx + A * 0.7, hc + 1.95 * B], [cx + A * 1.28, hc + 1.75 * B], [cx + A * 1.08, hc + 0.8 * B], [cx + A * 0.98, hc - 0.2 * B]]; p.shadedFill(bp, col, dark, light, A, 0.3); p.poly(bp, null, ow); for (const sd of [-1, 1]) p.stroke([[cx + sd * A * 0.8, hc + 0.4 * B], [cx + sd * A * 0.85, hc + 1.6 * B]], 2 * u, dark); }
     if (style === 'ponytail') { const sd = -(facing || 1), px = cx + sd * A * 0.95; const pt = [[px, hc - 0.6 * B], [px + sd * 0.45 * A, hc - 0.2 * B], [px + sd * 0.5 * A, hc + 0.9 * B], [px + sd * 0.15 * A, hc + 1.5 * B], [px - sd * 0.05 * A, hc + 0.6 * B]]; p.shadedFill(pt, col, dark, light, A, 0.3); p.poly(pt, null, ow); p.ell(px + sd * 0.05 * A, hc - 0.5 * B, 0.13 * A, 0.1 * B, '#d0304a', 2.4 * u); }
     if (style === 'bun') { p.ell(cx, hc - B * 1.02, 0.36 * A, 0.3 * B, col, ow); p.ell(cx - 0.08 * A, hc - B * 1.08, 0.12 * A, 0.07 * B, mul(col, [1.15, 1.15, 1.15]), 0); }
@@ -2573,9 +2573,9 @@ const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
   const drop = style === 'long' ? 0.3 : style === 'curly' ? 0.25 : 0.12;
   if (drop > 0.2) pts.push([cx + A * 0.99, hc + drop * B]); pts.push([cx + A * 0.86, cut + 0.06 * B]);
   // fringe: rounded tufts from right to left
-  const n = style === 'spiky' ? 5 : 4;
+  const n = style === 'spiky' ? 7 : 6;   // franja com mais mechas
   for (let k = n; k >= 0; k--) { const t = k / n, x = cx + sk + (t - 0.5) * 1.64 * A, slant = style === 'side' ? (t - 0.5) * 0.3 * B * (facing || 1) : 0;
-    pts.push([x, cut + slant + (k % 2 ? 0.16 : 0.04) * B]); }
+    pts.push([x, cut + slant + (k % 2 ? 0.24 : 0.02) * B + (k === Math.floor(n / 2) ? 0.06 * B : 0)]); }
   pts.push([cx - A * 0.86, cut + 0.06 * B]); if (drop > 0.2) pts.push([cx - A * 0.99, hc + drop * B]);
   if (style === 'spiky') { const top = []; for (let k = 0; k < 5; k++) { const a = Math.PI * (1.15 + k * 0.175); top.push([cx + Math.cos(a) * A * 0.9, hc + Math.sin(a) * B * 0.9], [cx + Math.cos(a + 0.09) * A * 1.25, hc + Math.sin(a + 0.09) * B * 1.25]); } p.poly([...top, [cx + A * 0.5, hc - 0.5 * B], [cx - A * 0.5, hc - 0.5 * B]], col, ow); }
   if (style === 'curly') for (let k = 0; k < 9; k++) { const a = Math.PI * (1.0 + k / 8); p.ell(cx + Math.cos(a) * A * 0.98, hc + Math.sin(a) * B * 0.98, 0.2 * A, 0.18 * B, col, ow * 0.8); }
@@ -2583,7 +2583,10 @@ const drawHair = (p, style, col, H, cx, hc, light, facing, u, behind) => {
   p.stroke(pts.slice(0, 29), ow, INK);
   p.stroke(pts.slice(28), 1.6 * u, dark);   // fringe edge: thin, soft — no band
   if (style === 'long') { p.stroke([[cx + sk * 0.3, hc - 1.02 * B], [cx + sk * 0.3 + 2 * u, cut + 0.05 * B]], 2 * u, dark); for (const sd of [-1, 1]) for (let k = 1; k <= 3; k++) p.stroke([[cx + sd * A * (0.15 + k * 0.2), hc - 0.9 * B + k * 0.1 * B], [cx + sd * A * (0.25 + k * 0.2), cut]], 1.4 * u, dark); }
-  p.stroke([[cx - 0.35 * A + sk, hc - 0.82 * B], [cx - 0.05 * A + sk, hc - 0.92 * B]], 3 * u, mul(col, [1.35, 1.35, 1.35]));  // highlight
+  // brilho do cabelo: faixa curva clara + reflexo menor, e fios escuros que dão direção
+  const shine = mix(col, '#ffffff', 0.38), arcP = (r0, a0_, a1_, k = 10) => { const o = []; for (let i = 0; i <= k; i++) { const a = a0_ + i / k * (a1_ - a0_); o.push([cx + sk * 0.4 + Math.cos(a) * A * r0, hc + Math.sin(a) * B * r0]); } return o; };
+  p.stroke(arcP(0.78, Math.PI * 1.22, Math.PI * 1.48), 5 * u, shine); p.stroke(arcP(0.78, Math.PI * 1.55, Math.PI * 1.63), 4 * u, shine);
+  if (style !== 'long') for (let k = 0; k < 4; k++) { const x0 = cx + sk + (k - 1.5) * 0.32 * A; p.stroke([[x0 + 0.06 * A, hc - 0.95 * B], [x0 - 0.04 * A, hc - 0.7 * B], [x0 + 0.02 * A, cut + 0.02 * B]], 1.5 * u, dark); }
 };
 /** mitten hand (skin) with thumb, drawn over held props */
 const hand = (p, hx, hy, u, skin, dirx = 1) => { p.ell(hx, hy, 7.2 * u, 7.2 * u, skin, 2.2 * u); p.ell(hx + dirx * 5.5 * u, hy - 4.5 * u, 3.2 * u, 3.6 * u, skin, 1.8 * u); };
@@ -2610,7 +2613,7 @@ export const romanFront = (p, key, opts = {}) => {
   for (const side of [-1, 1]) {
     const up = Math.max(0, Math.sin(Math.PI * 2 * (step + (side > 0 ? 0.5 : 0)))) * 30 * (step ? 1 : 0);
     const hx = cx + side * 16 * u, fx = cx + side * 22 * u, fy = sole - 4 * u - up;
-    p.band(curve([hx, hipY], [(hx + fx) / 2 + side * 2 * u, (hipY + fy) / 2], [fx, fy]), O.pants || legCol, 6.4 * u, 1.5 * u, "round");
+    p.band(curve([hx, hipY], [(hx + fx) / 2 + side * 2 * u, (hipY + fy) / 2], [fx, fy]), O.pants || legCol, 9.2 * u, 1.6 * u, "round");   // pernas mais cheias (antes pareciam palitos)
     if (O.straps) { p.band([[fx + side * 1 * u, fy - 0.34 * HH], [fx, fy - 4 * u]], '#3a2416', 8.4 * u, 1.4 * u, 'butt'); p.stroke([[fx - 4 * u, fy - 0.3 * HH], [fx + 4 * u, fy - 0.3 * HH]], 1.4 * u, '#6a4a2e'); }
     { const kx = (hx + fx) / 2 + side * 2 * u, ky = (hipY + fy) / 2; p.arc(kx, ky, 3.2 * u, 2.2 * u, side > 0 ? 200 : 200, 340, 1.2 * u, mul(O.pants || legCol, [0.75, 0.72, 0.72])); }
     const shoe = O.shoe || (O.helmet ? LEATHER : "#3a2a22");
