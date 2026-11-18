@@ -63,6 +63,9 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 ## Voz (decidido pelo dono do canal)
 Gemini TTS voz **Charon**, +8% de velocidade (`template/gemini_tts.py`). Sem instrução de estilo (ela é lida em voz alta). A animação da voz vem da pontuação do roteiro: "...", "!", MAIÚSCULA na palavra de ênfase, frases curtas.
 
+## Linha editorial (18/11, pedido do dono)
+História antiga cansa o público. Prioridade: **curiosidades absurdas** (corpo, bichos, espaço, recordes) e **"E SE..."** inspirados no clima de séries/filmes famosos (zumbi, dragão, monstro, jogo mortal, mistério) — sempre com ciência real e o mesmo humor. Pode citar a série uma vez no título/descrição ("inspirado em..."), mas nunca usar personagens, nomes, logos ou visual da obra. Vilões e monstros devem dar medo de verdade (olhar fixo, sombra, sorriso esticado), e os heróis devem ser bonitos e expressivos.
+
 ## Regras de alcance (desde 18/11 — obrigatórias em todo Short)
 1. **Gancho no 1º segundo**: o vídeo ABRE na cena mais absurda (não na apresentação calma) e o arquivo `work/gancho.txt` tem a frase-gancho curta (4–7 palavras, pergunta ou afirmação chocante, ex.: "O BRASIL IMPORTOU CAMELOS?!"). O `captions.py` mostra ela grande no topo nos primeiros 2,8 s. A 1ª frase da narração já é o absurdo.
 2. **Final em loop**: a última frase do roteiro emenda na primeira (ex.: termina com "...e foi assim que" / "E tudo começou quando..." e o vídeo recomeça na frase 1). O último plano tem enquadramento parecido com o primeiro, para a volta não ser percebida.
