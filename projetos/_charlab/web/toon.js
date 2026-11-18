@@ -587,10 +587,12 @@ const eye = (p, kind, x, ey, u, side, look, skin)=>{
     const lx = x + look * 3 * u, lw = 3.8 * u;
     switch(kind){
         case "dot":
-            p.ell(lx, ey, 3.8 * u, 5.5 * u, INK, 0);
+            p.ell(lx, ey, 4.4 * u, 6.2 * u, INK, 0);
+            p.dot(lx + 1.4 * u, ey - 2.4 * u, 1.5 * u, "#ffffff");
             break;
         case "small":
-            p.ell(lx, ey, 3 * u, 4.4 * u, INK, 0);
+            p.ell(lx, ey, 3.4 * u, 4.8 * u, INK, 0);
+            p.dot(lx + 1.1 * u, ey - 1.8 * u, 1.1 * u, "#ffffff");
             break;
         case "lid":
             p.ell(lx, ey - u, 7 * u, 6 * u, INK, 0, 0, 180);
@@ -652,7 +654,8 @@ const eye = (p, kind, x, ey, u, side, look, skin)=>{
         case "shock":
         case "shockHalf":
             p.ell(x, ey, 11 * u, 11 * u, WHITE, 2.6 * u);
-            p.dot(lx - side * 1.5 * u, ey + 1.5 * u, 3 * u);
+            p.dot(lx - side * 1.5 * u, ey + 1.5 * u, 3.4 * u);
+            p.dot(lx - side * 1.5 * u + 1.2 * u, ey - 0.4 * u, 1.1 * u, "#ffffff");
             if (kind === "shockHalf") {
                 p.ell(x, ey, 11 * u, 11 * u, skin, 0, 180, 360);
                 p.stroke([
@@ -2620,8 +2623,9 @@ export const romanFront = (p, key, opts = {}) => {
     const hx = cx + side * 16 * u, fx = cx + side * 22 * u, fy = sole - 4 * u - up;
     p.band(curve([hx, hipY], [(hx + fx) / 2 + side * 2 * u, (hipY + fy) / 2], [fx, fy]), O.pants || legCol, 6.4 * u, 1.5 * u, "round");
     if (O.straps) { p.band([[fx + side * 1 * u, fy - 0.34 * HH], [fx, fy - 4 * u]], '#3a2416', 8.4 * u, 1.4 * u, 'butt'); p.stroke([[fx - 4 * u, fy - 0.3 * HH], [fx + 4 * u, fy - 0.3 * HH]], 1.4 * u, '#6a4a2e'); }
+    { const kx = (hx + fx) / 2 + side * 2 * u, ky = (hipY + fy) / 2; p.arc(kx, ky, 3.2 * u, 2.2 * u, side > 0 ? 200 : 200, 340, 1.2 * u, mul(O.pants || legCol, [0.75, 0.72, 0.72])); }
     const shoe = O.shoe || (O.helmet ? LEATHER : "#3a2a22");
-    p.ell(fx + side * 5 * u, fy - 1 * u, 11 * u, 6 * u, shoe, 1.8 * u, 180, 360); p.stroke([[fx + side * 5 * u - 11 * u, fy - 1 * u], [fx + side * 5 * u + 11 * u, fy - 1 * u]], 3.4 * u, INK);
+    p.ell(fx + side * 5 * u, fy - 1 * u, 11 * u, 6 * u, shoe, 1.8 * u, 180, 360); p.stroke([[fx + side * 5 * u - 11 * u, fy - 1 * u], [fx + side * 5 * u + 11 * u, fy - 1 * u]], 3.4 * u, INK); p.stroke([[fx + side * 5 * u - 9.5 * u, fy - 1 * u], [fx + side * 5 * u + 9.5 * u, fy - 1 * u]], 1.4 * u, '#d8cbb8');
     if (O.helmet) for (let k = 1; k <= 3; k++) p.stroke([[fx - 4 * u, fy - k * 0.07 * HH], [fx + 4 * u, fy - k * 0.07 * HH - 2 * u]], 2 * u, LEATHER);
   }
   if (O.hair && !helmet && ['long', 'ponytail'].includes(O.hairStyle)) { p.rot = null; drawHair(p, O.hairStyle, O.hair, H, cx, hc, light, facing, u, true); }
@@ -2767,6 +2771,8 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.hair && !helmet && !['long', 'ponytail'].includes(O.hairStyle)) drawHair(p, O.hairStyle || 'short', O.hair, H, cx, hc, light, facing, u, true);
   if (!helmet) for (const sd of [-1, 1]) { const ex = cx + sd * H.a * 0.97, ey = hc + 4 * u; p.ell(ex, ey, 9 * u, 12 * u, skin, ow * 0.7); p.arc(ex + sd * 1 * u, ey, 4 * u, 6 * u, sd > 0 ? -70 : 110, sd > 0 ? 70 : 250, 1.4 * u, mul(skin, [0.75, 0.62, 0.58])); }
   p.shadedFill(hp, skin, mul(skin, SH_SKIN), light, H.a);
+  p.clip(hp, () => { const g = p.g; g.save(); g.globalAlpha = 0.16; p.ell(cx - Math.cos(light) * H.a * 0.55, hc - Math.sin(light) * H.b * 0.55, H.a * 0.95, H.b * 1.05, mul(skin, [0.55, 0.42, 0.42]), 0); g.restore();
+    g.save(); g.globalAlpha = 0.12; p.ell(cx + Math.cos(light) * H.a * 0.3, hc + Math.sin(light) * H.b * 0.35, H.a * 0.45, H.b * 0.35, '#ffffff', 0); g.restore(); });
   p.inkRing(hp, ow, thick);
   if (helmet) {
     const bandY = hc - H.b * 0.42, bp = ellPts(cx, bandY, H.a * 1.05, H.b * 0.66, 180, 360, 0, 48);
