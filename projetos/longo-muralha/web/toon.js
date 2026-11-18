@@ -3158,7 +3158,6 @@ export const fxSack = (p, t = 0) => {
 };
 /** livro de registros aberto, à luz de vela */
 export const fxLedger = (p) => {
-  p.ell(300, 560, 520, 300, "rgba(255,190,90,0.18)", 0);
   const L = [[-160, 420], [290, 450], [290, 900], [-160, 870]], R = [[310, 450], [760, 420], [760, 870], [310, 900]];
   p.shadedFill(L, "#f2e6c8", "#d8c49a", -2.1, 400, 0.3); p.poly(L, null, 7); p.shadedFill(R, "#f2e6c8", "#d8c49a", -2.1, 400, 0.3); p.poly(R, null, 7);
   const g = p.g; g.save(); g.fillStyle = "#3a2414"; g.font = "italic 700 34px Georgia, serif";
@@ -3167,14 +3166,27 @@ export const fxLedger = (p) => {
 };
 export const fxCoins = (p) => { for (let r = 0; r < 5; r++) for (let i = 0; i < 6 - r; i++) { const x = 300 + (i - (5 - r) / 2) * 70, y = 900 - r * 34; p.ell(x, y, 34, 14, "#e8b830", 5); p.ell(x, y - 2, 22, 8, "#f7d860", 0); } };
 /** antebraço + mão de gigante atravessando a rachadura, vindo da direita */
-export const fxArm = (p, t = 0) => { const g0 = p.g; g0.save(); g0.translate(600, 0); g0.scale(-1, 1); _armBody(p, t); g0.restore(); };
-const _armBody = (p, t = 0) => {
-  const sk = "#e6b08a", sh = mul(sk, [0.8, 0.7, 0.7]);
-  const arm = [[800, 380], [360, 420], [250, 470], [250, 640], [360, 690], [800, 700]];
-  p.shadedFill(arm, sk, sh, -2.1, 300, 0.35); p.poly(arm, null, 9);
-  const f = 18 * Math.sin(t * 6.28);
-  for (let i = 0; i < 4; i++) { const y = 470 + i * 50; p.band([[270, y], [130, y - 10 + f * (i % 2 ? 1 : -1)], [60, y + 20]], sk, 44, 8, 'round'); }
-  p.band([[330, 650], [240, 760], [180, 780]], sk, 46, 8, 'round');
+export const fxArm = (p, t = 0) => { const g0 = p.g; g0.save(); g0.translate(230, 0); g0.scale(0.82, 0.82); g0.translate(60, 110); _arm(p, t); g0.restore(); };
+const _arm = (p, t = 0) => {
+  const sk = "#e6b08a", sh = mul(sk, [0.78, 0.66, 0.64]), f = 14 * Math.sin(t * 6.28);
+  // hole in the wall (left) — the arm comes out of it
+  const hole = [[-150, 250], [-60, 300], [-20, 260], [40, 360], [10, 450], [60, 560], [20, 680], [70, 790], [-10, 900], [-90, 860], [-130, 740], [-170, 620], [-140, 480], [-190, 380]];
+  p.poly(hole, "#120c0a", 0);
+  // forearm: thick at the hole, bulge, wrist
+  const arm = [[-60, 470], [120, 445], [300, 470], [420, 500], [470, 520], [470, 600], [420, 610], [300, 640], [120, 680], [-60, 690]];
+  p.shadedFill(arm, sk, sh, -2.1, 320, 0.35); p.poly(arm, null, 9);
+  p.arc(180, 560, 70, 30, 200, 340, 4, sh);
+  // hand: palm + 4 fingers spread, thumb down
+  const hx = 520, hy = 560;
+  for (let k = 0; k < 4; k++) { const a = -0.55 + k * 0.36, L = 150 - Math.abs(k - 1.5) * 18; p.band([[hx + 30, hy + Math.sin(a) * 30], [hx + 30 + Math.cos(a) * L * 0.6, hy + Math.sin(a) * L * 0.6 + f * (k % 2 ? 1 : -1)], [hx + 30 + Math.cos(a) * L, hy + Math.sin(a) * L + 20]], sk, 40, 8, 'round'); }
+  p.band([[hx - 10, hy + 50], [hx + 30, hy + 120], [hx + 90, hy + 140]], sk, 42, 8, 'round');
+  const palm = [[hx - 70, hy - 70], [hx + 40, hy - 80], [hx + 80, hy - 20], [hx + 70, hy + 60], [hx - 10, hy + 85], [hx - 70, hy + 60]];
+  p.shadedFill(palm, sk, sh, -2.1, 120, 0.35); p.poly(palm, null, 9);
+  for (let k = 0; k < 3; k++) p.arc(hx + 62, hy - 40 + k * 32, 10, 6, 270, 450, 3, sh);
+  // broken rim over the root of the arm + falling stones
+  const rim = [[-70, 380], [20, 410], [0, 470], [60, 470], [30, 520], [70, 600], [30, 640], [60, 700], [-10, 740], [-70, 720]];
+  p.poly(rim, "#120c0a", 0);
+  for (const [x, y, r] of [[90, 330, 26], [60, 780, 30], [120, 820, 20], [10, 960, 34], [150, 930, 24], [-40, 980, 28]]) { p.poly([[x - r, y], [x - r * 0.3, y - r], [x + r, y - r * 0.6], [x + r * 0.8, y + r * 0.5], [x - r * 0.2, y + r * 0.8]], "#5a5a66", 5); }
 };
 /** barraca de frutas (t=1: derrubada) */
 export const fxStall = (p, t = 0) => {

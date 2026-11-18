@@ -233,7 +233,7 @@ for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 20
   const inField = (x, z) => FIELDS.some(([fx, fz, w, d, r]) => { const dx = x - fx, dz = z - fz, c = Math.cos(r), s = Math.sin(r), u = dx * c - dz * s, v = -dx * s - dz * c; return Math.abs(u) < w / 2 + 1.2 && Math.abs(v) < d / 2 + 1.2; });
   const N = 170000, gi2 = new THREE.InstancedMesh(bg, std({ vertexColors: true, side: THREE.DoubleSide }), N); const col = new THREE.Color(); let k = 0, guard = 0;
   while (k < N && guard++ < N * 6) { const r = Math.pow(rr(), 1.25) * 170, a = rr() * Math.PI * 2, x = Math.cos(a) * r, z = Math.sin(a) * r + 10;
-    if (Math.abs(z - 8) < 2.6 || inField(x, z) || (x > -24 && x < 24 && z > -16 && z < 18)) continue;
+    if (Math.abs(z - 8) < 2.6 || inField(x, z) || (x > -3 && x < 7.5 && z > 18 && z < 100) || (x > -24 && x < 24 && z > -16 && z < 18)) continue;
     dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.18 + rr() * 0.3 + r * 0.002; dummy.scale.set(1.2 + rr() + r * 0.01, s, 1.2); dummy.updateMatrix(); gi2.setMatrixAt(k, dummy.matrix);
     col.setHSL(0.2 + rr() * 0.09, 0.42 + rr() * 0.2, 0.7 + rr() * 0.35); gi2.setColorAt(k, col); k++; }
   gi2.count = k; gi2.receiveShadow = true; gi2.castShadow = false; gi2.userData.nd = plainNd; world.add(gi2);

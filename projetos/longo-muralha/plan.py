@@ -128,11 +128,11 @@ S[30] = [shot(N, cam([14, 3, 30], [0, 6, 20], 48), cast=[giant('grin', [0, -3.5,
 S[31] = [wall_out(N, [giant('grin', [6, 0, OUT + 3]), giant('tiny', [-6, 0, OUT + 4], arms='reach'), giant('long', [15, 0, OUT + 5])])]
 # cap 3
 S[32] = [field(N, 2, walk=False)]
-S[33] = [shot(N, cam([6, 1.6, -4], [-3, 15, OUT + 8], 62, [5.5, 1.6, -5], [-3, 16, OUT + 8], 60), cast=[COL([-4, 0, OUT + 8])])]
+S[33] = [shot(N, cam([-18, 1.8, -12], [-4, 14, OUT + 8], 64, [-17.5, 1.8, -13], [-4, 15, OUT + 8], 62), cast=[COL([-4, 0, OUT + 8])])]
 S[34] = [shot(N, cam([1.0, WY + 1.6, WALK - 1.4], [-2, WY + 9, OUT + 8], 64), cast=[COL([-4, 0, OUT + 8]), who('tonico', [0.2, WY, WALK + 0.8], P('shock', 'up', 'up', look=-0.3))])]
-S[35] = [wall_out(N, [COL([3, 0, OUT + 6])], lookY=10, fov=60)]
+S[35] = [shot(N, cam([-16, 2, -10], [0, 12, OUT + 6], 64, [-15.5, 2, -11], [0, 12, OUT + 6], 62), cast=[COL([3, 0, OUT + 6])], kick=True)]
 S[36] = [shot(N, cam([2, 1.8, -54], [0, 4.5, WZ - 3], 46), cast=[who('pobre', [3, 0, -48], P('shock', 'cheek', 'cheek'))], kick=True)]
-S[37] = [shot(N, cam([6, 1.6, -4], [-3, 15, OUT + 8], 60, [6, 1.6, -4], [-3, 15, OUT + 8], 56), cast=[COL([-4, 0, OUT + 8], to=[-4, 0, OUT + 40])])]
+S[37] = [shot(N, cam([-18, 1.8, -12], [-4, 14, OUT + 8], 62, [-18, 1.8, -12], [-4, 14, OUT + 8], 58), cast=[COL([-4, 0, OUT + 8], to=[-30, 0, OUT + 30])])]
 G3W = lambda **o: [giant('grin', [-6, 0, OUT + 3], arms='reach', **o), giant('tiny', [6, 0, OUT + 3.5], arms='reach'), giant('long', [15, 0, OUT + 5], arms='up')]
 S[38] = [wall_out(N, G3W(), kick=True)]
 S[39] = [wall_duo(N, p('shock', 'cheek', 'hang'), p('shock', 'hang', 'hang'), extra=()), ]
@@ -220,7 +220,7 @@ S[130] = [shot(GD, cam([3, 2, 64], [0, 8, 100], 58), cast=[giant('grin', [-3, 0,
 S[131] = [field_out(N, EXP(-20) + [giant('grin', [-3, 0, 20], walk=True, to=[-3, 0, 8])])]
 S[132] = [wall_out(N, lookY=4.5, fov=40, kick=True)]
 S[133] = [crack_out(N, crack=2)]
-ARMIN = lambda t=0: fx('fxArm', [-4.6, 2.4, WZ - 3.0], 2.6, t=t)
+ARMIN = lambda t=0: fx('fxArm', [-4.3, 1.4, WZ - 2.9], 5.0, t=t)
 S[134] = [crack_out(N, [giant('grin', [-6.2, 0, OUT + 3], arms='reach')], crack=2), street(N, [ARMIN()], crack=2)]
 S[135] = [street(N, [ARMIN(0.4), fx('fxStall', [-2.5, 0, -47], 1.1, t=1)], crack=2)]
 S[136] = [street(N, [ARMIN(0.6), who('velha', [0, 0, -50], p('shock', 'up', 'up'), walk=True, to=[3, 0, -56]), who('padeiro', [2, 0, -49], p('shock', 'cheek', 'cheek'), walk=True, to=[5, 0, -55]), who('pobre', [-1, 0, -48], p('shock', 'up', 'hang'), walk=True, to=[1, 0, -55])], crack=2)]
@@ -258,7 +258,7 @@ S[163] = [gclose(N, 'grin', 30, mouth=0.8)]
 S[164] = [gclose(N, 'grin', 30, mouth=1.0, fov=30)]
 S[165] = [bell(N)]; S[166] = [bell(N, near=True)]
 S[167] = [wall_out(N, [giant('grin', [-6, 0, OUT + 3], roll=0, rollTo=-1.4, rollEase='in', sleep=True), giant('tiny', [6, 0, OUT + 3.5], roll=0, rollTo=1.45, rollEase='in', sleep=True), giant('long', [15, 0, OUT + 5], roll=0, rollTo=-1.45, rollEase='in', sleep=True)], crack=2)]
-S[168] = [wall_out(N, [giant('grin', [-6, 4, OUT + 2.6], roll=0.4, rollTo=1.5, rollEase='in', sleep=True), giant('tiny', [8, 0.5, OUT + 4], roll=1.5, sleep=True)], crack=2, lookY=4)]
+S[168] = [wall_out(N, [giant('grin', [-10, 0.6, OUT + 2.6], roll=-1.5, sleep=True), giant('tiny', [8, 0.5, OUT + 4], roll=1.5, sleep=True)], crack=2, lookY=4, kick=True)]
 S[169] = [city(N)]; S[170] = [street(N, crack=0)]
 # cap 12
 S[171] = [shot(DW, cam([70, 48, 60], [0, 8, -50], 44))]
@@ -275,10 +275,10 @@ S[180][1]['cast'][1] = fx('fxTablet', [-2.1, WY + 0.2, WALK + 0.1], 0.8, t=1)
 S[181] = [shot(GD, cam([-2.1, WY + 0.75, WALK - 1.4], [-2.1, WY + 0.75, WALK + 0.1], 34), cast=[fx('fxTablet', [-2.1, WY + 0.2, WALK + 0.1], 0.8, t=1)])]
 S[182] = [shot(GD, cam([-1.75, WY + 0.6, WALK - 0.9], [-1.75, WY + 0.6, WALK + 0.1], 26), cast=[fx('fxTablet', [-2.1, WY + 0.2, WALK + 0.1], 0.8, t=1)])]
 S[183] = S[182]
-S[184] = [shot(GD, cam([1.0, WY + 1.9, WALK - 1.2], [0, 9, 200], 36), cast=[COL([0, -17, 200])])]
-S[185] = [shot(GD, cam([0.5, WY + 1, 130], [0, 10, 200], 30), cast=[COL([0, -17, 200], look=-0.4)])]
+S[184] = [shot(GD, cam([1.0, WY + 1.9, WALK - 1.2], [0, 14, 170], 36), cast=[COL([0, -8, 170])])]
+S[185] = [shot(GD, cam([6, 14, 60], [0, 16, 170], 26), cast=[COL([0, -8, 170], look=-0.4)])]
 S[186] = [wall_one(GD, 'bia', p('stern', 'hang', 'lift', holdR='grapple', look=0.5), x0=0.65)]
-S[187] = [shot(GD, cam([0.85, WY + 1.55, WALK - 1.1], [0.65, WY + 1.5, WALK], 26), cast=[who('bia', [0.65, WY, WALK], p('nervous', 'hang', 'lift', holdR='grapple', look=0.5))]), shot(GD, cam([1.0, WY + 1.9, WALK - 1.2], [0, 9, 200], 24), cast=[COL([0, -17, 200], look=-0.4)])]
+S[187] = [shot(GD, cam([0.85, WY + 1.55, WALK - 1.1], [0.65, WY + 1.5, WALK], 26), cast=[who('bia', [0.65, WY, WALK], p('nervous', 'hang', 'lift', holdR='grapple', look=0.5))]), shot(GD, cam([1.0, WY + 1.9, WALK - 1.2], [0, 14, 170], 24), cast=[COL([0, -8, 170], look=-0.4)])]
 # ---- hud callouts (number cards) ----
 HUD = {0: [['MURALHA', '12 m']], 22: [['GIGANTE', '15 m']], 33: [['GIGANTE', '30 m']], 92: [['SINO x 3', 'ACORDA'], ['SINO x 7', 'DORME']], 113: [['MEDO', '100 anos']]}
 CAPTITLE = {1: 'O SINO', 2: 'ELES VOLTARAM', 3: 'O QUARTO GIGANTE', 4: 'O SACO', 5: 'LÁ FORA', 6: 'A PEDRA', 7: 'O CONSELHEIRO', 8: 'CORRE!', 9: 'A RACHADURA', 10: 'A TORRE', 11: 'SETE BADALADAS', 12: 'CONTINUA'}
