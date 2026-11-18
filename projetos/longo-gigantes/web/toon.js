@@ -2699,6 +2699,11 @@ export const romanFront = (p, key, opts = {}) => {
     if (O.armor) for (let i = -3; i <= 3; i++) { const x = tcx + i * 0.27 * T.a, st = [[x - 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot - 0.05 * HH], [x + 9 * u, torsoBot + 0.22 * HH], [x - 9 * u, torsoBot + 0.22 * HH]]; p.poly(st, old ? "#5e4632" : LEATHER, 1.6 * u); }
   }
   if (O.female) { const nk = [[tcx - 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.17 * T.a, chin - 0.12 * HH], [tcx + 0.2 * T.a, chin + 0.16 * HH], [tcx - 0.2 * T.a, chin + 0.16 * HH]]; p.poly(nk, mul(skin, [0.92, 0.88, 0.86]), 1.8 * u); }
+  if (O.gear) for (const sd of [-1, 1]) { const gx = tcx + sd * 0.92 * T.a, gy = torsoBot - 0.06 * HH, MT = '#5c626b';
+    const cs = [[gx - sd * 6 * u, gy - 7 * u], [gx + sd * 26 * u, gy - 9 * u], [gx + sd * 30 * u, gy - 3 * u], [gx + sd * 26 * u, gy + 5 * u], [gx - sd * 6 * u, gy + 6 * u]];
+    p.gradFill(cs, '#7d838c', MT, light); p.poly(cs, null, 1.8 * u); for (const k of [6, 16]) p.dot(gx + sd * k * u, gy - 1 * u, 1.3 * u, '#c9ccd2');
+    p.band([[gx + sd * 29 * u, gy - 3 * u], [gx + sd * 36 * u, gy - 6 * u]], '#3a3e44', 3 * u, 1 * u, 'round');
+    if (opts.hookFire && sd === (opts.hookFire > 0 ? 1 : -1)) { const ex = gx + sd * 150 * u, ey = gy - 230 * u; p.stroke([[gx + sd * 36 * u, gy - 6 * u], [ex, ey]], 1.6 * u, '#e8e2d4'); p.poly([[ex, ey], [ex - sd * 4 * u, ey - 14 * u], [ex + sd * 8 * u, ey - 8 * u]], '#9aa0a8', 1.2 * u); } }
   p.gradFill(tp, O.tunic, mul(O.tunic, SH_CLOTH), light);
   p.clip(tp, () => {
     if (O.armor) {
@@ -2727,16 +2732,13 @@ export const romanFront = (p, key, opts = {}) => {
     p.poly([[tcx + 0.12 * T.a, chin + 0.02 * HH], [tcx + 0.42 * T.a, chin + 0.02 * HH], [tcx + 0.16 * T.a, chin + 0.3 * HH]], mul(O.tunic, [1.12, 1.12, 1.12]), 1.4 * u); } });
   if (O.straps) p.clip(tp, () => { p.poly([[tcx - 1.6 * T.a, chin + 0.5 * HH], [tcx + 1.6 * T.a, chin + 0.46 * HH], [tcx + 1.6 * T.a, torsoBot + 0.2 * HH], [tcx - 1.6 * T.a, torsoBot + 0.2 * HH]], '#ece4d0', 0); p.stroke([[tcx - 1.6 * T.a, chin + 0.5 * HH], [tcx + 1.6 * T.a, chin + 0.46 * HH]], 2.2 * u, mul(O.tunic, [0.7, 0.7, 0.7])); });
   if (O.straps) { const BL = '#3a2416', BK = '#c9a24a';
-    for (const sd of [-1, 1]) p.band([[tcx - sd * 0.85 * T.a, chin + 0.04 * HH], [tcx + sd * 0.75 * T.a, torsoBot - 0.22 * HH]], BL, 0.032 * HH, 0.9 * u);
-    for (const yy of [chin + 0.36 * HH, torsoBot - 0.22 * HH]) p.band([[tcx - 1.0 * T.a, yy], [tcx + 1.0 * T.a, yy]], BL, 0.03 * HH, 0.9 * u);
-    for (const sd of [-1, 1]) p.band([[tcx + sd * 0.45 * T.a, chin + 0.05 * HH], [tcx + sd * 0.45 * T.a, chin + 0.36 * HH]], BL, 0.026 * HH, 0.8 * u);
-    p.poly(rrect(tcx - 5 * u, chin + 0.31 * HH, tcx + 5 * u, chin + 0.41 * HH, 1.5 * u), BK, 1.2 * u); }
+    for (const sd of [-1, 1]) p.band([[tcx + sd * 0.42 * T.a, chin + 0.02 * HH], [tcx + sd * 0.48 * T.a, chin + 0.4 * HH], [tcx + sd * 0.5 * T.a, torsoBot - 0.2 * HH]], BL, 0.03 * HH, 0.9 * u);
+    p.band([[tcx - 0.95 * T.a, chin + 0.42 * HH], [tcx + 0.95 * T.a, chin + 0.4 * HH]], BL, 0.026 * HH, 0.8 * u);
+    p.band([[tcx - 1.05 * T.a, torsoBot - 0.2 * HH], [tcx + 1.05 * T.a, torsoBot - 0.2 * HH]], BL, 0.045 * HH, 1 * u);
+    for (const sd of [-1, 1]) p.poly(rrect(tcx + sd * 0.49 * T.a - 3.5 * u, chin + 0.37 * HH, tcx + sd * 0.49 * T.a + 3.5 * u, chin + 0.45 * HH, 1.2 * u), BK, 1 * u);
+    p.poly(rrect(tcx - 6 * u, torsoBot - 0.24 * HH, tcx + 6 * u, torsoBot - 0.16 * HH, 1.5 * u), BK, 1.2 * u); }
   p.inkRing(tp, ow, thick);
   for (const a of arms) if (!a.front) drawArm(a);
-  if (O.gear) for (const sd of [-1, 1]) { const gx = tcx + sd * 1.02 * T.a, gy = torsoBot - 0.08 * HH;
-    p.poly(rrect(gx - 13 * u, gy - 10 * u, gx + 13 * u, gy + 12 * u, 3 * u), '#8d939c', 1.8 * u); p.ell(gx, gy + 1 * u, 6 * u, 6 * u, '#5a6068', 1.4 * u); p.dot(gx, gy + 1 * u, 2 * u, '#c9ccd2');
-    p.band([[gx + sd * 12 * u, gy - 2 * u], [gx + sd * 24 * u, gy - 8 * u]], '#6a7078', 4 * u, 1.2 * u, 'round');
-    if (opts.hookFire && sd === (opts.hookFire > 0 ? 1 : -1)) { p.stroke([[gx + sd * 24 * u, gy - 8 * u], [gx + sd * 140 * u, gy - 220 * u]], 1.8 * u, '#e8e2d4'); p.poly([[gx + sd * 140 * u, gy - 220 * u], [gx + sd * 132 * u, gy - 236 * u], [gx + sd * 152 * u, gy - 230 * u]], '#9aa0a8', 1.4 * u); } }
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);
