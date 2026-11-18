@@ -190,3 +190,16 @@ error: Please commit or stash them.
 + sleep 120
 + grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
 + sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
++ R=/home/user/juroqueeverdade-videos
++ P=/home/user/juroqueeverdade-videos/projetos
++ G=/home/user/juroqueeverdade-videos/projetos/longo-muralha
++ cd /home/user/juroqueeverdade-videos/projetos/longo-muralha
++ '[' '!' -f mix_raw.wav ']'
++ grep -q FIM-MADRUGADA-2 /home/user/juroqueeverdade-videos/projetos/madrugada2.log
++ sleep 120
