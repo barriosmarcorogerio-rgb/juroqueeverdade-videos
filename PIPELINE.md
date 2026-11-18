@@ -30,6 +30,15 @@ LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrig
 4b. **Capa de vídeo já publicado** (ex.: depois que o canal foi verificado por telefone): rodar o mesmo cenário com `canal:"thumb"`, `video_id`, `thumb_url`, `yt_snippet` (+ os campos obrigatórios `video_url`, `yt_url`, `title`, e `instagram:"nao"`). Erro 403 "permissions to ... set custom video thumbnails" = canal ainda não verificado em youtube.com/verify.
 5. Se a fila estiver vazia: não publicar nada e registrar o motivo em `metricas.md`.
 
+## Prévia (Short) de vídeo longo
+Para cada vídeo longo pronto (`projetos/entrega/<slug>-ALTA.mp4`):
+1. `python3 projetos/_teaser/teaser.py projetos/<slug> projetos/entrega/<slug>-ALTA.mp4 "<TÍTULO DO LONGO>" videos/prev-<slug>.mp4` → vertical 1080x1920, primeiros ~55 s (corta no fim de frase) + cartela "QUER CONTINUAR?" com a narração `_teaser/fim.wav` (55–65 s no total).
+   Versão YouTube: `ffmpeg -i videos/prev-<slug>.mp4 -c:v libx264 -b:v 520k -maxrate 600k -bufsize 1200k -vf scale=720:1280 -c:a aac -b:a 96k videos/prev-<slug>-yt.mp4`; capa: `thumb.py` de um quadro do trecho.
+2. Item em `fila.json` com `publicado:false` e **`requer_longo:"<título exato do longo no YouTube>"`**.
+3. Na Tarefa B, item com `requer_longo`: antes de publicar, chamar o webhook de métricas, achar no `youtube` o vídeo cujo título contém `requer_longo`, e montar o link `https://youtu.be/<id>`.
+   Descrição do YouTube: 1ª linha "▶ Vídeo completo: https://youtu.be/<id>". Legenda do Instagram: "Vídeo completo no YouTube (link na bio)".
+   Se o longo ainda não estiver no canal: **não publicar** a prévia, publicar o próximo item da fila e tentar de novo no dia seguinte.
+
 ## Tarefa C — Melhoria contínua (domingo)
 1. `git pull`; ler `metricas.md` da semana, `historias.md`, `ESTILO.md` e os erros anotados pelas tarefas A/B.
 2. Ler as métricas atuais (webhook acima). Comparar: quais ganchos, temas, épocas e durações tiveram mais views/likes por hora desde a publicação.
