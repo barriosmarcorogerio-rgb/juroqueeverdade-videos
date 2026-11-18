@@ -3166,7 +3166,7 @@ export const fxLedger = (p) => {
 };
 export const fxCoins = (p) => { for (let r = 0; r < 5; r++) for (let i = 0; i < 6 - r; i++) { const x = 300 + (i - (5 - r) / 2) * 70, y = 900 - r * 34; p.ell(x, y, 34, 14, "#e8b830", 5); p.ell(x, y - 2, 22, 8, "#f7d860", 0); } };
 /** antebraço + mão de gigante atravessando a rachadura, vindo da direita */
-export const fxArm = (p, t = 0) => { const g0 = p.g; g0.save(); g0.translate(230, 0); g0.scale(0.82, 0.82); g0.translate(60, 110); _arm(p, t); g0.restore(); };
+export const fxArm = (p, t = 0) => { const g0 = p.g; g0.save(); g0.translate(90, 324); g0.scale(0.62, 0.62); g0.translate(60, 110); _arm(p, t); g0.restore(); };
 const _arm = (p, t = 0) => {
   const sk = "#e6b08a", sh = mul(sk, [0.78, 0.66, 0.64]), f = 14 * Math.sin(t * 6.28);
   // hole in the wall (left) — the arm comes out of it

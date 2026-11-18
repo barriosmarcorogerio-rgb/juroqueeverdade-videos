@@ -220,7 +220,7 @@ S[130] = [shot(GD, cam([3, 2, 64], [0, 8, 100], 58), cast=[giant('grin', [-3, 0,
 S[131] = [field_out(N, EXP(-20) + [giant('grin', [-3, 0, 20], walk=True, to=[-3, 0, 8])])]
 S[132] = [wall_out(N, lookY=4.5, fov=40, kick=True)]
 S[133] = [crack_out(N, crack=2)]
-ARMIN = lambda t=0: fx('fxArm', [-4.3, 1.4, WZ - 2.9], 5.0, t=t)
+ARMIN = lambda t=0: fx('fxArm', [-7.7, 1.4, WZ - 2.9], 6.6, t=t)
 S[134] = [crack_out(N, [giant('grin', [-6.2, 0, OUT + 3], arms='reach')], crack=2), street(N, [ARMIN()], crack=2)]
 S[135] = [street(N, [ARMIN(0.4), fx('fxStall', [-2.5, 0, -47], 1.1, t=1)], crack=2)]
 S[136] = [street(N, [ARMIN(0.6), who('velha', [0, 0, -50], p('shock', 'up', 'up'), walk=True, to=[3, 0, -56]), who('padeiro', [2, 0, -49], p('shock', 'cheek', 'cheek'), walk=True, to=[5, 0, -55]), who('pobre', [-1, 0, -48], p('shock', 'up', 'hang'), walk=True, to=[1, 0, -55])], crack=2)]
