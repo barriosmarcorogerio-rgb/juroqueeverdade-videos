@@ -356,13 +356,13 @@ const setActive = (S, f) => {
 const clouds = [];
 { const r = P.rng(90);
   for (let i = 0; i < 22; i++) {
-    const c = document.createElement('canvas'); c.width = 512; c.height = 300; const g = c.getContext('2d'); g.filter = 'blur(5px)';
-    for (let k = 0; k < 28; k++) { const x = 90 + r() * 330, y = 120 + r() * 110 - Math.sin((x - 90) / 330 * Math.PI) * 70, rad = 30 + r() * 55;
+    const c = document.createElement('canvas'); c.width = 512; c.height = 400; const g = c.getContext('2d'); g.filter = 'blur(5px)';   // 400 de altura: nenhum puff encosta na borda (antes o topo saía cortado)
+    for (let k = 0; k < 28; k++) { const x = 90 + r() * 330, y = 190 + r() * 110 - Math.sin((x - 90) / 330 * Math.PI) * 70, rad = 30 + r() * 55;
       const gr = g.createRadialGradient(x, y - rad * 0.3, rad * 0.1, x, y, rad); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.7, 'rgba(240,244,250,.95)'); gr.addColorStop(1, 'rgba(205,215,230,0)');
       g.fillStyle = gr; g.beginPath(); g.arc(x, y, rad, 0, 7); g.fill(); }
-    const sh = g.createLinearGradient(0, 150, 0, 260); sh.addColorStop(0, 'rgba(150,165,190,0)'); sh.addColorStop(1, 'rgba(150,165,190,.55)'); g.globalCompositeOperation = 'source-atop'; g.fillStyle = sh; g.fillRect(0, 0, 512, 300);
+    const sh = g.createLinearGradient(0, 220, 0, 330); sh.addColorStop(0, 'rgba(150,165,190,0)'); sh.addColorStop(1, 'rgba(150,165,190,.55)'); g.globalCompositeOperation = 'source-atop'; g.fillStyle = sh; g.fillRect(0, 0, 512, 400);
     const t = P.tex(c); t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 0.586), new THREE.MeshBasicMaterial({ map: t, transparent: true, fog: false, depthWrite: false }));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 0.781), new THREE.MeshBasicMaterial({ map: t, transparent: true, fog: false, depthWrite: false }));
     const a = r() * Math.PI * 2, d = 380 + r() * 260; m.position.set(Math.cos(a) * d, 70 + r() * 150, Math.sin(a) * d); m.scale.setScalar(150 + r() * 160);
     m.userData.ndSkip = true; m.renderOrder = -1; scene.add(m); clouds.push(m);
   } }

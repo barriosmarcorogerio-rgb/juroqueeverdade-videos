@@ -2933,16 +2933,27 @@ return (p, t = 0, o = {}) => {
     for (let k = 0; k < 5; k++) { const x = hcx - HR * 0.6 + k * HR * 0.3; p.stroke([[x, hcy - HR * ry * 0.85], [x + 6, hcy - HR * ry * 0.6]], 2.5, mul(HC, [0.6, 0.6, 0.6])); } }
   // eyes: sunken, blank, tiny pupils
   const ey = hcy - HR * ry * 0.16, er = kind === 'tiny' ? HR * 0.3 : HR * 0.17;
-  for (const sd of [-1, 1]) { const ex = hcx + sd * HR * 0.36; p.ell(ex, ey + 3, er * 1.35, er * 1.25, mix(SK, DK, 0.55), 0); p.ell(ex, ey, er, er * 0.95, '#fbf7ee', 5);
+  const SCARY = !o.cute && !o.down && !o.sleep && !o.dazed;   // titã assustador: órbitas fundas, olho pequeno e parado, pupila de alfinete
+  for (const sd of [-1, 1]) { const ex = hcx + sd * HR * 0.36;
+    if (SCARY) { p.ell(ex, ey + 4, er * 1.75, er * 1.5, mix(DK, '#1a0e12', 0.5), 0); p.ell(ex, ey + 2, er * 1.25, er * 1.05, mix(DK, '#1a0e12', 0.75), 0);
+      p.ell(ex, ey + 3, er * 0.86, er * 0.66, '#efe4cc', 4); p.dot(ex + (o.look || 0) * er * 0.3, ey + 3, Math.max(3.5, er * 0.13), '#140606');
+      p.arc(ex, ey + 3, er * 0.86, er * 0.66, 200, 340, 6);   // pálpebra pesada por cima
+      p.stroke([[ex + sd * er * 1.35, ey - er * 1.45], [ex - sd * er * 0.1, ey - er * 1.1], [ex - sd * er * 1.3, ey - er * 0.62]], 10, mix(DK, '#1a0e12', 0.6));   // sobrancelha em V (ponta de dentro para baixo = raiva)
+      continue; }
+    p.ell(ex, ey + 3, er * 1.35, er * 1.25, mix(SK, DK, 0.55), 0); p.ell(ex, ey, er, er * 0.95, '#fbf7ee', 5);
     if (o.down) { const r = er * 0.62; p.stroke([[ex - r, ey - r], [ex + r, ey + r]], 6); p.stroke([[ex - r, ey + r], [ex + r, ey - r]], 6); } else if (o.sleep) { p.ell(ex, ey, er * 1.02, er * 0.97, SK, 0); p.arc(ex, ey - 2, er * 0.8, er * 0.5, 20, 160, 5); } else if (o.dazed) { const sp = []; for (let k = 0; k < 26; k++) { const a = k / 26 * 12, r = k / 26 * er * 0.8; sp.push([ex + Math.cos(a) * r, ey + Math.sin(a) * r]); } p.stroke(sp, 3); } else p.dot(ex + (o.look || 0) * er * 0.3, ey + 2, Math.max(4, er * 0.16)); }
   p.stroke([[hcx - 6, ey + er + 8], [hcx + 8, ey + er + 34], [hcx - 6, ey + er + 38]], 4, DK);
   // mouth: wide grin with gums + teeth
-  const my = hcy + HR * ry * 0.42, mw = kind === 'tiny' ? HR * 0.5 : HR * 0.82, open = o.down ? 36 : o.sleep ? 8 : (o.mouth || 0) * 40;
-  if (kind === 'tiny') { p.arc(hcx, my - 10, mw, 18, 15, 165, 5); p.arc(hcx, my - 4, mw * 0.6, 8, 30, 150, 3, DK); }
+  const my = hcy + HR * ry * 0.42, mw = kind === 'tiny' ? HR * (SCARY ? 0.78 : 0.5) : HR * (SCARY ? 0.98 : 0.82), open = o.down ? 36 : o.sleep ? 8 : (o.mouth || 0) * 40;
+  if (kind === 'tiny' && SCARY) { const tp = [], bp = []; for (let i = 0; i <= 18; i++) { const x = hcx - mw + i / 18 * mw * 2, k = (i / 18 - 0.5) * 2; tp.push([x, my - 14 - k * k * 22]); bp.push([x, my + 6 - k * k * 24]); }
+    const mp = [...tp, ...bp.reverse()]; p.poly(mp, '#2a0a12', 0); p.clip(mp, () => { for (let i = 0; i < 12; i++) { const x0 = hcx - mw + i / 12 * mw * 2; p.poly([[x0 + 1, my - 40], [x0 + mw / 6 - 1, my - 40], [x0 + mw / 6 - 2, my - 4], [x0 + 2, my - 4]], '#f1e6c8', 2); } }); p.poly(mp, null, 5); }
+  else if (kind === 'tiny') { p.arc(hcx, my - 10, mw, 18, 15, 165, 5); p.arc(hcx, my - 4, mw * 0.6, 8, 30, 150, 3, DK); }
   else { const top = [], bt = []; for (let i = 0; i <= 22; i++) { const x = hcx - mw + i / 22 * mw * 2, k = (i / 22 - 0.5) * 2; top.push([x, my - 20 - k * k * 16]); bt.push([x, my + 24 + open - k * k * 28]); }
     const mp = [...top, ...bt.reverse()]; p.poly(mp, '#4a1420', 0);
-    p.clip(mp, () => { p.poly(top.map(([x, y]) => [x, y - 2]).concat(top.slice().reverse().map(([x, y]) => [x, y + 9])), '#d06a78', 0); const nT = 14; for (let i = 0; i < nT; i++) { const x0 = hcx - mw + i / nT * mw * 2, k = ((i + 0.5) / nT - 0.5) * 2, yt = my - 12 - k * k * 16; p.poly([[x0 + 2, yt], [x0 + mw * 2 / nT - 2, yt], [x0 + mw * 2 / nT - 3, yt + 16 - k * k * 4], [x0 + 3, yt + 16 - k * k * 4]], '#fbf3dc', 1.6); } });
-    p.poly(mp, null, 6); for (const sd of [-1, 1]) p.stroke([[hcx + sd * mw, my - 20 - 16], [hcx + sd * (mw + 16), my - 34 - 16]], 4, DK); }
+    p.clip(mp, () => { p.poly(top.map(([x, y]) => [x, y - 2]).concat(top.slice().reverse().map(([x, y]) => [x, y + 9])), '#d06a78', 0); const nT = SCARY ? 20 : 14; for (let i = 0; i < nT; i++) { const x0 = hcx - mw + i / nT * mw * 2, k = ((i + 0.5) / nT - 0.5) * 2, yt = my - 12 - k * k * 16; p.poly([[x0 + 2, yt], [x0 + mw * 2 / nT - 2, yt], [x0 + mw * 2 / nT - 3, yt + 16 - k * k * 4], [x0 + 3, yt + 16 - k * k * 4]], '#fbf3dc', 1.6); } });
+    p.poly(mp, null, 6); for (const sd of [-1, 1]) p.stroke([[hcx + sd * mw, my - 20 - 16], [hcx + sd * (mw + 16), my - 34 - 16]], 4, DK);
+    if (SCARY) for (const sd of [-1, 1]) { p.stroke([[hcx + sd * (mw - 4), my - 40], [hcx + sd * mw * 1.02, my - 70], [hcx + sd * mw * 0.94, my - 100]], 4, DK); p.stroke([[hcx + sd * mw * 0.7, my + 30 + open], [hcx + sd * mw * 0.95, my + 52 + open]], 3.5, DK); } }
+  if (SCARY) { const VN = mix(SK, '#6a3a5a', 0.45); for (const sd of [-1, 1]) { const tx = hcx + sd * HR * 0.78, ty = hcy - HR * ry * 0.35; p.stroke([[tx, ty], [tx - sd * 10, ty + 22], [tx + sd * 4, ty + 44], [tx - sd * 6, ty + 62]], 3, VN); } }
   if (o.down && kind !== 'tiny') { p.ell(hcx + mw * 0.45, my + 30 + open, mw * 0.2, 30, '#d9667a', 5); p.stroke([[hcx + mw * 0.45, my + 18 + open], [hcx + mw * 0.45, my + 46 + open]], 3, '#a8405a'); }
   if (o.down && kind === 'tiny') { p.ell(hcx, my + 4, mw * 0.4, 18, '#4a1420', 5); }
   if (o.sleep) { const g = p.g; g.save(); g.font = '900 64px sans-serif'; g.fillStyle = '#ffffff'; g.strokeStyle = INK; g.lineWidth = 8; for (let k = 0; k < 3; k++) { const x = hcx + HR * 0.9 + k * 46, y = hcy - HR * 0.7 - k * 56, sz = 1 - k * 0.2; g.save(); g.translate(x, y); g.scale(sz, sz); g.strokeText('Z', 0, 0); g.fillText('Z', 0, 0); g.restore(); } g.restore(); }
