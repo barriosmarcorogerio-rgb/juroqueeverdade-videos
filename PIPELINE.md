@@ -39,6 +39,13 @@ Para cada vídeo longo pronto (`projetos/entrega/<slug>-ALTA.mp4`):
    Descrição do YouTube: 1ª linha "▶ Vídeo completo: https://youtu.be/<id>". Legenda do Instagram: "Vídeo completo no YouTube (link na bio)".
    Se o longo ainda não estiver no canal: **não publicar** a prévia, publicar o próximo item da fila e tentar de novo no dia seguinte.
 
+## Recortes de Instagram de vídeo longo (divulgação)
+Para cada longo pronto em `projetos/entrega/`, além da prévia: `bash projetos/_teaser/gerar_recortes.sh <projeto_longo>`.
+- Usa `projetos/_teaser/recortes.json` (capítulos que se entendem sozinhos + gancho + legenda) e `recorte.py`: o capítulo inteiro em vertical, gancho em cima, selo "TRECHO" e cartela final "QUER VER O RESTO? Vídeo completo no YouTube — link na bio" (narração `fim_insta.wav`).
+- Põe na fila itens `canal:"insta"` com `requer_longo`. Para um longo novo, escolher 2–3 capítulos com começo-meio-fim próprios (fato curioso, piada ou ação) e acrescentar em `recortes.json`.
+- **Publicação (Tarefa B)**: além do Short do dia, publicar **1 recorte por dia** (o mais antigo com `canal:"insta"`, `publicado:false`) cujo longo já esteja no YouTube (mesma checagem de `requer_longo` da prévia). Cenário 7068350 com `canal:"insta"` → rota "Só Instagram" (não sobe no YouTube). Campos: `video_url`, `caption` = `legenda_instagram`, `cover_ms`, `instagram:"sim"` e, por serem obrigatórios, `yt_url` = `video_url` e `title` = `titulo`.
+- Bio do Instagram deve ter o link do canal do YouTube (o dono configura uma vez).
+
 ## Tarefa C — Melhoria contínua (domingo)
 1. `git pull`; ler `metricas.md` da semana, `historias.md`, `ESTILO.md` e os erros anotados pelas tarefas A/B.
 2. Ler as métricas atuais (webhook acima). Comparar: quais ganchos, temas, épocas e durações tiveram mais views/likes por hora desde a publicação.
