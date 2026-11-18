@@ -2,10 +2,10 @@
 # Gigantes: narração pendente (cota) -> timings -> plano -> espera o buraco -> render -> finalização. Log: projetos/madrugada2.log
 set -x
 R=/home/user/juroqueeverdade-videos; P=$R/projetos; G=$P/longo-gigantes
-push() { cd $R && git add -A && git commit -qm "$1
+push() { ( cd $R && git add -A && git commit -qm "$1
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; }
+Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; ) }
 cd $G
 while true; do
   miss=""; for k in 01 02 03 04 05 06 07 08 09 10 11 12; do [ -f cap$k.wav ] || miss="$miss $k"; done

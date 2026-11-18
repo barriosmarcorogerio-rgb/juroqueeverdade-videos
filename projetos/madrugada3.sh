@@ -2,10 +2,10 @@
 # A Muralha de Pedra Alta (ep. 1): narração -> timings -> plano -> espera os gigantes -> render -> finalização. Log: projetos/madrugada3.log
 set -x
 R=/home/user/juroqueeverdade-videos; P=$R/projetos; G=$P/longo-muralha
-push() { cd $R && git add -A && git commit -qm "$1
+push() { ( cd $R && git add -A && git commit -qm "$1
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; }
+Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; ) }
 cd $G
 if [ ! -f mix_raw.wav ]; then
 while true; do

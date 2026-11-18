@@ -2,10 +2,10 @@
 # Produção encadeada da madrugada (roda sozinho em segundo plano). Log: projetos/madrugada.log
 set -x
 R=/home/user/juroqueeverdade-videos; P=$R/projetos
-push() { cd $R && git add -A && git commit -qm "$1
+push() { ( cd $R && git add -A && git commit -qm "$1
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; }
+Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; ) }
 # ---------- 1) Short dos camelos ----------
 if [ ! -f $R/videos/2026-11-18-camelos-ceara.mp4 ]; then
 cd $P/2026-11-18-camelos-ceara; mkdir -p frames out
