@@ -39,3 +39,6 @@ Conclusões:
 - Backlog de historias.md mantido na ordem (sem dados suficientes para reordenar).
 
 Publicação: execução Make ded0d5a5… SUCCESS (YouTube j9vrGbPrAUM + Instagram).
+
+## 2026-11-18 — publicação da noite (18h50 BRT)
+Nada publicado: o único item pendente fora do Instagram é a prévia "E se você cavasse um buraco até o Japão? (parte 1)", que exige o longo já no canal — e o longo ainda não foi publicado pelo dono. Os Shorts novos (2 por dia) entram na fila a partir da produção desta madrugada.
