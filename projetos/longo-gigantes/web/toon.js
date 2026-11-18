@@ -2731,14 +2731,14 @@ export const romanFront = (p, key, opts = {}) => {
     if (!O.female && !O.straps) p.poly([[tcx - 0.12 * T.a, chin + 0.02 * HH], [tcx - 0.42 * T.a, chin + 0.02 * HH], [tcx - 0.16 * T.a, chin + 0.3 * HH]], mul(O.tunic, [1.12, 1.12, 1.12]), 1.4 * u),
     p.poly([[tcx + 0.12 * T.a, chin + 0.02 * HH], [tcx + 0.42 * T.a, chin + 0.02 * HH], [tcx + 0.16 * T.a, chin + 0.3 * HH]], mul(O.tunic, [1.12, 1.12, 1.12]), 1.4 * u); } });
   if (O.straps) p.clip(tp, () => { const jy = O.female ? chin + 0.4 * HH : chin + 0.5 * HH; p.poly([[tcx - 1.6 * T.a, jy], [tcx + 1.6 * T.a, jy - 0.03 * HH], [tcx + 1.6 * T.a, torsoBot + 0.2 * HH], [tcx - 1.6 * T.a, torsoBot + 0.2 * HH]], '#ece4d0', 0); p.stroke([[tcx - 1.6 * T.a, jy], [tcx + 1.6 * T.a, jy - 0.03 * HH]], 2.2 * u, mul(O.tunic, [0.7, 0.7, 0.7])); });
-  if (O.straps) { const BL = '#3a2416', BK = '#c9a24a';
+  if (O.straps) p.clip(tp, () => { const BL = '#3a2416', BK = '#c9a24a';
     const fTop = chin + 0.1 * HH, fBot = torsoBot + 0.04 * HH, beltY = O.female ? fTop + 0.5 * (fBot - fTop) : torsoBot - 0.2 * HH, chestY = O.female ? chin + 0.36 * HH : chin + 0.41 * HH;
     const xs = O.female ? [0.32, 0.36, 0.3] : [0.42, 0.48, 0.5];
     for (const sd of [-1, 1]) p.band([[tcx + sd * xs[0] * T.a, chin + (O.female ? 0.14 : 0.02) * HH], [tcx + sd * xs[1] * T.a, chestY], [tcx + sd * xs[2] * T.a, beltY]], BL, 0.03 * HH, 0.9 * u);
     p.band([[tcx - (O.female ? 0.7 : 0.95) * T.a, chestY + 0.01 * HH], [tcx + (O.female ? 0.7 : 0.95) * T.a, chestY]], BL, 0.026 * HH, 0.8 * u);
     p.band([[tcx - 1.05 * T.a, beltY], [tcx + 1.05 * T.a, beltY]], BL, 0.045 * HH, 1 * u);
     for (const sd of [-1, 1]) p.poly(rrect(tcx + sd * xs[1] * T.a - 3.5 * u, chestY - 0.04 * HH, tcx + sd * xs[1] * T.a + 3.5 * u, chestY + 0.04 * HH, 1.2 * u), BK, 1 * u);
-    p.poly(rrect(tcx - 6 * u, beltY - 0.04 * HH, tcx + 6 * u, beltY + 0.04 * HH, 1.5 * u), BK, 1.2 * u); }
+    p.poly(rrect(tcx - 6 * u, beltY - 0.04 * HH, tcx + 6 * u, beltY + 0.04 * HH, 1.5 * u), BK, 1.2 * u); });
   p.inkRing(tp, ow, thick);
   for (const a of arms) if (!a.front) drawArm(a);
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
