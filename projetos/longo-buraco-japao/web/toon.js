@@ -2626,7 +2626,7 @@ export const romanFront = (p, key, opts = {}) => {
       const sh = 0.78, wa = 0.58, hi = 1.04; return T.a * (k < 0.12 ? sh * (0.55 + 0.45 * Math.sin(k / 0.12 * Math.PI / 2)) : k < 0.5 ? sh + (wa - sh) * Math.sin((k - 0.12) / 0.38 * Math.PI / 2) : k < 0.85 ? wa + (hi - wa) * Math.sin((k - 0.5) / 0.35 * Math.PI / 2) : hi * Math.cos((k - 0.85) / 0.15 * Math.PI / 2 * 0.9)); };
     const L = [], Rr = []; for (let i = 0; i <= 30; i++) { const k = i / 30, y = top + k * H2, w = Math.max(half(k), 0.05 * T.a); Rr.push([tcx + w, y]); L.push([tcx - w, y]); }
     tp = [...Rr, ...L.reverse()]; }
-  const S = (side) => [tcx + side * 0.85 * T.a, chin + 0.12 * HH];
+  const S = (side) => O.female ? [tcx + side * 0.56 * T.a, chin + 0.24 * HH] : [tcx + side * 0.8 * T.a, chin + 0.14 * HH];
   const arm = (side, pose) => {
     const s = S(side), X = (k) => tcx + side * (T.a * 1.1 + k * u);
     switch (pose) {
@@ -2650,8 +2650,10 @@ export const romanFront = (p, key, opts = {}) => {
   };
   const arms = [arm(-1, L), arm(1, R)];
   const drawArm = (a) => {
-    const cp = curve(a.pts[0], a.pts[1], a.pts[2]);
-    p.band(cp, mix(O.tunic, "#000000", 0.08), 7 * u, 1.7 * u, "round");
+    const cp = curve(a.pts[0], a.pts[1], a.pts[2]), sleeve = mix(O.tunic, "#000000", 0.08);
+    p.band(cp, sleeve, 7 * u, 1.7 * u, "round");
+    { const [sx, sy] = a.pts[0], [nx, ny] = cp[2], dx = nx - sx, dy = ny - sy, l = Math.hypot(dx, dy) || 1; // seamless shoulder: cover the seam with sleeve colour, inside the body
+      p.ell(sx - dx / l * 2 * u, sy - dy / l * 2 * u, 6.2 * u, 6.2 * u, sleeve, 0); p.ell(sx + dx / l * 2 * u, sy + dy / l * 2 * u, 4.6 * u, 4.6 * u, sleeve, 0); }
     const [hx, hy] = a.pts[2], dirx = Math.sign(hx - cx) || 1;
     const holds = (opts.holdL && a === arms[0]) || (opts.holdR && a === arms[1]);
     if (holds) hand(p, hx, hy, u, skin, -dirx);   // palm + thumb behind the object
@@ -2672,7 +2674,6 @@ export const romanFront = (p, key, opts = {}) => {
     p.poly(tip, old ? "#8b7c6a" : "#c9cfd6", 2 * u);
     if (web) cobweb(p, s1[0] - 2 * u, s1[1] + 60 * u, 70 * u, u);
   }
-  for (const a of arms) if (!a.front) drawArm(a);
   // torso
   if (dress) {
     const D = { a: 0.5 * W * 0.98, b: 0.5 * ((sole - 0.35 * HH) - (chin - 0.2 * HH)), nTop: 2.0, nBot: 3.0, egg: 0.35, asym: 0, rot: 0, noise: 0.006, seed: seed + 9 };
@@ -2710,6 +2711,7 @@ export const romanFront = (p, key, opts = {}) => {
     }
   });
   p.inkRing(tp, ow, thick);
+  for (const a of arms) if (!a.front) drawArm(a);
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);
