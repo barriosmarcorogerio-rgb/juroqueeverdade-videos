@@ -145,7 +145,15 @@ gable(house, 9, 6.5, 5.6, 2.6, mat(WH, 9, 6, 2.4), std({ map: sideTex(roofT, 10,
 add(tbox(9.4, 0.5, 6.9, 2), std({ color: '#8d8478' }), 0, 0.25, 0, house);
 add(tbox(0.9, 3, 0.9, 1), brick, 2.6, 8.3, -0.8, house);
 for (const [x, y] of [[-3, 1.6], [3, 1.6], [-3, 4.2], [0, 4.2], [3, 4.2]]) { add(box(1.1, 1.5, 0.06), winM, x, y, 3.27, house, { cast: false }); add(box(1.35, 0.14, 0.12), trimM, x, y + 0.8, 3.3, house); add(box(1.35, 0.14, 0.12), trimM, x, y - 0.8, 3.3, house); for (const s of [-1, 1]) add(box(0.12, 1.7, 0.12), trimM, x + s * 0.62, y, 3.3, house); add(box(0.06, 1.5, 0.08), trimM, x, y, 3.31, house); }
-add(box(1.2, 2.3, 0.08), std({ color: '#5b3a26' }), 0, 1.4, 3.28, house, { cast: false });
+// real door: dark interior, frame, hinged leaf (pivot on the left edge) with knob; opens with world.door 0..1
+add(box(1.18, 2.28, 0.02), decal(std({ color: '#1a120c' }), 2), 0, 1.4, 3.262, house, { cast: false });
+for (const [x, y, w, h] of [[-0.66, 1.42, 0.12, 2.42], [0.66, 1.42, 0.12, 2.42], [0, 2.62, 1.44, 0.14]]) add(box(w, h, 0.14), trimM, x, y, 3.3, house);
+const doorPivot = new THREE.Group(); doorPivot.position.set(-0.6, 0.25, 3.3); house.add(doorPivot);
+{ const leafM = std({ color: '#6b4428' }); add(box(1.2, 2.3, 0.07), leafM, 0.6, 1.15, 0, doorPivot);
+  for (const [y, h] of [[0.6, 0.8], [1.6, 0.8]]) add(box(0.85, h, 0.03), std({ color: '#5a3820' }), 0.6, y, 0.05, doorPivot);
+  for (const sz of [-1, 1]) { add(new THREE.SphereGeometry(0.055, 12, 8), std({ color: '#d9b44a', metalness: 0.7, roughness: 0.3 }), 1.05, 1.1, sz * 0.07, doorPivot); add(new THREE.CylinderGeometry(0.03, 0.03, 0.18, 8), std({ color: '#d9b44a', metalness: 0.7, roughness: 0.3 }), 1.05, 1.1, 0, doorPivot).rotation.x = Math.PI / 2; }
+  for (const y of [0.35, 1.95]) add(box(0.05, 0.16, 0.09), std({ color: '#3a3a3a' }), 0.0, y, 0, doorPivot); }
+const setDoor = (t) => { doorPivot.rotation.y = -Math.min(1, Math.max(0, t || 0)) * 1.75; };
 // porch
 add(tbox(9, 0.25, 2.6, 1), std({ map: sideTex(WH, 9, 2.6, 2) , color: '#c9b9a0' }), 0, 0.55, 4.55, house);
 for (const x of [-4.3, -1.5, 1.5, 4.3]) add(new THREE.CylinderGeometry(0.1, 0.1, 2.3, 10), trimM, x, 1.8, 5.7, house);
@@ -216,7 +224,7 @@ const rockC = cv(512, 512, (g, w, h) => { g.fillStyle = '#7a6a5a'; g.fillRect(0,
 const shaftM = emis({ map: P.tex(rockC, 3, 12), side: THREE.BackSide, color: '#ffffff', emissive: '#000000' });
 const shaft = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.0, 80, 32, 1, true), shaftM); shaft.position.y = -40.2; shaft.castShadow = false; shaft.receiveShadow = false; shaftG.add(shaft);
 const shaftBottom = add(new THREE.CircleGeometry(1.0, 32), emis({ color: '#5a4a3a' }), 0, -80, 0, shaftG, { cast: false }); shaftBottom.rotation.x = -Math.PI / 2;
-const rope = add(new THREE.CylinderGeometry(0.018, 0.018, 80, 6), std({ color: '#d9c49a' }), 0.35, -40, 0.2, shaftG, { cast: false });
+const rope = add(new THREE.CylinderGeometry(0.018, 0.018, 80, 6), std({ color: '#d9c49a' }), 0.6, -40, 0.36, shaftG, { cast: false });
 const shaftLight = new THREE.PointLight('#ffd9a0', 0, 12, 1.4); scene.add(shaftLight);
 const iceM = std({ color: '#cfeaf6', roughness: 0.2 });
 const ice = new THREE.Group(); shaftG.add(ice); for (let i = 0; i < 4; i++) add(new THREE.BoxGeometry(0.35, 0.3, 0.35), iceM, -0.4 + (i % 2) * 0.3, -79.85 + Math.floor(i / 2) * 0.3, -0.45, ice);
@@ -227,16 +235,16 @@ const setShaft = (S) => { const L = LAYERS[S.layer || 'terra']; shaftM.color.set
 const KX = 3000;
 const kolaG = new THREE.Group(); kolaG.position.set(KX, 0, 0); world.add(kolaG);
 { const sn = add(new THREE.PlaneGeometry(900, 900), std({ map: P.tex(cv(256, 256, (g, w, h) => { g.fillStyle = '#eef2f6'; g.fillRect(0, 0, w, h); for (let i = 0; i < 3000; i++) { g.fillStyle = `rgba(150,170,200,${rr() * 0.15})`; g.fillRect(rr() * w, rr() * h, 3, 2); } }), 120, 120) }), 0, 0.01, 0, kolaG, { cast: false }); sn.rotation.x = -Math.PI / 2;
-  const rust = std({ map: P.tex(cv(256, 256, (g, w, h) => { g.fillStyle = '#7a4a2a'; g.fillRect(0, 0, w, h); for (let i = 0; i < 1500; i++) { g.fillStyle = `hsla(${15 + rr() * 20},60%,${20 + rr() * 30}%,.6)`; g.fillRect(rr() * w, rr() * h, 4, 4); } })), roughness: 0.6, metalness: 0.3 });
-  add(new THREE.CylinderGeometry(0.45, 0.5, 0.18, 24), rust, 0, 0.09, 0, kolaG); add(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 6), rust, 0, 0.22, 0, kolaG);
-  for (let i = 0; i < 10; i++) { const a = i / 10 * 6.283; add(new THREE.CylinderGeometry(0.035, 0.035, 0.06, 6), std({ color: '#4a3020' }), Math.cos(a) * 0.38, 0.2, Math.sin(a) * 0.38, kolaG); }
+  const rust = std({ map: P.tex(cv(256, 256, (g, w, h) => { g.fillStyle = '#7d8086'; g.fillRect(0, 0, w, h); for (let i = 0; i < 260; i++) { g.fillStyle = `hsla(${18 + rr() * 16},55%,${28 + rr() * 18}%,${0.35 + rr() * 0.4})`; g.beginPath(); g.ellipse(rr() * w, rr() * h, 4 + rr() * 16, 3 + rr() * 9, rr() * 3, 0, 7); g.fill(); } })), roughness: 0.45, metalness: 0.55 });
+  add(new THREE.CylinderGeometry(0.45, 0.47, 0.08, 32), rust, 0, 0.04, 0, kolaG); add(new THREE.CylinderGeometry(0.1, 0.1, 0.05, 6), rust, 0, 0.1, 0, kolaG);
+  for (let i = 0; i < 10; i++) { const a = i / 10 * 6.283; add(new THREE.CylinderGeometry(0.03, 0.03, 0.03, 6), std({ color: '#55585e', metalness: 0.6, roughness: 0.4 }), Math.cos(a) * 0.38, 0.095, Math.sin(a) * 0.38, kolaG); }
   const plate = textTex(512, 256, (g, w, h) => { g.fillStyle = '#5a4a3a'; g.fillRect(0, 0, w, h); g.fillStyle = '#f2e6c8'; g.textAlign = 'center'; fitT(g, 'POÇO DE KOLA', w / 2, 100, '900 # Georgia, serif', 70, w - 40); fitT(g, '12.262 m', w / 2, 200, '900 # Georgia, serif', 90, w - 40); });
   add(new THREE.BoxGeometry(1.2, 0.6, 0.06), std({ map: plate }), 0, 0.9, -0.9, kolaG); add(new THREE.BoxGeometry(0.06, 1.0, 0.06), std({ color: '#3a3a3a' }), 0, 0.5, -0.95, kolaG);
   const conc = std({ color: '#9a9a96' });
   for (const [x, z, w, h, d] of [[-8, -12, 10, 6, 6], [6, -16, 8, 9, 6], [14, -10, 5, 4, 5]]) { add(tbox(w, h, d, 2), conc, x, h / 2, z, kolaG); for (let i = 0; i < 3; i++) add(box(1, 1.3, 0.1), std({ color: '#2a2e34' }), x - w / 2 + 1.5 + i * 2.5, h * 0.6, z + d / 2 + 0.02, kolaG); }
   add(new THREE.CylinderGeometry(0.5, 0.6, 22, 12), conc, 12, 11, -18, kolaG);
   const birch = std({ color: '#efece6' });
-  for (let i = 0; i < 40; i++) { const x = (rr() - 0.5) * 120, z = -20 - rr() * 60; const t = add(new THREE.CylinderGeometry(0.08, 0.12, 6 + rr() * 4, 6), birch, x, 3.5, z, kolaG); add(new THREE.SphereGeometry(1.2 + rr(), 8, 6), std({ color: '#d9c29a' }), x, 7 + rr() * 2, z, kolaG); }
+  for (let i = 0; i < 40; i++) { const x = (rr() - 0.5) * 120, z = -20 - rr() * 60; const h = 6 + rr() * 4, t = add(new THREE.CylinderGeometry(0.05, 0.12, h, 6), birch, x, h / 2, z, kolaG); for (let b = 0; b < 4; b++) { const br = add(new THREE.CylinderGeometry(0.02, 0.04, 1.6, 4), birch, x, h * (0.55 + b * 0.1), z, kolaG); br.rotation.set(rr() - 0.5, rr() * 6, 0.6 + rr() * 0.5); } }
   const pole = textTex(512, 256, (g, w, h) => { g.fillStyle = '#c0302c'; g.fillRect(0, 0, w, h); g.fillStyle = '#ffffff'; g.textAlign = 'center'; fitT(g, 'POLO NORTE', w / 2, 160, '900 # Georgia, serif', 110, w - 40); });
   const pn = new THREE.Group(); pn.position.set(40, 0, 40); kolaG.add(pn); add(new THREE.CylinderGeometry(0.08, 0.08, 2.6, 10), std({ color: '#ffffff' }), 0, 1.3, 0, pn); for (let i = 0; i < 5; i++) add(new THREE.CylinderGeometry(0.085, 0.085, 0.25, 10), std({ color: '#c0302c' }), 0, 0.3 + i * 0.5, 0, pn);
   add(new THREE.BoxGeometry(1.4, 0.7, 0.05), std({ map: pole }), 0, 2.2, 0.1, pn); }
@@ -348,8 +356,8 @@ const clouds = [];
   } }
 
 // ---------- cards ----------
-const CW = 1200, CH = 2000, CM = 2.25; // canvas px, card height in metres (design 600x1000 -> 2.25 m)
-const cardGeo = new THREE.PlaneGeometry(CM * 0.6, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
+const CW = 2000, CH = 2000, CM = 2.25, PAD = 200; // canvas px; design space x -200..800 (character centred at 300), y 0..1000 -> 2.25 m
+const cardGeo = new THREE.PlaneGeometry(CM * (600 + 2 * PAD) / 1000, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
 const blobTex = P.tex(P.radial('20,14,30', 0.6));
 class Card {
   constructor(scale = 1) {
@@ -364,7 +372,7 @@ class Card {
   }
   draw(key, fn) {
     if (key === this.key) return; this.key = key;
-    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / 600, 0, 0, CH / 1000, 0, 0);
+    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / (600 + 2 * PAD), 0, 0, CH / 1000, PAD * CW / (600 + 2 * PAD), 0);
     const p = new T.Pen(g); fn(p); this.t.needsUpdate = true;
   }
 }
@@ -437,7 +445,7 @@ function placeSun(L, focus) {
   const ext = L.shadowExt || 30, sc = sun.shadow.camera; sc.left = -ext; sc.right = ext; sc.top = ext; sc.bottom = -ext; sc.near = 1; sc.far = 200; sc.updateProjectionMatrix();
 }
 
-function worldState(S, f) { for (const c of clouds) c.visible = !S.noClouds && (S.set || 'quintal') === 'quintal'; setActive(S, f); if ((S.set || 'quintal') === 'shaft' || S.set === 'mine') { shaftLight.position.copy(camera.position); } }
+function worldState(S, f) { setDoor(S.door); for (const c of clouds) c.visible = !S.noClouds && (S.set || 'quintal') === 'quintal'; setActive(S, f); if ((S.set || 'quintal') === 'shaft' || S.set === 'mine') { shaftLight.position.copy(camera.position); } }
 
 function drawActors(list, cam) {
   cards.forEach((c) => { c.mesh.visible = c.blob.visible = false; });

@@ -39,7 +39,7 @@ def cam2(p0, l0, f0, p1, l1, f1, roll=0):
 def shaft(y=-12, v='side', layer='terra', jp=None, glow=0.6, light='shaft', ice=False, extra=None, rope=True, lamp=30, hat=True, kick=None, rocha=None):
     jpos = [H[0] + 0.32, y, H[2] + 0.12]
     cast = [act(J, jpos, pose=jp or pose('neutral', 'up', 'hang', holdR='drill'), face='cam', blob=False, shadow=False, hat=hat)]
-    if rocha: cast.append(act(R, [H[0] - 0.35, y + rocha, H[2] - 0.1], pose=pose('stern', 'up', 'point', facing=1, look=0.6), face='cam', blob=False, shadow=False))
+    if rocha: cast.append(act(R, [H[0] + 0.05, y + rocha + 0.2, H[2] + 0.62], pose=pose('stern', 'up', 'point', facing=1, look=0.6), face='cam', blob=False, shadow=False))
     cams = {
         'side': ([H[0] - 0.55, y + 1.3, H[2] - 0.6], [jpos[0], y + 1.15, jpos[2]], 58, [H[0] - 0.5, y + 1.3, H[2] - 0.5], [jpos[0], y + 1.2, jpos[2]], 54),
         'up': ([H[0] - 0.1, y - 1.2, H[2] + 0.1], [H[0] + 0.05, y + 30, H[2]], 70, [H[0] - 0.1, y - 1.0, H[2] + 0.1], [H[0] + 0.05, y + 30, H[2]], 64),

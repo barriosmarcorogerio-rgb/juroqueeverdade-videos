@@ -145,7 +145,15 @@ gable(house, 9, 6.5, 5.6, 2.6, mat(WH, 9, 6, 2.4), std({ map: sideTex(roofT, 10,
 add(tbox(9.4, 0.5, 6.9, 2), std({ color: '#8d8478' }), 0, 0.25, 0, house);
 add(tbox(0.9, 3, 0.9, 1), brick, 2.6, 8.3, -0.8, house);
 for (const [x, y] of [[-3, 1.6], [3, 1.6], [-3, 4.2], [0, 4.2], [3, 4.2]]) { add(box(1.1, 1.5, 0.06), winM, x, y, 3.27, house, { cast: false }); add(box(1.35, 0.14, 0.12), trimM, x, y + 0.8, 3.3, house); add(box(1.35, 0.14, 0.12), trimM, x, y - 0.8, 3.3, house); for (const s of [-1, 1]) add(box(0.12, 1.7, 0.12), trimM, x + s * 0.62, y, 3.3, house); add(box(0.06, 1.5, 0.08), trimM, x, y, 3.31, house); }
-add(box(1.2, 2.3, 0.08), std({ color: '#5b3a26' }), 0, 1.4, 3.28, house, { cast: false });
+// real door: dark interior, frame, hinged leaf (pivot on the left edge) with knob; opens with world.door 0..1
+add(box(1.18, 2.28, 0.02), decal(std({ color: '#1a120c' }), 2), 0, 1.4, 3.262, house, { cast: false });
+for (const [x, y, w, h] of [[-0.66, 1.42, 0.12, 2.42], [0.66, 1.42, 0.12, 2.42], [0, 2.62, 1.44, 0.14]]) add(box(w, h, 0.14), trimM, x, y, 3.3, house);
+const doorPivot = new THREE.Group(); doorPivot.position.set(-0.6, 0.25, 3.3); house.add(doorPivot);
+{ const leafM = std({ color: '#6b4428' }); add(box(1.2, 2.3, 0.07), leafM, 0.6, 1.15, 0, doorPivot);
+  for (const [y, h] of [[0.6, 0.8], [1.6, 0.8]]) add(box(0.85, h, 0.03), std({ color: '#5a3820' }), 0.6, y, 0.05, doorPivot);
+  for (const sz of [-1, 1]) { add(new THREE.SphereGeometry(0.055, 12, 8), std({ color: '#d9b44a', metalness: 0.7, roughness: 0.3 }), 1.05, 1.1, sz * 0.07, doorPivot); add(new THREE.CylinderGeometry(0.03, 0.03, 0.18, 8), std({ color: '#d9b44a', metalness: 0.7, roughness: 0.3 }), 1.05, 1.1, 0, doorPivot).rotation.x = Math.PI / 2; }
+  for (const y of [0.35, 1.95]) add(box(0.05, 0.16, 0.09), std({ color: '#3a3a3a' }), 0.0, y, 0, doorPivot); }
+const setDoor = (t) => { doorPivot.rotation.y = -Math.min(1, Math.max(0, t || 0)) * 1.75; };
 // porch
 add(tbox(9, 0.25, 2.6, 1), std({ map: sideTex(WH, 9, 2.6, 2) , color: '#c9b9a0' }), 0, 0.55, 4.55, house);
 for (const x of [-4.3, -1.5, 1.5, 4.3]) add(new THREE.CylinderGeometry(0.1, 0.1, 2.3, 10), trimM, x, 1.8, 5.7, house);
@@ -348,8 +356,8 @@ const clouds = [];
   } }
 
 // ---------- cards ----------
-const CW = 1200, CH = 2000, CM = 2.25; // canvas px, card height in metres (design 600x1000 -> 2.25 m)
-const cardGeo = new THREE.PlaneGeometry(CM * 0.6, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
+const CW = 2000, CH = 2000, CM = 2.25, PAD = 200; // canvas px; design space x -200..800 (character centred at 300), y 0..1000 -> 2.25 m
+const cardGeo = new THREE.PlaneGeometry(CM * (600 + 2 * PAD) / 1000, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
 const blobTex = P.tex(P.radial('20,14,30', 0.6));
 class Card {
   constructor(scale = 1) {
@@ -364,7 +372,7 @@ class Card {
   }
   draw(key, fn) {
     if (key === this.key) return; this.key = key;
-    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / 600, 0, 0, CH / 1000, 0, 0);
+    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / (600 + 2 * PAD), 0, 0, CH / 1000, PAD * CW / (600 + 2 * PAD), 0);
     const p = new T.Pen(g); fn(p); this.t.needsUpdate = true;
   }
 }
@@ -437,7 +445,7 @@ function placeSun(L, focus) {
   const ext = L.shadowExt || 30, sc = sun.shadow.camera; sc.left = -ext; sc.right = ext; sc.top = ext; sc.bottom = -ext; sc.near = 1; sc.far = 200; sc.updateProjectionMatrix();
 }
 
-function worldState(S, f) { for (const c of clouds) c.visible = !S.noClouds && (S.set || 'quintal') === 'quintal'; setActive(S, f); if ((S.set || 'quintal') === 'shaft' || S.set === 'mine') { shaftLight.position.copy(camera.position); } }
+function worldState(S, f) { setDoor(S.door); for (const c of clouds) c.visible = !S.noClouds && (S.set || 'quintal') === 'quintal'; setActive(S, f); if ((S.set || 'quintal') === 'shaft' || S.set === 'mine') { shaftLight.position.copy(camera.position); } }
 
 function drawActors(list, cam) {
   cards.forEach((c) => { c.mesh.visible = c.blob.visible = false; });
