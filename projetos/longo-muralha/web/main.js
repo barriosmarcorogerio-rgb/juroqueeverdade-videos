@@ -245,15 +245,47 @@ for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 20
 // ================= Pedra Alta: muralha de 12 m, torres, cidade, horta, corda-armadilha =================
 const textTex = (w, h, fn) => { const t = P.tex(cv(w, h, fn)); t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping; t.repeat.set(1, 1); return t; };
 const WZ = -40, WALLH = 12, WT = 5;
-const wallM = std({ map: P.tex(P.stone(51, 38, 12, 64, 96, 48), 40, 3) });
+const wallCanvas = (seed, base) => cv(1024, 1024, (g, w, h) => { const r = P.rng(seed); g.fillStyle = '#3e3a33'; g.fillRect(0, 0, w, h);
+  const rows = 8, rh = h / rows;
+  for (let j = 0; j < rows; j++) { let x = -r() * 140; while (x < w) { const bw = 120 + r() * 160, v = (r() - 0.5) * 30, wm = (r() - 0.5) * 12, y = j * rh;
+      g.fillStyle = `rgb(${base[0] + v + wm | 0},${base[1] + v | 0},${base[2] + v - wm | 0})`; g.beginPath(); g.roundRect(x + 5, y + 5, bw - 10, rh - 10, 14); g.fill();
+      g.fillStyle = 'rgba(255,255,255,0.12)'; g.fillRect(x + 10, y + 7, bw - 20, 7); g.fillStyle = 'rgba(0,0,0,0.18)'; g.fillRect(x + 10, y + rh - 16, bw - 20, 9);
+      for (let k = 0; k < 18; k++) { g.fillStyle = `rgba(0,0,0,${0.05 + r() * 0.08})`; g.beginPath(); g.arc(x + 12 + r() * (bw - 24), y + 12 + r() * (rh - 24), 2 + r() * 5, 0, 6.283); g.fill(); }
+      if (r() < 0.12) { g.strokeStyle = 'rgba(30,26,22,0.55)'; g.lineWidth = 3; g.beginPath(); let cx = x + bw * r(), cy = y + 8; g.moveTo(cx, cy); for (let k = 0; k < 4; k++) { cx += (r() - 0.5) * 30; cy += (rh - 16) / 4; g.lineTo(cx, cy); } g.stroke(); }
+      x += bw; } } });
+const wallTexA = P.tex(wallCanvas(51, [176, 166, 146]), 1, 1), wallTexB = P.tex(wallCanvas(77, [138, 130, 114]), 1, 1);
+const wallM = std({ map: wallTexA }), wallDark = std({ map: wallTexB }), capM = std({ map: wallTexA, color: '#d8d2c4' });
 const wallG = new THREE.Group(); world.add(wallG);
-add(tbox(320, WALLH, WT, 3), wallM, 0, WALLH / 2, WZ, wallG);
-for (let x = -158; x <= 158; x += 2.4) add(tbox(1.3, 1.3, 0.8, 1), wallM, x, WALLH + 0.65, WZ + WT / 2 - 0.4, wallG);
-for (let x = -150; x <= 150; x += 30) { if (Math.abs(x) < 1) continue; add(new THREE.CylinderGeometry(4, 4.4, WALLH + 5, 20), std({ map: P.tex(P.stone(52, 38, 12, 62, 96, 48), 6, 3) }), x, (WALLH + 5) / 2, WZ, wallG);
-  add(new THREE.ConeGeometry(4.8, 5, 20), std({ color: '#7a3a2a' }), x, WALLH + 7.5, WZ, wallG); }
-// gate
-add(box(7, 9, 0.6), std({ map: P.tex(P.planks(53), 2, 1), color: '#8a6040' }), 0, 4.5, WZ + WT / 2 + 0.2, wallG);
-for (const sd of [-1, 1]) add(box(0.3, 9, 0.3), std({ color: '#3a3a3a' }), sd * 1.8, 4.5, WZ + WT / 2 + 0.55, wallG);
+const FACE = WZ + WT / 2;
+add(tbox(320, WALLH, WT, 4), wallM, 0, WALLH / 2, WZ, wallG);
+add(tbox(320, 1.6, WT + 1.2, 4), wallDark, 0, 0.8, WZ, wallG);                                   // plinth
+add(tbox(320, 0.45, WT + 0.7, 4), capM, 0, WALLH - 0.75, WZ, wallG);                             // cornice
+{ const fl = add(new THREE.PlaneGeometry(320, WT - 0.2), std({ map: P.tex(P.stone(61, 34, 10, 58, 160, 120), 80, 1.2) }), 0, WALLH + 0.012, WZ, wallG, { cast: false }); fl.rotation.x = -Math.PI / 2; }
+for (let x = -158; x <= 158; x += 2.6) { add(tbox(1.5, 1.6, 0.7, 4), wallM, x, WALLH + 0.8, FACE - 0.35, wallG); add(tbox(1.75, 0.18, 0.9, 4), capM, x, WALLH + 1.69, FACE - 0.35, wallG); }
+add(tbox(320, 0.55, 0.4, 4), wallM, 0, WALLH + 0.27, WZ - WT / 2 + 0.2, wallG);                  // low inner parapet
+for (let x = -152; x <= 152; x += 16) { if (Math.abs(x) < 7 || Math.abs(x % 30) < 4 || Math.abs(x % 30) > 26) continue; add(tbox(1.8, WALLH - 1.2, 1.0, 4), wallM, x, (WALLH - 1.2) / 2, FACE + 0.5, wallG); add(tbox(2.0, 0.3, 1.2, 4), capM, x, WALLH - 1.05, FACE + 0.5, wallG); }
+// grime + moss along the bottom of both faces
+{ const gc = cv(2048, 256, (g, w, h) => { const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, 'rgba(30,28,20,0)'); gr.addColorStop(1, 'rgba(30,28,20,0.55)'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    const r = P.rng(5); for (let i = 0; i < 90; i++) { const x = r() * w, y = h * (0.45 + r() * 0.55), rw = 20 + r() * 70; g.fillStyle = `rgba(${60 + r() * 20 | 0},${78 + r() * 20 | 0},${40 + r() * 15 | 0},${0.12 + r() * 0.18})`; g.beginPath(); g.ellipse(x, y, rw, rw * 0.35, 0, 0, 6.283); g.fill(); }
+    for (let i = 0; i < 60; i++) { const x = r() * w; g.fillStyle = 'rgba(25,22,18,0.18)'; g.fillRect(x, 0, 3 + r() * 6, h * (0.3 + r() * 0.7)); } });
+  for (const [z, ry] of [[FACE + 0.03, 0], [WZ - WT / 2 - 0.03, Math.PI]]) for (const [cx, w] of [[-82.5, 155], [82.5, 155]]) { const t = P.tex(gc, w / 40, 1); const m = new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false, opacity: 0.8 }); decal(m, 2); const pl = add(new THREE.PlaneGeometry(w, 3.6), m, cx, 3.4, z, wallG, { cast: false }); pl.rotation.y = ry; pl.userData.ndSkip = true; } }
+for (let x = -150; x <= 150; x += 30) { if (Math.abs(x) < 1) continue; add(new THREE.CylinderGeometry(4, 4.6, WALLH + 5, 24), std({ map: P.tex(wallCanvas(52 + x, [140, 133, 118]), 3, 2) }), x, (WALLH + 5) / 2, WZ, wallG);
+  add(new THREE.CylinderGeometry(4.5, 4.5, 0.5, 24), capM, x, WALLH + 5.2, WZ, wallG);
+  add(new THREE.ConeGeometry(4.9, 5.5, 24), std({ color: '#8a3a28' }), x, WALLH + 8.2, WZ, wallG);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 4.2), std({ map: P.tex(cv(64, 160, (g, w, h) => { g.fillStyle = '#a82a2a'; g.fillRect(0, 0, w, h); g.fillStyle = '#f2c84b'; g.fillRect(0, 0, w, 8); g.fillRect(0, h - 10, w, 10); g.beginPath(); g.moveTo(w / 2, 50); g.lineTo(w - 14, 90); g.lineTo(w / 2, 130); g.lineTo(14, 90); g.fill(); }), 1, 1), side: THREE.DoubleSide }));
+  fl.position.set(x, WALLH + 1.8, WZ + 4.62); wallG.add(fl); }
+// gate: stone frame with arch lintel + iron-banded doors
+add(box(7, 9, 0.6), std({ map: P.tex(P.planks(53), 2, 1), color: '#8a6040' }), 0, 4.5, FACE + 0.2, wallG);
+for (const sd of [-1, 1]) add(box(0.3, 9, 0.3), std({ color: '#3a3a3a' }), sd * 1.8, 4.5, FACE + 0.55, wallG);
+for (const y of [1.6, 4.5, 7.4]) add(box(7, 0.28, 0.12), std({ color: '#2e2e30', metalness: 0.4 }), 0, y, FACE + 0.56, wallG);
+for (const sd of [-1, 1]) add(tbox(1.4, 10.2, 1.6, 4), capM, sd * 4.2, 5.1, FACE + 0.3, wallG);
+add(tbox(9.8, 1.6, 1.6, 4), capM, 0, 10.0, FACE + 0.3, wallG); add(tbox(1.2, 1.9, 1.75, 4), wallDark, 0, 10.0, FACE + 0.32, wallG);
+// 3D ropes (grapple lines): world.ropes = [[x1,y1,z1,x2,y2,z2], ...]
+const ropePool = []; { const rm = std({ color: '#d9c49a' }), hm = std({ color: '#55595f', metalness: 0.5, roughness: 0.5 });
+  for (let i = 0; i < 6; i++) { const m = add(new THREE.CylinderGeometry(0.028, 0.028, 1, 6), rm, 0, -50, 0, world); const h = add(new THREE.ConeGeometry(0.12, 0.35, 8), hm, 0, -50, 0, world); ropePool.push([m, h]); } }
+const _up = new THREE.Vector3(0, 1, 0), _d = new THREE.Vector3();
+const setRopes = (R) => ropePool.forEach(([m, h], i) => { const r = R && R[i]; m.visible = h.visible = !!r; if (!r) return; const a = new THREE.Vector3(r[0], r[1], r[2]), b = new THREE.Vector3(r[3], r[4], r[5]);
+  _d.subVectors(b, a); const L = _d.length(); m.position.copy(a).addScaledVector(_d, 0.5); m.scale.set(1, L, 1); m.quaternion.setFromUnitVectors(_up, _d.clone().normalize()); h.position.copy(b); h.quaternion.copy(m.quaternion); });
 // city houses
 const houseCol = ['#e7c25a', '#7fb0c9', '#e79a8a', '#f2efe6', '#9fcf8a', '#c9a0d9', '#e0b080'];
 for (let i = 0; i < 60; i++) { const x = -110 + rr() * 220, z = WZ - 12 - rr() * 90; if (Math.abs(x) < 6 && z > WZ - 25) continue; const w = 5 + rr() * 4, h = 5 + rr() * 6, d = 5 + rr() * 3;
@@ -307,7 +339,7 @@ const forestG = new THREE.Group(); world.add(forestG);
 const prints = new THREE.Group(); world.add(prints);
 { const pm = decal(std({ color: '#4a3a24', transparent: true, opacity: 0.75 }), 3); for (let i = 0; i < 17; i++) { const z = 22 + i * 4.6, x = 2 + (i % 2 ? 1.4 : -1.4) + Math.sin(i * 0.7) * 1.5;
   const e = add(new THREE.CircleGeometry(1, 24), pm, x, 0.04, z, prints, { cast: false }); e.rotation.x = -Math.PI / 2; e.scale.set(1.3, 2.6, 1); e.userData.ndSkip = true; } }
-const setWorld = (S, f) => { tripG.visible = !!S.trip; carts.visible = !!S.carts; chart.visible = !!S.chart;
+const setWorld = (S, f) => { tripG.visible = !!S.trip; carts.visible = !!S.carts; chart.visible = !!S.chart; setRopes(S.ropes);
   bellPiv.rotation.z = S.bell ? Math.sin(f * 0.9) * 0.45 : 0;
   for (const c of cracks) { c.visible = !!S.crack; c.material.map = crackA[S.crack === 2 ? 1 : 0]; c.scale.setScalar(S.crack === 2 ? 1.25 : 1); }
   prints.visible = !!S.prints; };
