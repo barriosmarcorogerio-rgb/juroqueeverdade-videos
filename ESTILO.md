@@ -121,3 +121,9 @@ E os vizinhos? Já tinham repetido o prato.
 
 ## Capa / thumbnail (aprovado pelo dono)
 VERTICAL 1080x1920 (o YouTube recomenda 9:16 para Shorts; horizontal é substituído por recorte automático). Quadro da animação com o personagem em close, expressão exagerada e o objeto-chave visível na metade de baixo + letreiro grosso amarelo/branco com contorno preto, 2–3 palavras em MAIÚSCULAS no terço de cima (ex.: "CHOVEU CARNE?!"). Gerar com `thumb.py`. A capa do Reel no Instagram é o mesmo quadro (cover_ms), sem letreiro.
+
+### Aprendizados da revisão de 19/11 (titãs, meio do render)
+- Objeto de apoio só na hora em que a narração fala dele: o cartão dos cubos estava "grudado" no enquadramento do Lúcio e aparecia em 39 planos (23% do vídeo), inclusive falando de coração, fome e Wadlow. Agora: cubos só no trecho do quadrado-cubo; na fome, pães; no Wadlow, o gráfico de alturas.
+- Titã inteiro em quadro quando a narração fala da cabeça/altura: câmera a ~30 m do titã alto (antes a 12 m cortava a cabeça).
+- Evitar braços abertos em "T" (pose 'reach' de longe parece boneco de teste) e titã "afundado" no chão (y negativo).
+- Revisar uma folha de quadros (12 por bloco) logo no começo do render, não no fim: corrigir cedo custa poucos quadros.

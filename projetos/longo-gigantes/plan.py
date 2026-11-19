@@ -137,8 +137,8 @@ S[59] = [chart(D)]
 S[60] = [chart(D)]
 S[61] = [chart(D)]
 S[62] = [chart(D)]
-S[63] = [lab(D, p('neutral', 'hang', 'hang'))]
-S[64] = [lab(D, p('neutral', 'hang', 'hang'))]
+S[63] = [chart(D)]   # Wadlow: gráfico de alturas, não os cubos
+S[64] = [chart(D)]
 S[65] = [chart(D)]
 S[66] = [chart(D)]
 S[67] = [wall_duo(D, p('pained', 'hang', 'hang'), p('pained', 'hang', 'hang'))]
@@ -158,12 +158,12 @@ S[79] = [animal(D, 'fxGiraffe', 2.4)]
 S[80] = [shot(D, cam([4, 1.6, 52], [0, 9, 40], 52), cast=[giant('long', [0, 0, 40])])]
 S[81] = [gclose(D, 'long', 40)]
 S[82] = [lab(D, p('shock', 'cheek', 'cheek'))]
-S[83] = [shot(D, cam([6, 3, 52], [0, 6, 40], 46), cast=[giant('long', [0, 0, 40], arms='reach')])]
-S[84] = [shot(D, cam([6, 3, 52], [0, 6, 40], 46), cast=[giant('long', [0, 0, 40], dazed=True)])]
-S[85] = [shot(D, cam([8, 3, 50], [0, 4, 38], 46), cast=[giant('long', [0, 0, 38], arms='reach'), fx('fxCow', [3, 0, 40], 1.0)])]
-S[86] = [shot(D, cam([8, 3, 50], [0, 6, 38], 46), cast=[giant('long', [0, 0, 38]), fx('fxCow', [3, 0, 40], 1.0)])]
-S[87] = [shot(D, cam([8, 3, 50], [0, 6, 38], 46), cast=[giant('long', [0, 0, 38], dazed=True), fx('fxCow', [3, 0, 40], 1.0)])]
-S[88] = [shot(D, cam([8, 3, 50], [0, 4, 38], 46), cast=[giant('long', [0, -3.5, 38], dazed=True), fx('fxCow', [3, 0, 40], 1.0)])]
+S[83] = [shot(D, cam([14, 4, 68], [0, 8, 38], 46, [13, 4, 64], [0, 8.5, 38], 45), cast=[giant('long', [0, 0, 40], look=0.5)])]
+S[84] = [shot(D, cam([14, 4, 68], [0, 8, 38], 46, [13, 4, 64], [0, 8.5, 38], 45), cast=[giant('long', [0, 0, 40], dazed=True)])]
+S[85] = [shot(D, cam([14, 4, 68], [0, 8, 38], 46, [13, 4, 64], [0, 8.5, 38], 45), cast=[giant('long', [0, 0, 38], look=0.5), fx('fxCow', [3, 0, 40], 1.0)])]
+S[86] = [shot(D, cam([14, 4, 68], [0, 8, 38], 46, [13, 4, 64], [0, 8.5, 38], 45), cast=[giant('long', [0, 0, 38]), fx('fxCow', [3, 0, 40], 1.0)])]
+S[87] = [shot(D, cam([14, 4, 68], [0, 8, 38], 46, [13, 4, 64], [0, 8.5, 38], 45), cast=[giant('long', [0, 0, 38], dazed=True), fx('fxCow', [3, 0, 40], 1.0)])]
+S[88] = [shot(D, cam([14, 4, 68], [0, 8, 38], 46, [13, 4, 64], [0, 8.5, 38], 45), cast=[giant('long', [0, 0, 38], dazed=True, mouth=0.5), fx('fxCow', [3, 0, 40], 1.0)])]
 # cap 7 — food
 S[89] = [wall_one(D, 'ferraz', p('nervous', 'cheek', 'hang'), x0=2.0)]
 S[90] = [lab(D)]
@@ -280,6 +280,15 @@ HUD = {0: [['ALTURA DA MURALHA', '12 m']], 7: [['ALTURA DO GIGANTE', '15 m']], 1
        92: [['COMIDA', '250 mil kcal/dia']], 93: [['PÃOZINHO', '> 1.500/dia']], 101: [['ELEFANTE', '16 h/dia comendo']], 109: [['CORPO', 'x 635'], ['PELE', 'x 74']],
        150: [['IMPACTO', 'caminhão a 100 km/h']], 157: [['SAURÓPODE', '> 15 m · dezenas de t']]}
 CAPTITLE = {1: 'A MURALHA', 2: 'DOZE CONTRA QUINZE', 3: 'O PROBLEMA É MATEMÁTICA', 4: 'A CONTA', 5: 'O HOMEM MAIS ALTO', 6: 'O CORAÇÃO', 7: 'A FOME', 8: 'O CALOR', 9: 'A QUEDA', 10: 'A CORDA', 11: 'E OS DINOSSAUROS?', 12: 'A RESPOSTA'}
+# Os cubos só aparecem quando a narração fala da lei do quadrado-cubo; na fome o Lúcio mostra pão (19/11: cubos em 23% do vídeo)
+CUBOS = set(range(31, 54)) | {109}
+FOME = set(range(90, 99))
+for idx, lst in S.items():
+    if idx in CUBOS: continue
+    for sh in lst:
+        cubes = [c for c in sh['cast'] if c.get('fx') == 'fxCubes']
+        sh['cast'] = [c for c in sh['cast'] if c.get('fx') != 'fxCubes']
+        if cubes and idx in FOME: sh['cast'].append(fx('fxBread', cubes[0]['pos'], 0.9))
 shots = []; hud = []; cur = None
 for idx, x in enumerate(SENT):
     a = int(round(x['s'] * FPS)); b = int(round(x['e'] * FPS)) - 1
