@@ -86,7 +86,7 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 - Nunca apagar vídeo publicado, mesmo teste: o histórico ajuda o canal.
 
 ## Voz (decidido pelo dono do canal)
-Gemini TTS voz **Charon**, +8% de velocidade (`template/gemini_tts.py`). Sem instrução de estilo (ela é lida em voz alta). A animação da voz vem da pontuação do roteiro: "...", "!", MAIÚSCULA na palavra de ênfase, frases curtas.
+Desde 19/11: **Gemini TTS, voz Fenrir, +5% de velocidade, sem mudar o tom** (o dono comparou Charon, Puck, Orus, Algenib, Sadachbia e 4 vozes brasileiras do ElevenLabs e preferiu a Fenrir original). Vale para longos, Shorts e cartelas. ElevenLabs está conectado (plano Creator, ~29 mil caracteres até 3/12), mas não é a voz do canal.
 
 ## Linha editorial (18/11, pedido do dono)
 História antiga cansa o público. Prioridade: **curiosidades absurdas** (corpo, bichos, espaço, recordes) e **"E SE..."** inspirados no clima de séries/filmes famosos (zumbi, dragão, monstro, jogo mortal, mistério) — sempre com ciência real e o mesmo humor. Pode citar a série uma vez no título/descrição ("inspirado em..."), mas nunca usar personagens, nomes, logos ou visual da obra. Vilões e monstros devem dar medo de verdade (olhar fixo, sombra, sorriso esticado), e os heróis devem ser bonitos e expressivos.
