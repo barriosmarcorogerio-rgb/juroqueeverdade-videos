@@ -1,5 +1,0 @@
-gemini-3.8-flash-tts 429 {
-  "error": {
-    "code": 429,
-    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/do
-cap02.wav gemini-2.5-flash-preview-tts Fenrir 1.05
