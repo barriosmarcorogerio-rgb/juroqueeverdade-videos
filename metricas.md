@@ -42,3 +42,7 @@ Publicação: execução Make ded0d5a5… SUCCESS (YouTube j9vrGbPrAUM + Instagr
 
 ## 2026-11-18 — publicação da noite (18h50 BRT)
 Nada publicado: o único item pendente fora do Instagram é a prévia "E se você cavasse um buraco até o Japão? (parte 1)", que exige o longo já no canal — e o longo ainda não foi publicado pelo dono. Os Shorts novos (2 por dia) entram na fila a partir da produção desta madrugada.
+
+## 2026-11-19 — produção da madrugada (01h07 BRT) adiada
+Os 2 Shorts do dia não foram produzidos na madrugada: a cota grátis de voz do Gemini estava esgotada (troca da voz do canal para Fenrir + regravação dos 3 longos no mesmo dia) e a CPU está reservada para os longos (titãs → muralha → buraco). Os Shorts entram assim que a narração dos longos terminar; histórias já escolhidas no backlog novo (curiosidades: A1 fungo "zumbi", A3 garoto que ficou 11 dias sem dormir).
+Lição: nunca regravar narrações longas e testar vozes no mesmo dia da produção — a cota diária do TTS acaba.
