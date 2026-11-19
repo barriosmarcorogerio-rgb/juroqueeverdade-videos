@@ -62,3 +62,6 @@ Conclusões:
 - Camelos virou o 1º Short a "pegar" no YouTube: 1148 views e 30 likes em ~23 h (2,6% de likes), contra 4 views do "Choveu carne". Gancho em pergunta com fato surpreendente ("…trouxe CAMELOS pro sertão?!") + tema brasileiro funcionou.
 - Instagram segue firme (60 likes nos camelos), mas o YouTube passou na frente em alcance: priorizar o Short diário.
 - A falta de Short ontem e hoje desperdiça o embalo do camelos: a fila precisa de pelo menos 2 Shorts independentes de longo. Backlog de historias.md mantido (curiosidades com pergunta no gancho já estão no topo).
+
+## 2026-11-19 — publicação da noite (18h50 BRT)
+Nada publicado: o único item fora do Instagram é a prévia "E se você cavasse um buraco até o Japão? (parte 1)", que exige o longo no canal — conferido pelo webhook às 18h50 e o longo ainda não foi publicado pelo dono. Sem Shorts novos na fila (CPU no render dos titãs, 71%).
