@@ -233,7 +233,7 @@ S[148] = [city(D)]
 S[149] = [shot(D, cam([8, 3, 46], [2, 4, 38], 46), cast=[fx('fxCow', [2, 0, 38], 1.0, to=[4, 6, 34], roll=0.4)])]
 S[150] = [shot(D, cam([12, 4, 36], [0, 1, 20], 48), cast=[giant('grin', [0, 0.5, 22], roll=-1.5, down=True)], world={'trip': True})]
 S[151] = [field(D, 2, walk=False), shot(D, cam([16, 3, 52], [6, 4, 38], 48), cast=[giant('tiny', [6, 0, 38], roll=0, rollTo=1.5, rollEase='in')])]
-S[152] = [shot(D, cam([22, 3, 66], [20, 4, 52], 48), cast=[giant('long', [20, -4.5, 52], arms='reach')])]
+S[152] = [shot(D, cam([26, 4, 86], [20, 8, 52], 46, [25, 4, 82], [20, 8, 52], 45), cast=[giant('long', [20, 0, 52], cute=True, mouth=0.3)])]   # desiste: titã inteiro, cara mansa (antes afundado no chão em pose de T)
 S[153] = [wall_duo(D, p('laugh', 'hang', 'up'), p('laugh', 'up', 'hang'))]
 S[154] = [wall_one(D, 'ferraz', p('grin', 'thumb', 'hip'), x0=2.0)]
 # cap 11 — dinosaurs
