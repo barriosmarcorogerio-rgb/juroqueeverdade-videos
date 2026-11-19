@@ -60,5 +60,5 @@ Para cada longo pronto em `projetos/entrega/`, além da prévia: `bash projetos/
 
 ## Contêiner ligado durante renders longos (aprendizado 19/11)
 - O contêiner é desligado quando a sessão fica ociosa; o render para e só volta na próxima vigia (perdemos ~5 h assim em 19/11).
-- Enquanto houver render longo: manter um laço em segundo plano no harness (até 2 h) e religá-lo assim que ele terminar, até sair o MP4.
+- Enquanto houver render longo: manter um laço em segundo plano no harness de 30 min (pedido do dono) e religá-lo assim que ele terminar, até sair o MP4.
 - Os scripts madrugada* não refazem o áudio se mix_raw.wav existe e voltam direto em 4 blocos de render (RESUME=1 pula quadros prontos).
