@@ -6,3 +6,4 @@ if ! pgrep -f "madrugada2.sh" >/dev/null && ! grep -q FIM-MADRUGADA-2 madrugada2
 if ! pgrep -f "madrugada3.sh" >/dev/null && ! grep -q FIM-MADRUGADA-3 madrugada3.log 2>/dev/null; then nohup bash madrugada3.sh >> madrugada3.log 2>&1 & fi
 sleep 2; pgrep -fa "madrugada|render.mjs" | cut -c1-80
 if ! pgrep -f "madrugada4.sh" >/dev/null && ! grep -q FIM-MADRUGADA-4 madrugada4.log 2>/dev/null; then nohup bash madrugada4.sh >> madrugada4.log 2>&1 & fi
+if [ ! -f _teaser/.fenrir_ok ] && ! pgrep -f cartelas_fenrir.sh >/dev/null; then nohup bash _teaser/cartelas_fenrir.sh > /dev/null 2>&1 & fi
