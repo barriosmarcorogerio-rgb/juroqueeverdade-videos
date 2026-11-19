@@ -370,9 +370,11 @@ for (let c = 0; c < 4; c++) { const g = new THREE.Group(); g.position.set(c * 5,
   for (let i = 0; i < 9; i++) add(new THREE.SphereGeometry(0.38, 10, 8), std({ color: '#7ac04a' }), -0.9 + (i % 3) * 0.9, 1.7, -0.6 + Math.floor(i / 3) * 0.6, g); }
 // height chart board on the wall walkway (Wadlow comparison)
 const chart = new THREE.Group(); chart.position.set(-6, WALLH, WZ - 1.2); world.add(chart);
-{ const t = textTex(512, 1024, (g, w, h) => { g.fillStyle = '#efe6d0'; g.fillRect(0, 0, w, h); g.fillStyle = '#1d1a18'; g.font = '700 40px Georgia, serif'; g.textAlign = 'left';
-    for (let m = 0; m <= 30; m++) { const y = h - m * h / 30; g.fillRect(0, y - 2, m % 10 === 0 ? 120 : 60, 4); if (m % 5 === 0) g.fillText((m / 10).toFixed(1).replace('.', ',') + ' m', 140, y + 14); }
-    g.fillStyle = '#c0302c'; const yW = h - 27.2 * h / 30; g.fillRect(0, yW - 3, w, 6); g.fillText('2,72 m', 300, yW - 14); g.fillStyle = '#2f5f9a'; const yH = h - 17.5 * h / 30; g.fillRect(0, yH - 3, w, 6); g.fillText('1,75 m', 300, yH - 14); });
+{ const t = textTex(512, 1024, (g, w, h) => { g.fillStyle = '#f4ead2'; g.fillRect(0, 0, w, h); g.strokeStyle = '#6a4228'; g.lineWidth = 28; g.strokeRect(14, 14, w - 28, h - 28);   // régua no estilo do desenho: moldura de madeira, letras grossas
+    g.fillStyle = '#1d1a18'; g.font = '900 44px sans-serif'; g.textAlign = 'left';
+    for (let m = 0; m <= 30; m++) { const y = h - 30 - m * (h - 60) / 30; g.fillRect(28, y - 3, m % 10 === 0 ? 120 : m % 5 === 0 ? 80 : 46, 6); if (m % 5 === 0) g.fillText((m / 10).toFixed(1).replace('.', ',') + ' m', 160, y + 15); }
+    const lab = (v, txt, col) => { const y = h - 30 - v * (h - 60) / 30; g.fillStyle = col; g.fillRect(28, y - 5, w - 56, 10); g.font = '900 38px sans-serif'; g.lineWidth = 8; g.strokeStyle = '#ffffff'; g.strokeText(txt, 190, y - 16); g.fillText(txt, 190, y - 16); };
+    lab(27.2, 'WADLOW 2,72 m', '#c0302c'); lab(17.5, 'VOCÊ 1,75 m', '#2f5f9a'); });
   add(new THREE.BoxGeometry(1.5, 3.0, 0.08), std({ map: t }), 0, 1.5, 0, chart); }
 const setWorld = (S, f) => { tripG.visible = !!S.trip; tripS.visible = !!S.tripSmall; carts.visible = !!S.carts; chart.visible = !!S.chart; setRopes(S.ropes, S.a != null ? f - S.a : 99); };
 // ===== vida: pássaros, fumaça das chaminés, tochas e bandeiras animadas (tudo por quadro, determinístico) =====

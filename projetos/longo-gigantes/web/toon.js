@@ -2874,12 +2874,12 @@ export const fxSoap = (p, t) => { const g = p.g; g.save(); g.globalAlpha = Math.
 export const fxHelmet = (p) => { p.ell(300, 560, 150, 30, "#e8b81a", 10); p.ell(300, 540, 115, 95, "#ffcc22", 10, 180, 360); p.stroke([[300, 448], [300, 540]], 10, "#e8b81a"); p.ell(300, 500, 28, 24, "#fff6c0", 8); };
 /** title-ish sparkle / impact star */
 export const fxStar = (p, t) => { const g = p.g; g.save(); g.globalAlpha = 1 - t; const pts = []; for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2, r = (i % 2 ? 90 : 220) * (0.6 + t * 0.6); pts.push([300 + Math.cos(a) * r, 500 + Math.sin(a) * r]); } p.poly(pts, "#fff3b0", 10); g.restore(); };
-export const fxBread = (p) => { const rows = 6, W = 104, Hh = 32, base = 920;
+export const fxBread = (p) => { const rows = 6, W = 104, Hh = 40, base = 920;   // pães (não moedas): casca escura, miolo dourado, 3 cortes
   for (let r = 0; r < rows; r++) { const n = rows - r; for (let i = 0; i < n; i++) { const x = 300 + (i - (n - 1) / 2) * W * 0.98 + ((r * 37 + i * 13) % 9 - 4), y = base - Hh - r * Hh * 1.45, rot = ((i * 7 + r * 3) % 5 - 2) * 3;
-    const g = p.g; p.ell(x, y, W * 0.52, Hh, "#c9802f", 4, 0, 360);
-    p.clip(Array.from({ length: 40 }, (_, k) => [x + Math.cos(k / 40 * 6.2832) * W * 0.52, y + Math.sin(k / 40 * 6.2832) * Hh]), () => { p.ell(x - 6, y - Hh * 0.35, W * 0.42, Hh * 0.55, "#e9b25e", 0); g.save(); g.globalAlpha = 0.5; p.ell(x - 14, y - Hh * 0.55, W * 0.2, Hh * 0.18, "#fff2c8", 0); g.restore(); });
+    const g = p.g; p.ell(x, y, W * 0.52, Hh, "#a8622a", 4, 0, 360);
+    p.clip(Array.from({ length: 40 }, (_, k) => [x + Math.cos(k / 40 * 6.2832) * W * 0.52, y + Math.sin(k / 40 * 6.2832) * Hh]), () => { p.ell(x - 6, y - Hh * 0.3, W * 0.44, Hh * 0.6, "#d08a3e", 0); g.save(); g.globalAlpha = 0.5; p.ell(x - 14, y - Hh * 0.55, W * 0.2, Hh * 0.18, "#fff2c8", 0); g.restore(); });
     p.ell(x, y, W * 0.52, Hh, null, 4);
-    p.band([[x - W * 0.32, y + Hh * 0.1 + rot], [x + W * 0.32, y - Hh * 0.3 - rot]], "#f7d896", 9, 4, 'round'); } } };
+    for (let c = -1; c <= 1; c++) p.band([[x + c * W * 0.24 - 8, y + Hh * 0.25], [x + c * W * 0.24 + 10, y - Hh * 0.45]], "#f2d39a", 7, 3, 'round'); } } };
 export const fxCubes = (p) => { const g = p.g; const cube = (x, y, s, c, grid) => { const sh = (k) => mul(c, [k, k, k]); p.poly([[x, y], [x + s, y], [x + s, y + s], [x, y + s]], c, 6); p.poly([[x, y], [x + s * 0.35, y - s * 0.3], [x + s * 1.35, y - s * 0.3], [x + s, y]], sh(1.15), 6); p.poly([[x + s, y], [x + s * 1.35, y - s * 0.3], [x + s * 1.35, y + s * 0.7], [x + s, y + s]], sh(0.78), 6);
     if (grid) { p.stroke([[x + s / 2, y], [x + s / 2, y + s]], 4); p.stroke([[x, y + s / 2], [x + s, y + s / 2]], 4); p.stroke([[x + s * 0.175, y - s * 0.15], [x + s * 1.175, y - s * 0.15]], 4); p.stroke([[x + s / 2, y], [x + s * 0.85, y - s * 0.3]], 4); p.stroke([[x + s * 1.175, y - s * 0.15], [x + s * 1.175, y + s * 0.85]], 4); p.stroke([[x + s, y + s / 2], [x + s * 1.35, y + s * 0.2]], 4); } };
   cube(30, 690, 100, "#f2c84b", false); cube(250, 590, 200, "#e8483b", true);   // cubinho (lado 1) e cubo com o lado dobrado (lado 2 = 8 cubinhos)
@@ -2915,8 +2915,11 @@ return (p, t = 0, o = {}) => {
   // --- legs: thick thigh -> knee -> calf bulge -> slim ankle; big flat feet ---
   for (const sd of [-1, 1]) { const ph = Math.sin((w + (sd > 0 ? 0.5 : 0)) * Math.PI * 2), hx = cx + sd * A.waistW * 0.52, kx = hx + sd * (o.down ? 46 : 10) + ph * 20, ky = (A.hip + sole) / 2 + 6 - Math.max(0, ph) * 24 - (o.down ? 26 : 0), ax = hx + sd * (o.down ? 92 : 4) + ph * 36, ay = sole - 34 - Math.max(0, ph) * 36;
     const L_ = A.legW; shapes.push({ pts: TW([[hx, A.hip - 40], [(hx + kx) / 2 + sd * 4, (A.hip + ky) / 2], [kx, ky], [kx + (ax - kx) * 0.3 - sd * 3, ky + (ay - ky) * 0.3], [ax, ay]], [L_ * 1.75, L_ * 1.5, L_ * 0.92, L_ * 1.05, L_ * 0.6]), col: SK },
-      { pts: E(ax + sd * 20, ay + 20, L_ * 0.82, L_ * 0.32), col: SK });
-    after.push(() => { p.arc(kx, ky + 2, L_ * 0.26, 6, 200, 340, 3, SD); p.arc(kx + (ax - kx) * 0.32 + sd * L_ * 0.2, ky + (ay - ky) * 0.32, L_ * 0.18, L_ * 0.35, sd > 0 ? 280 : 100, sd > 0 ? 350 : 170, 3, SD); for (let k = 0; k < 4; k++) p.ell(ax + sd * (20 + L_ * 0.58) - sd * k * 14, ay + 28, 6, 4, mix(SK, '#ffffff', 0.4), 2); }); }
+      ...(() => { const fw = L_ * 0.95, fy = ay + 14, fx0 = ax + sd * 8, out = [{ pts: E(fx0, fy, fw * 0.95, L_ * 0.34), col: SK }, { pts: E(ax - sd * 6, ay + 2, L_ * 0.42, L_ * 0.4), col: SK }];   // pé: base + calcanhar/tornozelo + 5 dedos (dedão do lado de dentro)
+        for (let k = 0; k < 5; k++) { const t = k / 4, x = fx0 - sd * fw * 0.78 + sd * t * fw * 1.5, r = k === 0 ? L_ * 0.21 : L_ * (0.15 - t * 0.03); out.push({ pts: E(x, fy + L_ * 0.26 - (k === 0 ? 2 : 0), r, r * 0.95), col: SK }); }
+        return out; })());
+    after.push(() => { p.arc(kx, ky + 2, L_ * 0.26, 6, 200, 340, 3, SD); p.arc(kx + (ax - kx) * 0.32 + sd * L_ * 0.2, ky + (ay - ky) * 0.32, L_ * 0.18, L_ * 0.35, sd > 0 ? 280 : 100, sd > 0 ? 350 : 170, 3, SD); { const fw = L_ * 0.95, fy = ay + 14, fx0 = ax + sd * 8; for (let k = 0; k < 5; k++) { const t = k / 4, x = fx0 - sd * fw * 0.78 + sd * t * fw * 1.5, r = k === 0 ? L_ * 0.21 : L_ * (0.15 - t * 0.03); p.ell(x, fy + L_ * 0.26 + r * 0.25, r * 0.55, r * 0.42, mix(SK, '#ffffff', 0.45), 2); }   // unhas
+        p.arc(ax - sd * L_ * 0.28, ay - 4, L_ * 0.12, L_ * 0.12, 0, 360, 2.5, SD); p.arc(fx0, fy - 4, fw * 0.6, L_ * 0.18, 200, 340, 3, SD); } }); }
   // pelvis (smooth, no detail) joining the thighs
   shapes.push({ pts: E(cx, A.hip - 18, A.waistW * 1.12, 74), col: SK });
   // --- torso: traps -> broad shoulders -> chest -> waist ---

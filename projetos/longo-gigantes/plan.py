@@ -61,7 +61,7 @@ def chart(light, extra=()):
 def animal(light, name, s, fov=44, extra=(), t=None):
     d = fx(name, [0, 0, 40], s, shadow=True)
     if t is not None: d['t'] = t
-    c = cam([3.5, 1.8, 46.5], [0.5, 1.6 * s / 2.2 + 0.4, 40], fov, [3.2, 1.8, 45.8], [0.5, 1.6 * s / 2.2 + 0.4, 40], fov - 2)
+    D_ = 4.6 + s * 2.1; c = cam([1.5 + D_ * 0.3, 1.6 + s * 0.25, 40 + D_], [0.5, s * 0.95 + 0.4, 40], fov, [1.4 + D_ * 0.28, 1.6 + s * 0.25, 40 + D_ * 0.95], [0.5, s * 0.95 + 0.4, 40], fov - 2)   # câmera se afasta conforme o tamanho do bicho (dinossauro inteiro no quadro)
     return shot(light, c, [d, *extra])
 def ground(light, extra=(), fov=50):
     c = cam([-3, 1.4, 30], [2, 2.4, 20], fov, [-2.6, 1.4, 29], [2, 2.4, 20], fov - 2)
