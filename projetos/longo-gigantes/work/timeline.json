@@ -4,1413 +4,1413 @@
 "i": 0,
 "text": "A cidade de Pedra Alta dorme tranquila atrás de uma muralha de doze metros.",
 "s": 0.6,
-"e": 5.68
+"e": 5.82
 },
 {
 "cap": 1,
 "i": 1,
 "text": "Lá em cima, o recruta Tonico faz a ronda da noite, bocejando, com uma lanterna e um pão com manteiga.",
-"s": 5.68,
-"e": 12.18
+"s": 5.82,
+"e": 13.64
 },
 {
 "cap": 1,
 "i": 2,
 "text": "E aí ele vê.",
-"s": 12.18,
-"e": 13.46
+"s": 13.64,
+"e": 15.3
 },
 {
 "cap": 1,
 "i": 3,
 "text": "No horizonte, uma cabeça enorme aparece por cima das árvores.",
-"s": 13.46,
-"e": 17.56
+"s": 15.3,
+"e": 20.1
 },
 {
 "cap": 1,
 "i": 4,
 "text": "Depois outra.",
-"s": 17.56,
-"e": 18.68
+"s": 20.1,
+"e": 21.46
 },
 {
 "cap": 1,
 "i": 5,
 "text": "E outra.",
-"s": 18.68,
-"e": 19.94
+"s": 21.46,
+"e": 23.2
 },
 {
 "cap": 1,
 "i": 6,
 "text": "Gigantes.",
-"s": 19.94,
-"e": 21.08
+"s": 23.2,
+"e": 24.86
 },
 {
 "cap": 1,
 "i": 7,
 "text": "Quinze metros de altura.",
-"s": 21.08,
-"e": 22.82
+"s": 24.86,
+"e": 27.12
 },
 {
 "cap": 1,
 "i": 8,
 "text": "Pelados, sorrindo, com aquele olhar vazio de quem esqueceu o que veio fazer.",
-"s": 22.82,
-"e": 27.88
+"s": 27.12,
+"e": 33.36
 },
 {
 "cap": 1,
 "i": 9,
 "text": "A soldada Bia sobe a escada correndo e olha pra muralha.",
-"s": 27.88,
-"e": 31.46
+"s": 33.36,
+"e": 37.84
 },
 {
 "cap": 1,
 "i": 10,
 "text": "Olha pros gigantes.",
-"s": 31.46,
-"e": 32.8
+"s": 37.84,
+"e": 39.56
 },
 {
 "cap": 1,
 "i": 11,
 "text": "Olha pra muralha de novo.",
-"s": 32.8,
-"e": 34.66
+"s": 39.56,
+"e": 41.8
 },
 {
 "cap": 1,
 "i": 12,
 "text": "\"Tonico... a muralha tem doze metros.",
-"s": 34.66,
-"e": 37.52
+"s": 41.8,
+"e": 45.6
 },
 {
 "cap": 1,
 "i": 13,
 "text": "Eles têm quinze.\" \"E daí?\" \"E daí que eles vão olhar a gente por cima, igual criança olhando aquário.\" Mas espera.",
-"s": 37.52,
-"e": 45.3
+"s": 45.6,
+"e": 55.62
 },
 {
 "cap": 1,
 "i": 14,
 "text": "Antes de entrar em pânico, a gente vai fazer a pergunta que ninguém faz nos filmes: um gigante de quinze metros... conseguiria mesmo existir?",
-"s": 45.3,
-"e": 53.2
+"s": 55.62,
+"e": 65.78
 },
 {
 "cap": 1,
 "i": 15,
 "text": "E eu juro: a resposta é muito mais estranha do que qualquer filme de monstro.",
-"s": 53.2,
-"e": 58.017
+"s": 65.78,
+"e": 71.344
 },
 {
 "cap": 1,
 "i": -1,
 "text": "#END",
-"s": 58.017,
-"e": 59.217
+"s": 71.344,
+"e": 72.544
 },
 {
 "cap": 2,
 "i": 0,
 "text": "Primeiro, a muralha.",
-"s": 59.217,
-"e": 60.577
+"s": 72.544,
+"e": 74.164
 },
 {
 "cap": 2,
 "i": 1,
 "text": "Juro que é verdade: muralhas desse tamanho existiram.",
-"s": 60.577,
-"e": 63.897
+"s": 74.164,
+"e": 78.184
 },
 {
 "cap": 2,
 "i": 2,
 "text": "A muralha de Constantinopla, construída há mais de mil e quinhentos anos, tinha uns doze metros de altura, cinco de espessura e quase cem torres.",
-"s": 63.897,
-"e": 71.717
+"s": 78.184,
+"e": 87.884
 },
 {
 "cap": 2,
 "i": 3,
 "text": "Ela segurou exércitos inteiros por quase mil anos.",
-"s": 71.717,
-"e": 75.137
+"s": 87.884,
+"e": 91.644
 },
 {
 "cap": 2,
 "i": 4,
 "text": "Nenhum gigante, é verdade... mas muita gente tentou.",
-"s": 75.137,
-"e": 78.557
+"s": 91.644,
+"e": 95.704
 },
 {
 "cap": 2,
 "i": 5,
 "text": "Agora, os gigantes.",
-"s": 78.557,
-"e": 80.477
+"s": 95.704,
+"e": 97.844
 },
 {
 "cap": 2,
 "i": 6,
 "text": "Quinze metros é a altura de um prédio de cinco andares.",
-"s": 80.477,
-"e": 83.517
+"s": 97.844,
+"e": 100.884
 },
 {
 "cap": 2,
 "i": 7,
 "text": "Um homem normal tem uns um metro e setenta e cinco.",
-"s": 83.517,
-"e": 86.337
+"s": 100.884,
+"e": 104.584
 },
 {
 "cap": 2,
 "i": 8,
 "text": "Então o gigante é umas oito vezes e meia maior.",
-"s": 86.337,
-"e": 89.297
+"s": 104.584,
+"e": 107.704
 },
 {
 "cap": 2,
 "i": 9,
 "text": "Parece simples: é só pegar uma pessoa e esticar.",
-"s": 89.297,
-"e": 92.477
+"s": 107.704,
+"e": 111.104
 },
 {
 "cap": 2,
 "i": 10,
 "text": "Um nariz oito vezes maior, um pé oito vezes maior, uma barriga oito vezes maior.",
-"s": 92.477,
-"e": 97.517
+"s": 111.104,
+"e": 117.524
 },
 {
 "cap": 2,
 "i": 11,
 "text": "O Comandante Ferraz chega, olha pela luneta e decide: \"Ninguém se mexe.",
-"s": 97.517,
-"e": 101.657
+"s": 117.524,
+"e": 122.364
 },
 {
 "cap": 2,
 "i": 12,
 "text": "Vamos esperar eles atacarem.\" O Tonico engole o pão inteiro.",
-"s": 101.657,
-"e": 105.517
+"s": 122.364,
+"e": 126.144
 },
 {
 "cap": 2,
 "i": 13,
 "text": "A Bia aperta a corda do gancho.",
-"s": 105.517,
-"e": 107.437
+"s": 126.144,
+"e": 128.364
 },
 {
 "cap": 2,
 "i": 14,
 "text": "E o gigante da frente dá o primeiro passo na direção da muralha.",
-"s": 107.437,
-"e": 110.832
+"s": 128.364,
+"e": 133.414
 },
 {
 "cap": 2,
 "i": -1,
 "text": "#END",
-"s": 110.832,
-"e": 112.032
+"s": 133.414,
+"e": 134.614
 },
 {
 "cap": 3,
 "i": 0,
 "text": "É aqui que entra o Mestre Lúcio, o sábio da cidade, subindo a escada de pijama.",
-"s": 112.032,
-"e": 117.652
+"s": 134.614,
+"e": 140.674
 },
 {
 "cap": 3,
 "i": 1,
 "text": "\"Calma, comandante.",
-"s": 117.652,
-"e": 119.192
+"s": 140.674,
+"e": 142.314
 },
 {
 "cap": 3,
 "i": 2,
 "text": "Esse gigante tem um problema.",
-"s": 119.192,
-"e": 121.012
+"s": 142.314,
+"e": 144.034
 },
 {
 "cap": 3,
 "i": 3,
 "text": "E o problema dele... é matemática.\" Em mil seiscentos e trinta e oito, um italiano chamado Galileu Galilei escreveu um livro que explica tudo isso.",
-"s": 121.012,
-"e": 130.852
+"s": 144.034,
+"e": 154.814
 },
 {
 "cap": 3,
 "i": 4,
 "text": "Ele percebeu uma coisa que hoje a gente chama de lei do quadrado-cubo.",
-"s": 130.852,
-"e": 134.692
+"s": 154.814,
+"e": 159.154
 },
 {
 "cap": 3,
 "i": 5,
 "text": "Funciona assim: quando você dobra o tamanho de alguma coisa, a área dela fica quatro vezes maior... mas o volume, e o peso, ficam OITO vezes maiores.",
-"s": 134.692,
-"e": 144.252
+"s": 159.154,
+"e": 170.234
 },
 {
 "cap": 3,
 "i": 6,
 "text": "O peso cresce muito mais rápido que a força.",
-"s": 144.252,
-"e": 147.112
+"s": 170.234,
+"e": 173.394
 },
 {
 "cap": 3,
 "i": 7,
 "text": "O Mestre Lúcio pega um cubinho de açúcar e um cubo de pedra, e começa a explicar com as mãos.",
-"s": 147.112,
-"e": 152.812
+"s": 173.394,
+"e": 179.834
 },
 {
 "cap": 3,
 "i": 8,
 "text": "O Tonico entende tudo.",
-"s": 152.812,
-"e": 154.692
+"s": 179.834,
+"e": 181.554
 },
 {
 "cap": 3,
 "i": 9,
 "text": "A Bia não entende nada.",
-"s": 154.692,
-"e": 156.572
+"s": 181.554,
+"e": 183.334
 },
 {
 "cap": 3,
 "i": 10,
 "text": "O Comandante finge que entende.",
-"s": 156.572,
-"e": 159.012
+"s": 183.334,
+"e": 185.914
 },
 {
 "cap": 3,
 "i": 11,
 "text": "Galileu escreveu que, se a natureza quisesse fazer um gigante, ia precisar de ossos tão grossos que ele ficaria parecendo um monstro.",
-"s": 159.012,
-"e": 166.372
+"s": 185.914,
+"e": 194.574
 },
 {
 "cap": 3,
 "i": 12,
 "text": "Ou seja: um gigante com o corpo igual ao nosso... simplesmente não aguentaria o próprio peso.",
-"s": 166.372,
-"e": 172.187
+"s": 194.574,
+"e": 201.202
 },
 {
 "cap": 3,
 "i": -1,
 "text": "#END",
-"s": 172.187,
-"e": 173.387
+"s": 201.202,
+"e": 202.402
 },
 {
 "cap": 4,
 "i": 0,
 "text": "Vamos fazer a conta com o nosso gigante.",
-"s": 173.387,
-"e": 175.827
+"s": 202.403,
+"e": 204.843
 },
 {
 "cap": 4,
 "i": 1,
 "text": "Ele é oito vezes e meia mais alto.",
-"s": 175.827,
-"e": 178.527
+"s": 204.843,
+"e": 207.322
 },
 {
 "cap": 4,
 "i": 2,
 "text": "Então o peso dele é oito e meio, vezes oito e meio, vezes oito e meio.",
-"s": 178.527,
-"e": 183.827
+"s": 207.322,
+"e": 212.643
 },
 {
 "cap": 4,
 "i": 3,
 "text": "Dá mais de seiscentas vezes o peso de uma pessoa.",
-"s": 183.827,
-"e": 187.127
+"s": 212.643,
+"e": 216.102
 },
 {
 "cap": 4,
 "i": 4,
 "text": "Uns quarenta e cinco mil quilos.",
-"s": 187.127,
-"e": 189.047
+"s": 216.102,
+"e": 217.803
 },
 {
 "cap": 4,
 "i": 5,
 "text": "O peso de quatro ônibus lotados.",
-"s": 189.047,
-"e": 191.447
+"s": 217.803,
+"e": 220.203
 },
 {
 "cap": 4,
 "i": 6,
 "text": "Mas os ossos dele só ficam uns setenta e quatro vezes mais grossos.",
-"s": 191.447,
-"e": 195.747
+"s": 220.203,
+"e": 224.822
 },
 {
 "cap": 4,
 "i": 7,
 "text": "Resultado: cada pedacinho de osso do gigante carrega quase nove vezes mais peso do que o seu osso carrega agora.",
-"s": 195.747,
-"e": 203.367
+"s": 224.822,
+"e": 232.363
 },
 {
 "cap": 4,
 "i": 8,
 "text": "O fêmur, o osso da coxa, quebra quando aguenta mais ou menos dez vezes o peso do corpo.",
-"s": 203.367,
-"e": 209.267
+"s": 232.363,
+"e": 238.023
 },
 {
 "cap": 4,
 "i": 9,
 "text": "Em mil novecentos e vinte e seis, um cientista chamado Haldane escreveu sobre isso e chegou numa conclusão assustadora: um gigante desses quebraria a coxa a cada passo que desse.",
-"s": 209.267,
-"e": 220.687
+"s": 238.023,
+"e": 249.222
 },
 {
 "cap": 4,
 "i": 10,
 "text": "Lá fora, o gigante da frente dá o segundo passo.",
-"s": 220.687,
-"e": 224.427
+"s": 249.222,
+"e": 253.062
 },
 {
 "cap": 4,
 "i": 11,
 "text": "Ouve-se um CREC.",
-"s": 224.427,
-"e": 225.427
+"s": 253.062,
+"e": 254.162
 },
 {
 "cap": 4,
 "i": 12,
 "text": "Ele olha pra perna.",
-"s": 225.427,
-"e": 226.967
+"s": 254.162,
+"e": 255.662
 },
 {
 "cap": 4,
 "i": 13,
 "text": "A perna olha pra ele.",
-"s": 226.967,
-"e": 228.697
+"s": 255.662,
+"e": 257.404
 },
 {
 "cap": 4,
 "i": -1,
 "text": "#END",
-"s": 228.697,
-"e": 229.897
+"s": 257.404,
+"e": 258.604
 },
 {
 "cap": 5,
 "i": 0,
 "text": "\"Mas, Mestre Lúcio, e as pessoas muito altas que existem de verdade?\", pergunta a Bia.",
-"s": 229.897,
-"e": 235.737
+"s": 258.604,
+"e": 264.284
 },
 {
 "cap": 5,
 "i": 1,
 "text": "Juro que é verdade: o homem mais alto já medido se chamava Robert Wadlow, dos Estados Unidos.",
-"s": 235.737,
-"e": 241.977
+"s": 264.284,
+"e": 270.124
 },
 {
 "cap": 5,
 "i": 2,
 "text": "Ele tinha dois metros e setenta e dois centímetros.",
-"s": 241.977,
-"e": 245.037
+"s": 270.124,
+"e": 273.404
 },
 {
 "cap": 5,
 "i": 3,
 "text": "O sapato dele tinha quase cinquenta centímetros de comprimento... e ele nunca parou de crescer.",
-"s": 245.037,
-"e": 250.917
+"s": 273.404,
+"e": 278.684
 },
 {
 "cap": 5,
 "i": 4,
 "text": "E mesmo assim, só um metro a mais que a gente, o corpo dele sofria.",
-"s": 250.917,
-"e": 254.797
+"s": 278.684,
+"e": 283.084
 },
 {
 "cap": 5,
 "i": 5,
 "text": "Ele precisava de talas de metal nas pernas pra conseguir andar.",
-"s": 254.797,
-"e": 258.837
+"s": 283.084,
+"e": 286.424
 },
 {
 "cap": 5,
 "i": 6,
 "text": "Mal sentia os próprios pés.",
-"s": 258.837,
-"e": 261.037
+"s": 286.424,
+"e": 288.324
 },
 {
 "cap": 5,
 "i": 7,
 "text": "Uma dessas talas fez uma ferida no tornozelo.",
-"s": 261.037,
-"e": 264.097
+"s": 288.324,
+"e": 290.924
 },
 {
 "cap": 5,
 "i": 8,
 "text": "A ferida infeccionou.",
-"s": 264.097,
-"e": 265.997
+"s": 290.924,
+"e": 292.484
 },
 {
 "cap": 5,
 "i": 9,
 "text": "E o Robert morreu em mil novecentos e quarenta, com só vinte e dois anos.",
-"s": 265.997,
-"e": 270.857
+"s": 292.484,
+"e": 296.904
 },
 {
 "cap": 5,
 "i": 10,
 "text": "Dois metros e setenta já é demais pro corpo humano.",
-"s": 270.857,
-"e": 273.657
+"s": 296.904,
+"e": 299.664
 },
 {
 "cap": 5,
 "i": 11,
 "text": "Agora imagina quinze.",
-"s": 273.657,
-"e": 275.497
+"s": 299.664,
+"e": 301.164
 },
 {
 "cap": 5,
 "i": 12,
 "text": "O Tonico abaixa a cabeça por respeito.",
-"s": 275.497,
-"e": 277.977
+"s": 301.164,
+"e": 303.384
 },
 {
 "cap": 5,
 "i": 13,
 "text": "A Bia também.",
-"s": 277.977,
-"e": 279.337
+"s": 303.384,
+"e": 304.644
 },
 {
 "cap": 5,
 "i": 14,
 "text": "Lá fora, o gigante tenta se apoiar numa árvore... e a árvore é que dá risada.",
-"s": 279.337,
-"e": 284.718
+"s": 304.644,
+"e": 308.991
 },
 {
 "cap": 5,
 "i": -1,
 "text": "#END",
-"s": 284.718,
-"e": 285.918
+"s": 308.991,
+"e": 310.191
 },
 {
 "cap": 6,
 "i": 0,
 "text": "Mas fica mais estranho.",
-"s": 285.918,
-"e": 287.518
+"s": 310.191,
+"e": 312.331
 },
 {
 "cap": 6,
 "i": 1,
 "text": "O problema não são só os ossos.",
-"s": 287.518,
-"e": 289.478
+"s": 312.331,
+"e": 314.291
 },
 {
 "cap": 6,
 "i": 2,
 "text": "É o coração.",
-"s": 289.478,
-"e": 290.898
+"s": 314.291,
+"e": 315.651
 },
 {
 "cap": 6,
 "i": 3,
 "text": "O coração precisa empurrar o sangue até o cérebro.",
-"s": 290.898,
-"e": 293.578
+"s": 315.651,
+"e": 318.591
 },
 {
 "cap": 6,
 "i": 4,
 "text": "E quanto mais longe fica a cabeça, mais força ele precisa fazer.",
-"s": 293.578,
-"e": 297.258
+"s": 318.591,
+"e": 322.551
 },
 {
 "cap": 6,
 "i": 5,
 "text": "A girafa, com aquele pescoço de dois metros, tem uma pressão arterial de umas duas vezes a nossa.",
-"s": 297.258,
-"e": 302.898
+"s": 322.551,
+"e": 327.951
 },
 {
 "cap": 6,
 "i": 6,
 "text": "O coração dela pesa mais de dez quilos e tem paredes grossas como um pneu.",
-"s": 302.898,
-"e": 307.658
+"s": 327.951,
+"e": 333.351
 },
 {
 "cap": 6,
 "i": 7,
 "text": "O nosso gigante tem a cabeça a quinze metros do chão.",
-"s": 307.658,
-"e": 310.858
+"s": 333.351,
+"e": 337.321
 },
 {
 "cap": 6,
 "i": 8,
 "text": "Pra o sangue chegar lá em cima, a pressão precisaria ser umas dez vezes maior que a de uma pessoa.",
-"s": 310.858,
-"e": 316.758
+"s": 337.321,
+"e": 343.431
 },
 {
 "cap": 6,
 "i": 9,
 "text": "Com uma pressão dessas, qualquer veia normal estourava como mangueira de jardim.",
-"s": 316.758,
-"e": 321.418
+"s": 343.431,
+"e": 348.591
 },
 {
 "cap": 6,
 "i": 10,
 "text": "E toda vez que o gigante abaixasse pra pegar alguma coisa... o sangue descia todo de uma vez.",
-"s": 321.418,
-"e": 326.398
+"s": 348.591,
+"e": 354.031
 },
 {
 "cap": 6,
 "i": 11,
 "text": "E toda vez que levantasse rápido... ele desmaiava.",
-"s": 326.398,
-"e": 329.658
+"s": 354.031,
+"e": 358.211
 },
 {
 "cap": 6,
 "i": 12,
 "text": "Lá fora, o gigante se abaixa pra olhar uma vaca.",
-"s": 329.658,
-"e": 332.758
+"s": 358.211,
+"e": 361.711
 },
 {
 "cap": 6,
 "i": 13,
 "text": "Levanta.",
-"s": 332.758,
-"e": 333.558
+"s": 361.711,
+"e": 362.791
 },
 {
 "cap": 6,
 "i": 14,
 "text": "Fica tonto.",
-"s": 333.558,
-"e": 334.678
+"s": 362.791,
+"e": 364.271
 },
 {
 "cap": 6,
 "i": 15,
 "text": "E senta no chão, com cara de quem levantou do sofá rápido demais.",
-"s": 334.678,
-"e": 339.107
+"s": 364.271,
+"e": 368.881
 },
 {
 "cap": 6,
 "i": -1,
 "text": "#END",
-"s": 339.107,
-"e": 340.307
+"s": 368.881,
+"e": 370.081
 },
 {
 "cap": 7,
 "i": 0,
 "text": "\"Tá, mas ele ainda pode comer a gente\", diz o Comandante, tremendo o bigode.",
-"s": 340.307,
-"e": 345.427
+"s": 370.081,
+"e": 375.421
 },
 {
 "cap": 7,
 "i": 1,
 "text": "E aí vem o problema da comida.",
-"s": 345.427,
-"e": 347.587
+"s": 375.421,
+"e": 377.901
 },
 {
 "cap": 7,
 "i": 2,
 "text": "Quanto maior o bicho, mais energia ele gasta só pra ficar vivo.",
-"s": 347.587,
-"e": 351.627
+"s": 377.901,
+"e": 382.481
 },
 {
 "cap": 7,
 "i": 3,
 "text": "Pelas contas dos biólogos, o nosso gigante precisaria de umas duzentas e cinquenta mil calorias por dia.",
-"s": 351.627,
-"e": 358.667
+"s": 382.481,
+"e": 389.061
 },
 {
 "cap": 7,
 "i": 4,
 "text": "Pra você ter uma ideia, isso é mais de mil e quinhentos pãezinhos franceses.",
-"s": 358.667,
-"e": 362.947
+"s": 389.061,
+"e": 393.161
 },
 {
 "cap": 7,
 "i": 5,
 "text": "Por dia.",
-"s": 362.947,
-"e": 364.127
+"s": 393.161,
+"e": 394.021
 },
 {
 "cap": 7,
 "i": 6,
 "text": "Todo dia.",
-"s": 364.127,
-"e": 365.427
+"s": 394.021,
+"e": 395.361
 },
 {
 "cap": 7,
 "i": 7,
 "text": "Comendo gente?",
-"s": 365.427,
-"e": 366.687
+"s": 395.361,
+"e": 396.701
 },
 {
 "cap": 7,
 "i": 8,
 "text": "Os cientistas já calcularam: uma pessoa inteira tem umas cento e vinte e cinco mil calorias.",
-"s": 366.687,
-"e": 372.067
+"s": 396.701,
+"e": 401.681
 },
 {
 "cap": 7,
 "i": 9,
 "text": "Ele precisaria de duas por dia.",
-"s": 372.067,
-"e": 374.207
+"s": 401.681,
+"e": 404.201
 },
 {
 "cap": 7,
 "i": 10,
 "text": "Ou seja: uma cidadezinha de mil pessoas acabava em pouco mais de um ano... e depois ele morria de fome.",
-"s": 374.207,
-"e": 381.127
+"s": 404.201,
+"e": 410.741
 },
 {
 "cap": 7,
 "i": 11,
 "text": "Na natureza, os animais gigantes comem o dia inteiro.",
-"s": 381.127,
-"e": 384.707
+"s": 410.741,
+"e": 414.321
 },
 {
 "cap": 7,
 "i": 12,
 "text": "O elefante passa umas dezesseis horas por dia mastigando.",
-"s": 384.707,
-"e": 388.287
+"s": 414.321,
+"e": 417.781
 },
 {
 "cap": 7,
 "i": 13,
 "text": "O Tonico olha pro pão com manteiga na mão.",
-"s": 388.287,
-"e": 390.787
+"s": 417.781,
+"e": 420.301
 },
 {
 "cap": 7,
 "i": 14,
 "text": "Olha pro gigante.",
-"s": 390.787,
-"e": 392.027
+"s": 420.301,
+"e": 421.121
 },
 {
 "cap": 7,
 "i": 15,
 "text": "E esconde o pão atrás das costas.",
-"s": 392.027,
-"e": 393.587
+"s": 421.121,
+"e": 423.721
 },
 {
 "cap": 7,
 "i": 16,
 "text": "Lá fora, o gigante arranca um pé de alface da horta da cidade... e come com a cara mais triste do mundo.",
-"s": 393.587,
-"e": 401.106
+"s": 423.721,
+"e": 430.224
 },
 {
 "cap": 7,
 "i": -1,
 "text": "#END",
-"s": 401.106,
-"e": 402.306
+"s": 430.224,
+"e": 431.424
 },
 {
 "cap": 8,
 "i": 0,
 "text": "E tem o calor.",
-"s": 402.306,
-"e": 403.446
+"s": 431.424,
+"e": 432.724
 },
 {
 "cap": 8,
 "i": 1,
 "text": "Quando o seu corpo funciona, ele produz calor.",
-"s": 403.446,
-"e": 406.186
+"s": 432.724,
+"e": 435.424
 },
 {
 "cap": 8,
 "i": 2,
 "text": "E ele perde esse calor pela pele.",
-"s": 406.186,
-"e": 408.726
+"s": 435.424,
+"e": 437.364
 },
 {
 "cap": 8,
 "i": 3,
 "text": "Só que, de novo, a lei do quadrado-cubo: o gigante tem seiscentas vezes mais corpo... mas só setenta e quatro vezes mais pele.",
-"s": 408.726,
-"e": 416.846
+"s": 437.364,
+"e": 445.024
 },
 {
 "cap": 8,
 "i": 4,
 "text": "Ele produz calor como uma fornalha e não consegue se livrar dele.",
-"s": 416.846,
-"e": 421.026
+"s": 445.024,
+"e": 449.164
 },
 {
 "cap": 8,
 "i": 5,
 "text": "É por isso que o elefante tem aquelas orelhas enormes: elas funcionam como radiador.",
-"s": 421.026,
-"e": 425.846
+"s": 449.164,
+"e": 453.644
 },
 {
 "cap": 8,
 "i": 6,
 "text": "Ele abana, e o sangue esfria.",
-"s": 425.846,
-"e": 428.246
+"s": 453.644,
+"e": 455.644
 },
 {
 "cap": 8,
 "i": 7,
 "text": "O nosso gigante não tem orelha de elefante.",
-"s": 428.246,
-"e": 430.326
+"s": 455.644,
+"e": 457.944
 },
 {
 "cap": 8,
 "i": 8,
 "text": "Então ele ia esquentar, esquentar, esquentar...",
-"s": 430.326,
-"e": 433.726
+"s": 457.944,
+"e": 461.124
 },
 {
 "cap": 8,
 "i": 9,
 "text": "Até cozinhar por dentro, no primeiro dia de sol.",
-"s": 433.726,
-"e": 437.086
+"s": 461.124,
+"e": 464.204
 },
 {
 "cap": 8,
 "i": 10,
 "text": "Lá fora, o sol começa a nascer.",
-"s": 437.086,
-"e": 439.706
+"s": 464.204,
+"e": 466.564
 },
 {
 "cap": 8,
 "i": 11,
 "text": "O gigante da frente começa a suar.",
-"s": 439.706,
-"e": 441.766
+"s": 466.564,
+"e": 468.364
 },
 {
 "cap": 8,
 "i": 12,
 "text": "Suar MUITO.",
-"s": 441.766,
-"e": 443.026
+"s": 468.364,
+"e": 470.024
 },
 {
 "cap": 8,
 "i": 13,
 "text": "O suor escorre pela muralha como uma cachoeira salgada.",
-"s": 443.026,
-"e": 446.366
+"s": 470.024,
+"e": 473.624
 },
 {
 "cap": 8,
 "i": 14,
 "text": "\"Que nojo\", diz a Bia.",
-"s": 446.366,
-"e": 448.026
+"s": 473.624,
+"e": 476.244
 },
 {
 "cap": 8,
 "i": 15,
 "text": "\"É ciência\", diz o Mestre Lúcio, anotando tudo.",
-"s": 448.026,
-"e": 451.237
+"s": 476.244,
+"e": 479.608
 },
 {
 "cap": 8,
 "i": -1,
 "text": "#END",
-"s": 451.237,
-"e": 452.437
+"s": 479.608,
+"e": 480.808
 },
 {
 "cap": 9,
 "i": 0,
 "text": "E agora, a parte que salva a cidade.",
-"s": 452.437,
-"e": 455.537
+"s": 480.808,
+"e": 484.028
 },
 {
 "cap": 9,
 "i": 1,
 "text": "A queda.",
-"s": 455.537,
-"e": 456.897
+"s": 484.028,
+"e": 485.228
 },
 {
 "cap": 9,
 "i": 2,
 "text": "O Haldane, aquele cientista, escreveu uma das frases mais famosas da biologia: você pode jogar um rato num poço de mina de quase mil metros.",
-"s": 456.897,
-"e": 465.997
+"s": 485.228,
+"e": 494.408
 },
 {
 "cap": 9,
 "i": 3,
 "text": "Lá embaixo, ele leva um susto... e sai andando.",
-"s": 465.997,
-"e": 469.177
+"s": 494.408,
+"e": 498.248
 },
 {
 "cap": 9,
 "i": 4,
 "text": "Um rato é morto.",
-"s": 469.177,
-"e": 470.577
+"s": 498.248,
+"e": 499.468
 },
 {
 "cap": 9,
 "i": 5,
 "text": "Um homem se quebra.",
-"s": 470.577,
-"e": 472.077
+"s": 499.468,
+"e": 501.028
 },
 {
 "cap": 9,
 "i": 6,
 "text": "Um cavalo... se espatifa.",
-"s": 472.077,
-"e": 474.417
+"s": 501.028,
+"e": 503.268
 },
 {
 "cap": 9,
 "i": 7,
 "text": "Quanto maior o corpo, pior é a queda.",
-"s": 474.417,
-"e": 477.257
+"s": 503.268,
+"e": 505.948
 },
 {
 "cap": 9,
 "i": 8,
 "text": "Porque o peso cresce muito mais rápido que a resistência.",
-"s": 477.257,
-"e": 480.617
+"s": 505.948,
+"e": 508.848
 },
 {
 "cap": 9,
 "i": 9,
 "text": "Um tropeção, pra você, é um joelho ralado.",
-"s": 480.617,
-"e": 483.737
+"s": 508.848,
+"e": 511.948
 },
 {
 "cap": 9,
 "i": 10,
 "text": "Pra um gigante de quinze metros, é como cair do quinto andar.",
-"s": 483.737,
-"e": 487.697
+"s": 511.948,
+"e": 516.228
 },
 {
 "cap": 9,
 "i": 11,
 "text": "O Comandante Ferraz arregala os olhos.",
-"s": 487.697,
-"e": 490.277
+"s": 516.228,
+"e": 518.508
 },
 {
 "cap": 9,
 "i": 12,
 "text": "Ele finalmente entendeu.",
-"s": 490.277,
-"e": 492.257
+"s": 518.508,
+"e": 520.668
 },
 {
 "cap": 9,
 "i": 13,
 "text": "\"Então a gente não precisa lutar com eles...\" \"Não\", diz o Mestre Lúcio.",
-"s": 492.257,
-"e": 497.097
+"s": 520.668,
+"e": 526.288
 },
 {
 "cap": 9,
 "i": 14,
 "text": "\"Só precisa fazer eles tropeçarem.\" A Bia pega a corda com gancho.",
-"s": 497.097,
-"e": 501.877
+"s": 526.288,
+"e": 530.548
 },
 {
 "cap": 9,
 "i": 15,
 "text": "O Tonico pega outra.",
-"s": 501.877,
-"e": 503.277
+"s": 530.548,
+"e": 531.808
 },
 {
 "cap": 9,
 "i": 16,
 "text": "E o plano mais simples da história militar começa.",
-"s": 503.277,
-"e": 506.735
+"s": 531.808,
+"e": 535.768
 },
 {
 "cap": 9,
 "i": -1,
 "text": "#END",
-"s": 506.735,
-"e": 507.935
+"s": 535.768,
+"e": 536.968
 },
 {
 "cap": 10,
 "i": 0,
 "text": "Os soldados descem a muralha pelas cordas, correm até as árvores e esticam uma corda bem baixinha, na altura do tornozelo.",
-"s": 507.935,
-"e": 514.615
+"s": 536.968,
+"e": 544.408
 },
 {
 "cap": 10,
 "i": 1,
 "text": "É o truque mais velho do mundo.",
-"s": 514.615,
-"e": 516.715
+"s": 544.408,
+"e": 546.248
 },
 {
 "cap": 10,
 "i": 2,
 "text": "Funciona com o seu irmão mais novo.",
-"s": 516.715,
-"e": 518.455
+"s": 546.248,
+"e": 548.068
 },
 {
 "cap": 10,
 "i": 3,
 "text": "E, aparentemente, com gigantes.",
-"s": 518.455,
-"e": 521.155
+"s": 548.068,
+"e": 550.488
 },
 {
 "cap": 10,
 "i": 4,
 "text": "O primeiro gigante vem andando, sorrindo, olhando pro nada.",
-"s": 521.155,
-"e": 524.815
+"s": 550.488,
+"e": 554.328
 },
 {
 "cap": 10,
 "i": 5,
 "text": "O pé dele bate na corda.",
-"s": 524.815,
-"e": 527.095
+"s": 554.328,
+"e": 556.228
 },
 {
 "cap": 10,
 "i": 6,
 "text": "E ele cai.",
-"s": 527.095,
-"e": 528.695
+"s": 556.228,
+"e": 558.028
 },
 {
 "cap": 10,
 "i": 7,
 "text": "Devagar, como uma árvore cortada.",
-"s": 528.695,
-"e": 531.315
+"s": 558.028,
+"e": 561.168
 },
 {
 "cap": 10,
 "i": 8,
 "text": "A terra treme.",
-"s": 531.315,
-"e": 532.655
+"s": 561.168,
+"e": 562.528
 },
 {
 "cap": 10,
 "i": 9,
 "text": "Os pássaros fogem.",
-"s": 532.655,
-"e": 534.455
+"s": 562.528,
+"e": 564.108
 },
 {
 "cap": 10,
 "i": 10,
 "text": "Uma vaca voa.",
-"s": 534.455,
-"e": 536.075
+"s": 564.108,
+"e": 565.088
 },
 {
 "cap": 10,
 "i": 11,
 "text": "Juro que é verdade: um corpo de quarenta e cinco toneladas caindo de quinze metros bate no chão com a força de um caminhão a cem por hora.",
-"s": 536.075,
-"e": 542.715
+"s": 565.088,
+"e": 573.908
 },
 {
 "cap": 10,
 "i": 12,
 "text": "O segundo gigante olha pro primeiro, assustado... e escorrega no suor que ficou na grama.",
-"s": 542.715,
-"e": 547.815
+"s": 573.908,
+"e": 579.448
 },
 {
 "cap": 10,
 "i": 13,
 "text": "O terceiro senta no chão sozinho, desiste e pede alface.",
-"s": 547.815,
-"e": 552.055
+"s": 579.448,
+"e": 583.248
 },
 {
 "cap": 10,
 "i": 14,
 "text": "A Bia e o Tonico batem as mãos.",
-"s": 552.055,
-"e": 554.495
+"s": 583.248,
+"e": 585.268
 },
 {
 "cap": 10,
 "i": 15,
 "text": "O Comandante finge que o plano foi dele.",
-"s": 554.495,
-"e": 557.192
+"s": 585.268,
+"e": 587.892
 },
 {
 "cap": 10,
 "i": -1,
 "text": "#END",
-"s": 557.192,
-"e": 558.392
+"s": 587.892,
+"e": 589.092
 },
 {
 "cap": 11,
 "i": 0,
 "text": "\"Mas, Mestre Lúcio... os dinossauros não eram gigantes?",
-"s": 558.392,
-"e": 561.772
+"s": 589.092,
+"e": 592.732
 },
 {
 "cap": 11,
 "i": 1,
 "text": "Como eles conseguiam?\" Ótima pergunta.",
-"s": 561.772,
-"e": 564.332
+"s": 592.732,
+"e": 595.612
 },
 {
 "cap": 11,
 "i": 2,
 "text": "Alguns dinossauros, os saurópodes, tinham mais de quinze metros de altura e pesavam dezenas de toneladas.",
-"s": 564.332,
-"e": 571.012
+"s": 595.612,
+"e": 602.072
 },
 {
 "cap": 11,
 "i": 3,
 "text": "Mas eles não eram uma pessoa esticada.",
-"s": 571.012,
-"e": 573.572
+"s": 602.072,
+"e": 604.332
 },
 {
 "cap": 11,
 "i": 4,
 "text": "Eles resolveram cada problema com uma gambiarra da natureza.",
-"s": 573.572,
-"e": 577.852
+"s": 604.332,
+"e": 608.172
 },
 {
 "cap": 11,
 "i": 5,
 "text": "Quatro patas grossas como colunas, em vez de duas pernas finas.",
-"s": 577.852,
-"e": 581.872
+"s": 608.172,
+"e": 611.972
 },
 {
 "cap": 11,
 "i": 6,
 "text": "Ossos cheios de bolsas de ar por dentro, como uma esponja, leves e fortes ao mesmo tempo.",
-"s": 581.872,
-"e": 587.872
+"s": 611.972,
+"e": 617.272
 },
 {
 "cap": 11,
 "i": 7,
 "text": "Um pescoção que funcionava como guindaste, pra comer sem andar muito.",
-"s": 587.872,
-"e": 592.692
+"s": 617.272,
+"e": 621.712
 },
 {
 "cap": 11,
 "i": 8,
 "text": "Ou seja: pra existir um gigante de verdade, ele teria que ser gordo, de quatro patas, com ossos de esponja e pescoço comprido.",
-"s": 592.692,
-"e": 600.812
+"s": 621.712,
+"e": 629.952
 },
 {
 "cap": 11,
 "i": 9,
 "text": "Ou seja... ele teria que parecer um dinossauro.",
-"s": 600.812,
-"e": 603.652
+"s": 629.952,
+"e": 632.592
 },
 {
 "cap": 11,
 "i": 10,
 "text": "E não teria mais cara de gente.",
-"s": 603.652,
-"e": 606.032
+"s": 632.592,
+"e": 634.732
 },
 {
 "cap": 11,
 "i": 11,
 "text": "O Tonico imagina um gigante de quatro patas com pescoção.",
-"s": 606.032,
-"e": 609.792
+"s": 634.732,
+"e": 637.852
 },
 {
 "cap": 11,
 "i": 12,
 "text": "A Bia imagina também.",
-"s": 609.792,
-"e": 611.732
+"s": 637.852,
+"e": 639.212
 },
 {
 "cap": 11,
 "i": 13,
 "text": "Os dois fazem uma careta.",
-"s": 611.732,
-"e": 613.837
+"s": 639.212,
+"e": 641.267
 },
 {
 "cap": 11,
 "i": -1,
 "text": "#END",
-"s": 613.837,
-"e": 615.037
+"s": 641.267,
+"e": 642.467
 },
 {
 "cap": 12,
 "i": 0,
 "text": "O sol nasce em Pedra Alta.",
-"s": 615.037,
-"e": 617.117
+"s": 642.467,
+"e": 644.807
 },
 {
 "cap": 12,
 "i": 1,
 "text": "Lá fora, três gigantes estão deitados na grama, cansados, suados, com dor nas costas.",
-"s": 617.117,
-"e": 623.477
+"s": 644.807,
+"e": 652.167
 },
 {
 "cap": 12,
 "i": 2,
 "text": "Ninguém precisou de espada.",
-"s": 623.477,
-"e": 625.017
+"s": 652.167,
+"e": 653.907
 },
 {
 "cap": 12,
 "i": 3,
 "text": "Ninguém precisou de canhão.",
-"s": 625.017,
-"e": 626.737
+"s": 653.907,
+"e": 655.427
 },
 {
 "cap": 12,
 "i": 4,
 "text": "Precisou de uma corda e de um pouco de matemática.",
-"s": 626.737,
-"e": 630.137
+"s": 655.427,
+"e": 659.407
 },
 {
 "cap": 12,
 "i": 5,
 "text": "A cidade faz uma festa.",
-"s": 630.137,
-"e": 631.797
+"s": 659.407,
+"e": 661.407
 },
 {
 "cap": 12,
 "i": 6,
 "text": "O Comandante Ferraz ganha uma medalha.",
-"s": 631.797,
-"e": 633.517
+"s": 661.407,
+"e": 663.527
 },
 {
 "cap": 12,
 "i": 7,
 "text": "O Mestre Lúcio ganha um livro novo pra escrever.",
-"s": 633.517,
-"e": 636.037
+"s": 663.527,
+"e": 666.287
 },
 {
 "cap": 12,
 "i": 8,
 "text": "E os gigantes?",
-"s": 636.037,
-"e": 637.377
+"s": 666.287,
+"e": 667.447
 },
 {
 "cap": 12,
 "i": 9,
 "text": "A cidade, com pena, leva pra eles quatro carroças de alface por dia.",
-"s": 637.377,
-"e": 641.417
+"s": 667.447,
+"e": 672.107
 },
 {
 "cap": 12,
 "i": 10,
 "text": "Então, respondendo à pergunta, e isso vale até pros titãs de Attack on Titan: se gigantes de quinze metros atacassem a sua cidade... a física derrotava eles antes de chegarem na muralha.",
-"s": 641.417,
-"e": 651.797
+"s": 672.107,
+"e": 683.887
 },
 {
 "cap": 12,
 "i": 11,
 "text": "O peso quebraria os ossos.",
-"s": 651.797,
-"e": 653.557
+"s": 683.887,
+"e": 686.007
 },
 {
 "cap": 12,
 "i": 12,
 "text": "O coração não daria conta.",
-"s": 653.557,
-"e": 655.197
+"s": 686.007,
+"e": 687.667
 },
 {
 "cap": 12,
 "i": 13,
 "text": "A fome acabaria com eles.",
-"s": 655.197,
-"e": 656.357
+"s": 687.667,
+"e": 689.767
 },
 {
 "cap": 12,
 "i": 14,
 "text": "E o calor terminaria o serviço.",
-"s": 656.357,
-"e": 658.857
+"s": 689.767,
+"e": 692.487
 },
 {
 "cap": 12,
 "i": 15,
 "text": "A muralha de doze metros nunca foi testada.",
-"s": 658.857,
-"e": 661.717
+"s": 692.487,
+"e": 696.027
 },
 {
 "cap": 12,
 "i": 16,
 "text": "Lá em cima, o Tonico volta pra ronda da noite, com um pão com manteiga novo.",
-"s": 661.717,
-"e": 665.937
+"s": 696.027,
+"e": 700.727
 },
 {
 "cap": 12,
 "i": 17,
 "text": "E no horizonte... aparece uma cabeça.",
-"s": 665.937,
-"e": 668.877
+"s": 700.727,
+"e": 704.267
 },
 {
 "cap": 12,
 "i": 18,
 "text": "Pequenininha.",
-"s": 668.877,
-"e": 670.177
+"s": 704.267,
+"e": 705.527
 },
 {
 "cap": 12,
 "i": 19,
 "text": "É um gigante de quinze centímetros.",
-"s": 670.177,
-"e": 672.257
+"s": 705.527,
+"e": 708.667
 },
 {
 "cap": 12,
 "i": 20,
 "text": "\"Esse aí\", diz a Bia, \"esse aí pode ser perigoso.\"",
-"s": 672.257,
-"e": 676.288
+"s": 708.667,
+"e": 713.084
 },
 {
 "cap": 12,
 "i": -1,
 "text": "#END",
-"s": 676.288,
-"e": 677.488
+"s": 713.084,
+"e": 714.284
 }
 ]
