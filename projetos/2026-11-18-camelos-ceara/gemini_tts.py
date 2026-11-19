@@ -5,6 +5,9 @@ uso: python3 gemini_tts.py script.txt voice.wav [VOZ] [VELOCIDADE]
   ("...", "!", palavras em MAIÚSCULA para ênfase).
 - Tenta o modelo novo e cai para o antigo; repete com espera em erro 429/500."""
 import sys, json, base64, wave, time, subprocess, urllib.request, urllib.error
+import os
+KF = "/root/.config/gemini_key2"   # chave escolhida pelo dono (fica fora do repositório); se existir, é a única usada
+KEYQ = ("?key=" + open(KF).read().strip()) if os.path.exists(KF) else ""
 src, out = sys.argv[1], sys.argv[2]
 voice = sys.argv[3] if len(sys.argv) > 3 else "Fenrir"   # voz oficial do canal desde 19/11 (escolha do dono), velocidade +5%
 speed = float(sys.argv[4]) if len(sys.argv) > 4 else 1.05
@@ -14,7 +17,7 @@ body = {"contents": [{"parts": [{"text": txt}]}],
 d = None
 for attempt in range(4):
     for model in ["gemini-3.8-flash-tts", "gemini-2.5-flash-preview-tts", "gemini-2.5-pro-preview-tts"]:
-        req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent" + KEYQ,
                                      data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
         try:
             d = json.load(urllib.request.urlopen(req, timeout=300)); break
