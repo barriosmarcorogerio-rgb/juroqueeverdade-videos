@@ -2467,6 +2467,7 @@ export const OUTFITS = {
   civC: { tunic: "#5d8a3a", skin: "#c99067", hair: "#1e1714", stout: true },
   workA: { tunic: "#8a5d3b", skin: "#f5c9a0", cap: "#c2733a", apron: "#d8c9a6" },
   workB: { tunic: "#3f6a6f", skin: "#ecd0b6", cap: "#5b4a8a", moustache: "#4a3020" },
+  irmao: { tunic: "#3f7fd0", skin: "#f2c09a", hair: "#3a2418", hairStyle: "spiky", pants: "#2e4a7a", shoe: "#c23a2a" },   // irmão mais novo (criança)
   pobre: { tunic: "#8a6a48", skin: "#eab58e", hair: "#4a3424", moustache: "#4a3424", patches: true, hairStyle: "spiky" },
   padeiro: { tunic: "#e2cfae", skin: "#f2bf96", cap: "#fbf8f2", apron: "#ffffff", stout: true, moustache: "#3a2414" },
   juiz: { tunic: "#30304a", toga: "#a5263a", skin: "#f3d6bb", beard: "#eeeae2", cap: "#23233a", stout: true },
@@ -2879,8 +2880,11 @@ export const fxBread = (p) => { const rows = 6, W = 104, Hh = 32, base = 920;
     p.clip(Array.from({ length: 40 }, (_, k) => [x + Math.cos(k / 40 * 6.2832) * W * 0.52, y + Math.sin(k / 40 * 6.2832) * Hh]), () => { p.ell(x - 6, y - Hh * 0.35, W * 0.42, Hh * 0.55, "#e9b25e", 0); g.save(); g.globalAlpha = 0.5; p.ell(x - 14, y - Hh * 0.55, W * 0.2, Hh * 0.18, "#fff2c8", 0); g.restore(); });
     p.ell(x, y, W * 0.52, Hh, null, 4);
     p.band([[x - W * 0.32, y + Hh * 0.1 + rot], [x + W * 0.32, y - Hh * 0.3 - rot]], "#f7d896", 9, 4, 'round'); } } };
-export const fxCubes = (p) => { const cube = (x, y, s, c) => { p.poly([[x, y], [x + s, y], [x + s, y + s], [x, y + s]], c, 6); p.poly([[x, y], [x + s * 0.35, y - s * 0.3], [x + s * 1.35, y - s * 0.3], [x + s, y]], mul(c, [1.15, 1.15, 1.15]), 6); p.poly([[x + s, y], [x + s * 1.35, y - s * 0.3], [x + s * 1.35, y + s * 0.7], [x + s, y + s]], mul(c, [0.8, 0.8, 0.8]), 6); };
-  cube(90, 700, 90, "#f2c84b"); for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) cube(300 + i * 90, 610 + j * 90, 90, "#e8483b"); };
+export const fxCubes = (p) => { const g = p.g; const cube = (x, y, s, c, grid) => { const sh = (k) => mul(c, [k, k, k]); p.poly([[x, y], [x + s, y], [x + s, y + s], [x, y + s]], c, 6); p.poly([[x, y], [x + s * 0.35, y - s * 0.3], [x + s * 1.35, y - s * 0.3], [x + s, y]], sh(1.15), 6); p.poly([[x + s, y], [x + s * 1.35, y - s * 0.3], [x + s * 1.35, y + s * 0.7], [x + s, y + s]], sh(0.78), 6);
+    if (grid) { p.stroke([[x + s / 2, y], [x + s / 2, y + s]], 4); p.stroke([[x, y + s / 2], [x + s, y + s / 2]], 4); p.stroke([[x + s * 0.175, y - s * 0.15], [x + s * 1.175, y - s * 0.15]], 4); p.stroke([[x + s / 2, y], [x + s * 0.85, y - s * 0.3]], 4); p.stroke([[x + s * 1.175, y - s * 0.15], [x + s * 1.175, y + s * 0.85]], 4); p.stroke([[x + s, y + s / 2], [x + s * 1.35, y + s * 0.2]], 4); } };
+  cube(30, 690, 100, "#f2c84b", false); cube(250, 590, 200, "#e8483b", true);   // cubinho (lado 1) e cubo com o lado dobrado (lado 2 = 8 cubinhos)
+  g.save(); g.textAlign = "center"; g.font = "900 46px sans-serif"; g.lineWidth = 10; g.strokeStyle = "#1c1418"; g.fillStyle = "#ffffff";
+  for (const [t, x, y] of [["1 CUBO", 95, 860], ["LADO 2x", 380, 860], ["= 8 CUBOS!", 380, 915]]) { g.strokeText(t, x, y); g.fillText(t, x, y); } g.restore(); };
 export const fxSweat = (p, t = 0) => { for (let i = 0; i < 5; i++) { const y = 300 + ((t * 300 + i * 140) % 600); p.ell(260 + i * 22, y, 12, 18, "#9fd4ff", 4); } };
 /** Gigante (design próprio, contorno único). o: {kind: grin|tiny|long, skin, hair, walk, arms|armsL|armsR, look, mouth, dazed} */
 const P_rng = (seed) => { let x = seed * 9301 + 49297; return () => { x = (x * 9301 + 49297) % 233280; return x / 233280; }; };

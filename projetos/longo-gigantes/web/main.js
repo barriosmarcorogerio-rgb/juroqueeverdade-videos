@@ -234,7 +234,7 @@ for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 20
   const N = 170000, gi2 = new THREE.InstancedMesh(bg, std({ vertexColors: true, side: THREE.DoubleSide }), N); const col = new THREE.Color(); let k = 0, guard = 0;
   while (k < N && guard++ < N * 6) { const r = Math.pow(rr(), 1.25) * 170, a = rr() * Math.PI * 2, x = Math.cos(a) * r, z = Math.sin(a) * r + 10;
     if (Math.abs(z - 8) < 2.6 || inField(x, z) || (x > -24 && x < 24 && z > -16 && z < 18)) continue;
-    dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.18 + rr() * 0.3 + r * 0.002; dummy.scale.set(1.2 + rr() + r * 0.01, s, 1.2); dummy.updateMatrix(); gi2.setMatrixAt(k, dummy.matrix);
+    dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.1 + rr() * 0.15 + r * 0.001; dummy.scale.set(1.0 + rr() * 0.8 + r * 0.006, s, 1.0);   // grama do campo abaixo do joelho (antes chegava na cintura e as pessoas pareciam anãs) dummy.updateMatrix(); gi2.setMatrixAt(k, dummy.matrix);
     col.setHSL(0.2 + rr() * 0.09, 0.42 + rr() * 0.2, 0.7 + rr() * 0.35); gi2.setColorAt(k, col); k++; }
   gi2.count = k; gi2.receiveShadow = true; gi2.castShadow = false; gi2.userData.nd = plainNd; world.add(gi2);
   const patch = P.tex(cv(1024, 1024, (g, w, h) => { for (let i = 0; i < 220; i++) { const x = rr() * w, y = rr() * h, r = 20 + rr() * 90, light = rr() < 0.5; const gr = g.createRadialGradient(x, y, 0, x, y, r);
@@ -346,6 +346,10 @@ for (let i = 0; i < 60; i++) { const x = -110 + rr() * 220, z = WZ - 12 - rr() *
 const horta = new THREE.Group(); horta.position.set(14, 0, WZ + 12); world.add(horta);
 { const lettuce = std({ color: '#7ac04a' }); for (let i = 0; i < 6; i++) for (let j = 0; j < 10; j++) { const l = add(new THREE.SphereGeometry(0.35, 10, 8), lettuce, -4 + j * 0.9, 0.25, -2 + i * 0.9, horta); l.scale.y = 0.7; }
   const soil = add(new THREE.PlaneGeometry(10, 6), decal(std({ color: '#6a4a2e' }), 2), 0, 0.02, 0.2, horta, { cast: false }); soil.rotation.x = -Math.PI / 2; }
+// barbante de pegadinha (irmão mais novo): duas estacas pequenas e um fio na altura do tornozelo, na rua logo depois do portão
+const tripS = new THREE.Group(); tripS.position.set(3, 0, -48); world.add(tripS);
+{ for (const sd of [-1, 1]) add(new THREE.CylinderGeometry(0.03, 0.04, 0.32, 8), std({ color: '#6a4a30' }), sd * 1.6, 0.16, 0, tripS);
+  add(new THREE.CylinderGeometry(0.008, 0.008, 3.2, 6), std({ color: '#f2efe6' }), 0, 0.14, 0, tripS).rotation.z = Math.PI / 2; }
 // trip rope between two posts, ankle height (cap 10)
 const tripG = new THREE.Group(); tripG.position.set(0, 0, 20); world.add(tripG);
 { for (const sd of [-1, 1]) add(new THREE.CylinderGeometry(0.25, 0.3, 2.2, 10), std({ color: '#6a4a30' }), sd * 12, 1.1, 0, tripG);
@@ -361,7 +365,7 @@ const chart = new THREE.Group(); chart.position.set(-6, WALLH, WZ - 1.2); world.
     for (let m = 0; m <= 30; m++) { const y = h - m * h / 30; g.fillRect(0, y - 2, m % 10 === 0 ? 120 : 60, 4); if (m % 5 === 0) g.fillText((m / 10).toFixed(1).replace('.', ',') + ' m', 140, y + 14); }
     g.fillStyle = '#c0302c'; const yW = h - 27.2 * h / 30; g.fillRect(0, yW - 3, w, 6); g.fillText('2,72 m', 300, yW - 14); g.fillStyle = '#2f5f9a'; const yH = h - 17.5 * h / 30; g.fillRect(0, yH - 3, w, 6); g.fillText('1,75 m', 300, yH - 14); });
   add(new THREE.BoxGeometry(1.5, 3.0, 0.08), std({ map: t }), 0, 1.5, 0, chart); }
-const setWorld = (S, f) => { tripG.visible = !!S.trip; carts.visible = !!S.carts; chart.visible = !!S.chart; setRopes(S.ropes, S.a != null ? f - S.a : 99); };
+const setWorld = (S, f) => { tripG.visible = !!S.trip; tripS.visible = !!S.tripSmall; carts.visible = !!S.carts; chart.visible = !!S.chart; setRopes(S.ropes, S.a != null ? f - S.a : 99); };
 // ===== vida: pássaros, fumaça das chaminés, tochas e bandeiras animadas (tudo por quadro, determinístico) =====
 const smokeT = P.tex(cv(128, 128, (g) => { const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(235,235,240,0.9)'); gr.addColorStop(0.6, 'rgba(220,220,228,0.45)'); gr.addColorStop(1, 'rgba(220,220,228,0)'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); }));
 const PUFF = 7; for (const sm of LIFE.smoke) { sm.push([]); for (let k = 0; k < PUFF; k++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeT, transparent: true, depthWrite: false })); sp.userData.ndSkip = true; world.add(sp); sm[4].push(sp); } }

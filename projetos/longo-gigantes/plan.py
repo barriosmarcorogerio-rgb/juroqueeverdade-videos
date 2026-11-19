@@ -15,6 +15,7 @@ def giant(kind, pos, s=None, **o):
     S = s or {'grin': 7.6, 'tiny': 7.2, 'long': 8.4}[kind]; sk = {'grin': '#e6b08a', 'tiny': '#d29a74', 'long': '#f0c8a8'}[kind]; hr = {'grin': '#4a3424', 'tiny': '#2b211c', 'long': '#b07a3a'}[kind]
     extra = {k: o.pop(k) for k in list(o) if k in ('to', 'roll', 'rollTo', 'rollEase', 'rollDelay', 'rollDur', 'walk', 'flip')}
     oo = {'kind': kind, 'skin': sk, 'hair': hr}; oo.update(o)
+    pos = [pos[0], pos[1] + (0.45 if pos[1] == 0 else 0), pos[2]]   # pés acima da grama alta (antes sumiam)
     d = {'fx': 'fxGiant', 'pos': pos, 's': S, 'o': oo, 'shadow': True}; d.update(extra); return d
 def fx(name, pos, s, **kw): d = {'fx': name, 'pos': pos, 's': s}; d.update(kw); return d
 G1, G2, G3 = [-4, 0, 34], [12, 0, 52], [26, 0, 70]       # giants approaching (later closer)
@@ -220,8 +221,9 @@ S[138] = [wall_duo(D, p('grin', 'hang', 'reach', holdR='grapple'), p('grin', 're
 S[139] = [shot(D, cam([17, 6.5, WZ + 11.5], [10.8, 6, WZ + 3], 46, [16.5, 6, WZ + 11], [10.8, 5, WZ + 3], 44), cast=[who('tonico', [9.5, 6.5, WZ + 3.3], p('grin', 'up', 'up'), to=[9.5, 1.5, WZ + 3.3], climb=True), who('bia', [12.2, 8.5, WZ + 3.3], p('stern', 'up', 'up'), to=[12.2, 3.0, WZ + 3.3], climb=True)], world={'ropes': [[9.5, 0.05, WZ + 3.2, 9.5, WY + 1.6, WZ + 3.2], [12.2, 0.05, WZ + 3.2, 12.2, WY + 1.6, WZ + 3.2]]}),
           ground(D, [who('tonico', [-10, 0, 20.5], p('grin', 'reach', 'hang')), who('bia', [10, 0, 20.5], p('grin', 'hang', 'reach'))])]
 S[140] = [ground(D, [who('tonico', [-10, 0, 20.5], p('grin', 'thumb', 'hang')), who('bia', [10, 0, 20.5], p('smile', 'hang', 'thumb'))])]
-S[141] = [ground(D, [who('tonico', [-10, 0, 20.5], p('laugh', 'belly', 'hang'))])]
-S[142] = [ground(D, [giant('grin', [0, 0, 34])])]
+S[141] = [shot(D, cam([9, 1.0, -48.5], [3, 0.55, -48], 40), cast=[who('irmao', [3, 0, -53.5], p('grin', 'reach', 'hang'), s=0.82, walk=True, to=[3, 0, -48.3]), who('tonico', [3, 0, -45.3], p('laugh', 'belly', 'reach', facing=-1), s=1.0)], world={'tripSmall': True}),   # o irmão mais novo vem correndo...
+          shot(D, cam([8, 0.8, -48.2], [3, 0.4, -48], 38), cast=[who('irmao', [3, 0, -47.7], p('shock', 'reach', 'reach'), s=0.82, roll=0, rollTo=1.45, rollEase='in', still=True), who('tonico', [3, 0, -45.3], p('laugh', 'belly', 'belly', facing=-1), s=1.0)], world={'tripSmall': True}, kick=True)]   # ...tropeça no barbante; o Tonico morre de rir
+S[142] = [shot(D, cam([-4, 1.6, 9], [1, 6, 30], 58), cast=[giant('grin', [0, 0, 44], walk=True, to=[0, 0, 23])], world={'trip': True})]   # o gigante vem andando na direção da corda (câmera do lado da muralha)
 S[143] = [shot(D, cam([-6, 1.2, 14], [0, 6, 28], 52), cast=[giant('grin', [0, 0, 34], to=[0, 0, 22.5], walk=True)], world={'trip': True})]
 S[144] = [shot(D, cam([-3, 0.8, 16], [0, 0.9, 21], 46), cast=[giant('grin', [0, 0, 22.5])], world={'trip': True}, kick=True)]
 S[145] = [shot(D, cam([20, 3, 30], [0, 5, 20], 50), cast=[giant('grin', [0, 0, 22], roll=0, rollTo=-1.5, rollEase='in')], world={'trip': True})]
