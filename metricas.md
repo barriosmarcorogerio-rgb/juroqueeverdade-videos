@@ -46,3 +46,19 @@ Nada publicado: o único item pendente fora do Instagram é a prévia "E se voc�
 ## 2026-11-19 — produção da madrugada (01h07 BRT) adiada
 Os 2 Shorts do dia não foram produzidos na madrugada: a cota grátis de voz do Gemini estava esgotada (troca da voz do canal para Fenrir + regravação dos 3 longos no mesmo dia) e a CPU está reservada para os longos (titãs → muralha → buraco). Os Shorts entram assim que a narração dos longos terminar; histórias já escolhidas no backlog novo (curiosidades: A1 fungo "zumbi", A3 garoto que ficou 11 dias sem dormir).
 Lição: nunca regravar narrações longas e testar vozes no mesmo dia da produção — a cota diária do TTS acaba.
+
+## 2026-11-19 — publicação das 11h47 BRT (nada publicado)
+| Data | Plataforma | Título | Views | Likes | Coment. |
+|---|---|---|---|---|---|
+| 2026-11-18 15:26 | YouTube | Dom Pedro II trouxe CAMELOS pro sertão?! #shorts (j9vrGbPrAUM) | 1148 | 30 | 0 |
+| 2026-11-17 16:06 | YouTube | Choveu carne do céu… e a culpa era de quem? #shorts | 4 | 0 | 0 |
+| 2026-11-17 02:58 | YouTube | Choveu carne numa fazenda (teste) | 0 | 0 | 0 |
+| 2026-11-18 15:26 | Instagram | Em 1859 o Brasil trouxe 14 CAMELOS… | — | 60 | 0 |
+| 2026-11-17 16:07 | Instagram | Choveu CARNE do céu numa fazenda do Kentucky… | — | 44 | 2 |
+
+Nada publicado: todos os itens pendentes (prévia + 3 recortes) exigem o longo "E se você cavasse um buraco até o Japão?" no canal, e ele ainda não foi publicado pelo dono. Não há Shorts novos (produção da madrugada adiada pela cota de voz; CPU ocupada com o render dos titãs).
+
+Conclusões:
+- Camelos virou o 1º Short a "pegar" no YouTube: 1148 views e 30 likes em ~23 h (2,6% de likes), contra 4 views do "Choveu carne". Gancho em pergunta com fato surpreendente ("…trouxe CAMELOS pro sertão?!") + tema brasileiro funcionou.
+- Instagram segue firme (60 likes nos camelos), mas o YouTube passou na frente em alcance: priorizar o Short diário.
+- A falta de Short ontem e hoje desperdiça o embalo do camelos: a fila precisa de pelo menos 2 Shorts independentes de longo. Backlog de historias.md mantido (curiosidades com pergunta no gancho já estão no topo).
