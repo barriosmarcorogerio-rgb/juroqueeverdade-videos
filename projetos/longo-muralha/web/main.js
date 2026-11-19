@@ -334,6 +334,8 @@ const setRopes = (R, f = 0) => ropePool.forEach(([m, h, chips, ink], i) => { con
   m.material.map.repeat.set(1, L * 2.2);
   h.position.copy(b).addScaledVector(dir, 0.08); h.quaternion.setFromUnitVectors(_up, dir);              // nose buried a little in the stone
   const ph = r[6] ?? Math.min(1, (f - (r[7] || 0)) / 14); chips.visible = ph > 0 && ph < 1; chips.children.forEach((c) => { const v = c.userData.v; c.position.set(v[0] * ph, v[1] * ph - 1.2 * ph * ph, v[2] * ph); c.rotation.set(ph * 5, ph * 3, 0); c.scale.setScalar(Math.max(0.01, 1 - ph)); }); });
+// rua de pedras do portão para dentro da cidade (antes era gramado liso com textura listrada)
+{ const st = add(new THREE.PlaneGeometry(11, 60), decal(std({ map: P.tex(P.stone(73, 34, 10, 58, 150, 118), 3, 16), color: '#c8bfae' }), 1), 0, 0.02, WZ - 2.6 - 30, world, { cast: false }); st.rotation.x = -Math.PI / 2; }
 // city houses
 const houseCol = ['#e7c25a', '#7fb0c9', '#e79a8a', '#f2efe6', '#9fcf8a', '#c9a0d9', '#e0b080'];
 for (let i = 0; i < 60; i++) { const x = -110 + rr() * 220, z = WZ - 12 - rr() * 90; if (Math.abs(x) < 6 && z > WZ - 25) continue; const w = 5 + rr() * 4, h = 5 + rr() * 6, d = 5 + rr() * 3;
