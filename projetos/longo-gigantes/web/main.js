@@ -233,7 +233,7 @@ for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 20
   const inField = (x, z) => FIELDS.some(([fx, fz, w, d, r]) => { const dx = x - fx, dz = z - fz, c = Math.cos(r), s = Math.sin(r), u = dx * c - dz * s, v = -dx * s - dz * c; return Math.abs(u) < w / 2 + 1.2 && Math.abs(v) < d / 2 + 1.2; });
   const N = 170000, gi2 = new THREE.InstancedMesh(bg, std({ vertexColors: true, side: THREE.DoubleSide }), N); const col = new THREE.Color(); let k = 0, guard = 0;
   while (k < N && guard++ < N * 6) { const r = Math.pow(rr(), 1.25) * 170, a = rr() * Math.PI * 2, x = Math.cos(a) * r, z = Math.sin(a) * r + 10;
-    if (Math.abs(z - 8) < 2.6 || inField(x, z) || (x > -24 && x < 24 && z > -16 && z < 18)) continue;
+    if (Math.abs(z - 8) < 2.6 || inField(x, z) || (x > -24 && x < 24 && z > -16 && z < 18) || z < -41) continue;   // sem grama dentro da cidade (muralha em z = -40)
     dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.1 + rr() * 0.15 + r * 0.001; dummy.scale.set(1.0 + rr() * 0.8 + r * 0.006, s, 1.0);   // grama do campo abaixo do joelho (antes chegava na cintura e as pessoas pareciam anãs) dummy.updateMatrix(); gi2.setMatrixAt(k, dummy.matrix);
     col.setHSL(0.2 + rr() * 0.09, 0.42 + rr() * 0.2, 0.7 + rr() * 0.35); gi2.setColorAt(k, col); k++; }
   gi2.count = k; gi2.receiveShadow = true; gi2.castShadow = false; gi2.userData.nd = plainNd; world.add(gi2);
@@ -334,15 +334,22 @@ const setRopes = (R, f = 0) => ropePool.forEach(([m, h, chips, ink], i) => { con
   m.material.map.repeat.set(1, L * 2.2);
   h.position.copy(b).addScaledVector(dir, 0.08); h.quaternion.setFromUnitVectors(_up, dir);              // nose buried a little in the stone
   const ph = r[6] ?? Math.min(1, (f - (r[7] || 0)) / 14); chips.visible = ph > 0 && ph < 1; chips.children.forEach((c) => { const v = c.userData.v; c.position.set(v[0] * ph, v[1] * ph - 1.2 * ph * ph, v[2] * ph); c.rotation.set(ph * 5, ph * 3, 0); c.scale.setScalar(Math.max(0.01, 1 - ph)); }); });
-// rua de pedras do portão para dentro da cidade (antes era gramado liso com textura listrada)
-{ const st = add(new THREE.PlaneGeometry(26, 60), decal(std({ map: P.tex(P.stone(73, 34, 10, 58, 150, 118), 7, 16), color: '#c8bfae' }), 1), 0, 0.02, WZ - 2.6 - 30, world, { cast: false }); st.rotation.x = -Math.PI / 2; }
+// chão da cidade: calçamento de pedra contínuo em toda a área dentro da muralha (antes: gramado + campo de trigo da fazenda por baixo)
+{ const cf = add(new THREE.PlaneGeometry(330, 130), decal(std({ map: P.tex(P.stone(73, 34, 10, 58, 150, 118), 80, 32), color: '#c8bfae' }), 1), 0, 0.03, WZ - 2.6 - 65, world, { cast: false }); cf.rotation.x = -Math.PI / 2; }
 // city houses
-const houseCol = ['#e7c25a', '#7fb0c9', '#e79a8a', '#f2efe6', '#9fcf8a', '#c9a0d9', '#e0b080'];
+const houseCol = ['#efe0c0', '#e8d6b4', '#f2e8d4', '#e6cfa8', '#efdcc6', '#e9d3b0', '#f1e2c8'];   // reboco claro (enxaimel)
+const houseTex = (base, seed) => { const r = P.rng(seed); const c = cv(256, 256, (g, w, h) => { g.fillStyle = base; g.fillRect(0, 0, w, h);
+    for (let i = 0; i < 400; i++) { g.fillStyle = `rgba(120,100,70,${r() * 0.06})`; g.fillRect(r() * w, r() * h, 3, 3); }
+    const T = '#5a3a24'; g.fillStyle = T; g.fillRect(0, 0, w, 14); g.fillRect(0, h - 14, w, 14); g.fillRect(0, h / 2 - 6, w, 12); for (const x of [0, w / 2 - 6, w - 12]) g.fillRect(x, 0, 12, h);
+    g.strokeStyle = T; g.lineWidth = 9; g.beginPath(); g.moveTo(12, 14); g.lineTo(w / 2 - 6, h / 2 - 6); g.moveTo(w - 12, 14); g.lineTo(w / 2 + 6, h / 2 - 6); g.stroke();
+    for (const [x, y] of [[40, 150], [160, 150]]) { g.fillStyle = '#4a3020'; g.fillRect(x - 6, y - 6, 62, 62); g.fillStyle = '#2b3a4a'; g.fillRect(x, y, 50, 50); g.fillStyle = '#7fa6c4'; g.fillRect(x + 4, y + 4, 18, 18); g.fillStyle = '#5a3a24'; g.fillRect(x + 23, y, 4, 50); g.fillRect(x, y + 23, 50, 4); g.fillStyle = '#7a4a2a'; g.fillRect(x - 6, y + 56, 62, 6); } });
+  const t = P.tex(c, 1, 1); t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping; return t; };
+const HT = houseCol.map((c, i) => houseTex(c, 300 + i));
 for (let i = 0; i < 60; i++) { const x = -110 + rr() * 220, z = WZ - 12 - rr() * 90; if (Math.abs(x) < 6 && z > WZ - 25) continue; const w = 5 + rr() * 4, h = 5 + rr() * 6, d = 5 + rr() * 3;
   const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = (rr() - 0.5) * 0.3; world.add(g);
-  add(tbox(w, h, d, 2), std({ color: houseCol[i % houseCol.length] }), 0, h / 2, 0, g);
-  if (i % 3 === 0) { add(tbox(0.9, 3.2, 0.9, 2), std({ color: '#7a5a48' }), w * 0.22, h + 2.0, 0, g); LIFE.smoke.push([x + w * 0.22, h + 3.7, z, i]); } const r = add(new THREE.ConeGeometry(Math.max(w, d) * 0.75, 3, 4), std({ color: '#a8482e' }), 0, h + 1.5, 0, g); r.rotation.y = Math.PI / 4;
-  for (let k = 0; k < 2; k++) add(box(1, 1.3, 0.1), std({ color: '#2b3a4a' }), -w / 4 + k * w / 2, h * 0.6, d / 2 + 0.03, g); }
+  add(box(w, h, d), std({ map: HT[i % HT.length] }), 0, h / 2, 0, g); add(box(1.3, 2.2, 0.12), std({ color: '#6a4228' }), 0, 1.1, d / 2 + 0.05, g); add(box(1.6, 0.25, 0.3), std({ color: '#5a3a24' }), 0, 2.35, d / 2 + 0.1, g);   // porta + verga
+  if (i % 3 === 0) { add(tbox(0.9, 3.2, 0.9, 2), std({ color: '#7a5a48' }), w * 0.22, h + 2.0, 0, g); LIFE.smoke.push([x + w * 0.22, h + 3.7, z, i]); } const r = add(new THREE.ConeGeometry(Math.max(w, d) * 0.82, 3.6, 4), std({ color: ['#a8482e', '#8e3a26', '#b5562f', '#6f4a3a'][i % 4] }), 0, h + 1.8, 0, g); r.rotation.y = Math.PI / 4;
+  }
 { const ch = new THREE.Group(); ch.position.set(10, 0, WZ - 50); world.add(ch); add(tbox(14, 14, 20, 3), std({ color: '#efe8da' }), 0, 7, 0, ch); add(tbox(6, 30, 6, 3), std({ color: '#efe8da' }), 0, 15, 12, ch); add(new THREE.ConeGeometry(5, 9, 4), std({ color: '#7a3a2a' }), 0, 34.5, 12, ch).rotation.y = Math.PI / 4; }
 // vegetable garden outside the wall
 const horta = new THREE.Group(); horta.position.set(14, 0, WZ + 12); world.add(horta);

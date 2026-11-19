@@ -2467,7 +2467,7 @@ export const OUTFITS = {
   civC: { tunic: "#5d8a3a", skin: "#c99067", hair: "#1e1714", stout: true },
   workA: { tunic: "#8a5d3b", skin: "#f5c9a0", cap: "#c2733a", apron: "#d8c9a6" },
   workB: { tunic: "#3f6a6f", skin: "#ecd0b6", cap: "#5b4a8a", moustache: "#4a3020" },
-  irmao: { tunic: "#3f7fd0", skin: "#f2c09a", hair: "#3a2418", hairStyle: "spiky", pants: "#2e4a7a", shoe: "#c23a2a" },   // irmão mais novo (criança)
+  irmao: { tunic: "#2f9a5a", skin: "#f7d2b4", hair: "#c9562a", hairStyle: "curly", pants: "#8a6a3a", shoe: "#c23a2a" },   // irmão mais novo (criança)
   pobre: { tunic: "#8a6a48", skin: "#eab58e", hair: "#4a3424", moustache: "#4a3424", patches: true, hairStyle: "spiky" },
   padeiro: { tunic: "#e2cfae", skin: "#f2bf96", cap: "#fbf8f2", apron: "#ffffff", stout: true, moustache: "#3a2414" },
   juiz: { tunic: "#30304a", toga: "#a5263a", skin: "#f3d6bb", beard: "#eeeae2", cap: "#23233a", stout: true },
