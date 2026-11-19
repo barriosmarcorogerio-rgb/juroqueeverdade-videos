@@ -57,3 +57,8 @@ Para cada longo pronto em `projetos/entrega/`, além da prévia: `bash projetos/
 5. Repor o backlog de `historias.md` com 10 histórias novas com fatos conferidos, ordenadas pelo que as métricas indicam.
 6. Corrigir no `template/` qualquer problema técnico recorrente (render lento, objetos mal reconhecíveis, falhas de voz).
 7. Commit + push com um resumo da semana no topo de `metricas.md`.
+
+## Contêiner ligado durante renders longos (aprendizado 19/11)
+- O contêiner é desligado quando a sessão fica ociosa; o render para e só volta na próxima vigia (perdemos ~5 h assim em 19/11).
+- Enquanto houver render longo: manter um laço em segundo plano no harness (até 2 h) e religá-lo assim que ele terminar, até sair o MP4.
+- Os scripts madrugada* não refazem o áudio se mix_raw.wav existe e voltam direto em 4 blocos de render (RESUME=1 pula quadros prontos).
