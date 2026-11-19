@@ -2913,13 +2913,13 @@ return (p, t = 0, o = {}) => {
     const e0 = Q[0], e1 = Q[n], d0 = Math.atan2(Q[1][1] - e0[1], Q[1][0] - e0[0]), d1 = Math.atan2(e1[1] - Q[n - 1][1], e1[0] - Q[n - 1][0]);
     return [...A_, ...cap(e1, e1[2] / 2, d1 - Math.PI / 2), ...B_.reverse(), ...cap(e0, e0[2] / 2, d0 + Math.PI / 2)]; };
   // --- legs: thick thigh -> knee -> calf bulge -> slim ankle; big flat feet ---
-  for (const sd of [-1, 1]) { const ph = Math.sin((w + (sd > 0 ? 0.5 : 0)) * Math.PI * 2), hx = cx + sd * A.waistW * 0.52, kx = hx + sd * (o.down ? 46 : 10) + ph * 20, ky = (A.hip + sole) / 2 + 6 - Math.max(0, ph) * 24 - (o.down ? 26 : 0), ax = hx + sd * (o.down ? 92 : 4) + ph * 36, ay = sole - 34 - Math.max(0, ph) * 36;
+  for (const sd of [-1, 1]) { const ph = Math.sin((w + (sd > 0 ? 0.5 : 0)) * Math.PI * 2), hx = cx + sd * A.waistW * 0.52, kx = hx + sd * (o.down ? 46 : 10) + ph * 20, ky = (A.hip + sole) / 2 + 6 - Math.max(0, ph) * 24 - (o.down ? 26 : 0), ax = hx + sd * (o.down ? 92 : 22) + ph * 36, ay = sole - 34 - Math.max(0, ph) * 36;
     const L_ = A.legW; shapes.push({ pts: TW([[hx, A.hip - 40], [(hx + kx) / 2 + sd * 4, (A.hip + ky) / 2], [kx, ky], [kx + (ax - kx) * 0.3 - sd * 3, ky + (ay - ky) * 0.3], [ax, ay]], [L_ * 1.75, L_ * 1.5, L_ * 0.92, L_ * 1.05, L_ * 0.6]), col: SK },
-      ...(() => { const fw = L_ * 0.95, fy = ay + 14, fx0 = ax + sd * 8, out = [{ pts: E(fx0, fy, fw * 0.95, L_ * 0.34), col: SK }, { pts: E(ax - sd * 6, ay + 2, L_ * 0.42, L_ * 0.4), col: SK }];   // pé: base + calcanhar/tornozelo + 5 dedos (dedão do lado de dentro)
-        for (let k = 0; k < 5; k++) { const t = k / 4, x = fx0 - sd * fw * 0.78 + sd * t * fw * 1.5, r = k === 0 ? L_ * 0.21 : L_ * (0.15 - t * 0.03); out.push({ pts: E(x, fy + L_ * 0.26 - (k === 0 ? 2 : 0), r, r * 0.95), col: SK }); }
-        return out; })());
-    after.push(() => { p.arc(kx, ky + 2, L_ * 0.26, 6, 200, 340, 3, SD); p.arc(kx + (ax - kx) * 0.32 + sd * L_ * 0.2, ky + (ay - ky) * 0.32, L_ * 0.18, L_ * 0.35, sd > 0 ? 280 : 100, sd > 0 ? 350 : 170, 3, SD); { const fw = L_ * 0.95, fy = ay + 14, fx0 = ax + sd * 8; for (let k = 0; k < 5; k++) { const t = k / 4, x = fx0 - sd * fw * 0.78 + sd * t * fw * 1.5, r = k === 0 ? L_ * 0.21 : L_ * (0.15 - t * 0.03); p.ell(x, fy + L_ * 0.26 + r * 0.25, r * 0.55, r * 0.42, mix(SK, '#ffffff', 0.45), 2); }   // unhas
-        p.arc(ax - sd * L_ * 0.28, ay - 4, L_ * 0.12, L_ * 0.12, 0, 360, 2.5, SD); p.arc(fx0, fy - 4, fw * 0.6, L_ * 0.18, 200, 340, 3, SD); } }); }
+      ...(() => { const fw = L_ * 0.8, fy = ay + 12, fx0 = ax + sd * 16; return [{ pts: E(fx0, fy, fw, L_ * 0.3), col: SK }, { pts: E(ax - sd * 4, ay, L_ * 0.4, L_ * 0.38), col: SK }]; })());   // pé: base + calcanhar (dedos separados, desenhados depois)
+    after.push(() => { p.arc(kx, ky + 2, L_ * 0.26, 6, 200, 340, 3, SD); p.arc(kx + (ax - kx) * 0.32 + sd * L_ * 0.2, ky + (ay - ky) * 0.32, L_ * 0.18, L_ * 0.35, sd > 0 ? 280 : 100, sd > 0 ? 350 : 170, 3, SD); { const fw = L_ * 0.8, fy = ay + 12, fx0 = ax + sd * 16, ty = fy + L_ * 0.2;   // 5 dedos separados, cada um com contorno e unha; dedão do lado de dentro, maior e mais alto
+        for (let k = 4; k >= 0; k--) { const t = k / 4, x = fx0 - sd * fw * 0.62 + sd * t * fw * 1.28, r = k === 0 ? L_ * 0.17 : L_ * (0.125 - t * 0.025), y = ty + (k === 0 ? -3 : t * 6);
+          p.ell(x, y, r, r * 1.08, SK, 3.5); p.ell(x, y + r * 0.35, r * 0.55, r * 0.45, mix(SK, '#ffffff', 0.5), 2); }
+        p.arc(ax - sd * L_ * 0.3, ay - 6, L_ * 0.11, L_ * 0.11, 0, 360, 2.5, SD); } }); }
   // pelvis (smooth, no detail) joining the thighs
   shapes.push({ pts: E(cx, A.hip - 18, A.waistW * 1.12, 74), col: SK });
   // --- torso: traps -> broad shoulders -> chest -> waist ---
