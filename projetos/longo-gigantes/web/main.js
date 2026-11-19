@@ -222,7 +222,7 @@ for (let i = 0; i < 14; i++) { const a = rr() * Math.PI * 2, d = 330 + rr() * 20
   bg.setAttribute('color', new THREE.Float32BufferAttribute([0.16, 0.26, 0.08, 0.16, 0.26, 0.08, 0.55, 0.72, 0.3], 3));
   const N = 90000, gm = std({ vertexColors: true, side: THREE.DoubleSide }); const gi = new THREE.InstancedMesh(bg, gm, N); const col = new THREE.Color(); let k = 0;
   while (k < N) { const x = -24 + rr() * 48, z = -16 + rr() * 34; if (Math.abs(z - 8) < 2.6) continue; if (x > 3.6 && x < 7.4 && z > -7.5 && z < 6.5) continue; if (x > -6.5 && x < 3.5 && z > -12.8 && z < -2.8) continue; if (Math.hypot(x - 3, z - 2) < 1.0) continue;
-    dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.1 + rr() * 0.2; dummy.scale.set(0.8 + rr() * 0.6, s, 0.8); dummy.updateMatrix(); gi.setMatrixAt(k, dummy.matrix);
+    dummy.position.set(x, 0, z); dummy.rotation.set((rr() - 0.5) * 0.5, rr() * 6.28, (rr() - 0.5) * 0.5); const s = 0.07 + rr() * 0.1; dummy.scale.set(0.8 + rr() * 0.6, s, 0.8);   // grama do quintal na mesma altura do campo (antes: faixa de grama alta só ali) dummy.updateMatrix(); gi.setMatrixAt(k, dummy.matrix);
     col.setHSL(0.22 + rr() * 0.07, 0.45 + rr() * 0.2, 0.75 + rr() * 0.35); gi.setColorAt(k, col); k++; }
   gi.receiveShadow = true; gi.castShadow = false; gi.userData.nd = plainNd; world.add(gi); }
 // ---- FIELD GRASS: blades over the whole countryside (denser near the yard), + large-scale colour patches on the ground ----
