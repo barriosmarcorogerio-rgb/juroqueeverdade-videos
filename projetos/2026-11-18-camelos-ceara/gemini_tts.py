@@ -1,4 +1,4 @@
-"""Narração oficial do canal: Gemini TTS, voz Charon, +8% de velocidade.
+"""Narração oficial do canal: Gemini TTS, voz Fenrir, +5% de velocidade (desde 19/11).
 uso: python3 gemini_tts.py script.txt voice.wav [VOZ] [VELOCIDADE]
 - A chave fica no ambiente da nuvem (header x-goog-api-key injetado pelo proxy); não precisa de variável.
 - Mande SÓ o texto: instruções de estilo são lidas em voz alta. A emoção vem da pontuação do roteiro
@@ -6,8 +6,8 @@ uso: python3 gemini_tts.py script.txt voice.wav [VOZ] [VELOCIDADE]
 - Tenta o modelo novo e cai para o antigo; repete com espera em erro 429/500."""
 import sys, json, base64, wave, time, subprocess, urllib.request, urllib.error
 src, out = sys.argv[1], sys.argv[2]
-voice = sys.argv[3] if len(sys.argv) > 3 else "Charon"
-speed = float(sys.argv[4]) if len(sys.argv) > 4 else 1.08
+voice = sys.argv[3] if len(sys.argv) > 3 else "Fenrir"   # voz oficial do canal desde 19/11 (escolha do dono), velocidade +5%
+speed = float(sys.argv[4]) if len(sys.argv) > 4 else 1.05
 txt = open(src, encoding="utf-8").read().strip()
 body = {"contents": [{"parts": [{"text": txt}]}],
         "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}

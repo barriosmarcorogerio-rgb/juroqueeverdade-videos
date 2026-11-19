@@ -6,6 +6,14 @@ push() { ( cd $R && git add -A && git commit -qm "$1
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01KB6dFgyV8wxf1h8YEXRKbv" ; for i in 1 2 3 4; do git pull -q --rebase && git push -q && break; sleep $((i*15)); done; ) }
+cd $G
+if [ ! -f mix_raw.wav ]; then   # narração nova (voz Fenrir) -> timings -> plano -> trilha -> mixagem
+  while true; do miss=""; for k in 01 02 03 04 05 06 07 08 09 10 11 12; do [ -f cap$k.wav ] || miss="$miss $k"; done; [ -z "$miss" ] && break
+    for k in $miss; do python3 gemini_tts.py cap$k.txt cap$k.wav > cap$k.tts.log 2>&1 || rm -f cap$k.wav; done; sleep 30; done
+  mkdir -p work; for k in 01 02 03 04 05 06 07 08 09 10 11 12; do [ -f work/cap$k.words.json ] || HF_HUB_DISABLE_XET=1 python3 -I words.py cap$k.wav cap$k.txt work/cap$k.words.json > work/cap$k.wlog 2>&1; done
+  python3 timeline.py && python3 plan.py && python3 voice_all.py && nice -n 10 python3 audio_long.py && python3 mix.py voice.wav music.wav sfx.wav
+  push "Buraco: narração nova com a voz Fenrir"
+fi
 until grep -q FIM-MADRUGADA-3 $P/madrugada3.log; do sleep 120; done
 cd $G; [ -f mix_raw.wav ] || exit 1
 TOT=$(python3 -c "import json;print(json.load(open('web/shots.json'))['total'])"); Q=$((TOT/4))
