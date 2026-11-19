@@ -1,9 +1,1 @@
 PAGE Failed to load resource: the server responded with a status of 404 (Not Found)
-node:internal/modules/run_main:123
-    triggerUncaughtException(
-    ^
-
-page.evaluate: Target page, context or browser has been closed
-    at /home/user/juroqueeverdade-videos/projetos/longo-gigantes/render.mjs:23:22
-
-Node.js v22.23.4

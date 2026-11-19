@@ -28,3 +28,4 @@ projetos/amostra-*.m4a
 projetos/_teaser/.fenrir_ok
 projetos/_teaser/*.new.wav
 projetos/*/tts.log
+projetos/*/r[0-9].log
