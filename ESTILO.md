@@ -52,6 +52,31 @@ Narração + trilha leve que para na virada + efeitos em cada ação (whoosh, ba
 - Mostrar a prévia (folha de quadros) com close do objeto-chave e de cada personagem novo antes do render longo.
 - **Arquitetura coerente.** Telhado de varanda fica ABAIXO das janelas do andar de cima; nada atravessa janela, porta ou rosto. Conferir peças que se cruzam (colher atravessando carne, telhado cortando janela) em todos os ângulos da prévia.
 
+### Aprendizados de 18–19/11 (vídeos longos e titãs) — conferir TODOS antes de renderizar
+**Animação / personagens**
+- Nunca personagem parado: o motor já faz gestos automáticos (braços alternam a cada ~1–2 s, ferramenta sobe e desce, balanço, olhar) e varia a expressão a cada ~2 s (16 expressões: neutral, stern, grin, laugh, smile, nervous, shock, angry, sad, cry, scared, terrified, surprised, smug, determined, excited, confused, disgust…). No plano, dar AÇÃO a cada frase: entrar andando (walk + to), cavar, apontar, cair (rollTo), correr. Uma pose fixa por 6–10 s foi a principal reclamação.
+- Precisão do balanço/inclinação alta (q(…,5)/q(…,3)): arredondar fazia a cabeça "tremer" 1–2 px.
+- Personagens diferentes precisam de silhueta diferente (cabelo, cor de cabelo, roupa) — não só a cor da roupa.
+- Corda/escalada: pose 'grip' + climb=True; a corda é desenhada no próprio cartão (passa pelas mãos e entre as pernas). Corda 3D sozinha nunca alinha com o desenho.
+- Voo de arpão: uma mão na corda ('reach'), lâmina na outra ('give'), corpo inclinado (roll). Nada de dois braços para cima. O gancho voa até cravar (ropes r[7] = quadros do disparo).
+- Escala: pessoas ~1,7 m; criança s≈0.8 (não 0.6). Grama do campo abaixo do joelho — grama alta faz as pessoas parecerem anãs e esconde os pés dos gigantes.
+**Titãs**
+- Assustadores: órbitas fundas, olho pequeno parado, sobrancelha de raiva, sorriso esticado com muitos dentes, cabelo em mechas desiguais (nada de "capacete" em zigue-zague).
+- Ponto fraco na nuca: mostrar o titã de PERFIL (side=1) para ver o rosto gritando + a nuca; decapitação com cabeça voando (decapFrac), toco jorrando, corpo caindo. Violência de desenho, sem órgãos.
+- Gigantes com pés visíveis (sobem 0,45 m quando estão em y=0).
+**Cenário**
+- O mundo nasceu da fazenda: ao montar um lugar novo, CONFERIR o chão no nível da câmera (sobras de campo de trigo/grama aparecem). Cidade = calçamento contínuo + casas em enxaimel (não caixas lisas).
+- Cenário vivo: pássaros, fumaça de chaminé, tochas, bandeiras ondulando.
+- Nuvens: canvas alto o bastante (sem topo cortado).
+**Objetos e gráficos**
+- Todo gráfico explicativo precisa de RÓTULO na tela (ex.: cubos "1 CUBO" / "LADO 2x = 8 CUBOS!"). Sem texto o público não entende.
+- A imagem tem que bater com a frase: se a narração cita algo (irmão mais novo, barbante), mostrar exatamente isso, na escala certa (barbante pequeno para criança; corda de navio para titã).
+**Processo**
+- Abrir a cena no nível da câmera de cada plano antes do render longo (prévia com 4–6 quadros) — o dono vê tudo de perto.
+- Abertura de vídeo: começar com ação/personagem, nunca drone alto (perde o interesse e a grama tremula).
+- Comentários em código JS: nunca colocar `//` antes de um `}` na mesma linha (já travou o render 2 vezes).
+- Máquina tem 4 núcleos: 4 renders em paralelo, ~16 quadros/min nos cenários pesados.
+
 ## Duração e retenção (decidido pelo dono em 2026-11-17: vídeos LONGOS, 55–65 s)
 - Dado do canal: teste de 10 s pegou ~1k views; versão de 58 s, 1 view em 6 h. O dono prefere manter os vídeos longos, então o trabalho é segurar a pessoa até o fim:
   - **Quadro 0 já com ação**: objeto-chave caindo/voando na tela; nada de plano de abertura parado.
