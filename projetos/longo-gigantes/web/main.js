@@ -352,8 +352,8 @@ const tripS = new THREE.Group(); tripS.position.set(3, 0, -48); world.add(tripS)
   add(new THREE.CylinderGeometry(0.008, 0.008, 3.2, 6), std({ color: '#f2efe6' }), 0, 0.14, 0, tripS).rotation.z = Math.PI / 2; }
 // trip rope between two posts, ankle height (cap 10)
 const tripG = new THREE.Group(); tripG.position.set(0, 0, 20); world.add(tripG);
-{ for (const sd of [-1, 1]) add(new THREE.CylinderGeometry(0.25, 0.3, 2.2, 10), std({ color: '#6a4a30' }), sd * 12, 1.1, 0, tripG);
-  add(new THREE.CylinderGeometry(0.06, 0.06, 24, 8), std({ color: '#d9c49a' }), 0, 0.9, 0, tripG).rotation.z = Math.PI / 2; }
+{ for (const sd of [-1, 1]) add(new THREE.CylinderGeometry(0.4, 0.5, 2.6, 10), std({ color: '#6a4a30' }), sd * 12, 1.3, 0, tripG);
+  add(new THREE.CylinderGeometry(0.16, 0.16, 24, 10), std({ color: '#c9a86a' }), 0, 0.9, 0, tripG).rotation.z = Math.PI / 2; for (const sd of [-1, 1]) add(new THREE.TorusGeometry(0.3, 0.08, 8, 14), std({ color: '#b08f55' }), sd * 11.7, 0.9, 0, tripG).rotation.y = Math.PI / 2; }   // corda grossa de navio (para tornozelo de titã), amarrada nas estacas
 // lettuce carts (final)
 const carts = new THREE.Group(); carts.position.set(-8, 0, 30); world.add(carts);
 for (let c = 0; c < 4; c++) { const g = new THREE.Group(); g.position.set(c * 5, 0, 0); carts.add(g); add(tbox(3, 1, 2, 1), std({ color: '#8a6040' }), 0, 1.0, 0, g);
