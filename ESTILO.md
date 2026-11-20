@@ -127,3 +127,4 @@ VERTICAL 1080x1920 (o YouTube recomenda 9:16 para Shorts; horizontal é substitu
 - Titã inteiro em quadro quando a narração fala da cabeça/altura: câmera a ~30 m do titã alto (antes a 12 m cortava a cabeça).
 - Evitar braços abertos em "T" (pose 'reach' de longe parece boneco de teste) e titã "afundado" no chão (y negativo).
 - Revisar uma folha de quadros (12 por bloco) logo no começo do render, não no fim: corrigir cedo custa poucos quadros.
+- Se a narração diz que algo acontece ("o buraco vira uma piscina de lama"), a imagem TEM de mostrar (19/11: o buraco v1 falava em água e o poço estava seco). Conferir cada frase com verbo de ação visível contra o plano antes do render.

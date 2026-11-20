@@ -266,7 +266,16 @@ const iceM = std({ color: '#cfeaf6', roughness: 0.2 });
 const ice = new THREE.Group(); shaftG.add(ice); for (let i = 0; i < 4; i++) add(new THREE.BoxGeometry(0.35, 0.3, 0.35), iceM, -0.4 + (i % 2) * 0.3, -79.85 + Math.floor(i / 2) * 0.3, -0.45, ice);
 // layer palettes: [wall colour, emissive glow]
 const LAYERS = { terra: ['#9a7a5a', '#000000'], rocha: ['#8a8278', '#000000'], quente: ['#9a6a4a', '#2a0800'], crosta: ['#7a5a4a', '#401000'], manto: ['#c0582a', '#a02a00'], fundo: ['#e0742a', '#ff5a10'] };
-const setShaft = (S) => { const L = LAYERS[S.layer || 'terra']; shaftM.color.set(L[0]); shaftM.emissive.set(L[1]); shaftM.emissiveIntensity = S.glow ?? 0.6; ice.visible = !!S.ice; rope.visible = S.rope !== false; };
+/* lençol freático: água barrenta que enche o fundo do buraco (world.water = {top, depth}) */
+const mudC = cv(512, 512, (g, w, h) => { g.fillStyle = '#4e3218'; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 90; i++) { g.fillStyle = `rgba(${110 + rr() * 40},${75 + rr() * 30},${40 + rr() * 20},${0.25 + rr() * 0.3})`; g.beginPath(); g.ellipse(rr() * w, rr() * h, 10 + rr() * 50, 4 + rr() * 16, rr() * 3, 0, 7); g.fill(); }
+  g.strokeStyle = 'rgba(230,205,160,.55)'; g.lineWidth = 5; for (let r = 40; r < 250; r += 46) { g.beginPath(); g.ellipse(w / 2, h / 2, r, r * 0.96, 0, 0.3, 5.6); g.stroke(); }
+  g.fillStyle = 'rgba(255,240,210,.8)'; for (let i = 0; i < 40; i++) { g.beginPath(); g.arc(rr() * w, rr() * h, 3 + rr() * 7, 0, 7); g.fill(); } });
+const mudTex = P.tex(mudC, 1, 1);
+const mudW = add(new THREE.CylinderGeometry(0.985, 0.985, 1, 40, 1, true), new THREE.MeshBasicMaterial({ color: '#3e2812', side: THREE.DoubleSide }), 0, 0, 0, shaftG, { cast: false }); mudW.visible = false; mudW.userData.ndSkip = true;
+const mudTop = add(new THREE.CircleGeometry(0.985, 40), new THREE.MeshBasicMaterial({ map: mudTex, color: '#c8a888' }), 0, 0, 0, shaftG, { cast: false }); mudTop.rotation.x = -Math.PI / 2; mudTop.visible = false; mudTop.userData.ndSkip = true;
+const mudFoam = add(new THREE.TorusGeometry(0.95, 0.035, 6, 40), new THREE.MeshBasicMaterial({ color: '#e6d2ae' }), 0, 0, 0, shaftG, { cast: false }); mudFoam.rotation.x = Math.PI / 2; mudFoam.visible = false; mudFoam.userData.ndSkip = true;
+const setShaft = (S) => { const W = S.water; mudW.visible = mudTop.visible = mudFoam.visible = !!W; if (W) { mudW.scale.y = W.depth; mudW.position.y = W.top - W.depth / 2; mudTop.position.y = W.top; mudFoam.position.y = W.top + 0.005; } const L = LAYERS[S.layer || 'terra']; shaftM.color.set(L[0]); shaftM.emissive.set(L[1]); shaftM.emissiveIntensity = S.glow ?? 0.6; ice.visible = !!S.ice; rope.visible = S.rope !== false; };
 // ---- Kola: snowy plain, rusty welded cap, ruins, birches (x = 3000) ----
 const KX = 3000;
 const kolaG = new THREE.Group(); kolaG.position.set(KX, 0, 0); world.add(kolaG);
@@ -370,7 +379,7 @@ const setActive = (S, f) => {
   shaftG.visible = s === 'shaft' || (s === 'quintal' && !!S.showShaft); kolaG.visible = s === 'kola'; mineG.visible = s === 'mine'; earthG.visible = s === 'earth'; coreG.visible = s === 'core'; centerG.visible = s === 'center'; oceanG.visible = s === 'ocean';
   stars.visible = s === 'earth'; holeState(S.hole ?? 1);
   shaftLight.intensity = s === 'shaft' ? (S.lamp ?? 30) : 0; mineLight.intensity = s === 'mine' ? 60 : 0; coreLight.intensity = s === 'core' ? 400 : 0; centerLight.intensity = s === 'center' ? 200 : 0;
-  if (s === 'shaft') setShaft(S);
+  if (s === 'shaft') { setShaft(S); if (S.water) { const wob = Math.sin(f * 0.35) * 0.015; mudW.position.y += wob; mudTop.position.y += wob; mudFoam.position.y += wob; mudTop.rotation.z = f * 0.01; mudFoam.scale.setScalar(1 + Math.sin(f * 0.5) * 0.01); } }
   if (s === 'earth') { earthG.rotation.y = S.earthRot ?? 0; const u = S.trav ?? -1; traveller.visible = u >= 0; if (u >= 0) traveller.position.lerpVectors(TUN_A, TUN_B, u); }
   if (s === 'core') { metalT.offset.set(f * 0.0008, f * 0.0005); pot.position.set(S.potX ?? 0, (S.potY ?? 0) + Math.sin(f * 0.15) * 0.06, S.potZ ?? 0); pot.rotation.z = Math.sin(f * 0.1) * 0.05; }
   if (s === 'center') { const sw = centerG.userData.sw, hm = centerG.userData.hm; sw.position.y = 1.6 + Math.sin(f * 0.07) * 0.25; sw.rotation.set(f * 0.02, f * 0.03, 0); hm.position.y = 2.2 + Math.sin(f * 0.06 + 2) * 0.2; hm.rotation.z = f * 0.02; }

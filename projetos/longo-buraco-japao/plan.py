@@ -36,7 +36,7 @@ def yard(v='wide', jp=None, pp=None, light='day', hole=1, extra=None, kick=None)
     return sh
 def cam2(p0, l0, f0, p1, l1, f1, roll=0):
     return [{'t': 0, 'pos': p0, 'look': l0, 'fov': f0}, {'t': 1, 'pos': p1, 'look': l1, 'fov': f1, 'roll': roll}]
-def shaft(y=-12, v='side', layer='terra', jp=None, glow=0.6, light='shaft', ice=False, extra=None, rope=None, lamp=30, hat=True, kick=None, rocha=None):
+def shaft(y=-12, v='side', layer='terra', jp=None, glow=0.6, light='shaft', ice=False, extra=None, rope=None, lamp=30, hat=True, kick=None, rocha=None, water=0):
     if rope is None: rope = (v == 'up')
     jpos = [H[0] + 0.32, y, H[2] + 0.12]
     cast = [act(J, jpos, pose=jp or pose('neutral', 'up', 'hang', holdR='drill'), face='cam', blob=False, shadow=False, hat=hat)]
@@ -48,6 +48,7 @@ def shaft(y=-12, v='side', layer='terra', jp=None, glow=0.6, light='shaft', ice=
         'fall': ([H[0] - 0.3, y + 4, H[2]], [H[0], y - 20, H[2]], 70, [H[0] - 0.3, y - 2, H[2]], [H[0], y - 26, H[2]], 70),
     }[v]
     sh = {'set': 'shaft', 'light': light, 'cam': cam2(*cams), 'cast': cast, 'world': {'layer': layer, 'glow': glow, 'ice': ice, 'rope': rope, 'lamp': lamp}}
+    if water: sh['world']['water'] = {'top': y + water, 'depth': 3}   # nível da água acima dos pés do Joãozinho
     if extra: sh['cast'] += extra
     if kick: sh['kick'] = kick
     return sh
@@ -140,11 +141,11 @@ S[10] = [yard('wide', jp=p('nervous', 'reach', 'hang', holdL='shovel'), pp=p('ne
 S[11] = [shaft(-1.3, 'down', 'terra', jp=p('grin', 'reach', 'hang', holdL='shovel'), hat=False, rope=False)]
 S[12] = [shaft(-1.6, 'side', 'terra', jp=p('shock', 'lift', 'hang', holdL='shovel'), hat=False, rope=False), shaft(-1.6, 'down', 'terra', jp=p('stern', 'cheek', 'hang', holdL='shovel'), hat=False, rope=False)]
 S[13] = [shaft(-2.2, 'down', 'terra', jp=p('grin', 'reach', 'hang', holdL='shovel'), hat=False, rope=False)]
-S[14] = [shaft(-2.3, 'side', 'terra', jp=p('shock', 'cheek', 'cheek'), hat=False, rope=False)]
-S[15] = [shaft(-2.3, 'down', 'terra', jp=p('nervous', 'hang', 'hang'), hat=False, rope=False, lamp=20)]
-S[16] = [shaft(-2.3, 'side', 'terra', jp=p('pained', 'up', 'up'), hat=False, rope=False)]
+S[14] = [shaft(-2.3, 'side', 'terra', jp=p('shock', 'cheek', 'cheek'), hat=False, rope=False, water=0.35)]
+S[15] = [shaft(-2.3, 'side', 'terra', jp=p('nervous', 'hang', 'hang'), hat=False, rope=False, water=0.55, lamp=20)]
+S[16] = [shaft(-2.3, 'side', 'terra', jp=p('pained', 'up', 'up'), hat=False, rope=False, water=0.7)]
 S[17] = [yard('p', pp=p('grin', 'cheek', 'hang', facing=1, look=0.5)), shaft(-2.3, 'up', 'terra', jp=p('pained', 'up', 'hang', holdR='bucket'), hat=False, rope=False)]
-S[18] = [shaft(-2.3, 'side', 'terra', jp=p('stern', 'lift', 'hang', holdL='bucket'), hat=False, rope=False)]
+S[18] = [shaft(-2.3, 'side', 'terra', jp=p('stern', 'lift', 'hang', holdL='bucket'), hat=False, rope=False, water=0.3)]
 S[19] = [shaft(-5, 'down', 'rocha', jp=p('grin', 'reach', 'hang', holdL='shovel'), hat=False, rope=False)]
 S[20] = [shaft(-5, 'side', 'rocha', jp=p('neutral', 'reach', 'hang', holdL='shovel'), hat=False, rope=False)]
 S[21] = [shaft(-5, 'down', 'rocha', jp=p('stern', 'reach', 'hang', holdL='shovel'), hat=False, rope=False)]
