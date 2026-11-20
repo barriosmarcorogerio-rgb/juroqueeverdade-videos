@@ -90,7 +90,7 @@
   "cover_ms": 30000,
   "requer_longo": "Os titãs de Attack on Titan poderiam existir? A ciência responde",
   "publicado": false,
-  "nao_antes": "2026-11-21T11:47-03:00"
+  "pausado": true
  },
  {
   "slug": "insta-gigantes-1",
@@ -100,7 +100,8 @@
   "video": "videos/insta-gigantes-1.mp4",
   "cover_ms": 4000,
   "requer_longo": "Os titãs de Attack on Titan poderiam existir? A ciência responde",
-  "publicado": false
+  "publicado": false,
+  "pausado": true
  },
  {
   "slug": "insta-gigantes-2",
@@ -110,7 +111,8 @@
   "video": "videos/insta-gigantes-2.mp4",
   "cover_ms": 4000,
   "requer_longo": "Os titãs de Attack on Titan poderiam existir? A ciência responde",
-  "publicado": false
+  "publicado": false,
+  "pausado": true
  },
  {
   "slug": "insta-gigantes-3",
@@ -120,6 +122,7 @@
   "video": "videos/insta-gigantes-3.mp4",
   "cover_ms": 4000,
   "requer_longo": "Os titãs de Attack on Titan poderiam existir? A ciência responde",
-  "publicado": false
+  "publicado": false,
+  "pausado": true
  }
 ]

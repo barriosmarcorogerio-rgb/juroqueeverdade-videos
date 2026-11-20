@@ -20,7 +20,7 @@ LEIA ANTES: `ESTILO.md` (roteiro, câmera, luz, legenda e APRENDIZADOS — obrig
 13. `git add -A && git commit` (fim da mensagem com as linhas de atribuição) `&& git push`. Apagar `frames/`, `frames_cap/`, `stills/` antes do commit (não versionar quadros).
 
 ## Tarefa B — Publicação + métricas (11h47 e 19h BRT; métricas só na rodada das 11h47)
-1. `git pull`. Pegar em `fila.json` o item mais antigo com `publicado:false`. Item com `nao_antes` (data/hora ISO) só pode sair a partir desse momento — pular e pegar o próximo até lá (o dono escolhe o dia da prévia).
+1. `git pull`. Pegar em `fila.json` o item mais antigo com `publicado:false`. Item com `nao_antes` (data/hora ISO) só pode sair a partir desse momento — pular e pegar o próximo até lá (o dono escolhe o dia da prévia). Item com `pausado:true` nunca sai até o dono pedir (tirar o campo).
 2. Make (conector), cenário **7068350**, `scenarios_run` com `responsive:true` e data:
    `video_url` = `https://raw.githubusercontent.com/barriosmarcorogerio-rgb/juroqueeverdade-videos/main/<video>`,
    `yt_url` = idem com `<video_yt>`, `thumb_url` = idem com `<thumb>`, `cover_ms`, `title`, `description`, `caption`, `yt_privacy:"public"`, `instagram:"sim"`. **E também** `yt_snippet` = `json.dumps({"title":titulo,"description":descricao,"categoryId":"1","defaultLanguage":"pt-BR","defaultAudioLanguage":"pt-BR"})` (string JSON; sem ela o YouTube marca o idioma como pt-PT). Chamada: `curl -X POST https://us2.make.com/api/v2/scenarios/7068350/run -H 'Content-Type: application/json' -d '{"responsive":true,"data":{...}}'` (token injetado pelo ambiente). Item antigo sem `thumb`: usar `thumb_url` = a URL do vídeo yt (o passo da thumbnail falha e é ignorado).
