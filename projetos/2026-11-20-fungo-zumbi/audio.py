@@ -1,7 +1,7 @@
-"""Stems for "O cheiro do pão": music.wav + sfx.wav (no mixing here; mix.py does the level lock)."""
+"""Stems for "A formiga zumbi": music.wav + sfx.wav (no mixing here; mix.py does the level lock)."""
 import numpy as np, subprocess, wave
 SR = 48000
-DUR = 1884 / 30
+DUR = 1901 / 30
 N = int(DUR * SR)
 rng = np.random.default_rng(7)
 def load_voice():
@@ -55,31 +55,45 @@ def drum(kind):
     return hp_fast(s.astype(np.float32), 300)
 
 
-# ---------------- music: light village jig (C major), stops on "Pronto." ----------------
+# ---------------- music: suspense em Lá menor (pulso + baixo) até "Não!" (1483); depois Dó maior leve ----------------
 music = np.zeros(N, np.float32)
-BPM = 116; beat = 60 / BPM
-prog = [(48, [60, 64, 67]), (53, [57, 60, 65]), (55, [59, 62, 67]), (48, [60, 64, 67])]  # C F G C
-mel = [72, 74, 76, 72, 77, 76, 74, 71, 72, 76, 79, 77, 76, 74, 72, 67]
-MUSIC_END = 1131 / 30
-bar = 0; tt = 0.0; k = 0
-while tt < MUSIC_END:
+BPM = 100; beat = 60 / BPM
+SWITCH = 1483 / 30
+prog = [(45, [57, 60, 64]), (41, [57, 60, 65]), (43, [55, 59, 62]), (40, [56, 59, 64])]  # Am F G E
+mel = [76, 0, 77, 76, 0, 72, 71, 0, 72, 0, 69, 68, 0, 69, 71, 0]
+tt = 0.0; bar = 0; k = 0
+while tt < SWITCH:
     root, ch = prog[bar % 4]
-    place(music, brass([midi(m) for m in ch], beat * 4 * 0.98), tt, 0.05)
+    place(music, lp_fast(brass([midi(m) for m in ch], beat * 4 * 0.98), 900), tt, 0.05)
     for b in range(4):
         tb = tt + b * beat
-        if tb >= MUSIC_END: break
-        place(music, drum("kick" if b % 2 == 0 else "snare"), tb, 0.45 if b % 2 == 0 else 0.22)
-        place(music, pluck(midi(root - 12 + (7 if b % 2 else 0)), 0.32, 0.45), tb, 0.35)
+        if tb >= SWITCH: break
+        place(music, drum("kick"), tb, 0.35 if b in (0, 2) else 0.12)
+        place(music, pluck(midi(root - 12), 0.4, 0.35), tb, 0.38)
         for h in range(2):
-            th = tb + h * beat / 2
-            if th < MUSIC_END: place(music, pluck(midi(mel[k % len(mel)]), 0.2, 0.7), th, 0.16); k += 1
+            th = tb + h * beat / 2; m = mel[k % len(mel)]; k += 1
+            if th < SWITCH and m: place(music, pluck(midi(m), 0.25, 0.8), th, 0.12)
     bar += 1; tt += beat * 4
-i0 = int((MUSIC_END - 0.06) * SR); music[i0:] *= np.linspace(1, 0, N - i0) ** 10
-dn = int((DUR - MUSIC_END) * SR); td = np.arange(dn) / SR
-drone = (np.sin(2 * np.pi * 65.4 * td) + 0.5 * np.sin(2 * np.pi * 98 * td)) * np.minimum(1, td / 0.8)
-place(music, lp_fast(drone.astype(np.float32), 500), MUSIC_END, 0.06)
-# tiny comic button after the last word
-for j, m in enumerate([67, 72, 79]): place(music, pluck(midi(m), 0.3, 0.7), 1856 / 30 + j * 0.16, 0.35)
+i0 = int((SWITCH - 0.05) * SR); music[i0:] = 0
+BPM2 = 120; b2 = 60 / BPM2; prog2 = [(48, [60, 64, 67]), (53, [57, 60, 65]), (55, [59, 62, 67]), (48, [60, 64, 67])]
+mel2 = [72, 76, 79, 76, 77, 74, 71, 74, 72, 76, 79, 84, 79, 76, 74, 72]
+tt = SWITCH + 0.15; bar = 0; k = 0
+END2 = 1861 / 30
+while tt < END2:
+    root, ch = prog2[bar % 4]
+    place(music, brass([midi(m) for m in ch], b2 * 4 * 0.98), tt, 0.04)
+    for b in range(4):
+        tb = tt + b * b2
+        if tb >= END2: break
+        place(music, drum("kick" if b % 2 == 0 else "snare"), tb, 0.35 if b % 2 == 0 else 0.18)
+        place(music, pluck(midi(root - 12 + (7 if b % 2 else 0)), 0.3, 0.45), tb, 0.3)
+        for h in range(2):
+            th = tb + h * b2 / 2
+            if th < END2: place(music, pluck(midi(mel2[k % len(mel2)]), 0.18, 0.7), th, 0.13); k += 1
+    bar += 1; tt += b2 * 4
+# volta do suspense no loop (emenda com o começo)
+for j in range(int((DUR - END2) / beat) + 1):
+    place(music, drum("kick"), END2 + j * beat, 0.3); place(music, pluck(midi(33), 0.4, 0.35), END2 + j * beat, 0.38)
 # ---------------- sfx ----------------
 sfx = np.zeros(N, np.float32)
 def noise(d): return rng.standard_normal(int(d * SR)).astype(np.float32)
@@ -173,17 +187,21 @@ F = lambda f: f / 30
 def flap(d):
     n = int(d * SR); t = np.arange(n) / SR
     return (lp_fast(noise(d), 700) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 5 * t))) * np.sin(np.pi * t / d)).astype(np.float32)
-place(sfx, whoosh(0.4), F(94), 0.3); place(sfx, ting(), F(150), 0.4); place(sfx, thunk(160, 0.3), F(161), 0.6)
-place(sfx, sting(), F(200), 0.25); place(sfx, water(11.0), F(200), 0.35)
-place(sfx, murmur(1.4), F(264), 0.3); place(sfx, whoosh(0.5), F(359), 0.3); place(sfx, creak(0.8), F(380), 0.4)
-place(sfx, sting(), F(503), 0.35); place(sfx, leaves(3.5), F(534), 0.25); place(sfx, snore(1.0), F(600), 0.4)
-place(sfx, ting(), F(660), 0.3); place(sfx, water(2.4), F(717), 0.3); place(sfx, murmur(1.6), F(787), 0.6)
-place(sfx, hiss(0.5), F(860), 0.6); place(sfx, splash(0.4), F(872), 0.8); place(sfx, laugh(1.0), F(890), 0.35)
-place(sfx, crunch(0.4), F(942), 0.9); place(sfx, crunch(0.3), F(955), 0.6); place(sfx, laugh(1.0), F(965), 0.35)
-place(sfx, whoosh(0.4), F(1037), 0.4); place(sfx, thunk(70, 0.5), F(1052), 1.0); place(sfx, crash(0.8), F(1053), 0.3)
-place(sfx, cuckoo(), F(1100), 0.4); place(sfx, sting(), F(1133), 0.6); place(sfx, ting(), F(1214), 0.35)
-place(sfx, leaves(2.5), F(1378), 0.3); place(sfx, hiss(0.4), F(1482), 0.5); place(sfx, leaves(3.0), F(1590), 0.3)
-place(sfx, whoosh(0.6), F(1840), 0.3); place(sfx, crunch(0.3), F(1862), 0.6)
+def drip():
+    n = int(0.3 * SR); t = np.arange(n) / SR; f = 900 + 1400 * np.exp(-t * 40)
+    return (np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 18) * 0.5).astype(np.float32)
+place(sfx, sting(), F(2), 0.3); place(sfx, creak(0.7, 90), F(40), 0.35); place(sfx, ting(), F(72), 0.3)
+place(sfx, leaves(2.0), F(145), 0.25); place(sfx, crunch(0.3), F(255), 0.7); place(sfx, hiss(0.4), F(262), 0.4)
+place(sfx, creak(2.4, 70), F(330), 0.4); place(sfx, thunk(60, 0.5), F(395), 0.8)
+place(sfx, leaves(2.0), F(425), 0.2); place(sfx, rumble(1.8), F(505), 0.5); place(sfx, sting(), F(568), 0.4)
+place(sfx, scrape(1.5), F(630), 0.25); place(sfx, ting(), F(692), 0.35); place(sfx, whoosh(0.5), F(730), 0.3)
+place(sfx, snap(), F(866), 0.9); place(sfx, thunk(70, 0.5), F(920), 0.7)
+for j in range(6): place(sfx, drip(), F(990 + j * 19), 0.4)
+place(sfx, creak(2.6, 60), F(1110), 0.5); place(sfx, thunk(55, 0.5), F(1145), 0.7)
+place(sfx, hiss(1.6), F(1205), 0.45); place(sfx, sting(), F(1275), 0.45); place(sfx, murmur(3.0), F(1290), 0.25)
+place(sfx, thunk(80, 0.4), F(1458), 0.8); place(sfx, whoosh(0.4), F(1483), 0.4); place(sfx, ting(), F(1486), 0.35)
+place(sfx, ting(), F(1628), 0.3); place(sfx, laugh(0.9), F(1700), 0.25); place(sfx, crunch(0.3), F(1770), 0.4)
+place(sfx, whoosh(0.5), F(1840), 0.3); place(sfx, creak(0.7, 90), F(1880), 0.3)
 def wav(name, x):
     pcm = (np.clip(x, -1, 1) * 32767).astype(np.int16)
     with wave.open(name, "wb") as w: w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())
