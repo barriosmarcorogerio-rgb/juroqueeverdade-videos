@@ -83,3 +83,6 @@ Nada publicado: os dois longos já foram enviados ao canal, mas seguem com 0 vie
 - Camelos segue crescendo devagar (1148 → 1420 views em 6 dias sem postagem nova): o canal está parado há uma semana — o Short diário é a prioridade absoluta.
 - Gancho em pergunta com personagem histórico (camelos) segue muito acima do "chuva de carne": manter perguntas diretas ("UMA FORMIGA ZUMBI DE VERDADE?!").
 - Assim que o dono publicar um longo, liberar a prévia correspondente na mesma rodada.
+
+## 2026-11-25 — publicação da noite (18h50 BRT)
+Publicado: "Existe formiga ZUMBI de verdade?!" — YouTube 6xkFRbrNJM4 (21h51 UTC) + Reels (21h52 UTC). Primeiro Short com legenda de frase inteira. Prévias dos longos seguem bloqueadas (longos ainda privados; titãs pausados).

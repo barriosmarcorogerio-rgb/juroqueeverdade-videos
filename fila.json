@@ -135,6 +135,8 @@
     "video_yt": "videos/2026-11-20-fungo-zumbi-yt.mp4",
     "thumb": "videos/2026-11-20-fungo-zumbi-thumb.jpg",
     "cover_ms": 4333,
-    "publicado": false
+    "publicado": true,
+    "publicado_em": "2026-11-25 21:51 UTC",
+    "youtube_id": "6xkFRbrNJM4"
   }
 ]
