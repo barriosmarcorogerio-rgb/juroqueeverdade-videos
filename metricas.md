@@ -65,3 +65,6 @@ Conclusões:
 
 ## 2026-11-19 — publicação da noite (18h50 BRT)
 Nada publicado: o único item fora do Instagram é a prévia "E se você cavasse um buraco até o Japão? (parte 1)", que exige o longo no canal — conferido pelo webhook às 18h50 e o longo ainda não foi publicado pelo dono. Sem Shorts novos na fila (CPU no render dos titãs, 71%).
+
+## 2026-11-20 a 25 — sessão parada (contêiner reiniciado)
+O contêiner ficou fora do ar de 20/11 a 25/11 (tarefas agendadas acumuladas sem execução). Nada publicado no período: a fila só tem a prévia do buraco (exige o longo no canal), a prévia/recortes dos titãs (pausados pelo dono) e itens de Instagram. Muralha retomada em 25/11 14h36 UTC com 2343/7008 quadros. Short "fungo zumbi" em produção.

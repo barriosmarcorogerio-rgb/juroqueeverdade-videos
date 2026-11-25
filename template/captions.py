@@ -1,4 +1,5 @@
-"""Legenda palavra por palavra (estilo das referências) sobre frames/ -> frames_cap/.
+"""Legenda de FRASE INTEIRA (pedido do dono, 11/2026) sobre frames/ -> frames_cap/: a frase toda aparece (até 3 linhas)
+  e a palavra que está sendo falada fica AMARELA.
 + GANCHO: se existir work/gancho.txt (frase curta e absurda, ex.: "O BRASIL IMPORTOU CAMELOS?!"), ele aparece GRANDE
   no topo nos primeiros 2,8 s (entra com um "pop"). A legenda fica em 74% da altura, abaixo dos rostos."""
 import json, os, sys
@@ -31,18 +32,53 @@ def gancho(im, t):
         d.text((im.width / 2 + 5, y + 8), l, font=f, anchor='mm', fill=(0, 0, 0), stroke_width=16, stroke_fill=(0, 0, 0))
         d.text((im.width / 2, y), l, font=f, anchor='mm', fill=(255, 214, 63), stroke_width=14, stroke_fill=(20, 16, 22)); y += lh
 fs = sorted(glob.glob('frames/f*.jpg'))
-def word_at(t):
-    cur = None
-    for i, w in enumerate(W):
-        nxt = W[i + 1]['s'] if i + 1 < len(W) else w['e'] + 0.4
-        if w['s'] - 0.03 <= t < min(nxt, w['e'] + 0.45): cur = w['w']
-    return cur
+# --- frases: quebra no fim de frase (. ! ? …) e, se passar de 9 palavras, também na vírgula/pausa
+PH = []; cur = []
+for i, w in enumerate(W):
+    cur.append(i); txt = w['w']; gap = (W[i + 1]['s'] - w['e']) if i + 1 < len(W) else 9
+    rest = 0  # palavras até o fim da frase (não deixar 1–2 palavras órfãs)
+    for j in range(i + 1, len(W)):
+        rest += 1
+        if W[j]['w'].endswith(('.', '!', '?', '…')): break
+    soft = len(cur) >= 9 and rest >= 3 and (txt.endswith((',', ':', ';')) or gap > 0.35)
+    if txt.endswith(('.', '!', '?', '…')) or soft or (len(cur) >= 16 and rest >= 3) or gap > 0.8:
+        PH.append(cur); cur = []
+if cur: PH.append(cur)
+def phrase_at(t):
+    for k, ph in enumerate(PH):
+        a = W[ph[0]]['s'] - 0.05; b = W[PH[k + 1][0]]['s'] - 0.05 if k + 1 < len(PH) else W[ph[-1]]['e'] + 0.5
+        b = min(b, W[ph[-1]]['e'] + 0.6)
+        if a <= t < b: return ph
+    return None
+SZ = 74; fcap = ImageFont.truetype(FONT, SZ)
+_LAY = {}
+def layout(d, ph, maxw):
+    key = ph[0]
+    if key in _LAY: return _LAY[key]
+    lines = [[]]
+    for i in ph:
+        test = ' '.join(W[j]['w'] for j in lines[-1] + [i])
+        if lines[-1] and d.textlength(test, font=fcap) > maxw: lines.append([i])
+        else: lines[-1].append(i)
+    _LAY[key] = lines; return lines
+def caption(im, t):
+    ph = phrase_at(t)
+    if not ph: return
+    d = ImageDraw.Draw(im); lines = layout(d, ph, im.width * 0.86)
+    now = None
+    for i in ph:
+        if W[i]['s'] - 0.03 <= t: now = i
+    lh = int(SZ * 1.2); y0 = im.height * 0.74 - (len(lines) - 1) * lh / 2
+    for li, ln in enumerate(lines):
+        full = ' '.join(W[j]['w'] for j in ln); x = im.width / 2 - (d.textlength(full, font=fcap) + 6 * (len(ln) - 1)) / 2; y = y0 + li * lh
+        for j in ln:
+            word = W[j]['w']; col = (255, 214, 63) if j == now else (255, 255, 255)
+            d.text((x + 4, y + 6), word, font=fcap, anchor='lm', fill=(0, 0, 0), stroke_width=11, stroke_fill=(0, 0, 0))
+            d.text((x, y), word, font=fcap, anchor='lm', fill=col, stroke_width=9, stroke_fill=(20, 16, 22))
+            x += d.textlength(word + ' ', font=fcap) + 6
 for f in fs:
-    n = int(os.path.basename(f)[1:5]); t = n / 30; im = Image.open(f).convert('RGB'); w = word_at(t)
-    if w:
-        d = ImageDraw.Draw(im); x, y = im.width / 2, im.height * 0.74
-        d.text((x + 4, y + 6), w, font=font, anchor='mm', fill=(0, 0, 0), stroke_width=12, stroke_fill=(0, 0, 0))
-        d.text((x, y), w, font=font, anchor='mm', fill=(255, 255, 255), stroke_width=10, stroke_fill=(20, 16, 22))
+    n = int(os.path.basename(f)[1:5]); t = n / 30; im = Image.open(f).convert('RGB')
+    caption(im, t)
     gancho(im, t)
     im.save('frames_cap/' + os.path.basename(f), quality=95)
-print('captions', len(fs), FONT)
+print('captions', len(fs), len(PH), 'frases', FONT)
