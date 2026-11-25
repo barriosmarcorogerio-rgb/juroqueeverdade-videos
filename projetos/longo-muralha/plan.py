@@ -153,7 +153,7 @@ S[52] = [shot(N, cam([4, WY + 3, OUT - 6], [6, WY + 3, OUT + 3], 50), cast=[gian
 TOP = lambda e='shock': [giant('tiny', [6, 0, OUT + 3.5], look=0.0), who('tonico', [6, 12.2, OUT + 3.9], p(e, 'cheek', 'cheek'), s=1.0)]
 S[53] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 40), cast=TOP())]
 S[54] = [shot(N, cam([6.8, 13.8, OUT + 6.5], [6, 12.6, OUT + 3.9], 36), cast=TOP('nervous'))]
-S[55] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 34), cast=TOP('squeeze'))]
+S[55] = [shot(N, cam([8.5, 11, OUT + 10], [6, 11.5, OUT + 3.5], 34), cast=TOP('pained'))]
 S[56] = [shot(N, cam([10, 11, OUT + 12], [4, 12, OUT + 2], 48), cast=[giant('tiny', [6, 0, OUT + 3.5]), who('bia', [12, 13, OUT + 4], p('stern', 'reach', 'give', holdR='grapple', look=-0.6), to=[0, WY, WALK + 1], roll=0.3)])]
 S[57] = [shot(N, cam([6.4, 10.6, OUT + 15], [6, 9.8, OUT + 3.5], 44, [6.2, 10.4, OUT + 14], [6, 8.6, OUT + 3.5], 48), cast=[giant('grin', [6, 0, OUT + 3.5], side=1, cutFrac=0.3, decapFrac=0.5, steam=True), who('bia', [2.0, 10.7, OUT + 4.8], p('stern', 'reach', 'give', holdR='grapple', look=0.6), to=[11.0, 9.6, OUT + 4.8], roll=-0.35)], kick=True)]   # corte na nuca e DECAPITAÇÃO (titã de perfil)
 S[58] = [shot(DW, cam([18, 3, OUT + 22], [6, 5, OUT + 6], 50), cast=[giant('grin', [6, 0, OUT + 6], side=1, headGone=True, steam=True, roll=0, rollTo=1.5, rollEase='in'), giant('grin', [6, 0, OUT + 6.2], side=1, decap=1, headOnly=True), who('ferraz', [0, WY, WALK], p('stern', 'point', 'hip'))], kick=True)]   # corpo sem cabeça desaba; a cabeça já está na grama
@@ -249,7 +249,7 @@ S[153] = [bell(N, near=True)]
 S[154] = [tower(N, TOW('nervous', 'stern', 'up', 'up'), ring=True)]
 S[155] = [tower(N, TOW('grin', 'shock') + [who('ferraz', [BX - 0.6, WY, BZ - 0.8], p('stern', 'reach', 'reach', facing=1))], ring=True)]
 S[156] = [bell(N, near=True)]
-S[157] = [tower(N, [who('tonico', [BX + 0.5, WY + 0.4, BZ - 0.2], p('squeeze', 'up', 'up'))], ring=True)]
+S[157] = [tower(N, [who('tonico', [BX + 0.5, WY + 0.4, BZ - 0.2], p('pained', 'up', 'up'))], ring=True)]
 S[158] = [bell(N, near=True)]; S[159] = [bell(N)]
 S[160] = [wall_out(N, G3W())]
 S[161] = [wall_out(N, [giant('grin', [-6, 0, OUT + 3], look=-0.6), giant('tiny', [6, 0, OUT + 3.5], look=-0.6), giant('long', [15, 0, OUT + 5], look=-0.6)])]
