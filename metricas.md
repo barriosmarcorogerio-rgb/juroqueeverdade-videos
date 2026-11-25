@@ -68,3 +68,18 @@ Nada publicado: o único item fora do Instagram é a prévia "E se você cavasse
 
 ## 2026-11-20 a 25 — sessão parada (contêiner reiniciado)
 O contêiner ficou fora do ar de 20/11 a 25/11 (tarefas agendadas acumuladas sem execução). Nada publicado no período: a fila só tem a prévia do buraco (exige o longo no canal), a prévia/recortes dos titãs (pausados pelo dono) e itens de Instagram. Muralha retomada em 25/11 14h36 UTC com 2343/7008 quadros. Short "fungo zumbi" em produção.
+
+## 2026-11-25 — publicação + métricas (rodada das 11h47 BRT)
+| Vídeo | Rede | Data | Views | Likes | Coment. |
+|---|---|---|---|---|---|
+| Os titãs de Attack on Titan poderiam existir? (longo) | YT | 20/11 | 0 | 0 | 0 |
+| E se você cavasse um buraco até o Japão? (longo) | YT | 19/11 | 0 | 0 | 0 |
+| Dom Pedro II trouxe CAMELOS pro sertão?! | YT | 18/11 | 1420 | 38 | 0 |
+| Choveu carne do céu… | YT | 17/11 | 0 | 0 | 0 |
+| Camelos (reels) | IG | 18/11 | — | 60 | 0 |
+| Chuva de carne (reels) | IG | 17/11 | — | 44 | 2 |
+
+Nada publicado: os dois longos já foram enviados ao canal, mas seguem com 0 views há 5–6 dias (privados/agendados pelo dono), então as prévias com `requer_longo` continuam bloqueadas; titãs também estão pausados. Sem Short independente pronto (formiga zumbi em render, ~5 h).
+- Camelos segue crescendo devagar (1148 → 1420 views em 6 dias sem postagem nova): o canal está parado há uma semana — o Short diário é a prioridade absoluta.
+- Gancho em pergunta com personagem histórico (camelos) segue muito acima do "chuva de carne": manter perguntas diretas ("UMA FORMIGA ZUMBI DE VERDADE?!").
+- Assim que o dono publicar um longo, liberar a prévia correspondente na mesma rodada.
