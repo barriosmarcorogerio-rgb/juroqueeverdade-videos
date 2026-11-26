@@ -83,7 +83,7 @@ def badge(im, t):
     for B in BADGES:
         if B['a'] <= t < B['b']:
             d = ImageDraw.Draw(im); k = min(1, (t - B['a']) / 0.18); s = 0.7 + 0.3 * k
-            f2 = ImageFont.truetype(FONT, int(64 * s)); w = d.textlength(B['t'], font=f2); x, y = im.width / 2, im.height * 0.30
+            f2 = ImageFont.truetype(FONT, int(64 * s)); w = d.textlength(B['t'], font=f2); x, y = im.width / 2, im.height * 0.12
             d.rounded_rectangle([x - w / 2 - 34 * s, y - 52 * s, x + w / 2 + 34 * s, y + 52 * s], int(30 * s), fill=(255, 214, 63), outline=(20, 16, 22), width=int(8 * s))
             d.text((x, y + 2), B['t'], font=f2, anchor='mm', fill=(20, 16, 22))
 for f in fs:
