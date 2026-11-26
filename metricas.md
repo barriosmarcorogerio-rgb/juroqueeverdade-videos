@@ -86,3 +86,17 @@ Nada publicado: os dois longos já foram enviados ao canal, mas seguem com 0 vie
 
 ## 2026-11-25 — publicação da noite (18h50 BRT)
 Publicado: "Existe formiga ZUMBI de verdade?!" — YouTube 6xkFRbrNJM4 (21h51 UTC) + Reels (21h52 UTC). Primeiro Short com legenda de frase inteira. Prévias dos longos seguem bloqueadas (longos ainda privados; titãs pausados).
+
+## 2026-11-26 — publicação + métricas (11h47 BRT)
+| Vídeo | Rede | Publicado | Views | Likes | Coment. |
+|---|---|---|---|---|---|
+| Existe formiga ZUMBI de verdade?! | YT | 25/11 21h51 | 1148 (17 h) | 26 | 0 |
+| Existe formiga zumbi (reels) | IG | 25/11 21h52 | — | 42 | 0 |
+| Dom Pedro II trouxe CAMELOS pro sertão?! | YT | 18/11 | 1420 | 38 | 0 |
+| Camelos (reels) | IG | 18/11 | — | 60 | 0 |
+| Titãs / Buraco (longos) | YT | 19–20/11 | 0 | 0 | 0 (ainda privados) |
+
+Publicado agora: "Você aguentaria 11 DIAS sem dormir?!" — YouTube -HTHtv7_KuQ (14h49 UTC) + Reels.
+- A formiga zumbi (curiosidade de ciência + pergunta "de verdade?!" no gancho) fez em 17 h o que os camelos fizeram em 6 dias: o caminho "curiosidade/E SE" pedido pelo dono está funcionando — manter A-backlog na frente.
+- Primeiro Short com legenda de frase inteira: retenção não caiu (likes/views ~2,3%, parecido com camelos 2,7%). Manter.
+- Shorts independentes saindo todo dia é o que move o canal; os longos continuam privados — liberar as prévias assim que o dono publicar.
