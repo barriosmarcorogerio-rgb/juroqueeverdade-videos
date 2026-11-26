@@ -19,7 +19,7 @@ const CAMS = {
   series: [{ f: 119, pos: [8, 7, 24], look: [-4, 14, -10], fov: 52 }, { f: 219, pos: [4, 9, 22], look: [6, 15, -10], fov: 50 }],
   fisica: [{ f: 220, pos: [9, 4, 22], look: [0, 6, -4], fov: 54 }, { f: 287, pos: [9, 3.6, 21], look: [0, 4, -4], fov: 52 }],
   lei: [{ f: 288, pos: [-6.6, 2.4, 10.5], look: [-6.6, 1.2, 2], fov: 50 }, { f: 376, pos: [-6.6, 2.3, 9.6], look: [-6.6, 1.2, 2], fov: 48 }],
-  dobra: [{ f: 377, pos: [-6.2, 2.7, 9.0], look: [-6.2, 1.0, 2], fov: 48 }, { f: 482, pos: [-6.2, 2.6, 8.4], look: [-6.2, 1.0, 2], fov: 46 }],
+  dobra: [{ f: 377, pos: [-6.3, 2.7, 10.0], look: [-6.3, 1.0, 2], fov: 50 }, { f: 482, pos: [-6.3, 2.6, 9.4], look: [-6.3, 1.0, 2], fov: 48 }],
   peso: [{ f: 483, pos: [-5.6, 1.7, 8.2], look: [-5.6, 1.0, 2], fov: 48 }, { f: 565, pos: [-5.6, 1.7, 7.8], look: [-5.6, 1.0, 2], fov: 46 }],
   cresceu: [{ f: 566, pos: [6.5, 6.5, 10], look: [1.8, 6.0, 0], fov: 44 }, { f: 641, pos: [6.0, 6.6, 9.2], look: [1.8, 6.0, 0], fov: 42 }],
   aves: [{ f: 642, pos: [5.2, 1.0, 9.6], look: [3, 0.9, 6], fov: 42 }, { f: 746, pos: [5.0, 1.4, 9.2], look: [3, 1.6, 6], fov: 46 }],
@@ -53,16 +53,16 @@ export const actorsAt = (f, T) => {
   const S = shotAt(f), id = S.id, out = []; const push = (a) => out.push(a);
   switch (id) {
     case 'abre': case 'loop': push(DRAG(T, f, { flap: flapFast(f), effort: 1, hop: hopOf(f), sweat: 1, run: q((f * 0.05) % 1, 2) }, D0));
-      push(TON(T, f, ['surprised', 'confused'], [['cheek', 'hang'], ['hang', 'point', null, -1, -0.5]], [5.2, 0, 5])); break;
+      push(TON(T, f, ['surprised', 'confused'], [['cheek', 'hang'], ['hang', 'point', null, -1, -0.5]], [3.4, 0, 6.4])); break;
     case 'series': push(DRAG(T, f, { flap: flapSlow(f), fire: f > 160 ? q(0.6 + 0.4 * Math.sin(f * 0.3), 2) : 0 }, [lerp(-10, 10, (f - 119) / 100), 13 + Math.sin(f * 0.1) * 0.6, -10], DS, { blob: false })); break;
     case 'fisica': { const y = f < 250 ? lerp(13, 0, E.easeIn(ramp(f, 220, 250))) : 0; push(DRAG(T, f, { flap: f < 250 ? flapFast(f) : 0.25, effort: 1, sweat: f > 250 ? 1 : 0 }, [5, y, -4], DS, { blob: y < 0.5 })); break; }
-    case 'lei': push(TON(T, f, ['determined', 'smile'], [['hip', 'point', null, 1, 0.4], ['up', 'point', null, 1, 0.4]], [-8.8, 0, 3.8])); break;
-    case 'dobra': push(TON(T, f, ['smile', 'excited'], [['point', 'hip', null, 1, 0.4], ['up', 'hip']], [-8.6, 0, 3.8])); break;
-    case 'peso': push(TON(T, f, f > 520 ? ['shock', 'surprised'] : 'smug', [['cheek', 'cheek']], [-8.4, 0, 3.8])); break;
+    case 'lei': push(TON(T, f, ['determined', 'smile'], [['hip', 'point', null, 1, 0.4], ['up', 'point', null, 1, 0.4]], [-7.7, 0, 5.2])); break;
+    case 'dobra': push(TON(T, f, ['smile', 'excited'], [['point', 'hip', null, 1, 0.4], ['up', 'hip']], [-7.6, 0, 5.2])); break;
+    case 'peso': push(TON(T, f, f > 520 ? ['shock', 'surprised'] : 'smug', [['cheek', 'cheek']], [-7.5, 0, 5.0])); break;
     case 'cresceu': push(DRAG(T, f, { flap: flapFast(f), effort: 1, hop: hopOf(f), sweat: 1 }, D0)); break;
     case 'aves': { const y = f > 700 ? lerp(0, 2.2, E.easeIn(ramp(f, 700, 746))) : 0; push(FXC('bd' + flapFast(f), (p) => T.fxBirdD(p, { flap: f > 690 ? flapFast(f) : 0.25 }), [3, y, 6], 0.9, { blob: y < 0.3 })); break; }
     case 'gigante': push(FXC('pt0', (p) => T.fxPteroD(p, {}), [0, 0, 0], 2.4)); push(TON(T, f, ['shock', 'surprised'], [['cheek', 'cheek'], ['up', 'up']], [2.6, 0, 2.4])); break;
-    case 'girafa': push(FXC('pt1', (p) => T.fxPteroD(p, {}), [-2.6, 0, 0], 2.9)); push(FXC('gf', (p) => T.fxGiraffeD(p, {}), [2.6, 0, 0], 2.7));
+    case 'girafa': push(FXC('pt1', (p) => T.fxPteroD(p, {}), [-2.0, 0, 0], 2.9)); push(FXC('gf', (p) => T.fxGiraffeD(p, {}), [2.6, 0, 0], 2.7));
       push(TON(T, f, ['surprised', 'smile'], [['hang', 'point', null, -1, -0.4]], [0.3, 0, 2.2])); break;
     case 'salto': { const L = q(ramp(f, 1000, 1110), 2); push(FXC('pt' + L + flapSlow(f), (p) => T.fxPteroD(p, { launch: L, flap: flapSlow(f) }), [0, 0, 0], 2.4, { blob: L < 0.5 })); break; }
     case 'entao': push(TON(T, f, ['confused', 'determined'], [['temple', 'hang'], ['hang', 'temple']], [4.5, 0.25, 4.5])); break;
