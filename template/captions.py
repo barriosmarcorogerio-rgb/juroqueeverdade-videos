@@ -76,9 +76,20 @@ def caption(im, t):
             d.text((x + 4, y + 6), word, font=fcap, anchor='lm', fill=(0, 0, 0), stroke_width=11, stroke_fill=(0, 0, 0))
             d.text((x, y), word, font=fcap, anchor='lm', fill=col, stroke_width=9, stroke_fill=(20, 16, 22))
             x += d.textlength(word + ' ', font=fcap) + 6
+# SELOS opcionais (work/badges.json: [{"a": seg, "b": seg, "t": "DIA 3"}]) — etiqueta amarela no alto, abaixo do gancho
+BADGES = json.load(open('work/badges.json')) if os.path.exists('work/badges.json') else []
+fb = ImageFont.truetype(FONT, 64)
+def badge(im, t):
+    for B in BADGES:
+        if B['a'] <= t < B['b']:
+            d = ImageDraw.Draw(im); k = min(1, (t - B['a']) / 0.18); s = 0.7 + 0.3 * k
+            f2 = ImageFont.truetype(FONT, int(64 * s)); w = d.textlength(B['t'], font=f2); x, y = im.width / 2, im.height * 0.30
+            d.rounded_rectangle([x - w / 2 - 34 * s, y - 52 * s, x + w / 2 + 34 * s, y + 52 * s], int(30 * s), fill=(255, 214, 63), outline=(20, 16, 22), width=int(8 * s))
+            d.text((x, y + 2), B['t'], font=f2, anchor='mm', fill=(20, 16, 22))
 for f in fs:
     n = int(os.path.basename(f)[1:5]); t = n / 30; im = Image.open(f).convert('RGB')
     caption(im, t)
+    badge(im, t)
     gancho(im, t)
     im.save('frames_cap/' + os.path.basename(f), quality=95)
 print('captions', len(fs), len(PH), 'frases', FONT)
