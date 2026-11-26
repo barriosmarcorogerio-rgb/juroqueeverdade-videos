@@ -8,7 +8,7 @@
 
 ## Backlog (18/11: o dono pediu MENOS história antiga — prioridade para CURIOSIDADES e "E SE" inspirados em séries/filmes famosos; usar só a ideia geral, nunca nomes, personagens, logos ou visual da obra; fatos conferidos na web na hora da produção)
 A1. ✅ PRODUZIDO 25/11 (fila) — 🍄 O fungo que transforma formigas em "zumbis" (Ophiocordyceps — inspira séries de zumbi). Ele poderia infectar humanos? (não: corpo quente demais). ✅ conferir temperatura
-A2. 🐉 Um dragão de verdade conseguiria voar? (lei do quadrado-cubo, maior animal voador: Quetzalcoatlus, ~10 m de asa) ✅
+A2. ✅ PRODUZIDO 26/11 (fila) — 🐉 Um dragão de verdade conseguiria voar? (lei do quadrado-cubo, maior animal voador: Quetzalcoatlus, ~10 m de asa) ✅
 A3. ✅ PRODUZIDO 26/11 (fila) — 😴 O garoto que ficou 11 dias sem dormir (Randy Gardner, 1964) — o que acontece com o cérebro. ✅
 A4. 🐙 O polvo tem 3 corações, sangue azul e prova sabor com os braços. ✅
 A5. 💡 Dá pra conversar com luzes de Natal? (pisca-pisca + código Morse; inspirado em séries de mistério dos anos 80) ✅
