@@ -196,6 +196,8 @@
     "video_yt": "videos/2026-11-26-dragao-voaria-yt.mp4",
     "thumb": "videos/2026-11-26-dragao-voaria-thumb.jpg",
     "cover_ms": 20000,
-    "publicado": false
+    "publicado": true,
+    "publicado_em": "2026-11-26 21:51 UTC",
+    "youtube_id": "mtzYFmg56e4"
   }
 ]

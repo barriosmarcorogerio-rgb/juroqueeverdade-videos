@@ -100,3 +100,6 @@ Publicado agora: "Você aguentaria 11 DIAS sem dormir?!" — YouTube -HTHtv7_KuQ
 - A formiga zumbi (curiosidade de ciência + pergunta "de verdade?!" no gancho) fez em 17 h o que os camelos fizeram em 6 dias: o caminho "curiosidade/E SE" pedido pelo dono está funcionando — manter A-backlog na frente.
 - Primeiro Short com legenda de frase inteira: retenção não caiu (likes/views ~2,3%, parecido com camelos 2,7%). Manter.
 - Shorts independentes saindo todo dia é o que move o canal; os longos continuam privados — liberar as prévias assim que o dono publicar.
+
+## 2026-11-26 — publicação da noite (18h50 BRT)
+Publicado: "Um DRAGÃO de verdade conseguiria voar?!" — YouTube mtzYFmg56e4 (21h51 UTC) + Reels. "11 dias sem dormir" com 560 views em 7 h. Longos seguem privados (0 views), prévias bloqueadas. Fila de Shorts independentes agora vazia: produzir 2 novos na próxima madrugada.
