@@ -10,7 +10,7 @@
 A1. ✅ PRODUZIDO 25/11 (fila) — 🍄 O fungo que transforma formigas em "zumbis" (Ophiocordyceps — inspira séries de zumbi). Ele poderia infectar humanos? (não: corpo quente demais). ✅ conferir temperatura
 A2. ✅ PRODUZIDO 26/11 (fila) — 🐉 Um dragão de verdade conseguiria voar? (lei do quadrado-cubo, maior animal voador: Quetzalcoatlus, ~10 m de asa) ✅
 A3. ✅ PRODUZIDO 26/11 (fila) — 😴 O garoto que ficou 11 dias sem dormir (Randy Gardner, 1964) — o que acontece com o cérebro. ✅
-A4. 🐙 O polvo tem 3 corações, sangue azul e prova sabor com os braços. ✅
+A4. ✅ PRODUZIDO 27/11 (fila) — 🐙 O polvo tem 3 corações, sangue azul e prova sabor com os braços. ✅
 A5. 💡 Dá pra conversar com luzes de Natal? (pisca-pisca + código Morse; inspirado em séries de mistério dos anos 80) ✅
 A6. ✅ PRODUZIDO 27/11 (fila) — 🦴 E se você caísse num buraco negro? ("espaguetificação") ✅
 A7. 🧟 E se um apocalipse zumbi começasse hoje — quanto tempo a energia elétrica duraria? (usinas sem gente: horas a dias) ⚠️ conferir números
