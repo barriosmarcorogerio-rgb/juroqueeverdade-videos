@@ -4,11 +4,12 @@ export const FPS = 30, TOTAL = 1862, DECK = 0;
 const MOUTH = await (await fetch('mouth.json')).json();
 const talkAt = (f) => MOUTH[f] || 0;
 const SH = [
-  ['abre', 0, 'sea'], ['azul', 75, 'sea'], ['tres', 152, 'sea'], ['branq', 207, 'sea'], ['terceiro', 303, 'sea'], ['rasteja', 424, 'sea'], ['cobre', 485, 'sea'],
+  ['abre', 0, 'sea'], ['abre2', 16, 'sea'], ['abre3', 32, 'sea'], ['azul', 75, 'sea'], ['tres', 152, 'sea'], ['branq', 207, 'sea'], ['terceiro', 303, 'sea'], ['rasteja', 424, 'sea'], ['cobre', 485, 'sea'],
   ['bracos', 649, 'sea'], ['neuronios', 728, 'sea'], ['pensa', 849, 'sea'], ['gosto', 899, 'sea'], ['prova', 1018, 'sea'], ['cor', 1115, 'sea'], ['osso', 1227, 'sea'],
   ['buraco', 1312, 'sea'], ['moeda', 1409, 'sea'], ['tonico', 1495, 'beach'], ['melada', 1627, 'beach'], ['loop', 1697, 'sea'],
 ];
-export const SHOTS = SH.map(([id, a, light], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light }));
+const CLOSE = new Set(['tres', 'branq', 'gosto', 'melada', 'bracos']);   // closes de propósito: o enquadramento automático só centraliza
+export const SHOTS = SH.map(([id, a, light], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light, close: CLOSE.has(id) }));
 export const shotAt = (f) => SHOTS.find((s) => f >= s.a && f <= s.b) || SHOTS[SHOTS.length - 1];
 export const LIGHTS = {
   sea: { az: 30, el: 75, sky: '#bfefff', ground: '#2a6a7a', hemi: 1.45, sun: '#e8fbff', sunI: 2.2, fog: '#2a8aa8', fogNear: 4, fogFar: 46, skyTop: '#1a5a8a', skyHor: '#2a8aa8', sunDisc: '#000000', sunSize: 0, sat: 1.12, vig: 0.3, shadowExt: 10, gain: '#e8fcff' },
@@ -17,7 +18,9 @@ export const LIGHTS = {
 export const lightFor = (S, f) => ({ ...LIGHTS[S.light] });
 const OC = [0, 0, -2], PX = 200;
 const CAMS = {
-  abre: [{ f: 0, pos: [0.2, 1.2, 1.6], look: [0, 1.1, -2], fov: 50 }, { f: 74, pos: [0.15, 1.2, 1.3], look: [0, 1.1, -2], fov: 48 }],
+  abre: [{ f: 0, pos: [0, 1.6, 0.2], look: [0, 1.6, -2], fov: 40 }, { f: 15, pos: [0, 1.6, 0.05], look: [0, 1.6, -2], fov: 38 }],
+  abre2: [{ f: 16, pos: [0.9, 0.5, 0.4], look: [0.2, 0.5, -2], fov: 46 }, { f: 31, pos: [0.7, 0.5, 0.2], look: [0.2, 0.5, -2], fov: 44 }],
+  abre3: [{ f: 32, pos: [0.2, 1.2, 2.2], look: [0, 1.1, -2], fov: 52 }, { f: 74, pos: [0.15, 1.2, 1.5], look: [0, 1.1, -2], fov: 48 }],
   azul: [{ f: 75, pos: [1.8, 1.4, 3.6], look: [0.6, 1.0, -2], fov: 52 }, { f: 151, pos: [1.6, 1.4, 3.2], look: [0.6, 1.0, -2], fov: 50 }],
   tres: [{ f: 152, pos: [0, 1.35, 0.2], look: [0, 1.25, -2], fov: 46 }, { f: 206, pos: [0, 1.35, 0.0], look: [0, 1.25, -2], fov: 44 }],
   branq: [{ f: 207, pos: [-0.3, 1.2, 0.3], look: [0, 1.0, -2], fov: 46 }, { f: 302, pos: [-0.2, 1.2, 0.1], look: [0, 1.0, -2], fov: 44 }],
@@ -32,7 +35,7 @@ const CAMS = {
   cor: [{ f: 1115, pos: [4.4, 1.2, 1.4], look: [5.2, 0.9, -2.4], fov: 46 }, { f: 1226, pos: [4.6, 1.2, 1.0], look: [5.2, 0.9, -2.4], fov: 44 }],
   osso: [{ f: 1227, pos: [0.1, 1.2, 1.4], look: [0, 1.1, -2], fov: 50 }, { f: 1311, pos: [0.1, 1.2, 1.1], look: [0, 1.1, -2], fov: 48 }],
   buraco: [{ f: 1312, pos: [7.4, 1.1, 0.4], look: [6, 0.9, -2.5], fov: 44 }, { f: 1408, pos: [7.0, 1.0, 0.0], look: [6, 0.9, -2.5], fov: 40 }],
-  moeda: [{ f: 1409, pos: [6.4, 0.98, -1.2], look: [6.3, 0.9, -2.54], fov: 40 }, { f: 1494, pos: [6.38, 0.96, -1.4], look: [6.3, 0.9, -2.54], fov: 38 }],
+  moeda: [{ f: 1409, pos: [6.9, 1.1, -1.0], look: [6.3, 0.9, -2.54], fov: 44 }, { f: 1494, pos: [6.3, 0.95, -1.6], look: [6.42, 0.9, -2.54], fov: 42 }],
   tonico: [{ f: 1495, pos: [PX + 0.4, 1.5, 3.2], look: [PX, 1.3, 0], fov: 46 }, { f: 1626, pos: [PX + 0.3, 1.5, 2.6], look: [PX, 1.3, 0], fov: 44 }],
   melada: [{ f: 1627, pos: [PX + 0.2, 1.6, 1.6], look: [PX, 1.4, 0], fov: 40 }, { f: 1696, pos: [PX + 0.2, 1.6, 1.4], look: [PX, 1.4, 0], fov: 38 }],
   loop: [{ f: 1697, pos: [2.5, 2.0, 5], look: [0, 1.0, -2], fov: 54 }, { f: 1790, pos: [0.4, 1.3, 2.2], look: [0, 1.1, -2], fov: 50 }, { f: 1861, pos: [0.2, 1.2, 1.6], look: [0, 1.1, -2], fov: 50 }],
@@ -56,7 +59,7 @@ const bub = (T, f) => FXC('bb' + (f % 90), (p) => T.fxBubbles(p, (f % 90) / 30),
 export const actorsAt = (f, T) => {
   const S = shotAt(f), id = S.id, out = []; const push = (...a) => out.push(...a.flat());
   switch (id) {
-    case 'abre': push(OCT(T, f, { xray: 1 }, OC)); push(bub(T, f)); break;
+    case 'abre': case 'abre2': case 'abre3': push(OCT(T, f, { xray: 1, beat: q((f * 0.12) % 1, 1), wig: q((f * 0.04) % 1, 2) }, OC, 1.3, id === 'abre' || id === 'abre2' ? { noFrame: true } : {})); push(bub(T, f)); break;
     case 'azul': push(OCT(T, f, { xray: 1 }, OC)); push(TON(T, f, 'mergulhador', ['shock', 'surprised'], [['cheek', 'cheek'], ['up', 'point', null, -1, -0.5]], [2.0, 0, -0.6], {}, {}, true)); break;
     case 'tres': push(OCT(T, f, { xray: 1, beat: q((f * 0.12) % 1, 1) }, OC)); break;
     case 'branq': push(OCT(T, f, { xray: 1, beat: q((f * 0.12) % 1, 1) }, OC)); break;

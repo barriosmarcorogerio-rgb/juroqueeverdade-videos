@@ -5,7 +5,7 @@ let pw; try { pw = await import('playwright'); } catch { pw = await import('play
 const [,, outdir, spec, step = '1', qual = '0.96'] = process.argv;
 fs.mkdirSync(outdir, { recursive: true });
 let frames = [];
-for (const part of spec.split(',')) { if (part.includes('-')) { const [a, b] = part.split('-').map(Number); for (let f = a; f <= b; f += +step) frames.push(f); } else frames.push(+part); }
+for (const part of (spec === 'qa' ? '' : spec).split(',').filter(Boolean)) { if (part.includes('-')) { const [a, b] = part.split('-').map(Number); for (let f = a; f <= b; f += +step) frames.push(f); } else frames.push(+part); }
 const root = process.env.WEB || path.resolve('web');
 const srv = http.createServer((q, s) => { const p = path.join(root, decodeURIComponent(q.url.split('?')[0])); if (!fs.existsSync(p)) { s.writeHead(404); return s.end(); } s.writeHead(200, { 'Content-Type': p.endsWith('.js') ? 'text/javascript' : 'text/html' }); fs.createReadStream(p).pipe(s); }).listen(0);
 await new Promise(r => srv.on('listening', r));
@@ -16,12 +16,13 @@ pg.on('console', m => console.log('PAGE', m.text())); pg.on('pageerror', e => co
 await pg.goto(`http://localhost:${srv.address().port}/index.html${process.env.HASH || ""}`);
 await pg.waitForFunction(() => window.ready || window.err, null, { timeout: 900000 });
 if (await pg.evaluate(() => window.err)) { console.log('page error'); process.exit(1); }
+if (spec === 'qa') frames = await pg.evaluate(() => window.qaFrames());   // checagem: início, meio e fim de cada plano
 const t0 = Date.now(); let n = 0;
 for (const f of frames) {
   const out = path.join(outdir, `f${String(f).padStart(4, '0')}.jpg`);
   if (process.env.RESUME && fs.existsSync(out)) continue;
-  const d = await pg.evaluate(([f, q]) => { if (window.location.hash === "#nd") window.DEBUG_ND = 1; if (window.location.hash === "#e") window.DEBUG_E = 1; window.renderFrame(f); return document.getElementById('c').toDataURL('image/jpeg', q); }, [f, +qual]);
-  fs.writeFileSync(out, Buffer.from(d.split(',')[1], 'base64')); n++;
+  const d = await pg.evaluate(([f, q]) => { if (window.location.hash === "#nd") window.DEBUG_ND = 1; if (window.location.hash === "#e") window.DEBUG_E = 1; const r = window.renderFrame(f); return [document.getElementById('c').toDataURL('image/jpeg', q), typeof r === 'string' ? r : '']; }, [f, +qual]);
+  if (d[1]) console.log(`AVISO quadro ${f}: ${d[1]}`); fs.writeFileSync(out, Buffer.from(d[0].split(',')[1], 'base64')); n++;
 }
 console.log(`done ${n} frames, ${n ? ((Date.now() - t0) / n / 1000).toFixed(2) : 0} s/frame`);
 await b.close(); srv.close();

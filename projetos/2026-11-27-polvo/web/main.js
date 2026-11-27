@@ -193,8 +193,13 @@ class Card {
   draw(key, fn) {
     if (key === this.key) return; this.key = key;
     const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / (600 + 2 * PAD), 0, 0, CH / 1000, PAD * CW / (600 + 2 * PAD), 0);
-    const p = new T.Pen(g); fn(p); this.t.needsUpdate = true;
+    const p = new T.Pen(g); fn(p); this.t.needsUpdate = true; this.bounds = null;
   }
+  /** retângulo do desenho (fração do cartão: u0,u1,v0,v1), medido numa cópia 100x100 — usado no enquadramento automático */
+  getBounds() { if (this.bounds) return this.bounds; const n = 100; if (!Card.tmp) { Card.tmp = document.createElement('canvas'); Card.tmp.width = Card.tmp.height = n; }
+    const t = Card.tmp.getContext('2d', { willReadFrequently: true }); t.clearRect(0, 0, n, n); t.drawImage(this.c, 0, 0, n, n); const d = t.getImageData(0, 0, n, n).data;
+    let u0 = n, u1 = -1, v0 = n, v1 = -1; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (d[(y * n + x) * 4 + 3] > 40) { if (x < u0) u0 = x; if (x > u1) u1 = x; if (y < v0) v0 = y; if (y > v1) v1 = y; }
+    this.bounds = u1 < 0 ? null : [u0 / n, (u1 + 1) / n, v0 / n, (v1 + 1) / n]; return this.bounds; }
 }
 const cards = []; const getCard = (i) => cards[i] || (cards[i] = new Card());
 
@@ -267,13 +272,17 @@ function placeSun(L, focus) {
 
 function worldState(S, f) { for (const c of clouds) c.visible = !!S.clouds; if (window.__stars) window.__stars.visible = false; }
 
+let FR = 0, SA = 0;
 function drawActors(list, cam) {
   cards.forEach((c) => { c.mesh.visible = c.blob.visible = false; });
   list.forEach((a, i) => {
     const c = getCard(i);
     c.draw(a.key, a.draw);
     c.mesh.visible = true; c.mesh.position.set(a.x, a.y, a.z);
-    const s = a.s || 1; c.mesh.scale.set(s * (a.flip ? -1 : 1) * (a.sx || 1), s * (a.sy || 1), s);
+    let s = a.s || 1, bx = 1, by = 1;
+    if ((a.order || 2) <= 3 && !a.still) { const t = (FR - SA) / 9; if (t < 1) s *= 0.9 + 0.1 * (1 + 2.70158 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2));   // entra com um "pop" (overshoot)
+      const br = Math.sin(FR * 0.13 + i * 1.7); by = 1 + 0.014 * br; bx = 1 - 0.009 * br; }                                    // respira
+    c.mesh.scale.set(s * (a.flip ? -1 : 1) * (a.sx || 1) * bx, s * (a.sy || 1) * by, s);
     if (a.face === 'cam') { c.mesh.quaternion.copy(cam.quaternion); if (a.roll) c.mesh.rotateZ(a.roll); } else c.mesh.rotation.set(0, Math.atan2(cam.position.x - a.x, cam.position.z - a.z) + (a.yaw || 0), a.roll || 0);
     c.mat.color.set(a.tint || '#ffffff'); c.mat.opacity = a.alpha ?? 1;
     c.mesh.castShadow = a.shadow !== false;
@@ -296,6 +305,33 @@ const swapForNd = (on) => {
   });
 };
 
+// ---------- ENQUADRAMENTO AUTOMÁTICO ----------
+// O personagem principal do plano (actor.main, ou o 1º personagem) fica dentro da zona central:
+// centro horizontal até ±0.16 da tela, cabeça abaixo de 0.80 (espaço do selo/gancho), e se não couber a câmera abre (até 1.5x).
+// Plano com S.noAuto ou actor.noFrame fica como está. Devolve aviso se mesmo assim o personagem sair da tela.
+const _v = new THREE.Vector3();
+function autoFrame(list, S, C) {
+  if (S.noAuto) return null;
+  const idx = list.findIndex((a) => a.main) >= 0 ? list.findIndex((a) => a.main) : list.findIndex((a) => (a.order || 2) <= 2 && !a.noFrame);
+  if (idx < 0 || list[idx].noFrame) return null;
+  const c = cards[idx], b = c && c.getBounds(); if (!b) return null; c.mesh.updateMatrixWorld(true);
+  const W2 = CM * (600 + 2 * PAD) / 1000, y0 = CM / 2 - CM * 0.025 + CM / 2;   // topo do cartão em coords locais
+  let x0 = 1, x1 = -1, y0n = 1, y1 = -1;
+  for (const u of [b[0], b[1]]) for (const v of [b[2], b[3]]) { _v.set(-W2 / 2 + u * W2, y0 - v * CM, 0); c.mesh.localToWorld(_v); _v.project(camera);
+    x0 = Math.min(x0, _v.x); x1 = Math.max(x1, _v.x); y0n = Math.min(y0n, _v.y); y1 = Math.max(y1, _v.y); }
+  if (x1 < -1.6 || x0 > 1.6 || y1 < -1.6 || y0n > 1.6) return 'personagem principal fora da tela';
+  let z = S.close ? 1 : Math.max(1, (x1 - x0) / 1.8, (y1 - y0n) / 1.75); z = Math.min(z, 1.5);   // plano de close (S.close): só centraliza, não abre
+  const cx = (x0 + x1) / 2 / z, top = y1 / z; let dx = 0, dy = 0;
+  if (cx > 0.16) dx = cx - 0.16; else if (cx < -0.16) dx = cx + 0.16;
+  if (top > 0.8 && !S.close) dy = top - 0.8;
+  if (z === 1 && !dx && !dy) return null;
+  if (z > 1) { camera.fov = 2 * Math.atan(Math.tan(rx(camera.fov) / 2) * z) * 180 / Math.PI; camera.updateProjectionMatrix(); }
+  const tv = Math.tan(rx(camera.fov) / 2), th = tv * camera.aspect;
+  camera.rotateY(-Math.atan(dx * th)); camera.rotateX(Math.atan(dy * tv)); camera.updateMatrixWorld();
+  return !S.close && ((x1 - x0) / 1.8 > 1.5 || (y1 - y0n) / 1.75 > 1.5) ? 'personagem grande demais mesmo abrindo a câmera (marque o plano como close?)' : '';
+}
+
+window.qaFrames = () => SHOTS.flatMap((s) => [s.a + 4, Math.round((s.a + s.b) / 2), s.b - 4]).filter((f, i, a) => f >= 0 && a.indexOf(f) === i);
 window.renderFrame = (f) => {
   const S = shotAt(f), L = lightFor(S, f), C = camAt(f);
   applyLight(L, f);
@@ -303,7 +339,10 @@ window.renderFrame = (f) => {
   camera.fov = C.fov; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
   const W_ = worldAt(f); worldState(W_, f);
   placeSun(L, new THREE.Vector3(...(C.shadowAt || C.look)));
-  drawActors([...actorsAt(f, T), ...fxAt(f, T)], camera);
+  FR = f; SA = S.a; const LIST = [...actorsAt(f, T), ...fxAt(f, T)];
+  drawActors(LIST, camera);
+  const warn = autoFrame(LIST, S, C);
+  if (warn !== null) drawActors(LIST, camera);
   sky.position.copy(camera.position);
   for (const c of clouds) c.quaternion.copy(camera.quaternion);
   // pass A: colour
@@ -320,7 +359,7 @@ window.renderFrame = (f) => {
   // lens
   dofU.focus.value = D.focus; dofU.cinf.value = D.cinf; dofU.near.value = D.near ?? 1;
   renderer.setRenderTarget(null); renderer.render(dofScene, fsCam);
-  return true;
+  return warn || true;
 };
 window.TOTAL = TOTAL;
 window.ready = true;
