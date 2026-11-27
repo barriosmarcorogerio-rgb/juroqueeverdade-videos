@@ -1,7 +1,7 @@
 """Stems for "O polvo tem 3 corações": music.wav + sfx.wav (no mixing here; mix.py does the level lock)."""
 import numpy as np, subprocess, wave
 SR = 48000
-DUR = 1862 / 30
+DUR = 1778 / 30
 N = int(DUR * SR)
 rng = np.random.default_rng(7)
 def load_voice():
@@ -73,7 +73,7 @@ def section(t0, t1, gain=1.0):
                 th = tb + h * beat / 2; m = mel[k % len(mel)]; k += 1
                 if th < t1 and m: place(music, pluck(midi(m), 0.3, 0.95), th, 0.13 * gain); place(music, pluck(midi(ch[(k) % 3] + 12), 0.2, 0.9), th, 0.05 * gain)
         bar += 1; tt += beat * 4
-section(0.0, 49.7); section(49.9, DUR, 1.1)
+section(0.0, 41.4); section(41.6, 52.9, 0.7); section(53.0, DUR, 1.1)
 # ---------------- sfx ----------------
 sfx = np.zeros(N, np.float32)
 def noise(d): return rng.standard_normal(int(d * SR)).astype(np.float32)
@@ -175,14 +175,17 @@ def blub(d=0.35):
     n = int(d * SR); t = np.arange(n) / SR; f = 300 + 500 * t / d
     return (np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 12) * 0.6).astype(np.float32)
 def beat2(): return thunk(70, 0.25)
-for k in range(0, 300, 22): place(sfx, beat2(), F(k), 0.35); place(sfx, beat2(), F(k + 6), 0.25)
-for k in range(5, 1860, 47): place(sfx, blub(), F(k), 0.18)
-place(sfx, ting(), F(80), 0.3); place(sfx, sting(), F(368), 0.3); place(sfx, whoosh(0.6), F(370), 0.4)
-place(sfx, ting(), F(500), 0.3); place(sfx, ting(), F(560), 0.3); place(sfx, whoosh(0.5), F(650), 0.3)
-for k in range(740, 840, 9): place(sfx, hiss(0.08), F(k), 0.15)
-place(sfx, laugh(0.8), F(1030), 0.25); place(sfx, whoosh(0.4), F(1150), 0.4); place(sfx, ting(), F(1235), 0.3)
-place(sfx, stretchS(1.6, 400, 900) if 'stretchS' in dir() else whoosh(1.0), F(1330), 0.35); place(sfx, splash(0.3), F(1400), 0.35)
-place(sfx, ting(), F(1415), 0.3); place(sfx, splash(0.4), F(1565), 0.5); place(sfx, crunch(0.3), F(1570), 0.4); place(sfx, laugh(0.8), F(1640), 0.25)
+def clickS(): return hp_fast(noise(0.03), 2500) * np.exp(-np.arange(int(0.03 * SR)) / SR * 120)
+for k in list(range(0, 60, 22)) + list(range(349, 560, 22)) + list(range(705, 745, 22)) + list(range(1687, 1778, 22)): place(sfx, beat2(), F(k), 0.35); place(sfx, beat2(), F(k + 6), 0.25)
+for k in range(5, 1778, 53): place(sfx, blub(), F(k), 0.15)
+for k in range(118, 210, 14): place(sfx, clickS(), F(k), 0.5)
+place(sfx, whoosh(0.5), F(220), 0.3); place(sfx, ting(), F(310), 0.3); place(sfx, ting(), F(432), 0.3); place(sfx, ting(), F(506), 0.3)
+place(sfx, whoosh(0.8), F(570), 0.5); place(sfx, sting(), F(624), 0.4); place(sfx, thunk(60, 0.5), F(670), 0.6)
+place(sfx, ting(), F(765), 0.3); place(sfx, ting(), F(810), 0.45); place(sfx, whoosh(0.5), F(910), 0.3)
+for k in range(985, 1020, 6): place(sfx, ting(), F(k), 0.08)
+place(sfx, laugh(0.7), F(1190), 0.2); place(sfx, sting(), F(1248), 0.6); place(sfx, rumble(1.5), F(1250), 0.5)
+place(sfx, whoosh(0.4), F(1338), 0.5); place(sfx, snap(), F(1430), 0.7); place(sfx, whoosh(0.6), F(1442), 0.4)
+place(sfx, splash(0.3), F(1490), 0.4); place(sfx, thunk(90, 0.4), F(1555), 0.7); place(sfx, ting(), F(1600), 0.3)
 def wav(name, x):
     pcm = (np.clip(x, -1, 1) * 32767).astype(np.int16)
     with wave.open(name, "wb") as w: w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())

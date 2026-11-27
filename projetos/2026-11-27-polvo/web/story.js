@@ -15,13 +15,13 @@ export const LIGHTS = {
 };
 export const lightFor = (S, f) => { const L = { ...LIGHTS.sea }; if (['masai', 'tubarao', 'cor', 'pedra', 'naocolou'].includes(S.id)) { L.hemi = 1.1; L.fog = '#1a5a78'; L.vig = 0.42; } return L; };
 // trajeto do polvo: começo → fenda (-4.1,-3.2)
-const P0 = [2, 0, 1], PF = [-4.1, 0, -3.1], TOCA = [6, 0, -3];
+const P0 = [2, 0, 1], PF = [-3.5, 0, -2.3], TOCA = [6, 0, -3];
 const crawl = (f) => { const t = E.smooth(ramp(f, 217, 900)); return [lerp(P0[0], PF[0], t), 0, lerp(P0[2], PF[2], t)]; };
 const CAMS = {
   abre: [{ f: 0, pos: [2, 1.55, 2.3], look: [2, 1.55, 0.9], fov: 40 }, { f: 15, pos: [2, 1.55, 2.2], look: [2, 1.55, 0.9], fov: 38 }],
   abre2: [{ f: 16, pos: [2.6, 0.5, 2.4], look: [2.1, 0.5, 1], fov: 46 }, { f: 31, pos: [2.5, 0.5, 2.3], look: [2.1, 0.5, 1], fov: 44 }],
   abre3: [{ f: 32, pos: [2.4, 1.3, 5.2], look: [2, 1.0, 1], fov: 52 }, { f: 112, pos: [2.3, 1.3, 4.4], look: [2, 1.0, 1], fov: 50 }],
-  caranguejo: [{ f: 113, pos: [-4.6, 0.6, -2.2], look: [-5, 0.5, -4.2], fov: 42 }, { f: 216, pos: [-4.7, 0.6, -2.6], look: [-5, 0.5, -4.2], fov: 40 }],
+  caranguejo: [{ f: 113, pos: [-4.7, 0.7, -0.6], look: [-5, 0.55, -3.1], fov: 44 }, { f: 216, pos: [-4.8, 0.65, -1.0], look: [-5, 0.5, -3.1], fov: 42 }],
   rasteja: [{ f: 217, pos: [4.5, 1.0, 4.2], look: [1.6, 0.4, 0.6], fov: 52 }, { f: 309, pos: [3.2, 1.0, 3.6], look: [0.8, 0.4, 0.0], fov: 52 }],
   porque: [{ f: 310, pos: [1.0, 1.0, 3.0], look: [0, 0.8, 0], fov: 46 }, { f: 348, pos: [0.9, 1.0, 2.7], look: [0, 0.8, 0], fov: 44 }],
   coracoes: [{ f: 349, pos: [0, 1.3, 2.2], look: [0, 1.15, 0], fov: 46 }, { f: 398, pos: [0, 1.3, 2.0], look: [0, 1.15, 0], fov: 44 }],
@@ -32,10 +32,10 @@ const CAMS = {
   azul: [{ f: 705, pos: [0, 1.15, 2.4], look: [0, 1.0, 0], fov: 48 }, { f: 746, pos: [0, 1.15, 2.2], look: [0, 1.0, 0], fov: 46 }],
   cobre: [{ f: 747, pos: [0, 1.3, 4.6], look: [0, 1.0, 0], fov: 56 }, { f: 838, pos: [0, 1.3, 4.2], look: [0, 1.0, 0], fov: 54 }],
   fenda: [{ f: 839, pos: [-1.5, 1.4, 1.0], look: [-4.4, 0.7, -3.6], fov: 50 }, { f: 960, pos: [-2.2, 1.2, -0.2], look: [-4.6, 0.6, -3.8], fov: 48 }],
-  gosto: [{ f: 961, pos: [-4.6, 0.5, -2.3], look: [-5, 0.45, -4.2], fov: 42 }, { f: 1025, pos: [-4.7, 0.5, -2.6], look: [-5, 0.45, -4.2], fov: 40 }],
+  gosto: [{ f: 961, pos: [-4.7, 0.65, -0.8], look: [-5, 0.5, -3.1], fov: 44 }, { f: 1025, pos: [-4.8, 0.6, -1.1], look: [-5, 0.5, -3.1], fov: 42 }],
   pensa: [{ f: 1026, pos: [-3.2, 1.1, -0.6], look: [-4.1, 0.8, -3.1], fov: 50 }, { f: 1183, pos: [-3.4, 1.1, -1.0], look: [-4.1, 0.8, -3.1], fov: 48 }],
-  achou: [{ f: 1184, pos: [-3.3, 1.0, -0.8], look: [-4.3, 0.7, -3.3], fov: 50 }, { f: 1223, pos: [-3.4, 1.0, -1.1], look: [-4.3, 0.7, -3.3], fov: 48 }],
-  masai: [{ f: 1224, pos: [-3.4, 1.4, -0.9], look: [-3.8, 1.1, -3.2], fov: 50 }, { f: 1247, pos: [-3.2, 1.8, -0.6], look: [-3.4, 1.8, -3.2], fov: 50 }],
+  achou: [{ f: 1184, pos: [-2.4, 1.1, 1.4], look: [-3.3, 0.7, -2.2], fov: 50 }, { f: 1223, pos: [-2.5, 1.1, 1.1], look: [-3.3, 0.7, -2.2], fov: 48 }],
+  masai: [{ f: 1224, pos: [-2.6, 1.3, 1.4], look: [-3.4, 1.0, -2.3], fov: 50 }, { f: 1247, pos: [-2.5, 1.7, 1.6], look: [-3.2, 1.8, -2.3], fov: 50 }],
   tubarao: [{ f: 1248, pos: [-1.0, 1.6, 3.4], look: [-3.0, 1.4, -3.0], fov: 60 }, { f: 1289, pos: [-1.2, 1.6, 2.6], look: [-3.2, 1.3, -3.0], fov: 58 }],
   cor: [{ f: 1290, pos: [-3.3, 1.0, -0.5], look: [-4.3, 0.7, -3.3], fov: 48 }, { f: 1367, pos: [-3.5, 1.0, -1.0], look: [-4.3, 0.7, -3.3], fov: 46 }],
   pedra: [{ f: 1368, pos: [-1.5, 1.5, 2.0], look: [-3.6, 1.0, -3.2], fov: 56 }, { f: 1408, pos: [-1.6, 1.5, 1.6], look: [-3.6, 1.0, -3.2], fov: 54 }],
@@ -56,9 +56,9 @@ const OCT = (T, f, o, pos, s = 1.3, extra = {}) => { const oo = { wig: q((f * 0.
 const FXC = (key, fn, pos, s, extra = {}) => ({ key, draw: fn, x: pos[0], y: pos[1], z: pos[2], s, blob: false, shadow: false, order: 4, ...extra });
 const bub = (T, f, pos = [0.3, 0, -1.4]) => FXC('bb' + (f % 90), (p) => T.fxBubbles(p, (f % 90) / 30), pos, 2.2);
 const pop = (f, f0) => { const t = (f - f0) / 8; return t >= 1 ? 1 : 0.6 + 0.4 * (1 + 2.70158 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2)); };
-const CRAB = (T, f, o, pos, s = 0.35, extra = {}) => ({ key: 'cr' + JSON.stringify(o), draw: (p) => T.fxCrab(p, o), x: pos[0], y: pos[1], z: pos[2], s, ...extra });
+const CRAB = (T, f, o, pos, s = 0.6, extra = {}) => ({ key: 'cr' + JSON.stringify(o), draw: (p) => T.fxCrab(p, o), x: pos[0], y: pos[1], z: pos[2], s, ...extra });
 const SHARK = (T, f, o, pos, s = 1.6, extra = {}) => ({ key: 'sk' + JSON.stringify(o), draw: (p) => T.fxShark(p, o), x: pos[0], y: pos[1], z: pos[2], s, blob: false, ...extra });
-const CRABP = [-5, 0.05, -4.25];
+const CRABP = [-5, 0.02, -3.05];
 export const actorsAt = (f, T) => {
   const S = shotAt(f), id = S.id, out = []; const push = (...a) => out.push(...a.flat());
   const wig = (k) => q((f * k) % 1, 2);
@@ -81,7 +81,7 @@ export const actorsAt = (f, T) => {
       push(FXC('arm' + (f % 12), (pp) => { const g = pp.g, x = 700 - Math.min(1, (f - 961) / 25) * 380; g.lineCap = 'round'; g.lineWidth = 46; g.strokeStyle = '#1a1424'; g.beginPath(); g.moveTo(800, 700); g.quadraticCurveTo(560, 640 + Math.sin(f * 0.3) * 20, x, 760); g.stroke(); g.lineWidth = 36; g.strokeStyle = '#d8506a'; g.stroke();
         for (let k = 0; k < 6; k++) { const t = k / 6, sx = x + (800 - x) * t, sy = 760 - 60 * Math.sin(t * 3.1); g.fillStyle = '#f8d8c8'; g.beginPath(); g.arc(sx, sy + 14, 8, 0, 7); g.fill(); if (f > 980 && (f + k * 3) % 12 < 6) { g.fillStyle = '#ffe86a'; g.beginPath(); g.arc(sx, sy - 18, 7, 0, 7); g.fill(); } } }, [CRABP[0], 0.05, CRABP[2] + 0.02], 0.35, { order: 3 })); break;
     case 'pensa': push(OCT(T, f, { xray: f > 1100 ? 1 : 0, neur: 1, indep: 1, wig: wig(0.06), look: Math.sin(f * 0.15) > 0 ? 1 : -1 }, PF, 1.0)); break;
-    case 'achou': push(OCT(T, f, { happy: 1, wig: wig(0.04) }, PF, 1.0)); push(CRAB(T, f, { scared: 1, claw: 1 }, [PF[0] + 0.7, 0.05, PF[2] + 0.4], 0.3)); break;
+    case 'achou': push(OCT(T, f, { happy: 1, wig: wig(0.04) }, PF, 1.0)); push(CRAB(T, f, { scared: 1, claw: 1 }, [PF[0] + 0.9, 0.02, PF[2] + 0.5], 0.45)); break;
     case 'masai': push(OCT(T, f, { wig: wig(0.02), look: 1 }, PF, 1.0)); push(FXC('sh', (pp) => { const g = pp.g; g.fillStyle = 'rgba(10,20,30,.55)'; g.beginPath(); g.ellipse(300, 400, 320, 90, 0, 0, 7); g.fill(); }, [PF[0] + 1, 2.4, PF[2] - 1], 1.6)); break;
     case 'tubarao': { const x = lerp(4, -0.6, E.easeOut(ramp(f, 1248, 1285))); push(SHARK(T, f, { swim: q((f * 0.05) % 1, 2), bite: q(0.3 + 0.3 * Math.sin(f * 0.3), 1) }, [x, 0.6, -2.6], 1.5, { flip: true }));
       push(OCT(T, f, { wig: wig(0.08), look: 1 }, PF, 1.0)); break; }
