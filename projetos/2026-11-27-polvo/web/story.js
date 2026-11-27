@@ -8,7 +8,7 @@ const SH = [
   ['tubarao', 1248], ['cor', 1290], ['pedra', 1368], ['naocolou', 1409], ['foge', 1441], ['passa', 1509], ['final', 1590], ['loop', 1687],
 ];
 const CLOSE = new Set(['abre', 'abre2', 'coracoes', 'branq', 'azul', 'gosto', 'loop', 'porque']);
-export const SHOTS = SH.map(([id, a], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light: 'sea', close: CLOSE.has(id), noAuto: ['cor', 'pedra', 'foge', 'tubarao'].includes(id) }));
+export const SHOTS = SH.map(([id, a], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light: 'sea', close: CLOSE.has(id), noAuto: ['pedra', 'foge', 'tubarao'].includes(id) }));
 export const shotAt = (f) => SHOTS.find((s) => f >= s.a && f <= s.b) || SHOTS[SHOTS.length - 1];
 export const LIGHTS = {
   sea: { az: 30, el: 75, sky: '#bfefff', ground: '#2a6a7a', hemi: 1.45, sun: '#e8fbff', sunI: 2.2, fog: '#2a8aa8', fogNear: 4, fogFar: 46, skyTop: '#1a5a8a', skyHor: '#2a8aa8', sunDisc: '#000000', sunSize: 0, sat: 1.12, vig: 0.3, shadowExt: 12, gain: '#e8fcff' },
@@ -37,7 +37,7 @@ const CAMS = {
   achou: [{ f: 1184, pos: [-2.4, 1.1, 1.4], look: [-3.3, 0.7, -2.2], fov: 50 }, { f: 1223, pos: [-2.5, 1.1, 1.1], look: [-3.3, 0.7, -2.2], fov: 48 }],
   masai: [{ f: 1224, pos: [-2.6, 1.3, 1.4], look: [-3.4, 1.0, -2.3], fov: 50 }, { f: 1247, pos: [-2.5, 1.7, 1.6], look: [-3.2, 1.8, -2.3], fov: 50 }],
   tubarao: [{ f: 1248, pos: [-1.0, 1.6, 3.4], look: [-3.0, 1.4, -3.0], fov: 60 }, { f: 1289, pos: [-1.2, 1.6, 2.6], look: [-3.2, 1.3, -3.0], fov: 58 }],
-  cor: [{ f: 1290, pos: [-3.3, 1.0, -0.5], look: [-4.3, 0.7, -3.3], fov: 48 }, { f: 1367, pos: [-3.5, 1.0, -1.0], look: [-4.3, 0.7, -3.3], fov: 46 }],
+  cor: [{ f: 1290, pos: [-2.3, 1.1, 1.6], look: [-3.4, 0.75, -2.3], fov: 50 }, { f: 1367, pos: [-2.5, 1.05, 1.1], look: [-3.4, 0.75, -2.3], fov: 46 }],
   pedra: [{ f: 1368, pos: [-1.5, 1.5, 2.0], look: [-3.6, 1.0, -3.2], fov: 56 }, { f: 1408, pos: [-1.6, 1.5, 1.6], look: [-3.6, 1.0, -3.2], fov: 54 }],
   naocolou: [{ f: 1409, pos: [-0.8, 1.6, 3.0], look: [-3.4, 1.0, -3.0], fov: 58 }, { f: 1440, pos: [-0.8, 1.6, 2.8], look: [-3.4, 1.0, -3.0], fov: 58 }],
   foge: [{ f: 1441, pos: [7.2, 1.1, 0.0], look: [6.2, 0.9, -2.5], fov: 44 }, { f: 1508, pos: [6.6, 1.0, -1.1], look: [6.1, 0.9, -2.54], fov: 40 }],
