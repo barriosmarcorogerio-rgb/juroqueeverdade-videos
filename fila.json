@@ -224,6 +224,7 @@
     "video_yt": "videos/2026-11-27-polvo-yt.mp4",
     "thumb": "videos/2026-11-27-polvo-thumb.jpg",
     "cover_ms": 14000,
-    "publicado": false
+    "publicado": true,
+    "publicado_em": "2026-11-27T21:55Z"
   }
 ]
