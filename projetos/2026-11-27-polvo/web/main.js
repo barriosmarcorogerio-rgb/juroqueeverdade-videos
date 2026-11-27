@@ -176,8 +176,9 @@ const clouds = [];
   } }
 
 // ---------- cards ----------
-const CW = 2000, CH = 2000, CM = 2.25, PAD = 200;
-const cardGeo = new THREE.PlaneGeometry(CM * (600 + 2 * PAD) / 1000, CM); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
+// cartão: desenho em 600x1000 (chão em y=975) + folga PAD dos lados e VPAD em cima/embaixo (braço levantado, tentáculo, asa não são mais cortados)
+const CW = 2000, CH = 2400, CM = 2.25, PAD = 200, VPAD = 200;
+const cardGeo = new THREE.PlaneGeometry(CM * (600 + 2 * PAD) / 1000, CM * (1000 + 2 * VPAD) / 1000); cardGeo.translate(0, CM / 2 - CM * 0.025, 0);
 const blobTex = P.tex(P.radial('20,14,30', 0.6));
 class Card {
   constructor(scale = 1) {
@@ -192,14 +193,14 @@ class Card {
   }
   draw(key, fn) {
     if (key === this.key) return; this.key = key;
-    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / (600 + 2 * PAD), 0, 0, CH / 1000, PAD * CW / (600 + 2 * PAD), 0);
+    const g = this.g; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, CW, CH); g.setTransform(CW / (600 + 2 * PAD), 0, 0, CH / (1000 + 2 * VPAD), PAD * CW / (600 + 2 * PAD), VPAD * CH / (1000 + 2 * VPAD));
     const p = new T.Pen(g); fn(p); this.t.needsUpdate = true; this.bounds = null;
   }
   /** retângulo do desenho (fração do cartão: u0,u1,v0,v1), medido numa cópia 100x100 — usado no enquadramento automático */
   getBounds() { if (this.bounds) return this.bounds; const n = 100; if (!Card.tmp) { Card.tmp = document.createElement('canvas'); Card.tmp.width = Card.tmp.height = n; }
     const t = Card.tmp.getContext('2d', { willReadFrequently: true }); t.clearRect(0, 0, n, n); t.drawImage(this.c, 0, 0, n, n); const d = t.getImageData(0, 0, n, n).data;
     let u0 = n, u1 = -1, v0 = n, v1 = -1; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (d[(y * n + x) * 4 + 3] > 40) { if (x < u0) u0 = x; if (x > u1) u1 = x; if (y < v0) v0 = y; if (y > v1) v1 = y; }
-    this.bounds = u1 < 0 ? null : [u0 / n, (u1 + 1) / n, v0 / n, (v1 + 1) / n]; return this.bounds; }
+    this.bounds = u1 < 0 ? null : [u0 / n, (u1 + 1) / n, v0 / n, (v1 + 1) / n]; this.clipped = u1 >= 0 && (u0 <= 0 || u1 >= n - 1 || v0 <= 0 || v1 >= n - 1); return this.bounds; }
 }
 const cards = []; const getCard = (i) => cards[i] || (cards[i] = new Card());
 
@@ -312,23 +313,27 @@ const swapForNd = (on) => {
 const _v = new THREE.Vector3();
 function autoFrame(list, S, C) {
   if (S.noAuto) return null;
-  const idx = list.findIndex((a) => a.main) >= 0 ? list.findIndex((a) => a.main) : list.findIndex((a) => (a.order || 2) <= 2 && !a.noFrame);
-  if (idx < 0 || list[idx].noFrame) return null;
-  const c = cards[idx], b = c && c.getBounds(); if (!b) return null; c.mesh.updateMatrixWorld(true);
-  const W2 = CM * (600 + 2 * PAD) / 1000, y0 = CM / 2 - CM * 0.025 + CM / 2;   // topo do cartão em coords locais
-  let x0 = 1, x1 = -1, y0n = 1, y1 = -1;
-  for (const u of [b[0], b[1]]) for (const v of [b[2], b[3]]) { _v.set(-W2 / 2 + u * W2, y0 - v * CM, 0); c.mesh.localToWorld(_v); _v.project(camera);
-    x0 = Math.min(x0, _v.x); x1 = Math.max(x1, _v.x); y0n = Math.min(y0n, _v.y); y1 = Math.max(y1, _v.y); }
+  // quem entra no enquadramento: os marcados com main; senão TODOS os personagens do plano (ordem <= 2), para ninguém ficar cortado na borda
+  let ids = list.map((a, i) => (a.main ? i : -1)).filter((i) => i >= 0);
+  if (!ids.length) ids = list.map((a, i) => ((a.order || 2) <= 2 && !a.noFrame ? i : -1)).filter((i) => i >= 0);
+  if (!ids.length) return null;
+  const W2 = CM * (600 + 2 * PAD) / 1000, H2 = CM * (1000 + 2 * VPAD) / 1000, y0 = H2 / 2 + CM / 2 - CM * 0.025;   // topo do cartão em coords locais
+  let x0 = 9, x1 = -9, y0n = 9, y1 = -9, any = false;
+  for (const idx of ids) { const c = cards[idx], b = c && c.getBounds(); if (!b) continue; c.mesh.updateMatrixWorld(true); any = true;
+    for (const u of [b[0], b[1]]) for (const v of [b[2], b[3]]) { _v.set(-W2 / 2 + u * W2, y0 - v * H2, 0); c.mesh.localToWorld(_v); _v.project(camera);
+      x0 = Math.min(x0, _v.x); x1 = Math.max(x1, _v.x); y0n = Math.min(y0n, _v.y); y1 = Math.max(y1, _v.y); } }
+  if (!any) return null;
+  const cut = ids.some((i) => cards[i] && cards[i].clipped) ? 'desenho encostou na borda do cartão (parte do corpo cortada)' : '';
   if (x1 < -1.6 || x0 > 1.6 || y1 < -1.6 || y0n > 1.6) return 'personagem principal fora da tela';
-  let z = S.close ? 1 : Math.max(1, (x1 - x0) / 1.8, (y1 - y0n) / 1.75); z = Math.min(z, 1.5);   // plano de close (S.close): só centraliza, não abre
+  let z = S.close ? 1 : Math.max(1, (x1 - x0) / 1.8, (y1 - y0n) / 1.75); z = Math.min(z, 2.0);   // plano de close (S.close): só centraliza, não abre
   const cx = (x0 + x1) / 2 / z, top = y1 / z; let dx = 0, dy = 0;
   if (cx > 0.16) dx = cx - 0.16; else if (cx < -0.16) dx = cx + 0.16;
   if (top > 0.8 && !S.close) dy = top - 0.8;
-  if (z === 1 && !dx && !dy) return null;
+  if (z === 1 && !dx && !dy) return cut || null;
   if (z > 1) { camera.fov = 2 * Math.atan(Math.tan(rx(camera.fov) / 2) * z) * 180 / Math.PI; camera.updateProjectionMatrix(); }
   const tv = Math.tan(rx(camera.fov) / 2), th = tv * camera.aspect;
   camera.rotateY(-Math.atan(dx * th)); camera.rotateX(Math.atan(dy * tv)); camera.updateMatrixWorld();
-  return !S.close && ((x1 - x0) / 1.8 > 1.5 || (y1 - y0n) / 1.75 > 1.5) ? 'personagem grande demais mesmo abrindo a câmera (marque o plano como close?)' : '';
+  return cut || (!S.close && ((x1 - x0) / 1.8 > 2.0 || (y1 - y0n) / 1.75 > 2.0) ? 'personagem grande demais mesmo abrindo a câmera (marque o plano como close?)' : '');
 }
 
 window.qaFrames = () => SHOTS.flatMap((s) => [s.a + 4, Math.round((s.a + s.b) / 2), s.b - 4]).filter((f, i, a) => f >= 0 && a.indexOf(f) === i);
