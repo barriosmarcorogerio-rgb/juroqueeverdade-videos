@@ -3384,10 +3384,13 @@ export const fxOctopus = (p, o = {}) => { const g = p.g, X = o.xray || 0, col = 
   g.save(); g.translate(300, 975); g.scale(1 - sq * 0.55, 1 + sq * 0.25); g.translate(-300, -975);
   // braços (8): curvas com ventosas
   for (let k = 0; k < 8; k++) { const side = k < 4 ? -1 : 1, j = k % 4, ph = w * 6.28 + k * 0.9 + (o.indep ? k * 1.7 : 0), bx = 300 + side * (20 + j * 26), by = 720;
-    const pts = []; for (let i = 0; i <= 12; i++) { const t = i / 12; pts.push([bx + side * (40 + j * 40) * t + Math.sin(ph + t * 4) * 30 * t, by + 240 * t - Math.sin(t * 3.1) * 60 * (j % 2 ? 0.6 : 1) + Math.cos(ph + t * 3) * 20 * t]); }
+    const pts = []; const R = o.reach && k === 0 ? o.reach : 0;
+    for (let i = 0; i <= 12; i++) { const t = i / 12; if (R) { const tx = bx + (-120 - bx) * R * t, ty = by + (60 + 40 * Math.sin(t * 3.1)) * t - 140 * R * t * t; pts.push([tx + Math.sin(ph + t * 6) * 10 * (1 - R), ty]); }
+      else pts.push([bx + side * (40 + j * 40) * t + Math.sin(ph + t * 4) * 30 * t, by + 240 * t - Math.sin(t * 3.1) * 60 * (j % 2 ? 0.6 : 1) + Math.cos(ph + t * 3) * 20 * t]); }
     g.lineCap = 'round'; for (const [lw, c] of [[46, KI], [36, k < 2 || k > 5 ? dark : col]]) { g.lineWidth = lw; g.strokeStyle = c; g.beginPath(); pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y))); g.stroke(); }
     for (let i = 3; i <= 12; i += 2) { const [x, y] = pts[i]; const r = 9 * (1 - i / 16); g.fillStyle = '#f8d8c8'; g.beginPath(); g.arc(x, y + 6, r, 0, 7); g.fill(); g.lineWidth = 3; g.strokeStyle = KI; g.stroke();
       if (o.taste && i > 8) { g.fillStyle = 'rgba(255,240,120,.9)'; g.beginPath(); g.arc(x + side * 14, y - 10, 6, 0, 7); g.fill(); } }
+    if (o.reach && k === 0 && o.reach > 0.75) { g.lineWidth = 40; g.strokeStyle = 'rgba(10,18,24,' + ((o.reach - 0.75) * 3.6).toFixed(2) + ')'; g.beginPath(); pts.slice(10).forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y))); g.stroke(); }
     if (X > 0 && o.neur) for (let i = 2; i <= 12; i++) { const [x, y] = pts[i]; g.fillStyle = `rgba(255,255,140,${0.5 + 0.5 * Math.sin(ph * 3 + i)})`; g.beginPath(); g.arc(x, y - 4, 5, 0, 7); g.fill(); } }
   // manto (cabeça)
   P2([[300, 260], [450, 330], [480, 520], [430, 700], [300, 760], [170, 700], [120, 520], [150, 330]], col, 11);
@@ -3442,3 +3445,21 @@ export const fxShark = (p, o = {}) => { const g = p.g, KI = '#1a1424', w = Math.
   g.lineWidth = 9; g.beginPath(); g.moveTo(215, -75); g.lineTo(285, -60); g.stroke();
   for (let k = 0; k < 3; k++) { g.lineWidth = 6; g.beginPath(); g.moveTo(120 + k * 22, -30); g.lineTo(110 + k * 22, 30); g.stroke(); }
   g.restore(); };
+
+/** POLVO ESCOANDO PELO BURACO (vista de frente da pedra). Buraco no ponto (300,500) do cartão, raio hr.
+ *  k 0→1: braços entram primeiro, o manto se espreme até o tamanho do buraco e some no escuro. (Para sair do outro lado, use k 1→0.) */
+export const fxSqueeze = (p, o = {}) => { const g = p.g, k = Math.max(0, Math.min(1, o.k || 0)), hr = o.hr || 100, HX = 300, HY = 500, KI = '#1a1424', col = o.col || '#d8506a', dark = '#a8344e', w = o.wig || 0;
+  g.fillStyle = '#0a0a12'; g.beginPath(); g.arc(HX, HY, hr, 0, 7); g.fill();
+  const mk = Math.min(1, k * 1.25), cy = 250 + (HY - 250) * Math.pow(mk, 1.6), mw = 150 + (hr * 0.85 - 150) * mk, mh = 190 + (hr * 1.7 - 190) * mk, sc = k > 0.8 ? Math.max(0, 1 - (k - 0.8) * 5) : 1;
+  // braços: da base do manto até dentro do buraco (afinam no caminho)
+  for (let a = 0; a < 8; a++) { const ang = (a / 8 - 0.5) * 1.6, bx = HX + Math.sin(ang) * mw * 0.75, byy = cy + mh * 0.75 * sc, tip = [HX + Math.sin(ang) * hr * 0.3, HY + Math.cos(ang) * hr * 0.2];
+    const mid = [(bx + tip[0]) / 2 + Math.sin(w * 6.28 + a) * 30 * (1 - k), Math.max(byy, tip[1]) + 60 * (1 - k)];
+    g.lineCap = 'round'; for (const [lw, c] of [[38 * (1 - k * 0.5) * sc + 6, KI], [28 * (1 - k * 0.5) * sc, a % 2 ? dark : col]]) { if (lw <= 0) continue; g.lineWidth = lw; g.strokeStyle = c; g.beginPath(); g.moveTo(bx, byy); g.quadraticCurveTo(mid[0], mid[1], tip[0], tip[1]); g.stroke(); } }
+  // manto espremido
+  if (sc > 0) { g.save(); g.translate(HX, cy); g.scale(sc, sc); g.fillStyle = col; g.strokeStyle = KI; g.lineWidth = 10; g.beginPath(); g.ellipse(0, 0, mw, mh, 0, 0, 7); g.fill(); g.stroke();
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.ellipse(-mw * 0.35, -mh * 0.35, mw * 0.25, mh * 0.35, -0.3, 0, 7); g.fill();
+    if (mk < 0.85) for (const sd of [-1, 1]) { const ex = sd * mw * 0.42, ey = mh * 0.25; g.fillStyle = '#fffbe8'; g.beginPath(); g.ellipse(ex, ey, Math.min(34, mw * 0.3), 30, 0, 0, 7); g.fill(); g.lineWidth = 7; g.stroke(); g.fillStyle = KI; g.beginPath(); g.roundRect(ex - 16, ey - 8, 32, 18, 9); g.fill(); }
+    g.restore(); }
+  // o que já entrou no buraco fica no escuro
+  g.save(); g.beginPath(); g.arc(HX, HY, hr, 0, 7); g.clip(); g.fillStyle = `rgba(10,10,18,${0.55 + 0.35 * k})`; g.fillRect(HX - hr, HY - hr, hr * 2, hr * 2); g.restore();
+  g.strokeStyle = 'rgba(0,0,0,.6)'; g.lineWidth = 8; g.beginPath(); g.arc(HX, HY, hr, 0, 7); g.stroke(); };

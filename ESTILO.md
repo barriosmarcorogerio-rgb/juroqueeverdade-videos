@@ -128,3 +128,13 @@ VERTICAL 1080x1920 (o YouTube recomenda 9:16 para Shorts; horizontal é substitu
 - Evitar braços abertos em "T" (pose 'reach' de longe parece boneco de teste) e titã "afundado" no chão (y negativo).
 - Revisar uma folha de quadros (12 por bloco) logo no começo do render, não no fim: corrigir cedo custa poucos quadros.
 - Se a narração diz que algo acontece ("o buraco vira uma piscina de lama"), a imagem TEM de mostrar (19/11: o buraco v1 falava em água e o poço estava seco). Conferir cada frase com verbo de ação visível contra o plano antes do render.
+
+
+## Aprendizados de 27/11 (revisão do dono no polvo)
+- **História, não lista de fatos**: os fatos precisam ser consequência de uma ação (ex.: o polvo rasteja POR CAUSA do coração que para; acha o caranguejo COM o braço que sente gosto; foge COM o corpo sem osso). Roteiro = personagem com objetivo + obstáculo + virada.
+- **Mostrar o mecanismo**: se a narração diz "bombeia pro corpo", o desenho tem que mostrar o sangue indo pro corpo (fluxo animado), não só o órgão pulsando.
+- **Nunca revelar antes da fala**: selo, objeto ou rótulo só aparece na palavra que ele revela ("COBRE" entra quando a voz diz cobre).
+- **Sem corte seco que pareça fim**: troca de cenário no meio do vídeo precisa de continuidade (câmera que acompanha o personagem), senão parece que o vídeo acabou.
+- **Ação dita = ação mostrada, do jeito certo**: "enfia o braço lá dentro" → o braço entra NA fenda (não atravessa a pedra); "passa pelo buraco" → o corpo escoa para dentro do buraco e sai do outro lado (não só encolhe).
+- **Ameaça perto**: predador/perigo grande e próximo do herói na tela; longe e pequeno não assusta.
+- **Corte no último fato forte**: nada de cena extra só para fechar (o trecho do Tonico na praia tirava retenção).

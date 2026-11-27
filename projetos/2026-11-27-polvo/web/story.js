@@ -8,7 +8,7 @@ const SH = [
   ['tubarao', 1248], ['cor', 1290], ['pedra', 1368], ['naocolou', 1409], ['foge', 1441], ['passa', 1509], ['final', 1590], ['loop', 1687],
 ];
 const CLOSE = new Set(['abre', 'abre2', 'coracoes', 'branq', 'azul', 'gosto', 'loop', 'porque']);
-export const SHOTS = SH.map(([id, a], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light: 'sea', close: CLOSE.has(id), noAuto: ['pedra', 'foge', 'tubarao'].includes(id) }));
+export const SHOTS = SH.map(([id, a], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light: 'sea', close: CLOSE.has(id), noAuto: ['pedra', 'foge', 'tubarao', 'fenda', 'passa'].includes(id) }));
 export const shotAt = (f) => SHOTS.find((s) => f >= s.a && f <= s.b) || SHOTS[SHOTS.length - 1];
 export const LIGHTS = {
   sea: { az: 30, el: 75, sky: '#bfefff', ground: '#2a6a7a', hemi: 1.45, sun: '#e8fbff', sunI: 2.2, fog: '#2a8aa8', fogNear: 4, fogFar: 46, skyTop: '#1a5a8a', skyHor: '#2a8aa8', sunDisc: '#000000', sunSize: 0, sat: 1.12, vig: 0.3, shadowExt: 12, gain: '#e8fcff' },
@@ -31,12 +31,12 @@ const CAMS = {
   cansa: [{ f: 652, pos: [1.2, 1.4, 3.4], look: [0, 0.8, 0], fov: 52 }, { f: 704, pos: [1.0, 1.0, 3.0], look: [0, 0.6, 0], fov: 50 }],
   azul: [{ f: 705, pos: [0, 1.15, 2.4], look: [0, 1.0, 0], fov: 48 }, { f: 746, pos: [0, 1.15, 2.2], look: [0, 1.0, 0], fov: 46 }],
   cobre: [{ f: 747, pos: [0, 1.3, 4.6], look: [0, 1.0, 0], fov: 56 }, { f: 838, pos: [0, 1.3, 4.2], look: [0, 1.0, 0], fov: 54 }],
-  fenda: [{ f: 839, pos: [-1.5, 1.4, 1.0], look: [-4.4, 0.7, -3.6], fov: 50 }, { f: 960, pos: [-2.2, 1.2, -0.2], look: [-4.6, 0.6, -3.8], fov: 48 }],
+  fenda: [{ f: 839, pos: [-2.4, 1.3, 1.6], look: [-4.2, 0.7, -2.8], fov: 50 }, { f: 900, pos: [-4.0, 1.0, 0.6], look: [-4.7, 0.6, -3.0], fov: 50 }, { f: 960, pos: [-4.1, 0.95, 0.2], look: [-4.75, 0.6, -3.0], fov: 48 }],
   gosto: [{ f: 961, pos: [-4.7, 0.65, -0.8], look: [-5, 0.5, -3.1], fov: 44 }, { f: 1025, pos: [-4.8, 0.6, -1.1], look: [-5, 0.5, -3.1], fov: 42 }],
   pensa: [{ f: 1026, pos: [-3.2, 1.1, -0.6], look: [-4.1, 0.8, -3.1], fov: 50 }, { f: 1183, pos: [-3.4, 1.1, -1.0], look: [-4.1, 0.8, -3.1], fov: 48 }],
   achou: [{ f: 1184, pos: [-2.4, 1.1, 1.4], look: [-3.3, 0.7, -2.2], fov: 50 }, { f: 1223, pos: [-2.5, 1.1, 1.1], look: [-3.3, 0.7, -2.2], fov: 48 }],
   masai: [{ f: 1224, pos: [-2.6, 1.3, 1.4], look: [-3.4, 1.0, -2.3], fov: 50 }, { f: 1247, pos: [-2.5, 1.7, 1.6], look: [-3.2, 1.8, -2.3], fov: 50 }],
-  tubarao: [{ f: 1248, pos: [-1.0, 1.6, 3.4], look: [-3.0, 1.4, -3.0], fov: 60 }, { f: 1289, pos: [-1.2, 1.6, 2.6], look: [-3.2, 1.3, -3.0], fov: 58 }],
+  tubarao: [{ f: 1248, pos: [-1.6, 1.4, 2.6], look: [-3.2, 1.2, -2.6], fov: 58 }, { f: 1289, pos: [-1.8, 1.4, 2.0], look: [-3.2, 1.2, -2.6], fov: 56 }],
   cor: [{ f: 1290, pos: [-2.3, 1.1, 1.6], look: [-3.4, 0.75, -2.3], fov: 50 }, { f: 1367, pos: [-2.5, 1.05, 1.1], look: [-3.4, 0.75, -2.3], fov: 46 }],
   pedra: [{ f: 1368, pos: [-1.5, 1.5, 2.0], look: [-3.6, 1.0, -3.2], fov: 56 }, { f: 1408, pos: [-1.6, 1.5, 1.6], look: [-3.6, 1.0, -3.2], fov: 54 }],
   naocolou: [{ f: 1409, pos: [-0.8, 1.6, 3.0], look: [-3.4, 1.0, -3.0], fov: 58 }, { f: 1440, pos: [-0.8, 1.6, 2.8], look: [-3.4, 1.0, -3.0], fov: 58 }],
@@ -76,22 +76,26 @@ export const actorsAt = (f, T) => {
     case 'cobre': { const p = crawl(f); push(OCT(T, f, { xray: 1, flow: 'all', wig: wig(0.03) }, p, 1.0));
       if (f >= 765) push(FXC('d1', (pp) => T.fxDrop(pp, { col: '#c8302f', label: 'FERRO' }), [p[0] - 1.3, 0.3, p[2] + 0.4], 0.8 * pop(f, 765)));
       if (f >= 810) push(FXC('d2', (pp) => T.fxDrop(pp, { col: '#3f8fe8', label: 'COBRE' }), [p[0] + 1.3, 0.3, p[2] + 0.4], 0.8 * pop(f, 810))); break; }
-    case 'fenda': push(OCT(T, f, { wig: wig(0.05), look: -1 }, crawl(f), 1.0)); break;
+    case 'fenda': { const m = E.smooth(ramp(f, 839, 900)), c0 = crawl(839), R = E.smooth(ramp(f, 908, 950));   // chega na fenda e ENFIA o braço lá dentro
+      push(OCT(T, f, { wig: wig(0.05), look: -1, reach: q(R, 2) }, [lerp(c0[0], -4.3, m), 0, lerp(c0[2], -2.7, m)], 1.0)); break; } break;
     case 'gosto': push(CRAB(T, f, { claw: q(Math.abs(Math.sin(f * 0.2)), 1), scared: f > 990 ? 1 : 0 }, CRABP));
-      push(FXC('arm' + (f % 12), (pp) => { const g = pp.g, x = 700 - Math.min(1, (f - 961) / 25) * 380; g.lineCap = 'round'; g.lineWidth = 46; g.strokeStyle = '#1a1424'; g.beginPath(); g.moveTo(800, 700); g.quadraticCurveTo(560, 640 + Math.sin(f * 0.3) * 20, x, 760); g.stroke(); g.lineWidth = 36; g.strokeStyle = '#d8506a'; g.stroke();
-        for (let k = 0; k < 6; k++) { const t = k / 6, sx = x + (800 - x) * t, sy = 760 - 60 * Math.sin(t * 3.1); g.fillStyle = '#f8d8c8'; g.beginPath(); g.arc(sx, sy + 14, 8, 0, 7); g.fill(); if (f > 980 && (f + k * 3) % 12 < 6) { g.fillStyle = '#ffe86a'; g.beginPath(); g.arc(sx, sy - 18, 7, 0, 7); g.fill(); } } }, [CRABP[0], 0.05, CRABP[2] + 0.02], 0.35, { order: 3 })); break;
+      push(FXC('arm' + (f % 12) + q(Math.min(1, (f - 961) / 22), 1), (pp) => { const g = pp.g, k = Math.min(1, (f - 961) / 22), tip = [345 + 10 * k, 260 + 500 * k]; g.lineCap = 'round';   // braço sai do escuro da fenda e toca o caranguejo
+        for (const [lw, c] of [[44, '#1a1424'], [34, '#d8506a']]) { g.lineWidth = lw; g.strokeStyle = c; g.beginPath(); g.moveTo(345, -190); g.quadraticCurveTo(335 + Math.sin(f * 0.3) * 8, 200, tip[0], tip[1]); g.stroke(); }
+        for (let i = 0; i < 6; i++) { const t = 0.35 + i * 0.12; if (t > 1) break; const x = (1 - t) * (1 - t) * 345 + 2 * (1 - t) * t * 335 + t * t * tip[0], y = (1 - t) * (1 - t) * -190 + 2 * (1 - t) * t * 200 + t * t * tip[1];
+          g.fillStyle = '#f8d8c8'; g.beginPath(); g.arc(x + 14, y, 8, 0, 7); g.fill(); if (f > 980 && (f + i * 3) % 12 < 6) { g.fillStyle = '#ffe86a'; g.beginPath(); g.arc(x + 34, y - 6, 8, 0, 7); g.fill(); } } }, [CRABP[0], 0.02, CRABP[2] - 0.02], 0.6, { order: 3 })); break;
     case 'pensa': push(OCT(T, f, { xray: f > 1100 ? 1 : 0, neur: 1, indep: 1, wig: wig(0.06), look: Math.sin(f * 0.15) > 0 ? 1 : -1 }, PF, 1.0)); break;
     case 'achou': push(OCT(T, f, { happy: 1, wig: wig(0.04) }, PF, 1.0)); push(CRAB(T, f, { scared: 1, claw: 1 }, [PF[0] + 0.9, 0.02, PF[2] + 0.5], 0.45)); break;
     case 'masai': push(OCT(T, f, { wig: wig(0.02), look: 1 }, PF, 1.0)); push(FXC('sh', (pp) => { const g = pp.g; g.fillStyle = 'rgba(10,20,30,.55)'; g.beginPath(); g.ellipse(300, 400, 320, 90, 0, 0, 7); g.fill(); }, [PF[0] + 1, 2.4, PF[2] - 1], 1.6)); break;
-    case 'tubarao': { const x = lerp(4, -0.6, E.easeOut(ramp(f, 1248, 1285))); push(SHARK(T, f, { swim: q((f * 0.05) % 1, 2), bite: q(0.3 + 0.3 * Math.sin(f * 0.3), 1) }, [x, 0.6, -2.6], 1.5, { flip: true }));
+    case 'tubarao': { const x = lerp(4, -0.6, E.easeOut(ramp(f, 1248, 1285))); push(SHARK(T, f, { swim: q((f * 0.05) % 1, 2), bite: q(0.3 + 0.3 * Math.sin(f * 0.3), 1) }, [lerp(1.2, -2.2, E.easeOut(ramp(f, 1248, 1285))), 0.15, -3.0], 1.9, { flip: true }));
       push(OCT(T, f, { wig: wig(0.08), look: 1 }, PF, 1.0)); break; }
     case 'cor': { const k = E.smooth(ramp(f, 1330, 1350)); const c = k > 0.5 ? '#5a6670' : '#d8506a', d = k > 0.5 ? '#4a565e' : '#a8344e'; push(OCT(T, f, { col: c, dark: d, look: 1 }, PF, 1.0)); break; }
-    case 'pedra': push(OCT(T, f, { col: '#5a6670', dark: '#4a565e', look: 1 }, PF, 1.0)); push(SHARK(T, f, { swim: q((f * 0.03) % 1, 2), bite: 0 }, [-0.9, 0.9, -2.2], 1.5, { flip: true })); break;
-    case 'naocolou': { const bite = E.easeIn(ramp(f, 1409, 1430)); push(SHARK(T, f, { swim: q((f * 0.06) % 1, 2), bite: q(bite, 1) }, [lerp(-0.9, -2.6, bite), 0.9, -2.2], 1.5, { flip: true }));
+    case 'pedra': push(OCT(T, f, { col: '#5a6670', dark: '#4a565e', look: 1 }, PF, 1.0)); push(SHARK(T, f, { swim: q((f * 0.03) % 1, 2), bite: 0 }, [-2.3, 0.15, -3.0], 1.9, { flip: true })); break;
+    case 'naocolou': { const bite = E.easeIn(ramp(f, 1409, 1430)); push(SHARK(T, f, { swim: q((f * 0.06) % 1, 2), bite: q(bite, 1) }, [lerp(-1.6, -3.0, bite), 0.1, lerp(-2.9, -2.6, bite)], 1.9, { flip: true }));
       push(OCT(T, f, { wig: wig(0.1), look: 1, col: f > 1420 ? '#d8506a' : '#5a6670', dark: f > 1420 ? '#a8344e' : '#4a565e' }, [lerp(PF[0], PF[0] + 1.2, ramp(f, 1420, 1440)), 0, PF[2]], 1.0)); break; }
-    case 'foge': { const k = E.smooth(ramp(f, 1450, 1500)); push(OCT(T, f, { squeeze: k * 0.9, wig: wig(0.07) }, [lerp(6.6, 6.0, k), 0, lerp(-2.2, -2.45, k)], lerp(0.7, 0.2, k), { blob: k < 0.5 }));
-      if (f > 1470) push(SHARK(T, f, { swim: q((f * 0.06) % 1, 2), bite: 0.6 }, [lerp(10, 7.6, ramp(f, 1470, 1500)), 0.9, -1.6], 1.2, { flip: true, noFrame: true })); break; }
-    case 'passa': { const k = E.smooth(ramp(f, 1509, 1545)); push(OCT(T, f, { squeeze: (1 - k) * 0.9, wig: wig(0.05), happy: k > 0.8 ? 1 : 0 }, [6.0, 0, lerp(-3.5, -4.6, k)], lerp(0.25, 1.0, k))); break; }
+    case 'foge': { const k = q(E.smooth(ramp(f, 1446, 1500)), 2); push({ key: 'sq' + k + q((f * 0.05) % 1, 1), draw: (p) => T.fxSqueeze(p, { k, hr: 101, wig: q((f * 0.05) % 1, 1) }), x: 6, y: 0.152, z: -2.53, s: 0.7, fixed: true, blob: false, shadow: false, noFrame: true });
+      if (f > 1466) push(SHARK(T, f, { swim: q((f * 0.06) % 1, 2), bite: 0.7 }, [lerp(9.5, 7.4, ramp(f, 1466, 1500)), 0.0, -1.4], 1.7, { flip: true, noFrame: true })); break; }
+    case 'passa': { if (f < 1548) { const k = q(1 - E.smooth(ramp(f, 1509, 1546)), 2); push({ key: 'sq' + k + q((f * 0.05) % 1, 1), draw: (p) => T.fxSqueeze(p, { k, hr: 101, wig: q((f * 0.05) % 1, 1) }), x: 6, y: 0.152, z: -3.47, s: 0.7, fixed: true, yaw: Math.PI, blob: false, shadow: false, noFrame: true }); }
+      else { const k = E.smooth(ramp(f, 1548, 1589)); push(OCT(T, f, { wig: wig(0.05), happy: 1 }, [6.0, 0, lerp(-3.6, -4.6, k)], lerp(0.7, 1.0, k))); } break; }
     case 'final': push(OCT(T, f, { wig: wig(0.02), look: -1 }, [6.0, 0, -4.6], 1.0)); push(bub(T, f, [6.0, 0, -4.2])); break;
     case 'loop': push(OCT(T, f, { xray: 1, flow: 'all', beat: q((f * 0.12) % 1, 1), wig: wig(0.03) }, [6.0, 0, -4.6], 1.0)); push(bub(T, f, [6.0, 0, -4.2])); break;
   }

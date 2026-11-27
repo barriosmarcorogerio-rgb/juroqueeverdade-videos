@@ -153,6 +153,7 @@ for (let i = 0; i < 10; i++) { const r_ = new THREE.Mesh(new THREE.PlaneGeometry
 const toca = new THREE.Group(); toca.position.set(6, 0, -3); world.add(toca);
 add(new THREE.BoxGeometry(3.2, 2.4, 0.9), rockM, 0, 1.2, 0, toca);
 const holeM = new THREE.MeshBasicMaterial({ color: '#0a0a12' }); const hole = add(new THREE.CircleGeometry(0.16, 24), holeM, 0, 0.9, 0.46, toca, { cast: false });
+const hole2 = add(new THREE.CircleGeometry(0.16, 24), holeM, 0, 0.9, -0.46, toca, { cast: false }); hole2.rotation.y = Math.PI;   // buraco do outro lado
 const coin = add(new THREE.CylinderGeometry(0.13, 0.13, 0.02, 24), std({ color: '#e8c24a', metalness: 0.6, roughness: 0.3 }), 0.55, 0.9, 0.48, toca); coin.rotation.x = Math.PI / 2;
 // FENDA (x = -5): duas pedras grandes com uma fresta, onde o caranguejo se esconde
 const fenda = new THREE.Group(); fenda.position.set(-5, 0, -4); world.add(fenda);
@@ -288,7 +289,7 @@ function drawActors(list, cam) {
     if ((a.order || 2) <= 3 && !a.still) { const t = (FR - SA) / 9; if (t < 1) s *= 0.9 + 0.1 * (1 + 2.70158 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2));   // entra com um "pop" (overshoot)
       const br = Math.sin(FR * 0.13 + i * 1.7); by = 1 + 0.014 * br; bx = 1 - 0.009 * br; }                                    // respira
     c.mesh.scale.set(s * (a.flip ? -1 : 1) * (a.sx || 1) * bx, s * (a.sy || 1) * by, s);
-    if (a.face === 'cam') { c.mesh.quaternion.copy(cam.quaternion); if (a.roll) c.mesh.rotateZ(a.roll); } else c.mesh.rotation.set(0, Math.atan2(cam.position.x - a.x, cam.position.z - a.z) + (a.yaw || 0), a.roll || 0);
+    if (a.fixed) c.mesh.rotation.set(0, a.yaw || 0, 0); else if (a.face === 'cam') { c.mesh.quaternion.copy(cam.quaternion); if (a.roll) c.mesh.rotateZ(a.roll); } else c.mesh.rotation.set(0, Math.atan2(cam.position.x - a.x, cam.position.z - a.z) + (a.yaw || 0), a.roll || 0);
     c.mat.color.set(a.tint || '#ffffff'); c.mat.opacity = a.alpha ?? 1;
     c.mesh.castShadow = a.shadow !== false;
     c.mesh.renderOrder = a.order || 2;
