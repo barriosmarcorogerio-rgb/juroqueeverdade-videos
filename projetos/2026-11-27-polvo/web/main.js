@@ -154,6 +154,10 @@ const toca = new THREE.Group(); toca.position.set(6, 0, -3); world.add(toca);
 add(new THREE.BoxGeometry(3.2, 2.4, 0.9), rockM, 0, 1.2, 0, toca);
 const holeM = new THREE.MeshBasicMaterial({ color: '#0a0a12' }); const hole = add(new THREE.CircleGeometry(0.16, 24), holeM, 0, 0.9, 0.46, toca, { cast: false });
 const coin = add(new THREE.CylinderGeometry(0.13, 0.13, 0.02, 24), std({ color: '#e8c24a', metalness: 0.6, roughness: 0.3 }), 0.55, 0.9, 0.48, toca); coin.rotation.x = Math.PI / 2;
+// FENDA (x = -5): duas pedras grandes com uma fresta, onde o caranguejo se esconde
+const fenda = new THREE.Group(); fenda.position.set(-5, 0, -4); world.add(fenda);
+for (const sd of [-1, 1]) { const r_ = add(new THREE.BoxGeometry(1.6, 2.0, 1.6), rockM2, sd * 0.95, 1.0, 0, fenda); r_.rotation.y = sd * 0.15; r_.rotation.z = -sd * 0.05; }
+add(new THREE.BoxGeometry(0.4, 1.6, 0.2), new THREE.MeshBasicMaterial({ color: '#0a1218' }), 0, 0.8, -0.5, fenda, { cast: false });
 // PRAIA (x = 200): areia clara, mar azul, guarda-sol
 const PX = 200;
 const beach = add(new THREE.PlaneGeometry(120, 60), std({ color: '#f0dca8' }), PX, 0.01, 0, world, { cast: false }); beach.rotation.x = -Math.PI / 2;
