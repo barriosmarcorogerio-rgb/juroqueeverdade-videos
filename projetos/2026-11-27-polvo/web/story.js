@@ -9,7 +9,7 @@ const SH = [
   ['buraco', 1312, 'sea'], ['moeda', 1409, 'sea'], ['tonico', 1495, 'beach'], ['melada', 1627, 'beach'], ['loop', 1697, 'sea'],
 ];
 const CLOSE = new Set(['tres', 'branq', 'gosto', 'melada', 'bracos']);   // closes de propósito: o enquadramento automático só centraliza
-export const SHOTS = SH.map(([id, a, light], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light, close: CLOSE.has(id) }));
+export const SHOTS = SH.map(([id, a, light], i) => ({ id, a, b: (SH[i + 1] ? SH[i + 1][1] : TOTAL) - 1, light, close: CLOSE.has(id), noAuto: id === 'cor' }));
 export const shotAt = (f) => SHOTS.find((s) => f >= s.a && f <= s.b) || SHOTS[SHOTS.length - 1];
 export const LIGHTS = {
   sea: { az: 30, el: 75, sky: '#bfefff', ground: '#2a6a7a', hemi: 1.45, sun: '#e8fbff', sunI: 2.2, fog: '#2a8aa8', fogNear: 4, fogFar: 46, skyTop: '#1a5a8a', skyHor: '#2a8aa8', sunDisc: '#000000', sunSize: 0, sat: 1.12, vig: 0.3, shadowExt: 10, gain: '#e8fcff' },
@@ -32,7 +32,7 @@ const CAMS = {
   pensa: [{ f: 849, pos: [-1.2, 0.8, 1.4], look: [0, 0.6, -2], fov: 52 }, { f: 898, pos: [-1.0, 0.8, 1.2], look: [0, 0.6, -2], fov: 50 }],
   gosto: [{ f: 899, pos: [1.3, 0.35, -0.6], look: [0.8, 0.25, -1.6], fov: 44 }, { f: 1017, pos: [1.2, 0.35, -0.8], look: [0.8, 0.25, -1.6], fov: 42 }],
   prova: [{ f: 1018, pos: [1.0, 1.3, 3.6], look: [0.8, 1.0, -1.6], fov: 52 }, { f: 1114, pos: [0.9, 1.3, 3.2], look: [0.8, 1.0, -1.6], fov: 50 }],
-  cor: [{ f: 1115, pos: [4.4, 1.2, 1.4], look: [5.2, 0.9, -2.4], fov: 46 }, { f: 1226, pos: [4.6, 1.2, 1.0], look: [5.2, 0.9, -2.4], fov: 44 }],
+  cor: [{ f: 1115, pos: [0.9, 1.3, 3.2], look: [0.8, 1.0, -1.6], fov: 50 }, { f: 1142, pos: [4.0, 1.2, 1.6], look: [5.0, 0.9, -2.4], fov: 46 }, { f: 1226, pos: [4.5, 1.2, 1.0], look: [5.1, 0.9, -2.4], fov: 44 }],   // sem corte: a câmera continua do plano anterior e acompanha o polvo
   osso: [{ f: 1227, pos: [0.1, 1.2, 1.4], look: [0, 1.1, -2], fov: 50 }, { f: 1311, pos: [0.1, 1.2, 1.1], look: [0, 1.1, -2], fov: 48 }],
   buraco: [{ f: 1312, pos: [7.4, 1.1, 0.4], look: [6, 0.9, -2.5], fov: 44 }, { f: 1408, pos: [7.0, 1.0, 0.0], look: [6, 0.9, -2.5], fov: 40 }],
   moeda: [{ f: 1409, pos: [6.9, 1.1, -1.0], look: [6.3, 0.9, -2.54], fov: 44 }, { f: 1494, pos: [6.3, 0.95, -1.6], look: [6.42, 0.9, -2.54], fov: 42 }],
@@ -74,7 +74,9 @@ export const actorsAt = (f, T) => {
     case 'pensa': push(OCT(T, f, { indep: 1, wig: q((f * 0.06) % 1, 2), look: Math.sin(f * 0.2) > 0 ? 1 : -1 }, OC)); break;
     case 'gosto': push(OCT(T, f, { taste: f % 20 < 12 ? 1 : 0, wig: q((f * 0.02) % 1, 2) }, OC, 1.3)); break;
     case 'prova': push(OCT(T, f, { happy: 1, wig: q((f * 0.03) % 1, 2) }, OC)); push(TON(T, f, 'mergulhador', ['laugh', 'smile'], [['belly', 'point', null, -1, -0.5], ['up', 'hip']], [2.2, 0, -0.8], {}, { talk: talkAt(f) }, true)); break;
-    case 'cor': { const k = E.smooth(ramp(f, 1140, 1170)); const c = k > 0.5 ? '#6a7a7a' : '#d8506a', d = k > 0.5 ? '#5a6670' : '#a8344e'; push(OCT(T, f, { col: c, dark: d, look: 1 }, [5.0, 0, -2.4], 0.9, { alpha: 1 })); break; }
+    case 'cor': { const w = E.smooth(ramp(f, 1115, 1140)), k = E.smooth(ramp(f, 1142, 1166)); const c = k > 0.5 ? '#6a7a7a' : '#d8506a', d = k > 0.5 ? '#5a6670' : '#a8344e';
+      push(OCT(T, f, { col: c, dark: d, look: 1, wig: q((f * (f < 1140 ? 0.06 : 0.02)) % 1, 2) }, [lerp(0, 5.0, w), 0, lerp(-2, -2.4, w)], lerp(1.3, 0.9, w)));
+      push(TON(T, f, 'mergulhador', ['surprised', 'smile'], [['hang', 'point', null, 1, 0.5]], [2.2, 0, -0.8], { noFrame: true }, {}, true)); break; }
     case 'osso': push(OCT(T, f, { wig: q((f * 0.03) % 1, 2), happy: 1 }, OC)); break;
     case 'buraco': { const k = E.smooth(ramp(f, 1330, 1400)); push(OCT(T, f, { squeeze: k * 0.9, wig: q((f * 0.05) % 1, 2) }, [lerp(6.6, 6.0, k), 0, lerp(-2.2, -2.45, k)], lerp(0.7, 0.2, k), { blob: k < 0.5 })); break; }
     case 'moeda': break;
