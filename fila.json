@@ -210,7 +210,9 @@
     "video_yt": "videos/2026-11-27-buraco-negro-yt.mp4",
     "thumb": "videos/2026-11-27-buraco-negro-thumb.jpg",
     "cover_ms": 1000,
-    "publicado": false
+    "publicado": true,
+    "publicado_em": "2026-11-27 14:49 UTC",
+    "youtube_id": "I0ugDuAOwtI"
   },
   {
     "data": "2026-11-27",

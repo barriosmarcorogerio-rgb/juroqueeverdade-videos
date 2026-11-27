@@ -103,3 +103,19 @@ Publicado agora: "Você aguentaria 11 DIAS sem dormir?!" — YouTube -HTHtv7_KuQ
 
 ## 2026-11-26 — publicação da noite (18h50 BRT)
 Publicado: "Um DRAGÃO de verdade conseguiria voar?!" — YouTube mtzYFmg56e4 (21h51 UTC) + Reels. "11 dias sem dormir" com 560 views em 7 h. Longos seguem privados (0 views), prévias bloqueadas. Fila de Shorts independentes agora vazia: produzir 2 novos na próxima madrugada.
+
+## 2026-11-27 — publicação + métricas (11h47 BRT)
+| Vídeo | Rede | Publicado | Views | Likes | Coment. |
+|---|---|---|---|---|---|
+| Um DRAGÃO de verdade conseguiria voar?! | YT | 26/11 21h51 | 1138 (17 h) | 16 | 0 |
+| Você aguentaria 11 DIAS sem dormir?! | YT | 26/11 14h49 | 1076 (24 h) | 20 | 1 |
+| Existe formiga ZUMBI de verdade?! | YT | 25/11 21h51 | 1259 (41 h) | 29 | 0 |
+| Dom Pedro II trouxe CAMELOS pro sertão?! | YT | 18/11 | 1421 | 38 | 0 |
+| Dragão (reels) | IG | 26/11 | — | 54 | 0 |
+| 11 dias (reels) | IG | 26/11 | — | 30 | 0 |
+| Formiga zumbi (reels) | IG | 25/11 | — | 42 | 0 |
+
+Publicado agora: "E se você caísse num BURACO NEGRO?!" — YouTube I0ugDuAOwtI (14h49 UTC) + Reels. Primeiro Short com a boca do Tonico sincronizada.
+- Os 3 Shorts de curiosidade bateram ~1.100 views no 1º dia e depois quase param (formiga: 1.157 → 1.259 no 2º dia). O teto atual é a distribuição inicial do YouTube; para passar dele precisa de retenção maior nos primeiros 3 s.
+- Likes/views caíram de 2,7% (camelos) para 1,5–2,5%; o dragão teve mais likes no Instagram (54) que no YouTube (16) — tema "e se" com bicho fantástico rende mais no Reels.
+- Próximos passos: manter 2 Shorts/dia, testar abertura ainda mais rápida (corte em 1 s) e comparar o buraco negro (boca sincronizada) com os anteriores na próxima rodada.
