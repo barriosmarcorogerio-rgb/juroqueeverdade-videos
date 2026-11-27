@@ -65,8 +65,10 @@ export const actorsAt = (f, T) => {
     case 'branq': push(OCT(T, f, { xray: 1, beat: q((f * 0.12) % 1, 1) }, OC)); break;
     case 'terceiro': { const y = f > 360 ? lerp(0, 1.4, E.easeOut(ramp(f, 360, 420))) : 0; push(OCT(T, f, { xray: 1, stop: f > 368, wig: q((f * (f > 360 ? 0.06 : 0.02)) % 1, 2) }, [0, y, -2], 1.3, { blob: y < 0.3 })); push(bub(T, f)); break; }
     case 'rasteja': push(OCT(T, f, { wig: q((f * 0.05) % 1, 2), look: -1 }, [lerp(1.5, -0.8, ramp(f, 424, 484)), 0, -2], 1.1)); break;
-    case 'cobre': push(FXC('d1', (p) => T.fxDrop(p, { col: '#c8302f', label: 'FERRO' }), [-0.6, 0.3, -1.2], 0.9)); push(FXC('d2', (p) => T.fxDrop(p, { col: '#3f8fe8', label: 'COBRE' }), [1.2, 0.3, -1.2], 0.9));
-      push(TON(T, f, 'mergulhador', ['smile', 'determined'], [['point', 'hip', null, -1, -0.4], ['hip', 'point', null, 1, 0.4]], [0.3, 0, -0.7], {}, { talk: talkAt(f) }, true)); break;
+    case 'cobre': { const pop = (f0) => { const t = (f - f0) / 8; return t >= 1 ? 1 : 0.6 + 0.4 * (1 + 2.70158 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2)); };   // cada gota só aparece quando a narração fala dela
+      if (f >= 537) push(FXC('d1', (p) => T.fxDrop(p, { col: '#c8302f', label: 'FERRO' }), [-0.6, 0.3, -1.2], 0.9 * pop(537)));
+      if (f >= 585) push(FXC('d2', (p) => T.fxDrop(p, { col: '#3f8fe8', label: 'COBRE' }), [1.2, 0.3, -1.2], 0.9 * pop(585)));
+      push(TON(T, f, 'mergulhador', ['smile', 'determined'], [['point', 'hip', null, -1, -0.4], ['hip', 'point', null, 1, 0.4]], [0.3, 0, -0.7], {}, { talk: talkAt(f) }, true)); break; }
     case 'bracos': push(OCT(T, f, { wig: q((f * 0.04) % 1, 2) }, OC)); break;
     case 'neuronios': push(OCT(T, f, { xray: 1, neur: 1, wig: q((f * 0.03) % 1, 2) }, OC)); break;
     case 'pensa': push(OCT(T, f, { indep: 1, wig: q((f * 0.06) % 1, 2), look: Math.sin(f * 0.2) > 0 ? 1 : -1 }, OC)); break;
