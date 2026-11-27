@@ -12,7 +12,7 @@ A2. ✅ PRODUZIDO 26/11 (fila) — 🐉 Um dragão de verdade conseguiria voar? 
 A3. ✅ PRODUZIDO 26/11 (fila) — 😴 O garoto que ficou 11 dias sem dormir (Randy Gardner, 1964) — o que acontece com o cérebro. ✅
 A4. 🐙 O polvo tem 3 corações, sangue azul e prova sabor com os braços. ✅
 A5. 💡 Dá pra conversar com luzes de Natal? (pisca-pisca + código Morse; inspirado em séries de mistério dos anos 80) ✅
-A6. 🦴 E se você caísse num buraco negro? ("espaguetificação") ✅
+A6. ✅ PRODUZIDO 27/11 (fila) — 🦴 E se você caísse num buraco negro? ("espaguetificação") ✅
 A7. 🧟 E se um apocalipse zumbi começasse hoje — quanto tempo a energia elétrica duraria? (usinas sem gente: horas a dias) ⚠️ conferir números
 A8. 🖐️ Por que o dedo enruga na água? (é o sistema nervoso, não a água entrando — melhora a pegada) ✅
 A9. 🦈 O tubarão-da-groenlândia pode viver mais de 270 anos. ✅
